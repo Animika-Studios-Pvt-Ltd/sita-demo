@@ -39,7 +39,7 @@ export function Navigation() {
 
           {/* Logo (BIGGER) */}
           <Link to="/" className="flex items-center">
-            <img src={logoImage} alt="Sita" className="h-20" />
+            <img src={logoImage} alt="Sita" style={{ height: '80px' }}/>
           </Link>
 
           {/* DESKTOP NAV */}
