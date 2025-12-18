@@ -8,6 +8,8 @@ import { YogaTherapy } from './pages/YogaTherapy';
 import { Ayurveda } from './pages/Ayurveda';
 import { KoshaCounseling } from './pages/KoshaCounseling';
 import { BookMeeting } from './pages/BookMeeting';
+import Services from './pages/Services';
+import Events from './pages/Events';
 
 export default function App() {
   return (
@@ -23,6 +25,8 @@ export default function App() {
             <Route path="/ayurveda" element={<Ayurveda />} />
             <Route path="/kosha-counseling" element={<KoshaCounseling />} />
             <Route path="/book-meeting" element={<BookMeeting />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/events" element={<Events />} />
           </Routes>
         </main>
         <Footer />

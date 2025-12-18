@@ -26,13 +26,13 @@ export function SitaFactor() {
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="mb-6 text-emerald-700">What is The Sita Factor?</h2>
           <p className="text-gray-700 mb-4">
-            The Sita Factor is a comprehensive wellness methodology that brings together 
+            The Sita Factor is a comprehensive wellness methodology that brings together
             three powerful healing modalities: Yoga Therapy, Ayurveda, and Kosha Counseling.
           </p>
           <p className="text-gray-700">
-            This integrated approach recognizes that true healing requires addressing all 
-            aspects of our being—physical, energetic, mental, emotional, and spiritual. 
-            By working with these three complementary practices, we create lasting 
+            This integrated approach recognizes that true healing requires addressing all
+            aspects of our being—physical, energetic, mental, emotional, and spiritual.
+            By working with these three complementary practices, we create lasting
             transformation from the inside out.
           </p>
         </div>
@@ -72,11 +72,11 @@ export function SitaFactor() {
                   <h3 className="text-emerald-700">Yoga Therapy Programs</h3>
                 </div>
                 <p className="text-gray-700 mb-4">
-                  Evidence-based therapeutic yoga practices designed to support healing from 
+                  Evidence-based therapeutic yoga practices designed to support healing from
                   chronic conditions, manage stress, process trauma, and promote overall vitality.
                 </p>
                 <p className="text-gray-700 mb-6">
-                  Our programs include personalized asana (postures), pranayama (breathwork), 
+                  Our programs include personalized asana (postures), pranayama (breathwork),
                   meditation, and yogic lifestyle practices tailored to your specific needs.
                 </p>
                 <Link
@@ -113,13 +113,13 @@ export function SitaFactor() {
                   <h3 className="text-emerald-700">Ayurveda Integration</h3>
                 </div>
                 <p className="text-gray-700 mb-4">
-                  Ancient wisdom for modern living. Ayurveda provides personalized nutrition, 
-                  herbal support, and lifestyle recommendations based on your unique 
+                  Ancient wisdom for modern living. Ayurveda provides personalized nutrition,
+                  herbal support, and lifestyle recommendations based on your unique
                   constitutional type (dosha).
                 </p>
                 <p className="text-gray-700 mb-6">
-                  Learn to align your daily rhythms with nature's cycles, choose foods that 
-                  nourish your specific needs, and create sustainable practices that support 
+                  Learn to align your daily rhythms with nature's cycles, choose foods that
+                  nourish your specific needs, and create sustainable practices that support
                   long-term health and vitality.
                 </p>
                 <Link
@@ -142,13 +142,13 @@ export function SitaFactor() {
                   <h3 className="text-emerald-700">Kosha Counseling</h3>
                 </div>
                 <p className="text-gray-700 mb-4">
-                  A profound exploration of the five layers (koshas) of your being: physical, 
-                  energetic, mental-emotional, wisdom, and bliss. This counseling approach 
+                  A profound exploration of the five layers (koshas) of your being: physical,
+                  energetic, mental-emotional, wisdom, and bliss. This counseling approach
                   helps you understand and address imbalances at their deepest level.
                 </p>
                 <p className="text-gray-700 mb-6">
-                  Through guided inquiry and contemplative practices, we work together to 
-                  uncover limiting beliefs, heal old wounds, and reconnect you with your 
+                  Through guided inquiry and contemplative practices, we work together to
+                  uncover limiting beliefs, heal old wounds, and reconnect you with your
                   authentic self and innate wisdom.
                 </p>
                 <Link
@@ -181,7 +181,7 @@ export function SitaFactor() {
             </div>
             <h3 className="mb-3 text-emerald-700">Initial Consultation</h3>
             <p className="text-gray-600">
-              We begin with a comprehensive assessment of your health history, current 
+              We begin with a comprehensive assessment of your health history, current
               concerns, and wellness goals.
             </p>
           </div>
@@ -191,7 +191,7 @@ export function SitaFactor() {
             </div>
             <h3 className="mb-3 text-emerald-700">Personalized Plan</h3>
             <p className="text-gray-600">
-              Receive a customized wellness plan integrating yoga therapy, Ayurvedic 
+              Receive a customized wellness plan integrating yoga therapy, Ayurvedic
               recommendations, and kosha-based counseling.
             </p>
           </div>
@@ -201,7 +201,7 @@ export function SitaFactor() {
             </div>
             <h3 className="mb-3 text-emerald-700">Ongoing Support</h3>
             <p className="text-gray-600">
-              Regular sessions to refine practices, address challenges, and celebrate 
+              Regular sessions to refine practices, address challenges, and celebrate
               progress on your healing journey.
             </p>
           </div>

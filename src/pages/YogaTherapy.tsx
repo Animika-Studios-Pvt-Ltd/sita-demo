@@ -32,37 +32,34 @@ export function YogaTherapy() {
           </p>
           <p className="text-gray-700">
             Yoga Therapy is an emerging therapy in the world of holistic healing for the
-            therapeutic application of yogic techniques such as, but not limited to; asanas
-            (postures), pranayama (breathing), mantras, mudras, meditation, yoga nidra,
-            sometimes Ayurvedic practices as well as other holistic practices.
+            therapeutic application of yogic techniques such as asanas, pranayama, mudras,
+            mantras, meditation, yoga nidra, Ayurvedic practices and other holistic tools.
           </p>
         </div>
 
-        {/* Approach Details */}
         <div className="grid md:grid-cols-3 gap-8">
           <div className="bg-white border border-gray-200 rounded-lg p-6">
             <Heart className="text-emerald-600 mb-4" size={32} />
             <h3 className="mb-3 text-emerald-700">Holistic & Personalized</h3>
             <p className="text-gray-600">
               Each Yoga Therapist brings their experience and expertise into each session,
-              offering a holistic approach that is complementary to medical or other
-              therapeutic care.
+              offering a holistic approach that complements medical and therapeutic care.
             </p>
           </div>
           <div className="bg-white border border-gray-200 rounded-lg p-6">
             <Users className="text-emerald-600 mb-4" size={32} />
             <h3 className="mb-3 text-emerald-700">Multi-Dimensional Healing</h3>
             <p className="text-gray-600">
-              Yoga therapy addresses the seeker spiritually, emotionally, and physically,
-              supporting healing and growth on all levels.
+              Yoga therapy supports spiritual, emotional, mental, and physical healing,
+              addressing the whole person.
             </p>
           </div>
           <div className="bg-white border border-gray-200 rounded-lg p-6">
             <Calendar className="text-emerald-600 mb-4" size={32} />
             <h3 className="mb-3 text-emerald-700">Complementary Care</h3>
             <p className="text-gray-600">
-              This approach works alongside medical professionals and holistic
-              practitioners to support overall well-being.
+              Yoga therapy works alongside doctors and holistic practitioners to support
+              long-term well-being.
             </p>
           </div>
         </div>
@@ -92,33 +89,81 @@ export function YogaTherapy() {
         </div>
       </section>
 
-      {/* Method */}
-      <section className="bg-emerald-50 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="mb-12 text-emerald-700 text-center">
-            Is Yoga Therapy a Legitimate Treatment?
-          </h2>
-          <div className="max-w-3xl mx-auto space-y-6 text-gray-700">
-            <p>
-              Yoga Therapy is governed by The International Association of Yoga Therapists
-              (IAYT). Founded in 1989, IAYT supports research and education in yoga and serves
-              as a professional organization for yoga teachers and yoga therapists worldwide.
-            </p>
-            <p>
-              IAYT has more than 5,000 members from over 50 countries and more than 150 member
-              schools, with 66 accredited yoga therapy training programs as of 2021.
-            </p>
-            <p>
-              The training to become a Certified Yoga Therapist (C-IAYT) is an 805-hour
-              program. Sita Severson is completing her training through Soul of Yoga
-              Institute in Encinitas, California.
+      {/* 🔹 Yoga Therapy Programs (NEW SECTION) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="max-w-3xl mx-auto text-center mb-16">
+          <h1 className="mb-4 text-emerald-700">Yoga Therapy Programs</h1>
+             <p className="mb-8 opacity-90 max-w-2xl mx-auto">Changing For Your Health</p>
+          <p className="text-gray-700">
+            Our Yoga Therapy Programs offer a wide range of tools to support healing across
+            mind, body, and spirit. Feeling off in any area of your life? Yoga Therapy can
+            help you come home to yourself.
+          </p>
+        </div>
+
+        <div className="max-w-4xl mx-auto space-y-6 text-gray-700">
+          <p>
+            Depending on your needs, your program may include guided meditations, asana
+            practices specific to your condition, mudras, mantras, pranayama, and other
+            yogic tools that speak to all layers of your being.
+          </p>
+
+          <blockquote className="border-l-4 border-emerald-600 pl-4 italic text-emerald-700">
+            “Yoga is not just repetition of a few postures—it is more about the exploration
+            and discovery of the subtle energies of life.” — Amit Ray
+          </blockquote>
+
+          <h3 className="text-emerald-700 mt-8">
+            Who Benefits Most from Yoga Therapy Programs?
+          </h3>
+
+          <p>
+            You don’t need to be flexible or a certain age or body type. Sita designs
+            programs specific to your needs—whether you’re working with digestive issues,
+            anxiety, recovery, or seeking deeper spiritual connection.
+          </p>
+
+          <ul className="space-y-2">
+            {[
+              'Yoga Postures (Asana)',
+              'Gestures (Mudras)',
+              'Sacred Sound (Mantra)',
+              'Breath Control (Pranayama)',
+              'Meditation (Dhyāna)',
+            ].map((item, index) => (
+              <li key={index} className="flex items-start gap-2">
+                <CheckCircle2 className="text-emerald-600 mt-1" size={20} />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+
+          <p>
+            Your personalized Yoga Therapy plan is created after intake and evolves with
+            you. Whether you’re healing from chronic conditions, recovering from surgery,
+            or seeking balance and strength, Sita meets you where you are and guides you
+            forward.
+          </p>
+
+          <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-6">
+            <h4 className="text-emerald-700 mb-2">Package Includes</h4>
+            <ul className="space-y-2">
+              <li>• Private asana & meditation classes</li>
+              <li>• Ongoing personalized wellness plan</li>
+              <li>• Hatha, Yin & Kundalini-based practices</li>
+              <li>• Class recordings, mantra playlists & posture maps</li>
+              <li>• Progress appointments and easy daily practices</li>
+            </ul>
+            <p className="mt-4">
+              Initial session: <strong>$285</strong>. Package pricing varies based on
+              frequency and duration.
             </p>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      {/* CTA – Set Up a Call (UNCHANGED) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl p-12 text-center text-white">
           <h2 className="mb-4 text-white">Set Up a Call</h2>
           <p className="mb-8 opacity-90 max-w-2xl mx-auto">

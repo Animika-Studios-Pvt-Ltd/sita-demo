@@ -1,30 +1,62 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* Custom Terracotta Theme Colors */
-:root {
-  --color-primary: #A67365;
-  --color-primary-dark: #8B5E4F;
-  --color-primary-light: #C49186;
-  --color-primary-pale: #F5EBE8;
+@layer base {
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+    color: #374151;
+    /* gray-700 */
+  }
+
+    p {
+    max-width: 68ch;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: 'DM Serif Text', serif !important;
+  }
+
+  h1 {
+    font-size: 3.75rem;
+    line-height: 1.2;
+  }
+
+  /* 60px */
+  h2 {
+    font-size: 2.25rem;
+    line-height: 1.3;
+  }
+
+  /* 36px */
+  h3 {
+    font-size: 1.5rem;
+    line-height: 1.4;
+  }
+
+  /* 24px */
+  h4 {
+    font-size: 1.25rem;
+  }
+
+  /* 20px */
+
+  p,
+  li {
+    font-size: 1.125rem;
+    /* 18px */
+    line-height: 1.7;
+  }
 }
 
-/* Typography defaults */
-h1 {
-  @apply text-5xl;
+@layer utilities {
+  .font-heading {
+    font-family: 'DM Serif Text', serif;
+  }
 }
 
-h2 {
-  @apply text-3xl;
-}
-
-h3 {
-  @apply text-xl;
-}
-
-h4 {
-  @apply text-lg;
-}
-
-p {
-  @apply text-base;
-}
