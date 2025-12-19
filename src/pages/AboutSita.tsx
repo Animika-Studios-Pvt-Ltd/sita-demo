@@ -1,57 +1,58 @@
-import { Award, BookOpen, Heart, Users } from 'lucide-react';
-import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import { Award, BookOpen, Heart, Users } from "lucide-react";
+import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import sitaImage from "../assets/sita-image.jpg";
 
 export function AboutSita() {
   const certifications = [
     {
-      title: 'Master Ayurvedic Digestion & Nutrition (500 hr)',
-      organization: 'Advanced Professional Training',
-      year: '2023–2024',
+      title: "Master Ayurvedic Digestion & Nutrition (500 hr)",
+      organization: "Advanced Professional Training",
+      year: "2023–2024",
     },
     {
-      title: 'Ayurvedic Panchakarma',
-      organization: 'Clinical Ayurvedic Therapies',
-      year: '2023–2024',
+      title: "Ayurvedic Panchakarma",
+      organization: "Clinical Ayurvedic Therapies",
+      year: "2023–2024",
     },
     {
-      title: 'Yoga Therapist – IAYT (800 hr)',
-      organization: 'International Association of Yoga Therapists',
-      year: '2021–2023',
+      title: "Yoga Therapist – IAYT (800 hr)",
+      organization: "International Association of Yoga Therapists",
+      year: "2021–2023",
     },
     {
-      title: 'Clinical Ayurveda',
-      organization: 'Advanced Ayurvedic Studies',
-      year: '2021–2023',
+      title: "Clinical Ayurveda",
+      organization: "Advanced Ayurvedic Studies",
+      year: "2021–2023",
     },
     {
-      title: 'Marma Point Therapy (100 hr)',
-      organization: 'AyurPrana – Dr. Vasant Lad',
-      year: '2022',
+      title: "Marma Point Therapy (100 hr)",
+      organization: "AyurPrana – Dr. Vasant Lad",
+      year: "2022",
     },
     {
-      title: 'Holy Fire Reiki Master',
-      organization: 'International Reiki Training',
-      year: '2022',
+      title: "Holy Fire Reiki Master",
+      organization: "International Reiki Training",
+      year: "2022",
     },
     {
-      title: 'Kundalini Yoga – 200 hr',
-      organization: 'The Soul of Yoga, San Diego',
-      year: '2020',
+      title: "Kundalini Yoga – 200 hr",
+      organization: "The Soul of Yoga, San Diego",
+      year: "2020",
     },
     {
-      title: 'Restorative Yoga – 50 hr',
-      organization: 'Yoga Teacher Training',
-      year: '2020',
+      title: "Restorative Yoga – 50 hr",
+      organization: "Yoga Teacher Training",
+      year: "2020",
     },
     {
-      title: 'Western Herbalism',
-      organization: 'Herbal Medicine Studies',
-      year: '2019',
+      title: "Western Herbalism",
+      organization: "Herbal Medicine Studies",
+      year: "2019",
     },
     {
-      title: 'Ayurvedic Lifestyle – 200 hr',
-      organization: 'Yama Institute, Maryland',
-      year: '2007',
+      title: "Ayurvedic Lifestyle – 200 hr",
+      organization: "Yama Institute, Maryland",
+      year: "2007",
     },
   ];
 
@@ -78,7 +79,8 @@ export function AboutSita() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="relative h-[500px] rounded-lg overflow-hidden shadow-lg">
             <ImageWithFallback
-              src="https://images.unsplash.com/photo-1641391400871-3a6578a11d5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+              // src="https://images.unsplash.com/photo-1641391400871-3a6578a11d5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+              src={sitaImage}
               alt="Peaceful meditation practice"
               className="w-full h-full object-cover"
             />
@@ -98,17 +100,17 @@ export function AboutSita() {
             <p className="text-gray-700 mb-4">
               By 2005, Sita was ready to deepen her education and began studying
               with Yama Therapeutics. She became a yoga asana instructor and
-              pursued extensive training in Ayurveda, meditation, and
-              breathing techniques. In 2007, she established her Ayurvedic
-              Lifestyle Coaching practice.
+              pursued extensive training in Ayurveda, meditation, and breathing
+              techniques. In 2007, she established her Ayurvedic Lifestyle
+              Coaching practice.
             </p>
 
             <p className="text-gray-700">
               Her work expanded into hospitals, universities, senior centers,
               and conscious corporations. She taught mindfulness and yoga at
               Johns Hopkins University and Hospital, supported oncology staff
-              with burnout prevention, and created wellness curriculums for
-              the Baltimore County Department of Aging.
+              with burnout prevention, and created wellness curriculums for the
+              Baltimore County Department of Aging.
             </p>
           </div>
         </div>
@@ -131,13 +133,13 @@ export function AboutSita() {
 
             <p>
               Since establishing her practice in 2007, she has worked with
-              thousands of individuals worldwide and is a published author and
-              a beloved teacher on The Shift Network and Wisdom From North.
+              thousands of individuals worldwide and is a published author and a
+              beloved teacher on The Shift Network and Wisdom From North.
             </p>
 
             <blockquote className="border-l-4 border-emerald-600 pl-4 italic text-emerald-700">
-              “So often we want to change, but we don’t want to be inconvenienced
-              by it.”
+              “So often we want to change, but we don’t want to be
+              inconvenienced by it.”
             </blockquote>
           </div>
 
@@ -154,7 +156,8 @@ export function AboutSita() {
               <BookOpen className="text-emerald-600 mb-3" size={32} />
               <h3 className="mb-2 text-emerald-700">Rooted Wisdom</h3>
               <p className="text-gray-600">
-                Integrating ancient Ayurvedic and yogic traditions into modern life.
+                Integrating ancient Ayurvedic and yogic traditions into modern
+                life.
               </p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -185,10 +188,12 @@ export function AboutSita() {
           {certifications.map((cert, index) => (
             <div
               key={index}
-              className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow"
-            >
+              className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
               <div className="flex items-start gap-3">
-                <Award className="text-emerald-600 flex-shrink-0 mt-1" size={24} />
+                <Award
+                  className="text-emerald-600 flex-shrink-0 mt-1"
+                  size={24}
+                />
                 <div>
                   <h3 className="mb-2 text-emerald-700">{cert.title}</h3>
                   <p className="text-gray-600 mb-1">{cert.organization}</p>
