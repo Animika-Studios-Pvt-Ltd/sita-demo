@@ -39,7 +39,7 @@ export function Navigation() {
 
           {/* Logo (BIGGER) */}
           <Link to="/" className="flex items-center">
-            <img src={logoImage} alt="Sita" style={{ height: '80px' }}/>
+            <img src={logoImage} alt="Sita" style={{ height: '85px' }} />
           </Link>
 
           {/* DESKTOP NAV */}
@@ -85,7 +85,7 @@ export function Navigation() {
             {/* BOOK A MEETING */}
             <Link
               to="/book-meeting"
-               className={linkClass('/book-meeting')}
+              className={linkClass('/book-meeting')}
             >
               Book a Meeting
             </Link>

@@ -107,8 +107,22 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-gray-200 text-center text-gray-600">
-          <p>&copy; {new Date().getFullYear()} The Sita Factor. All rights reserved.</p>
+        <div className="mt-8 pt-8 border-t border-gray-200
+                flex w-full
+                items-center justify-between
+                text-gray-600 text-sm">
+          <p>
+            &copy; {new Date().getFullYear()} The Sita Factor. All rights reserved.
+          </p>
+
+          <a
+            href="https://lumos.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline hover:text-[#A67365] transition-colors"
+          >
+            Created by LUMOS | Lumos.in
+          </a>
         </div>
       </div>
     </footer>
