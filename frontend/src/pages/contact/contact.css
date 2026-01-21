@@ -1,0 +1,247 @@
+@font-face {
+  font-family: "PlayfairDisplay-Regular";
+  src: url("../assets/fonts/PlayfairDisplay-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Figtree-Light";
+  src: url("../assets/fonts/Figtree-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Figtree-Regular";
+  src: url("../assets/fonts/Figtree-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+h2 {
+  font-family: "PlayfairDisplay-Regular";
+  color: black;
+}
+
+p {
+  font-family: "Figtree-Light";
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  font-family: "Figtree-Light";
+  font-size: 16px;
+  margin-bottom: 20px;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+  content: ">";
+  color: #c6c6c6;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+  color: #aaaaaa;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+  color: #757575;
+  cursor: default;
+}
+
+.contact {
+  margin-bottom: 30px;
+}
+
+.contact-section {
+  padding: 20px 0;
+}
+
+.contact-section h2 {
+  position: relative;
+  text-align: center;
+  margin-bottom: 60px;
+  font-size: 50px;
+}
+
+.contact-section h2::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  background: url("/motif.webp") no-repeat center;
+  background-size: contain;
+  opacity: 0.15;
+  pointer-events: none;
+  margin: 0 auto;
+}
+
+.contact-address {
+  padding-right: 20px;
+}
+
+.contact-address .contact-address {
+  font-family: "Figtree-Light";
+  font-size: 20px;
+  color: #983120;
+  margin-bottom: 10px;
+}
+
+.contact-address p {
+  font-family: "Figtree-Light";
+  margin-bottom: 6px;
+  color: #444;
+  font-size: 18px;
+  margin-bottom: 0px;
+}
+
+.contact-section-frame {
+  margin-top: 20px;
+}
+
+.contact-form {
+  background: #fff;
+  padding: 10px 0px;
+  font-family: "Figtree-Light";
+}
+
+.contact-form .form-group {
+  margin-bottom: 10px;
+}
+
+.contact-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #444;
+  font-family: "Figtree-Regular";
+  font-size: 18px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #007bff;
+}
+
+.contact-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.submit-btn {
+  display: inline-block;
+  background-color: #c86836;
+  color: #fff;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #983120;
+}
+
+.contact-info-text p {
+  font-size: 18px;
+}
+
+.popup-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  z-index: 9999;
+  width: 300px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.popup-icon {
+  font-size: 50px;
+  margin-bottom: 15px;
+}
+
+.success-icon {
+  color: green !important;
+  font-size: 50px !important;
+}
+
+.error-icon {
+  color: red !important;
+  font-size: 50px !important;
+}
+
+.popup-message {
+  font-family: "Figtree-Regular";
+  font-size: 18px;
+  color: #333;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (max-width: 991px) {
+  .contact {
+    margin-bottom: 10px;
+  }
+
+  .contact-section {
+    padding: 10px 0px;
+  }
+
+  .contact-section h2 {
+    margin-bottom: 40px;
+    font-size: 40px;
+  }
+
+  .contact-section .row {
+    flex-direction: column-reverse;
+  }
+
+  .contact-address p {
+    font-size: 16px;
+  }
+
+  .contact-info-text p {
+    font-size: 16px;
+  }
+
+  .submit-btn {
+    padding: 6px 12px;
+  }
+}
