@@ -31,6 +31,10 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
+      "http://admin.localhost:5173",
+      "http://store.localhost:5173",
+      "http://booking.localhost:5173",
+      "http://blog.localhost:5173",
       "http://127.0.0.1:5500",   // ✅ ADD THIS
       "http://localhost:5500",  // ✅ ADD THIS
     ],
@@ -139,6 +143,10 @@ const io = new Server(server, {
   cors: {
     origin: [
       "http://localhost:5173",
+      "http://admin.localhost:5173",
+      "http://store.localhost:5173",
+      "http://booking.localhost:5173",
+      "http://blog.localhost:5173",
       "http://127.0.0.1:5500",   // ✅ ADD THIS
       "http://localhost:5500",  // ✅ ADD THIS
     ],

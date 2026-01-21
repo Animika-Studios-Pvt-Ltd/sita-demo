@@ -22,7 +22,7 @@ if (redisUrl) {
         return delay;
       }
     };
-    console.log(`🔗 Connecting to Redis at ${url.hostname}:${url.port}`);
+    // console.log(`🔗 Connecting to Redis at ${url.hostname}:${url.port}`);
   } catch (error) {
     console.error('❌ Invalid REDIS_URL:', error.message);
     redisConfig = null;
@@ -35,12 +35,12 @@ if (redisUrl) {
 const redis = redisConfig ? new Redis(redisConfig) : null;
 
 if (redis) {
-  redis.on('connect', () => console.log('✅ Redis connected (Upstash)'));
-  redis.on('ready', () => console.log('🎯 Redis ready to accept commands'));
+  // redis.on('connect', () => console.log('✅ Redis connected (Upstash)'));
+  // redis.on('ready', () => console.log('🎯 Redis ready to accept commands'));
   redis.on('error', (err) => {
-    console.error('❌ Redis error:', err.message);
+    // console.error('❌ Redis error:', err.message);
   });
-  redis.on('close', () => console.log('💤 Redis connection closed'));
+  // redis.on('close', () => console.log('💤 Redis connection closed'));
 }
 
 let isRedisAvailable = false;
@@ -49,7 +49,7 @@ if (redis) {
   redis.ping()
     .then(() => {
       isRedisAvailable = true;
-      console.log('✅ Redis ping successful');
+      // console.log('✅ Redis ping successful');
     })
     .catch((err) => {
       isRedisAvailable = false;
@@ -65,10 +65,10 @@ const cache = (duration = 300) => {
     try {
       const cached = await redis.get(key);
       if (cached) {
-        console.log(`🎯 Cache HIT: ${key}`);
+        // console.log(`🎯 Cache HIT: ${key}`);
         return res.json(JSON.parse(cached));
       }
-      console.log(`❌ Cache MISS: ${key}`);
+      // console.log(`❌ Cache MISS: ${key}`);
       const originalJson = res.json.bind(res);
       res.json = (data) => {
         redis.setex(key, duration, JSON.stringify(data))
@@ -92,12 +92,12 @@ const clearCache = async (pattern = '*') => {
     const keys = await redis.keys(`cache:${pattern}`);
     if (keys.length > 0) {
       await redis.del(...keys);
-      console.log(`🗑️ Cleared ${keys.length} cache keys for pattern: ${pattern}`);
+      // console.log(`🗑️ Cleared ${keys.length} cache keys for pattern: ${pattern}`);
     } else {
-      console.log(`ℹ️ No cache keys found for pattern: ${pattern}`);
+      // console.log(`ℹ️ No cache keys found for pattern: ${pattern}`);
     }
   } catch (error) {
-    console.error('Clear cache error:', error.message);
+    // console.error('Clear cache error:', error.message);
   }
 };
 
@@ -106,12 +106,12 @@ const clearAllCache = async () => {
     console.warn('⚠️ Redis unavailable - cannot clear cache');
     return;
   }
-  
+
   try {
     await redis.flushdb();
-    console.log('🗑️ All cache cleared');
+    // console.log('🗑️ All cache cleared');
   } catch (error) {
-    console.error('Clear all cache error:', error.message);
+    // console.error('Clear all cache error:', error.message);
   }
 };
 
@@ -119,11 +119,11 @@ const getCacheStats = async () => {
   if (!isRedisAvailable || !redis) {
     return { available: false };
   }
-  
+
   try {
     const info = await redis.info('stats');
     const keys = await redis.keys('cache:*');
-    
+
     return {
       available: true,
       totalKeys: keys.length,
@@ -137,22 +137,22 @@ const getCacheStats = async () => {
 
 process.on('SIGTERM', () => {
   if (redis) {
-    console.log('👋 Closing Redis connection...');
+    // console.log('👋 Closing Redis connection...');
     redis.quit();
   }
 });
 
 process.on('SIGINT', () => {
   if (redis) {
-    console.log('👋 Closing Redis connection...');
+    // console.log('👋 Closing Redis connection...');
     redis.quit();
   }
 });
 
-module.exports = { 
-  redis, 
-  cache, 
-  clearCache, 
+module.exports = {
+  redis,
+  cache,
+  clearCache,
   clearAllCache,
-  getCacheStats 
+  getCacheStats
 };
