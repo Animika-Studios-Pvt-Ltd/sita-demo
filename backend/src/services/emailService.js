@@ -20,7 +20,7 @@ const gmail = google.gmail({ version: 'v1', auth: oauth2Client });
 async function sendEmail({ to, subject, html, text }) {
   try {
     const from = process.env.EMAIL_USER;
-    const storeName = process.env.STORE_NAME || 'Langshott Foundation';
+    const storeName = process.env.STORE_NAME || 'Sita';
     
     const utf8Subject = `=?utf-8?B?${Buffer.from(subject).toString('base64')}?=`;
     const messageParts = [
@@ -1245,7 +1245,7 @@ async function sendContactFormEmail({ name, email, subject, message, contactId }
       <body style="max-width: 600px; margin: 0 auto; padding: 20px;">
         <div class="header">
           <h1 style="margin: 0;">New Contact Form Submission</h1>
-          <p style="margin: 10px 0 0 0; opacity: 0.9;">Langshott Foundation</p>
+          <p style="margin: 10px 0 0 0; opacity: 0.9;">Sita</p>
         </div>
         
         <div class="content">

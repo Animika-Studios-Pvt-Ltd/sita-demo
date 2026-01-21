@@ -1,5 +1,5 @@
-📚 Langshott Foundation Book Store - Frontend
-A modern, responsive React application for the Langshott Foundation Book Store, built with Vite, Redux Toolkit, and Tailwind CSS.
+📚 Sita Book Store - Frontend
+A modern, responsive React application for the Sita Book Store, built with Vite, Redux Toolkit, and Tailwind CSS.
 
 🚀 Tech Stack
 Framework: React 18+ with Vite
@@ -97,7 +97,7 @@ VITE_RAZORPAY_KEY_ID=your_razorpay_key
 VITE_CASHFREE_APP_ID=your_cashfree_app_id
 
 # App Configuration
-VITE_APP_NAME=Langshott Foundation Book Store
+VITE_APP_NAME=Sita Book Store
 VITE_APP_URL=http://localhost:5173
 Start development server
 

@@ -251,7 +251,7 @@ const DashboardLayout = () => {
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
               Welcome to{" "}
-              <span className="text-indigo-700">Langshott Leadership Foundation</span> Admin Panel
+              <span className="text-indigo-700">Sita</span> Admin Panel
             </h1>
           </div>
           {isMobile && (

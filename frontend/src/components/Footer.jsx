@@ -242,7 +242,7 @@ const Footer = () => {
       <div className="footer-bottom">
         <div className="container">
           <p>
-            © 2026 Langshott Leadership Foundation. All Rights
+            © 2026 Sita. All Rights
             Reserved.
           </p>
 

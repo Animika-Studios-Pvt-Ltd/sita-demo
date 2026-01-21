@@ -185,7 +185,7 @@ const AdminLogin = () => {
             </form>
           )}
           <div className="mt-6 text-center">
-            <p className="text-xs text-gray-500">© 2026 Langshott Leadership Foundation. All Rights Reserved.</p>
+            <p className="text-xs text-gray-500">© 2026 Sita. All Rights Reserved.</p>
           </div>
         </div>
       </div>

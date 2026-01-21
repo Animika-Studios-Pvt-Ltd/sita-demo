@@ -196,7 +196,7 @@ app.get('/api/health', async (req, res) => {
       status: 'ok',
       database: 'connected',
       timestamp: new Date().toISOString(),
-      service: 'Langshott Leadership Foundation Backend'
+      service: 'Sita Backend'
     })
   } catch (error) {
     console.error('Health check failed:', error)
@@ -360,7 +360,7 @@ app.use("/api/sms", smsRoutes)
 // ============================================
 app.get("/", (req, res) => {
   res.json({ 
-    message: "📚 Langshott Leadership Foundation API is running!",
+    message: "📚 Sita API is running!",
     environment: process.env.NODE_ENV,
     version: "2.0.0",
     endpoints: {

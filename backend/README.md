@@ -1,5 +1,5 @@
-📚 Langshott Foundation Book Store - Backend
-RESTful API backend for the Langshott Foundation Book Store, built with Node.js, Express, and MongoDB.
+📚 Sita Book Store - Backend
+RESTful API backend for the Sita Book Store, built with Node.js, Express, and MongoDB.
 
 🚀 Tech Stack
 Runtime: Node.js (v16+)
@@ -133,7 +133,7 @@ EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
 EMAIL_USER=your_email@gmail.com
 EMAIL_PASSWORD=your_app_specific_password
-EMAIL_FROM=Langshott Foundation <noreply@langshott.com>
+EMAIL_FROM=Sita <noreply@langshott.com>
 
 # Google Drive API (Optional)
 GOOGLE_DRIVE_CLIENT_EMAIL=your_service_account@project.iam.gserviceaccount.com

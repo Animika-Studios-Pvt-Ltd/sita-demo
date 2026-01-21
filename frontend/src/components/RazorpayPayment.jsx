@@ -29,7 +29,7 @@ const RazorpayPayment = ({ amount, bookDetails, onSuccess }) => {
         key: data.key,
         amount: data.amount,
         currency: data.currency,
-        name: 'Langshott Leadership Foundation',
+        name: 'Sita',
         description: bookDetails?.title || 'Book Purchase',
         image: 'https://res.cloudinary.com/duq4lad3e/image/upload/v1758535613/banner/nghvs5xkhliotx6ljd2h.webp',
         order_id: data.orderId,
