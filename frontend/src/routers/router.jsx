@@ -44,6 +44,7 @@ import SalesPage from "../pages/dashboard/salesPage/SalesPage";
 import UserDashboard from "../pages/dashboard/users/UserDashboard";
 import PageNotFound from "./PageNotFound";
 import Publications from "../pages/publications/Publications";
+import ManageEvents from "../pages/dashboard/CMS module/ManageEvents";
 
 /* ---------------- Auth0 Wrapper ---------------- */
 
@@ -144,6 +145,7 @@ const router = createBrowserRouter([
       { path: "manage-pages", element: <AdminManagePages /> },
       { path: "settings/mfa", element: <SetupMFA /> },
       { path: "sales", element: <SalesPage /> },
+      { path: "manage-events", element: <ManageEvents /> },
     ],
   },
 

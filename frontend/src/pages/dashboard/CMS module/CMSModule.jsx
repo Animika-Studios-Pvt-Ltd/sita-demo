@@ -23,6 +23,11 @@ const CMSModule = () => {
       icon: <DescriptionIcon fontSize="large" className="text-purple-600" />,
       route: "/dashboard/manage-pages",
     },
+    {
+    name: "Workshop / Event Calendar",
+    icon: <DescriptionIcon fontSize="large" className="text-orange-600" />,
+    route: "/dashboard/manage-events", // ✅ NEW
+  },
   ];
 
   const isCardActive = (route) => location.pathname === route;

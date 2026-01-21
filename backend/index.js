@@ -31,9 +31,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://bookstore-frontend-9tii.onrender.com",
-      "https://www.langshott.in",
-      "https://langshott.in",
+      "http://127.0.0.1:5500",   // ✅ ADD THIS
+      "http://localhost:5500",  // ✅ ADD THIS
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
@@ -49,11 +48,11 @@ app.use(
  * Get client IP address (handles proxies)
  */
 function getClientIP(req) {
-  return req.headers['cf-connecting-ip'] || 
-         req.headers['x-render-forwarded-for']?.split(',')[0].trim() ||
-         req.headers['x-forwarded-for']?.split(',')[0].trim() ||
-         req.headers['x-real-ip'] ||
-         req.socket.remoteAddress
+  return req.headers['cf-connecting-ip'] ||
+    req.headers['x-render-forwarded-for']?.split(',')[0].trim() ||
+    req.headers['x-forwarded-for']?.split(',')[0].trim() ||
+    req.headers['x-real-ip'] ||
+    req.socket.remoteAddress
 }
 
 /**
@@ -61,7 +60,7 @@ function getClientIP(req) {
  */
 function getDeviceName(ua) {
   if (!ua) return 'Unknown'
-  
+
   // Mobile devices
   const mobile = ua.match(/iPhone|SM-[A-Z]\d+|OnePlus|Redmi|POCO|Pixel|Moto|OPPO|vivo|Realme/i)?.[0]
   if (mobile) {
@@ -70,15 +69,15 @@ function getDeviceName(ua) {
     if (/SM-A/i.test(mobile)) return 'Samsung Galaxy A'
     return mobile
   }
-  
+
   // Tablets
   if (/iPad/i.test(ua)) return 'iPad'
-  
+
   // Desktop
   if (/Windows/i.test(ua)) return 'Windows PC'
   if (/Mac/i.test(ua)) return 'Mac'
   if (/Linux/i.test(ua)) return 'Linux PC'
-  
+
   return 'Unknown Device'
 }
 
@@ -87,15 +86,15 @@ function getDeviceName(ua) {
  */
 function getDeviceInfo(ua) {
   const os = /Windows/i.test(ua) ? 'Windows' :
-             /Mac/i.test(ua) ? 'macOS' :
-             /Android/i.test(ua) ? 'Android' :
-             /iOS|iPhone|iPad/i.test(ua) ? 'iOS' : 'Unknown'
-  
+    /Mac/i.test(ua) ? 'macOS' :
+      /Android/i.test(ua) ? 'Android' :
+        /iOS|iPhone|iPad/i.test(ua) ? 'iOS' : 'Unknown'
+
   const browser = /Edg/i.test(ua) ? 'Edge' :
-                  /Chrome/i.test(ua) ? 'Chrome' :
-                  /Safari/i.test(ua) ? 'Safari' :
-                  /Firefox/i.test(ua) ? 'Firefox' : 'Unknown'
-  
+    /Chrome/i.test(ua) ? 'Chrome' :
+      /Safari/i.test(ua) ? 'Safari' :
+        /Firefox/i.test(ua) ? 'Firefox' : 'Unknown'
+
   return { os, browser }
 }
 
@@ -104,25 +103,25 @@ function getDeviceInfo(ua) {
  */
 app.use((req, res, next) => {
   // Pages to track
-  const tracked = ['/api/books', '/api/author', '/api/blogs', '/api/letters', 
-                   '/api/foundation', '/api/home/banner', '/api/contact', 
-                   '/api/orders', '/api/reviews', '/api/pages']
-  
+  const tracked = ['/api/books', '/api/author', '/api/blogs', '/api/letters',
+    '/api/foundation', '/api/home/banner', '/api/contact',
+    '/api/orders', '/api/reviews', '/api/pages']
+
   // Skip if not tracked or health check
   if (!tracked.some(r => req.path.startsWith(r)) || req.path === '/api/health') {
     return next()
   }
-  
+
   const ip = getClientIP(req)
   const ua = req.headers['user-agent'] || ''
   const device = getDeviceName(ua)
   const { os, browser } = getDeviceInfo(ua)
-  const time = new Date().toLocaleString('en-IN', { 
+  const time = new Date().toLocaleString('en-IN', {
     timeZone: 'Asia/Kolkata',
     dateStyle: 'short',
     timeStyle: 'short'
   })
-  
+
   // Simple log
   console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
   console.log(`📄 ${req.method} ${req.path}`)
@@ -130,7 +129,7 @@ app.use((req, res, next) => {
   console.log(`📱 ${device} | ${os} | ${browser}`)
   console.log(`⏰ ${time}`)
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n')
-  
+
   next()
 })
 
@@ -140,8 +139,8 @@ const io = new Server(server, {
   cors: {
     origin: [
       "http://localhost:5173",
-      "https://www.langshott.in",
-      "https://langshott.in"
+      "http://127.0.0.1:5500",   // ✅ ADD THIS
+      "http://localhost:5500",  // ✅ ADD THIS
     ],
     methods: ["GET", "POST", "PATCH", "DELETE"],
   },
@@ -163,7 +162,7 @@ app.get('/oauth2callback', async (req, res) => {
   if (!code) {
     return res.status(400).json({ error: 'Missing authorization code' })
   }
-  
+
   try {
     const { tokens } = await oAuth2Client.getToken(code)
     console.log('OAuth2 tokens received:', tokens)
@@ -183,7 +182,7 @@ app.get('/api/health', async (req, res) => {
     const isDbConnected = dbState === 1
 
     if (!isDbConnected) {
-      return res.status(503).json({ 
+      return res.status(503).json({
         status: 'degraded',
         message: 'Database not connected',
         timestamp: new Date().toISOString()
@@ -192,7 +191,7 @@ app.get('/api/health', async (req, res) => {
 
     await mongoose.connection.db.admin().ping()
 
-    res.status(200).json({ 
+    res.status(200).json({
       status: 'ok',
       database: 'connected',
       timestamp: new Date().toISOString(),
@@ -200,7 +199,7 @@ app.get('/api/health', async (req, res) => {
     })
   } catch (error) {
     console.error('Health check failed:', error)
-    res.status(503).json({ 
+    res.status(503).json({
       status: 'error',
       message: error.message,
       timestamp: new Date().toISOString()
@@ -223,7 +222,7 @@ app.post("/api/users/sync", async (req, res) => {
 
     let firstName = name || nickname || email.split('@')[0]
     let lastName = ''
-    
+
     if (name && name.includes(' ')) {
       const nameParts = name.trim().split(' ')
       firstName = nameParts[0]
@@ -237,9 +236,9 @@ app.post("/api/users/sync", async (req, res) => {
       user.lastLoginAt = new Date()
       await user.save()
       console.log('✅ User synced (existing):', user.email)
-      
-      return res.status(200).json({ 
-        message: 'User synced successfully', 
+
+      return res.status(200).json({
+        message: 'User synced successfully',
         user: {
           uid: user.uid,
           email: user.email,
@@ -264,7 +263,7 @@ app.post("/api/users/sync", async (req, res) => {
       role: 'user',
       lastLoginAt: new Date()
     }
-    
+
     if (phone_number) {
       userData.phone = {
         primary: phone_number
@@ -277,8 +276,8 @@ app.post("/api/users/sync", async (req, res) => {
 
     console.log('✅ New user created:', user.email)
 
-    res.status(201).json({ 
-      message: 'User created successfully', 
+    res.status(201).json({
+      message: 'User created successfully',
       user: {
         uid: user.uid,
         email: user.email,
@@ -293,8 +292,8 @@ app.post("/api/users/sync", async (req, res) => {
   } catch (err) {
     console.error('❌ syncUser error:', err)
     console.error('Error details:', err.errors)
-    res.status(500).json({ 
-      message: 'Failed to sync user', 
+    res.status(500).json({
+      message: 'Failed to sync user',
       error: err.message,
       details: err.errors ? Object.keys(err.errors).map(key => ({
         field: key,
@@ -328,6 +327,7 @@ const adminAuthRoutes = require("./src/users/auth.routes")
 const paymentRoutes = require('./src/payments/payment.route')
 const smsRoutes = require("./src/sms/sms.route")
 const shippingRoutes = require('./src/shipping/shipping.route')
+const eventRoutes = require("./src/events/event.routes");
 
 app.use('/api/shipping', shippingRoutes)
 
@@ -354,12 +354,13 @@ app.use("/api/trust-certificates", trustRoutes)
 app.use("/api/admin-auth", adminAuthRoutes)
 app.use('/api/payment', paymentRoutes)
 app.use("/api/sms", smsRoutes)
+app.use("/api/events", eventRoutes);
 
 // ============================================
 // ROOT ENDPOINT
 // ============================================
 app.get("/", (req, res) => {
-  res.json({ 
+  res.json({
     message: "📚 Sita API is running!",
     environment: process.env.NODE_ENV,
     version: "2.0.0",
@@ -393,7 +394,7 @@ app.use((req, res, next) => {
 // ============================================
 app.use((err, req, res, next) => {
   console.error('❌ Global error handler:', err.stack)
-  
+
   res.status(err.status || 500).json({
     success: false,
     message: err.message || 'Internal server error',
@@ -413,12 +414,12 @@ async function main() {
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
     })
-    
+
     mongoose.set('bufferCommands', false)
-    
+
     console.log("✅ MongoDB connected successfully!")
     console.log(`📊 Database: ${mongoose.connection.name}`)
-    
+
     server.listen(port, '0.0.0.0', () => {
       console.log(`🚀 Server running on port ${port} (${process.env.NODE_ENV})`)
       console.log(`📍 Health check: http://localhost:${port}/api/health`)
