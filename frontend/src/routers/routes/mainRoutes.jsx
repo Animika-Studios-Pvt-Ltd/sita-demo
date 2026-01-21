@@ -1,15 +1,12 @@
 // Public pages
 import App from "../../App";
-import CartPage from "../../pages/books/CartPage";
-import CheckoutPage from "../../pages/books/CheckoutPage";
-import SingleBook from "../../pages/books/SingleBook";
-import OrderPage from "../../pages/books/OrderPage";
-import EbookReader from "../../pages/books/EbookReader";
-import BookPreview from "../../pages/books/BookPreview";
 import LetterFromLangshott from "../../pages/letters/letter-from-langshott";
 import Contact from "../../pages/contact/contact";
 import DynamicPage from "../../pages/Add pages/DynamicPage";
 import Publications from "../../pages/publications/Publications";
+import CartPage from "../../pages/books/CartPage"; // Kept for main domain fallback/access if desired, or remove if strict separation
+// Actually, strict separation is better. Removing Cart/Checkout from Main. 
+// Re-importing only what is strictly Main.
 
 // Auth & guards
 import Auth from "../../components/Auth";
@@ -28,27 +25,16 @@ export const mainRoutes = [
         ),
         children: [
             { path: "contact", element: <Contact /> },
-            { path: "cart", element: <CartPage /> },
-            { path: "checkout", element: <CheckoutPage /> },
-            { path: "books/:slug", element: <SingleBook /> },
-            { path: "books/preview/:id", element: <BookPreview /> },
 
-            {
-                path: "ebook/:id",
-                element: (
-                    <PrivateRoute>
-                        <EbookReader />
-                    </PrivateRoute>
-                ),
-            },
-            {
-                path: "orders",
-                element: (
-                    <PrivateRoute>
-                        <OrderPage />
-                    </PrivateRoute>
-                ),
-            },
+            // Removed Store Routes: cart, checkout, books, orders, ebook, preview
+            // They are now in storeRoutes.jsx
+
+            // Publications is effectively "The Store" listing. 
+            // If we want it on Main domain too as "Publications" page:
+            { path: "publications", element: <Publications /> },
+
+            { path: "letters", element: <LetterFromLangshott /> },
+
             {
                 path: "my-profile",
                 element: (
@@ -57,9 +43,6 @@ export const mainRoutes = [
                     </PrivateRoute>
                 ),
             },
-
-            { path: "publications", element: <Publications /> },
-            { path: "letters", element: <LetterFromLangshott /> },
 
             { path: "auth", element: <Auth /> },
 
