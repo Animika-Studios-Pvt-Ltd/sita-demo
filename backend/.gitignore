@@ -1,0 +1,123 @@
+Logs
+logs
+.log
+npm-debug.log
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+Dependencies
+node_modules
+.pnp
+.pnp.js
+
+Build outputs
+dist
+dist-ssr
+build
+*.local
+
+Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Admin credential scripts (sensitive)
+src/users/createAdmin.js
+**/createAdmin.js
+
+Service account keys
+service-account.json
+drive-key.json
+*-credentials.json
+
+Uploaded files
+uploads/
+temp/
+tmp/
+
+IDE and Editor files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+*.suo
+.ntvs
+*.njsproj
+*.sln
+*.sw?
+
+Testing
+coverage
+.nyc_output
+test-results/
+
+PM2
+.pm2
+pm2-*.log
+
+Vercel
+.vercel
+
+macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+Desktop.ini
+$RECYCLE.BIN/
+
+Linux
+~
+.fuse_hidden
+.directory
+.Trash-*
+.nfs*
+
+Certificates and keys
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+
+Database
+*.sqlite
+*.sqlite3
+*.db
+
+Backup files
+*.bak
+*.backup
+*.old
+
+Cache
+.cache
+*.cache
+
+Temporary files
+*.tmp
+*.temp
+
+Package managers
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+Optional: Remove package-lock.json from above if you want to keep it
+
