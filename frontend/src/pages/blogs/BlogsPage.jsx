@@ -4,10 +4,7 @@ import { ArrowLeft, CalendarDays, ArrowRight } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-const BACKEND_BASE_URL =
-  window.location.hostname === "localhost"
-    ? "http://localhost:5000"
-    : "https://bookstore-backend-hshq.onrender.com";
+const BACKEND_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const sanitizeDescription = (html) => {
   return html
@@ -214,11 +211,10 @@ const BlogsPage = () => {
                       key={num}
                       onClick={() => setCurrentPage(num)}
                       className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
-          ${
-            currentPage === num
-              ? "bg-[#993333] text-white"
-              : "border border-transparent text-black hover:border-black hover:bg-gray-100"
-          }`}>
+          ${currentPage === num
+                          ? "bg-[#993333] text-white"
+                          : "border border-transparent text-black hover:border-black hover:bg-gray-100"
+                        }`}>
                       {num}
                     </button>
                   ))}

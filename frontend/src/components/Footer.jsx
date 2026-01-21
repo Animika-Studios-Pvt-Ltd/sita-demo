@@ -8,10 +8,7 @@ import PinterestIcon from "@mui/icons-material/Pinterest";
 import "./Footer.css";
 import { useEffect, useState } from "react";
 
-const BACKEND_BASE_URL =
-  window.location.hostname === "localhost"
-    ? "http://localhost:5000"
-    : "https://bookstore-backend-hshq.onrender.com";
+const BACKEND_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const Footer = () => {
   const { data: books = [] } = useFetchAllBooksQuery();

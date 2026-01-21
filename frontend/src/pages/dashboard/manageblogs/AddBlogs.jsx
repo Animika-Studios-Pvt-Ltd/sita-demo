@@ -11,10 +11,7 @@ import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 
-const BACKEND_BASE_URL =
-  window.location.hostname === "localhost"
-    ? "http://localhost:5000"
-    : "https://bookstore-backend-hshq.onrender.com";
+const BACKEND_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const AddBlogs = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm({

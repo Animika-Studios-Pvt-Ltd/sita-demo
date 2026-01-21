@@ -5,10 +5,7 @@ import { useFetchAllBooksQuery } from "../../redux/features/books/booksApi";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-const BACKEND_BASE_URL =
-  window.location.hostname === "localhost"
-    ? "http://localhost:5000"
-    : "https://bookstore-backend-hshq.onrender.com";
+const BACKEND_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const sanitizeDescription = (html) => {
   return html

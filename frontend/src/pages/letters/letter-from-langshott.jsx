@@ -5,10 +5,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-const BACKEND_BASE_URL =
-  window.location.hostname === "localhost"
-    ? "http://localhost:5000"
-    : "https://bookstore-backend-hshq.onrender.com";
+const BACKEND_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const LetterFromLangshott = () => {
   const [letters, setLetters] = useState([]);
@@ -181,8 +178,8 @@ const LetterFromLangshott = () => {
                               <button
                                 onClick={() => handleCopyLink(fileUrl, _id)}
                                 className={`flex flex-col items-center no-underline ${copiedId === _id
-                                    ? "text-gray-700"
-                                    : "text-gray-700 hover:text-[#2563eb]"
+                                  ? "text-gray-700"
+                                  : "text-gray-700 hover:text-[#2563eb]"
                                   } text-[11px] sm:text-sm md:text-base font-medium px-2`}>
                                 <LinkIcon className="!text-[18px] sm:!text-[20px] md:!text-[22px] mb-[4px]" />
                                 {copiedId === _id ? "Copied!" : "Copy Link"}

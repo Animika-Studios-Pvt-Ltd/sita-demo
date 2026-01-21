@@ -127,14 +127,14 @@ app.use((req, res, next) => {
   })
 
   // Simple log
-  // console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
-  // console.log(`📄 ${req.method} ${req.path}`)
-  // console.log(`🌐 IP: ${ip}`)
-  // console.log(`📱 ${device} | ${os} | ${browser}`)
-  // console.log(`⏰ ${time}`)
-  // console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n')
+  console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+  console.log(`📄 ${req.method} ${req.path}`)
+  console.log(`🌐 IP: ${ip}`)
+  console.log(`📱 ${device} | ${os} | ${browser}`)
+  console.log(`⏰ ${time}`)
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n')
 
-  // next()
+  next()
 })
 
 
