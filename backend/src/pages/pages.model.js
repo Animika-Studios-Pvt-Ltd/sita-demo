@@ -1,104 +1,51 @@
 const mongoose = require("mongoose");
 
-// Image schema
-const ImageSchema = new mongoose.Schema(
+const cmsPageSchema = new mongoose.Schema(
   {
-    src: { type: String, required: true },
-    alt: { type: String, required: true },
-    position: {
+    tenantId: {
       type: String,
-      enum: ["top", "bottom", "left", "right", "center"],
-      default: "center",
+      required: true,
+      index: true,
+      default: "demo-tenant", // Default for compatibility
     },
-  },
-  { _id: false }
-);
 
-// Text block schema
-const TextBlockSchema = new mongoose.Schema(
-  {
-    text: { type: String, required: true },
-    alignment: {
+    slug: {
       type: String,
-      enum: ["left", "center", "right", "justify"],
-      default: "left",
+      required: true,
     },
-  },
-  { _id: false }
-);
 
-// Link schema
-const LinkSchema = new mongoose.Schema(
-  {
-    label: { type: String, required: true },
-    url: { type: String, required: true },
-    style: {
+    sections: [
+      {
+        key: {
+          type: String, // hero, doctors, links, content
+          required: true,
+        },
+        content: {
+          type: mongoose.Schema.Types.Mixed,
+          required: true,
+        },
+      },
+    ],
+
+    status: {
       type: String,
-      enum: ["primary", "secondary", "link"],
-      default: "link",
+      enum: ["draft", "published"],
+      default: "published",
     },
-  },
-  { _id: false }
-);
 
-// Section schema
-const SectionSchema = new mongoose.Schema(
-  {
-    title: { type: String },
-    subtitle: { type: String },
-    backgroundColor: { type: String, default: "#ffffff" },
-    layout: {
+    editorType: {
       type: String,
-      enum: ["text-only", "image-left", "image-right", "full-banner", "split"],
-      default: "text-only",
-    },
-    contentBlocks: [TextBlockSchema],
-    images: [ImageSchema],
-    links: [LinkSchema],
-  },
-  { _id: false }
-);
-
-const PageSchema = new mongoose.Schema(
-  {
-    title: { type: String, required: true },
-    slug: { type: String, required: true, unique: true },
-    metaTitle: { type: String },
-    metaDescription: { type: String },
-    bannerImage: { type: ImageSchema },
-    bannerPosition: {
-      type: String,
-      enum: ["top", "top-left", "top-right", "bottom", "hide"],
-      default: "hide",
-    },
-    motif: { type: String, default: "/motif.webp" },
-
-    displayLocations: {
-      type: [String],
-      enum: ["home", "header", "footer"],
-      default: [],
+      default: "json",
     },
 
-    headerType: {
-      type: String,
-      enum: ["heading", "subheading", "author-subheading", "publication-subheading", "Foundation-subheading", "letter-subheading", "beside-profile"],
-      default: null,
-    },
-
-    createAnywhere: { type: Boolean, default: false },
-
-    parentHeader: {
+    createdBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Page",
-      default: null,
+      ref: "Admin",
     },
-
-    content: { type: String, default: "" },
-    sections: [SectionSchema],
-    suspended: { type: Boolean, default: false },
   },
-
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Page", PageSchema);
+cmsPageSchema.index({ tenantId: 1, slug: 1 }, { unique: true });
+
+module.exports = mongoose.model("CmsPage", cmsPageSchema);

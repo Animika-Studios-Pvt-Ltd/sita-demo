@@ -9,6 +9,7 @@ import AdminOrderPage from "../../pages/dashboard/orders/AdminOrderPage";
 import BillingDownload from "../../pages/dashboard/billing-download/BillingDownload";
 import InventoryPage from "../../pages/dashboard/inventory/InventoryPage";
 import CMSModule from "../../pages/dashboard/CMS module/CMSModule";
+import CmsDashboard from "../../pages/Add pages/pages/CmsDashboard";
 import ManageReviews from "../../pages/dashboard/CMS module/ManageReviews";
 import TrustCertificate from "../../pages/dashboard/CMS module/Certificates/TrustCertificate";
 import AdminManagePages from "../../pages/Add pages/AdminManagePages";
@@ -38,6 +39,8 @@ export const adminRoutes = [
             { path: "billing-download", element: <BillingDownload /> },
             { path: "inventory", element: <InventoryPage /> },
             { path: "cms", element: <CMSModule /> },
+            { path: "cms/new", element: <CmsDashboard /> },
+            { path: "cms/edit/:slug", element: <CmsDashboard /> },
             { path: "manage-reviews", element: <ManageReviews /> },
             { path: "certificates/trust-certificate", element: <TrustCertificate /> },
             { path: "manage-pages", element: <AdminManagePages /> },

@@ -153,10 +153,23 @@ async function deletePage(req, res) {
   }
 }
 
+
+async function uploadImage(req, res) {
+  try {
+    if (!req.file) return res.status(400).json({ error: "No image provided" });
+    const result = await handleImageUpload(req.file);
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Image upload failed" });
+  }
+}
+
 module.exports = {
   getAllPages,
   getPageBySlug,
   createPage,
   updatePage,
   deletePage,
+  uploadImage,
 };

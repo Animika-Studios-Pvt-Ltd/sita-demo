@@ -3,6 +3,7 @@ import { getSubdomain } from "../utils/subdomain";
 import { adminRoutes } from "./routes/adminRoutes";
 import { mainRoutes } from "./routes/mainRoutes";
 import { blogRoutes } from "./routes/blogRoutes";
+import { bookingRoutes } from "./routes/bookingRoutes";
 import { storeRoutes } from "./routes/storeRoutes";
 
 // Determine which routes to use based on subdomain
@@ -16,6 +17,8 @@ if (subdomain === 'admin') {
   routes = blogRoutes;
 } else if (subdomain === 'store') {
   routes = storeRoutes;
+} else if (subdomain === 'booking') {
+  routes = bookingRoutes;
 } else {
   // Default to main routes 
   routes = mainRoutes;

@@ -102,12 +102,12 @@ const DashboardLayout = () => {
       )}
       <aside
         className={`fixed top-0 h-screen bg-gray-800 text-white flex flex-col justify-between py-6 px-3 shadow-lg z-40 transition-all duration-300 ${isMobile
-            ? mobileSidebar
-              ? "w-60 left-0"
-              : "w-0 -left-60"
-            : isExpanded
-              ? "w-60 left-0"
-              : "w-20 left-0"
+          ? mobileSidebar
+            ? "w-60 left-0"
+            : "w-0 -left-60"
+          : isExpanded
+            ? "w-60 left-0"
+            : "w-20 left-0"
           } overflow-hidden`}
       >
         <div>
@@ -204,8 +204,8 @@ const DashboardLayout = () => {
           <Link
             to="/dashboard/settings/mfa"
             className={`no-underline flex items-center gap-3 px-4 py-3 rounded-lg w-full transition-all duration-300 ${isActive("/dashboard/settings/mfa")
-                ? "bg-orange-600 text-white"
-                : "text-orange-400 hover:text-white hover:bg-orange-600"
+              ? "bg-orange-600 text-white"
+              : "text-orange-400 hover:text-white hover:bg-orange-600"
               } ${isExpanded || mobileSidebar ? "justify-start" : "justify-center"}`}
           >
             <SecurityIcon className="w-5 h-5 flex-shrink-0" />
@@ -232,7 +232,7 @@ const DashboardLayout = () => {
           className={`fixed top-0 z-20 flex flex-col items-center justify-center px-6 py-4 bg-white shadow-sm transition-all duration-300 ${isExpanded && !isMobile ? "left-60" : !isMobile ? "left-20" : "left-0"
             } right-0`}
         >
-          <div className="relative w-full flex flex-col items-center justify-center text-center py-6">
+          {/* <div className="relative w-full flex flex-col items-center justify-center text-center py-6">
             <img
               src="/1-langshott-foundation-logo.webp"
               alt="Langshott Logo"
@@ -253,7 +253,7 @@ const DashboardLayout = () => {
               Welcome to{" "}
               <span className="text-indigo-700">Sita</span> Admin Panel
             </h1>
-          </div>
+          </div> */}
           {isMobile && (
             <button
               onClick={() => setMobileSidebar(true)}

@@ -350,6 +350,8 @@ app.use("/api/reviews", reviewRoutes)
 app.use("/api/blogs", blogRoutes)
 app.use("/api/letters", letterRoutes)
 app.use("/api/pages", pageRoutes)
+app.use("/api/cms/pages", pageRoutes) // For listing and management
+app.use("/api/cms", pageRoutes) // For /upload
 app.use("/api/precepts", preceptsRoutes)
 app.use("/api/home/banner", bannerRoutes)
 app.use("/api/foundation", foundationRoutes)

@@ -47,7 +47,7 @@ const Footer = () => {
         const res = await fetch(`${BACKEND_BASE_URL}/api/pages`);
         const data = await res.json();
         const footer = data.filter((p) =>
-          p.displayLocations.includes("footer")
+          p.displayLocations?.includes("footer")
         );
         setFooterPages(footer);
       } catch (err) {
