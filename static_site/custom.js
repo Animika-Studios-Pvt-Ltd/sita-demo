@@ -1,6 +1,8 @@
 /* =========================
    HEADER SECTION
 ========================= */
+const BOOKING_BASE_URL = "http://booking.localhost:5173";
+
 document.addEventListener("DOMContentLoaded", function () {
   const currentPath = window.location.pathname.split("/").pop() || "index.html";
 
@@ -98,11 +100,21 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>-</td>
 
             <td>${e.ageGroup || "-"}</td>
-            <td>
-              <button class="sita-book-now" data-id="${e._id}">
-                Book Now
-              </button>
-            </td>
+          <td>
+  ${e.bookingUrl
+            ? `<a
+           href="${BOOKING_BASE_URL}/${e.bookingUrl}"
+           class="sita-book-now"
+           target="_blank"
+           rel="noopener noreferrer"
+         >
+           Book Now
+         </a>`
+            : `<button class="sita-book-now disabled" disabled>
+           Coming Soon
+         </button>`
+          }
+</td>
           </tr>
         `;
       });

@@ -1,5 +1,33 @@
 const Event = require("./event.model");
 const { uploadToCloudinary } = require("../config/cloudinary");
+const BlockedDate = require("../blockedDates/blockedDate.model");
+
+
+const generateEventCode = async (title, date) => {
+  const d = new Date(date);
+
+  // Month (01–12)
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+
+  // Year (last 2 digits)
+  const year = String(d.getFullYear()).slice(-2);
+
+  // Prefix from title (New Yoga → NY)
+  const prefix = title
+    .trim()
+    .split(" ")
+    .slice(0, 2)
+    .map(w => w[0].toUpperCase())
+    .join("");
+
+  while (true) {
+    const random = Math.floor(10 + Math.random() * 90); // 2 digits
+    const code = `${prefix}${month}${year}${random}`;
+
+    const exists = await Event.findOne({ code });
+    if (!exists) return code;
+  }
+};
 
 /**
  * GET all events (Public)
@@ -14,45 +42,89 @@ const getEvents = async (req, res) => {
   }
 };
 
+const isTimeOverlap = (start1, end1, start2, end2) => {
+  return start1 < end2 && start2 < end1;
+};
+
+
 /**
  * CREATE or UPDATE event (Admin)
  */
 const upsertEvent = async (req, res) => {
   try {
     const { id } = req.params;
-    const { code, title, date, fees, capacity, ageGroup, description } = req.body;
-
-    const updateData = {
+    let {
       code,
       title,
       date,
+      startTime,
+      endTime,
       fees,
       capacity,
       ageGroup,
       description,
+      bookingUrl, // ✅ NEW
+    } = req.body;
+
+    if (!bookingUrl) {
+      return res.status(400).json({
+        message: "Booking URL is required",
+      });
+    }
+
+    // ✅ Auto-generate code on CREATE
+    if (!id) {
+      code = await generateEventCode(title, date);
+    }
+
+    // ⛔ Check BLOCKED slots
+    const blockedSlots = await BlockedDate.find({ date });
+    for (const slot of blockedSlots) {
+      if (isTimeOverlap(startTime, endTime, slot.startTime, slot.endTime)) {
+        return res.status(403).json({
+          message: `Blocked: ${slot.reason}`,
+        });
+      }
+    }
+
+    // ⛔ Check EVENT overlaps
+    const events = await Event.find({
+      date,
+      ...(id && { _id: { $ne: id } }),
+    });
+
+    for (const ev of events) {
+      if (isTimeOverlap(startTime, endTime, ev.startTime, ev.endTime)) {
+        return res.status(409).json({
+          message: "Time slot already booked",
+        });
+      }
+    }
+
+    const payload = {
+      code,
+      title,
+      date,
+      startTime,
+      endTime,
+      fees,
+      capacity,
+      ageGroup,
+      description,
+      bookingUrl,
     };
 
-    if (req.files?.image) {
-      const result = await uploadToCloudinary(
-        req.files.image[0].buffer,
-        "events"
-      );
-      updateData.imageUrl = result.secure_url;
-    }
+    const event = id
+      ? await Event.findByIdAndUpdate(id, payload, { new: true })
+      : await Event.create(payload);
 
-    let event;
-    if (id) {
-      event = await Event.findByIdAndUpdate(id, updateData, { new: true });
-    } else {
-      event = await Event.create(updateData);
-    }
-
-    res.status(200).json({ message: "Event saved", event });
+    res.json({ message: "Saved successfully", event });
   } catch (err) {
-    console.error("❌ Save event error:", err);
-    res.status(500).json({ message: "Save failed", error: err.message });
+    console.error("❌ Event save error:", err);
+    res.status(500).json({ message: err.message });
   }
 };
+
 
 /**
  * DELETE event

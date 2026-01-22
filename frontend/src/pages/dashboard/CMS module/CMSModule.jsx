@@ -18,16 +18,16 @@ const CMSModule = () => {
       icon: <WorkspacePremiumIcon fontSize="large" className="text-green-600" />,
       route: "/dashboard/certificates/trust-certificate",
     },
+    // {
+    //   name: "Manage Pages",
+    //   icon: <DescriptionIcon fontSize="large" className="text-purple-600" />,
+    //   route: "/dashboard/manage-pages",
+    // },
     {
-      name: "Manage Pages",
-      icon: <DescriptionIcon fontSize="large" className="text-purple-600" />,
-      route: "/dashboard/manage-pages",
+      name: "Workshop / Event Calendar",
+      icon: <DescriptionIcon fontSize="large" className="text-orange-600" />,
+      route: "/dashboard/manage-events", // ✅ NEW
     },
-    {
-    name: "Workshop / Event Calendar",
-    icon: <DescriptionIcon fontSize="large" className="text-orange-600" />,
-    route: "/dashboard/manage-events", // ✅ NEW
-  },
   ];
 
   const isCardActive = (route) => location.pathname === route;

@@ -2,15 +2,25 @@ const mongoose = require("mongoose");
 
 const eventSchema = new mongoose.Schema(
   {
-    code: { type: String, required: true },
+    code: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+    },
     title: { type: String, required: true },
-    date: { type: String, required: true },
+
+    date: { type: String, required: true },       // YYYY-MM-DD
+    startTime: { type: String, required: true },  // HH:mm
+    endTime: { type: String, required: true },    // HH:mm
+
     fees: { type: String },
-    capacity: { type: Number },
+    capacity: { type: String },
     ageGroup: { type: String },
     description: { type: String },
 
-    // Optional poster/banner
+    bookingUrl: { type: String, required: true },
+
     imageUrl: { type: String },
   },
   { timestamps: true }
