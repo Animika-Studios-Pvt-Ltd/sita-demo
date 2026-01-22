@@ -336,6 +336,7 @@ const paymentRoutes = require('./src/payments/payment.route')
 const smsRoutes = require("./src/sms/sms.route")
 const shippingRoutes = require('./src/shipping/shipping.route')
 const eventRoutes = require("./src/events/event.routes");
+app.use("/api/blocked-dates", require("./src/blockedDates/blockedDate.routes"));
 
 app.use('/api/shipping', shippingRoutes)
 
