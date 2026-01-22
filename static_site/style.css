@@ -15,11 +15,11 @@
 }
 
 @font-face {
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat-Medium";
   font-style: normal;
-  font-weight: 300;
-  src: local("Montserrat-Light"), local("Montserrat-Light"),
-    url("/fonts/Montserrat-Light.ttf") format("truetype");
+  font-weight: 500;
+  src: local("Montserrat-Medium"), local("Montserrat-Medium"),
+    url("/fonts/Montserrat-Medium.ttf") format("truetype");
 }
 
 html,
@@ -33,14 +33,12 @@ h2 {
   color: #8b171b;
   font-size: 48px;
   text-transform: uppercase;
-  margin-bottom: 0px;
 }
 
 p,
 li {
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat-Regular";
   font-size: 20px;
-  color: black;
 }
 
 /* ------------------------------------------------- ANGLED BUTTON ------------------------------------------------- */
@@ -49,7 +47,8 @@ li {
   background-color: #f6981e;
   color: #ffffff;
   padding: 10px 24px;
-  font-family: "Montserrat-Regular";
+  font-family: "Montserrat";
+  font-weight: 600;
   font-size: 18px;
   text-decoration: none;
   line-height: 1;
@@ -73,7 +72,7 @@ nav[aria-label="breadcrumb"] {
 
 .breadcrumb {
   margin: 0px;
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat-Regular";
   flex-wrap: wrap;
 }
 
@@ -104,8 +103,8 @@ nav[aria-label="breadcrumb"] {
 }
 
 .sita-logo {
-  max-width: 180px;
-  margin-left: 50px;
+  max-width: 160px;
+  margin-left: 30px;
 }
 
 .sita-nav .home-icon i {
@@ -113,9 +112,10 @@ nav[aria-label="breadcrumb"] {
 }
 
 .sita-nav .nav-link {
-  font-family: "Montserrat-Regular";
+  font-family: "Montserrat";
+  font-weight: 600;
   font-size: 16px;
-  color: black;
+  color: #2b2b2b;
   padding: 6px 12px;
   text-transform: uppercase;
   white-space: nowrap;
@@ -190,10 +190,10 @@ nav[aria-label="breadcrumb"] {
 }
 
 .dropdown-item {
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat-Regular";
   font-size: 14px;
   text-transform: uppercase;
-  color: black;
+  color: #2b2b2b;
   padding: 5px 10px;
   transition: all 0.3s ease;
 }
@@ -206,7 +206,8 @@ nav[aria-label="breadcrumb"] {
 .dropdown-item.active {
   color: #8b171b;
   background: transparent;
-  font-family: "Montserrat-Regular";
+  font-family: "Montserrat";
+  font-weight: 600;
 }
 
 .dropdown-menu.show {
@@ -324,8 +325,13 @@ nav[aria-label="breadcrumb"] {
   z-index: 2;
 }
 
+.sita-factor-content h2 {
+  margin-bottom: 10px;
+}
+
 .sita-factor-section .motif {
   margin-bottom: 20px;
+  width: 30%;
 }
 
 .sita-factor-content {
@@ -335,7 +341,7 @@ nav[aria-label="breadcrumb"] {
 
 .sita-factor-text {
   line-height: 1.7;
-  color: black;
+  color: #4a3f36;
   margin-bottom: 10px;
 }
 
@@ -347,7 +353,8 @@ nav[aria-label="breadcrumb"] {
 }
 
 .sita-factor-highlight {
-  font-family: "Montserrat-Regular";
+  font-family: "Montserrat";
+  font-weight: 600;
   font-size: 28px;
   color: #8b171b;
   margin-bottom: 50px;
@@ -360,16 +367,6 @@ nav[aria-label="breadcrumb"] {
   right: 0;
   bottom: -220px;
   z-index: 10;
-}
-
-.sita-services-row {
-  display: flex;
-  justify-content: center;
-}
-
-.sita-service-col {
-  flex: 0 0 380px;
-  max-width: 380px;
 }
 
 .sita-service-card {
@@ -458,60 +455,66 @@ nav[aria-label="breadcrumb"] {
   z-index: 1;
 }
 
+.sita-masterclass h2 {
+  margin-bottom: 0px;
+}
+
 .sita-masterclass .motif {
   margin-bottom: 20px;
 }
 
 .sita-masterclass-text {
   width: 80%;
-  margin: 0 auto 20px;
+  margin: 0 auto 15px;
   line-height: 1.6;
 }
 
-.masterclass-card {
+.sita-masterclass-btn {
   position: relative;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.masterclass-content {
-  margin-top: 15px;
-}
-
-.masterclass-content h4 {
-  font-family: "Montserrat-Light";
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: black;
-}
-
-.masterclass-card-btn {
   display: inline-block;
-  color: #ffffff;
-  font-family: "Montserrat-Regular";
-  font-size: 14px;
-  padding: 10px 20px;
+  font-family: "Montserrat";
+  font-weight: 600;
+  font-size: 18px;
+  padding: 10px 60px;
+  margin-bottom: 50px;
+}
+
+.sita-masterclass-btn svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.sita-masterclass-btn-border {
+  fill: none;
+  stroke: #f6981e;
+  stroke-width: 5;
+}
+
+.sita-masterclass-btn:hover .btn-border {
+  stroke: #d87d12;
+}
+
+.sita-masterclass-btn-text {
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.sita-masterclass-btn-text a {
+  color: #2b70ff;
   text-decoration: none;
-  line-height: 1;
-  clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
-  transition: background-color 0.3s ease;
-}
-
-.masterclass-card-btn.pink {
-  background: #d86c87;
-}
-
-.masterclass-card-btn.peach {
-  background: #e29a7a;
-}
-
-.masterclass-card-btn.rose {
-  background: #c36c6c;
 }
 
 /* ----------------- WORKSHOP CALENDAR SECTION ----------------- */
 .sita-workshop-calendar {
   padding: 40px 0;
+}
+
+.sita-workshop-calendar h2 {
+  margin-bottom: 0px;
 }
 
 .sita-workshop-calendar .motif {
@@ -526,7 +529,7 @@ nav[aria-label="breadcrumb"] {
 
 .sita-table th {
   background-color: whitesmoke;
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat-Regular";
   font-size: 16px;
   border: 1px solid #9c9c9c;
   text-align: center;
@@ -534,7 +537,7 @@ nav[aria-label="breadcrumb"] {
 }
 
 .sita-table td {
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat-Regular";
   font-size: 14px;
   border: 1px solid #9c9c9c;
   vertical-align: middle;
@@ -545,7 +548,6 @@ nav[aria-label="breadcrumb"] {
   padding: 12px 14px;
   text-align: center;
   vertical-align: middle;
-  color: black;
 }
 
 .sita-table td:last-child {
@@ -687,6 +689,7 @@ nav[aria-label="breadcrumb"] {
 
 .sita-verses h2 {
   color: #ffffff;
+  margin-bottom: 0px;
 }
 
 .sita-verses .motif {
@@ -700,7 +703,7 @@ nav[aria-label="breadcrumb"] {
 }
 
 .sita-verses blockquote {
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat-Regular";
   color: #ffffff;
   font-size: 20px;
   font-style: italic;
@@ -771,6 +774,10 @@ nav[aria-label="breadcrumb"] {
   /* z-index: 5; */
 }
 
+.sita-publications h2 {
+  margin-bottom: 0px;
+}
+
 .sita-publications .motif {
   margin-bottom: 20px;
 }
@@ -784,6 +791,10 @@ nav[aria-label="breadcrumb"] {
   padding: 40px 0;
   position: relative;
   z-index: 2;
+}
+
+.sita-recent-blogs h2 {
+  margin-bottom: 10px;
 }
 
 .sita-recent-blogs .row {
@@ -817,11 +828,11 @@ nav[aria-label="breadcrumb"] {
   padding: 5px 20px;
   margin-bottom: 0px !important;
   border-radius: 6px 6px 0 0;
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat-Regular";
 }
 
 .sita-blog-card h4 {
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat-Regular";
   font-size: 20px;
   margin-bottom: 10px;
   color: black;
@@ -829,15 +840,15 @@ nav[aria-label="breadcrumb"] {
 
 .sita-blog-card p {
   font-size: 16px;
-  color: black;
+  color: #555;
   margin-bottom: 10px;
 }
 
 .blog-author {
   display: block;
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat-Regular";
   font-size: 14px;
-  color: black;
+  color: #777;
   font-style: italic;
 }
 
@@ -847,7 +858,7 @@ nav[aria-label="breadcrumb"] {
   padding: 8px 16px;
   margin-top: auto;
   align-self: center;
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat-Regular";
   font-size: 16px;
   text-decoration: none;
   line-height: 1;
@@ -915,7 +926,8 @@ nav[aria-label="breadcrumb"] {
 .sita-testimonial-name {
   display: block;
   margin-top: 8px;
-  font-family: "Montserrat-Regular";
+  font-family: "Montserrat";
+  font-weight: 600;
   font-size: 20px;
 }
 
@@ -959,8 +971,8 @@ nav[aria-label="breadcrumb"] {
 }
 
 .sita-testimonial-arrows i {
-  border: 2px solid black;
-  color: black !important;
+  border: 2px solid #333;
+  color: #333 !important;
   border-radius: 50%;
   width: 28px;
   height: 28px;
@@ -988,7 +1000,7 @@ nav[aria-label="breadcrumb"] {
 
 .sita-cta-btn {
   display: inline-block;
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat-Regular";
   font-size: 20px;
   background: #8b171b;
   color: #fff;
@@ -1015,10 +1027,10 @@ nav[aria-label="breadcrumb"] {
 }
 
 .footer-links a {
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat-Regular";
   font-size: 16px;
   display: block;
-  color: black;
+  color: #333;
   margin-bottom: 8px;
   text-decoration: none;
 }
@@ -1029,7 +1041,7 @@ nav[aria-label="breadcrumb"] {
 
 .footer-socials a {
   margin-left: 16px;
-  color: #5a3c32;
+  color: #333;
   font-size: 18px;
   text-decoration: none;
 }
@@ -1307,7 +1319,7 @@ nav[aria-label="breadcrumb"] {
 }
 
 .contact-form .form-label {
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat-Regular";
   font-size: 16px;
   color: #8b171b;
   margin-bottom: 0px;
@@ -1343,7 +1355,8 @@ nav[aria-label="breadcrumb"] {
   border: none;
   border-radius: 10px;
   padding: 8px 16px;
-  font-family: "Montserrat-Regular";
+  font-family: "Montserrat";
+  font-weight: 600;
   font-size: 18px;
   display: block;
   margin-left: auto;
@@ -1385,10 +1398,6 @@ nav[aria-label="breadcrumb"] {
     font-size: 16px;
     padding: 8px 20px;
   }
-
-  .motif {
-    width: 30%;
-  }
 }
 
 @media (max-width: 767px) {
@@ -1403,10 +1412,6 @@ nav[aria-label="breadcrumb"] {
   .sita-btn {
     font-size: 15px;
     padding: 7px 18px;
-  }
-
-  .motif {
-    width: 40%;
   }
 }
 
@@ -1508,24 +1513,10 @@ nav[aria-label="breadcrumb"] {
 }
 
 /* HEADER SECTION */
-@media (max-width: 1440px) {
-  .sita-logo {
-    max-width: 160px;
-    margin-left: 50px;
-  }
-}
-
-@media (max-width: 1366px) {
-  .sita-logo {
-    max-width: 140px;
-    margin-left: 20px;
-  }
-}
-
 @media (max-width: 1200px) {
   .sita-logo {
     max-width: 120px;
-    margin-left: -20px;
+    margin-left: 0px;
   }
 
   .sita-nav .nav-link {
@@ -1539,8 +1530,8 @@ nav[aria-label="breadcrumb"] {
   }
 
   .sita-logo {
-    max-width: 120px;
-    margin-left: -20px;
+    max-width: 100px;
+    margin-left: 0px;
   }
 
   .sita-nav .nav-link {
@@ -1569,7 +1560,6 @@ nav[aria-label="breadcrumb"] {
 
   .sita-logo {
     max-width: 120px;
-    margin-left: 0px;
   }
 
   .dropdown-menu {
@@ -2012,7 +2002,7 @@ nav[aria-label="breadcrumb"] {
   }
 }
 
-@media (min-width: 992px) and (max-width: 1200px) {
+@media (min-width: 992px) {
   .sita-about .motif {
     width: 100%;
   }
@@ -2025,6 +2015,7 @@ nav[aria-label="breadcrumb"] {
 
   .sita-about .motif {
     margin-bottom: 20px;
+    width: 30%;
   }
 }
 
@@ -2049,6 +2040,7 @@ nav[aria-label="breadcrumb"] {
 
   .sita-about .motif {
     margin-bottom: 10px;
+    width: 30%;
   }
 
   .sita-about p {
@@ -2058,6 +2050,10 @@ nav[aria-label="breadcrumb"] {
 
 /* Sita Factor Section */
 @media (max-width: 1440px) {
+  .sita-factor-section .motif {
+    width: 25%;
+  }
+
   .sita-factor-content {
     width: 80%;
   }
@@ -2075,18 +2071,6 @@ nav[aria-label="breadcrumb"] {
     right: 20px;
     width: 200px;
   }
-
-  .sita-service-col {
-    flex: 0 0 360px;
-    max-width: 360px;
-  }
-}
-
-@media (max-width: 1366px) {
-  .sita-service-col {
-    flex: 0 0 340px;
-    max-width: 340px;
-  }
 }
 
 @media (max-width: 1200px) {
@@ -2103,17 +2087,12 @@ nav[aria-label="breadcrumb"] {
     margin-bottom: 20px;
   }
 
-  .sita-service-col {
-    flex: 0 0 300px;
-    max-width: 300px;
-  }
-
   .sita-service-card {
-    height: 400px;
+    height: 420px;
   }
 
   .sita-service-card.consult {
-    height: 480px;
+    height: 500px;
   }
 
   .sita-service-card span {
@@ -2156,7 +2135,6 @@ nav[aria-label="breadcrumb"] {
 
   .sita-factor-content {
     width: 100%;
-    margin-bottom: 10px;
   }
 
   .sita-factor-heading {
@@ -2165,17 +2143,11 @@ nav[aria-label="breadcrumb"] {
 
   .sita-factor-highlight {
     font-size: 20px;
-    margin-bottom: 10px;
-  }
-
-  .sita-service-col {
-    flex: 0 0 220px;
-    max-width: 220px;
   }
 
   .sita-service-card {
     height: 300px;
-    width: 100%;
+    width: 95%;
   }
 
   .sita-service-card.consult {
@@ -2219,16 +2191,6 @@ nav[aria-label="breadcrumb"] {
   .sita-factor-highlight {
     font-size: 18px;
     margin-bottom: 10px;
-  }
-
-  .sita-services-row {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .sita-service-col {
-    flex: 0 0 100%;
-    max-width: 90%;
   }
 
   .sita-service-card,
@@ -2293,6 +2255,10 @@ nav[aria-label="breadcrumb"] {
   .sita-masterclass {
     padding: 270px 0 40px;
   }
+
+  .sita-masterclass-btn {
+    margin-bottom: 30px;
+  }
 }
 
 @media (max-width: 1200px) {
@@ -2304,13 +2270,9 @@ nav[aria-label="breadcrumb"] {
     width: 90%;
   }
 
-  .masterclass-content h4 {
-    font-size: 18px;
-  }
-
-  .masterclass-card-btn {
-    font-size: 13.5px;
-    padding: 9px 18px;
+  .sita-masterclass-btn {
+    font-size: 17px;
+    padding: 10px 50px;
   }
 }
 
@@ -2321,30 +2283,33 @@ nav[aria-label="breadcrumb"] {
 
   .sita-masterclass-text {
     width: 100%;
-    margin-bottom: 15px;
   }
 
-  .masterclass-card {
+  .sita-masterclass-btn {
+    font-size: 16px;
+    padding: 10px 42px;
     margin-bottom: 20px;
-  }
-
-  .masterclass-content {
-    margin-top: 12px;
-  }
-
-  .masterclass-content h4 {
-    font-size: 17px;
-  }
-
-  .masterclass-card-btn {
-    font-size: 13px;
-    padding: 9px 16px;
   }
 }
 
 @media (max-width: 767px) {
   .sita-masterclass {
     padding: 20px 0;
+  }
+
+  .sita-masterclass-btn {
+    font-size: 14px;
+    padding: 12px 30px;
+    max-width: 100%;
+  }
+
+  .sita-masterclass-btn svg {
+    height: 100%;
+  }
+
+  .sita-masterclass-btn-text {
+    white-space: normal;
+    line-height: 1.4;
   }
 
   .sita-masterclass .row>div {
@@ -2356,24 +2321,6 @@ nav[aria-label="breadcrumb"] {
     margin: 0 auto;
     display: block;
   }
-
-  .masterclass-content {
-    margin-top: 20px;
-  }
-
-  .masterclass-card {
-    margin-bottom: 0px;
-  }
-
-  .masterclass-content h4 {
-    font-size: 16px;
-    margin-bottom: 8px;
-  }
-
-  .masterclass-card-btn {
-    font-size: 12.5px;
-    padding: 10px 22px;
-  }
 }
 
 @media (max-width: 575px) {
@@ -2383,28 +2330,39 @@ nav[aria-label="breadcrumb"] {
 
   .sita-masterclass .motif {
     margin-bottom: 10px;
+    width: 35%;
+  }
+
+  .sita-masterclass-text {
+    margin-bottom: 5px;
+  }
+
+  .sita-masterclass-btn {
+    font-size: 13px;
+    padding: 10px 30px;
+  }
+
+  .sita-masterclass-btn-border {
+    stroke-width: 3;
   }
 
   .sita-masterclass .row>div {
-    margin-bottom: 20px;
-  }
-
-  .sita-masterclass .row>div:last-child {
-    margin-bottom: 0;
+    margin-bottom: 10px;
   }
 
   .sita-masterclass .row img {
     width: 80%;
   }
+}
 
-  .masterclass-content h4 {
-    font-size: 15px;
+@media (max-width: 480px) {
+  .sita-masterclass-btn {
+    font-size: 12px;
+    padding: 10px 24px;
   }
 
-  .masterclass-card-btn {
-    font-size: 12px;
-    padding: 8px 16px;
-    line-height: 1.2;
+  .sita-masterclass-btn svg {
+    width: 100%;
   }
 }
 
@@ -2470,6 +2428,7 @@ nav[aria-label="breadcrumb"] {
 
   .sita-workshop-calendar .motif {
     margin-bottom: 10px;
+    width: 35%;
   }
 
   .sita-table th {
@@ -2676,6 +2635,10 @@ nav[aria-label="breadcrumb"] {
 }
 
 @media (max-width: 575px) {
+  .sita-verses .motif {
+    width: 35%;
+  }
+
   .sita-verses blockquote {
     width: 95%;
     font-size: 15px;
@@ -2742,7 +2705,7 @@ nav[aria-label="breadcrumb"] {
   }
 
   .sita-publications .motif {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
   }
 
   .sita-publications-img {
@@ -2756,6 +2719,7 @@ nav[aria-label="breadcrumb"] {
   }
 
   .sita-publications .motif {
+    width: 35%;
     margin-top: 10px;
   }
 
@@ -2872,6 +2836,10 @@ nav[aria-label="breadcrumb"] {
     padding: 20px 0;
   }
 
+  .sita-recent-blogs .motif {
+    width: 35%;
+  }
+
   .sita-blog-image img {
     width: 80%;
   }
@@ -2972,6 +2940,10 @@ nav[aria-label="breadcrumb"] {
 }
 
 @media (max-width: 575px) {
+  .sita-testimonials .motif {
+    width: 35%;
+  }
+
   .sita-testimonial-quote {
     width: 50px;
   }
@@ -3304,6 +3276,7 @@ nav[aria-label="breadcrumb"] {
   }
 
   .sita-inner-content .motif {
+    width: 35%;
     margin-bottom: 10px !important;
   }
 
