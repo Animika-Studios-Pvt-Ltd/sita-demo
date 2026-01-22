@@ -3,7 +3,7 @@
   font-style: normal;
   font-weight: 400;
   src: local("PTSerif-Regular"), local("PTSerif-Regular"),
-    url("/fonts/PTSerif-Regular.ttf") format("truetype");
+    url("fonts/PTSerif-Regular.ttf") format("truetype");
 }
 
 @font-face {
@@ -11,7 +11,7 @@
   font-style: normal;
   font-weight: 400;
   src: local("Montserrat-Regular"), local("Montserrat-Regular"),
-    url("/fonts/Montserrat-Regular.ttf") format("truetype");
+    url("fonts/Montserrat-Regular.ttf") format("truetype");
 }
 
 @font-face {
@@ -19,7 +19,7 @@
   font-style: normal;
   font-weight: 300;
   src: local("Montserrat-Light"), local("Montserrat-Light"),
-    url("/fonts/Montserrat-Light.ttf") format("truetype");
+    url("fonts/Montserrat-Light.ttf") format("truetype");
 }
 
 html,
@@ -318,7 +318,8 @@ nav[aria-label="breadcrumb"] {
 
 .decor-s {
   right: 20px;
-  top: -140px;
+  /* top: -140px; */
+  top: -60px;
   width: 220px;
   height: auto;
   z-index: 2;
