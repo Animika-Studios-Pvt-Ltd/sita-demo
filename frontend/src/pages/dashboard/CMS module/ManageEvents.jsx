@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import "react-day-picker/dist/style.css";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import BlockIcon from "@mui/icons-material/Block";
+import { useNavigate } from "react-router-dom";
 
 const API = "http://localhost:5000/api";
 
@@ -19,16 +20,46 @@ const successAlert = (title, text) =>
 const isPastSlot = (date, startTime) => {
   if (!date) return false;
 
-  const today = new Date();
+  const now = new Date();
+
   const selected = new Date(date);
+  selected.setHours(0, 0, 0, 0);
 
-  // Only check time if it's today
-  if (selected.toDateString() !== today.toDateString()) return false;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-  const nowMinutes = today.getHours() * 60 + today.getMinutes();
-  const slotMinutes = toMinutes(startTime);
+  // ❌ Entire past day
+  if (selected < today) return true;
 
-  return slotMinutes <= nowMinutes;
+  // ❌ Today but time passed
+  if (selected.getTime() === today.getTime()) {
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+    const slotMinutes = toMinutes(startTime);
+    return slotMinutes <= nowMinutes;
+  }
+
+  return false;
+};
+const isEventEditable = (event) => {
+  const now = new Date();
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const [y, m, d] = event.date.split("-").map(Number);
+  const eventDate = new Date(y, m - 1, d);
+
+  // ❌ Past day
+  if (eventDate < today) return false;
+
+  // ❌ Today but already ended
+  if (eventDate.getTime() === today.getTime()) {
+    const endMinutes = toMinutes(event.endTime);
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+    if (endMinutes <= nowMinutes) return false;
+  }
+
+  return true;
 };
 
 const errorAlert = (title, text) =>
@@ -128,6 +159,7 @@ const ManageEvents = () => {
   const [blockDuration, setBlockDuration] = useState(60);
   const [manualEvent, setManualEvent] = useState(false);
   const [manualBlock, setManualBlock] = useState(false);
+  const navigate = useNavigate();
 
   const [eventForm, setEventForm] = useState({
     title: "",
@@ -224,6 +256,17 @@ const ManageEvents = () => {
       errorAlert("Error", err.response?.data?.message || "Failed");
     }
   };
+  useEffect(() => {
+    if (isPastDate(eventForm.date)) {
+      setManualEvent(false);
+    }
+  }, [eventForm.date]);
+
+  useEffect(() => {
+    if (isPastDate(blockForm.date)) {
+      setManualBlock(false);
+    }
+  }, [blockForm.date]);
 
   const editEvent = (e) => {
     setEditingEventId(e._id);
@@ -239,6 +282,18 @@ const ManageEvents = () => {
       startTime: e.startTime,
       endTime: e.endTime,
     });
+  };
+
+  const isPastDate = (date) => {
+    if (!date) return false;
+
+    const selected = new Date(date);
+    selected.setHours(0, 0, 0, 0);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return selected < today;
   };
 
   const editBlock = (b) => {
@@ -383,8 +438,10 @@ const ManageEvents = () => {
                   <input
                     type="checkbox"
                     checked={manualEvent}
+                    disabled={isPastDate(eventForm.date)}
                     onChange={() => setManualEvent(!manualEvent)}
                   />
+
                   Manual Time Selection
                 </label>
 
@@ -418,6 +475,18 @@ const ManageEvents = () => {
                           const past = isPastSlot(eventForm.date, slot);
                           const disabled = status !== "available" || past;
 
+                          let slotClass = "border-gray-300 bg-white hover:bg-gray-100";
+
+                          if (status === "blocked") {
+                            slotClass = "border-red-500 bg-red-50 text-red-600 cursor-not-allowed";
+                          } else if (status === "event") {
+                            slotClass = "border-blue-500 bg-blue-50 text-blue-600 cursor-not-allowed";
+                          } else if (past) {
+                            slotClass = "border-gray-300 bg-gray-100 text-gray-400 cursor-not-allowed";
+                          } else if (eventForm.startTime === slot) {
+                            slotClass = "border-indigo-600 bg-indigo-600 text-white";
+                          }
+
                           return (
                             <button
                               key={slot}
@@ -429,19 +498,7 @@ const ManageEvents = () => {
                                   endTime: end,
                                 })
                               }
-                              className={`py-2 text-xs rounded-lg border-2 transition
-  ${past
-                                  ? "border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed"
-                                  : status === "blocked"
-                                    ? "border-red-500 bg-red-50 text-red-600 cursor-not-allowed"
-                                    : status === "event"
-                                      ? "border-blue-500 bg-blue-50 text-blue-600 cursor-not-allowed"
-                                      : eventForm.startTime === slot
-                                        ? "border-indigo-600 bg-indigo-600 text-white"
-                                        : "border-gray-300 bg-white hover:bg-gray-100"
-                                }
-`}
-                            >
+                              className={`py-2 text-xs rounded-lg border-2 transition ${slotClass}`}>
                               {format12Hour(slot)} – {format12Hour(end)}
                             </button>
                           );
@@ -452,20 +509,24 @@ const ManageEvents = () => {
                   <>
                     <input
                       type="time"
-                      className="border p-3 rounded-lg w-full mb-2"
+                      disabled={isPastDate(eventForm.date)}
+                      className="border p-3 rounded-lg w-full mb-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       value={eventForm.startTime}
                       onChange={(e) =>
                         setEventForm({ ...eventForm, startTime: e.target.value })
                       }
                     />
+
                     <input
                       type="time"
-                      className="border p-3 rounded-lg w-full"
+                      disabled={isPastDate(eventForm.date)}
+                      className="border p-3 rounded-lg w-full disabled:bg-gray-100 disabled:cursor-not-allowed"
                       value={eventForm.endTime}
                       onChange={(e) =>
                         setEventForm({ ...eventForm, endTime: e.target.value })
                       }
                     />
+
                   </>
                 )}
               </div>
@@ -490,65 +551,81 @@ const ManageEvents = () => {
           </div>
 
           {/* LIST */}
-          <div className="bg-white rounded-xl shadow overflow-hidden">
-            <table className="w-full text-sm">
-              <thead className="bg-indigo-600 text-white">
-                <tr>
-                  {["Code", "Title", "Date", "Time", "Fees", "Capacity", "Age", "Actions"].map(
-                    (h) => (
-                      <th key={h} className="p-3">
-                        {h}
-                      </th>
-                    )
-                  )}
-                </tr>
-              </thead>
-              <tbody>
-                {events.map((e) => (
-                  <tr key={e._id} className="border-t hover:bg-gray-50">
-                    {/* CODE */}
-                    <td className="p-3 font-semibold text-indigo-600">
-                      {e.code || "-"}
-                    </td>
-                    <td className="p-3 font-medium">{e.title}</td>
-                    <td>{e.date}</td>
-                    <td>
-                      {format12Hour(e.startTime)} – {format12Hour(e.endTime)}
-                    </td>
-                    <td>{e.fees || "-"}</td>
-                    <td>{e.capacity || "-"}</td>
-                    <td>{e.ageGroup || "-"}</td>
-                    <td className="flex gap-2 justify-center p-2">
-                      <button
-                        onClick={() => editEvent(e)}
-                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={async () => {
-                          const res = await Swal.fire({
-                            title: "Delete Event?",
-                            text: "This event will be permanently deleted",
-                            icon: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#dc2626",
-                          });
-                          if (res.isConfirmed) {
-                            await axios.delete(`${API}/events/${e._id}`);
-                            fetchAll();
-                            Swal.fire("Deleted!", "Event removed", "success");
-                          }
-                        }}
-                        className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-                      >
-                        Delete
-                      </button>
-                    </td>
+          <div className="flex justify-center">
+            <div className="bg-white rounded-xl shadow overflow-hidden w-full max-w-7xl">
+              <table className="w-full text-sm">
+                <thead className="bg-indigo-600 text-white">
+                  <tr>
+                    {["Code", "Title", "Date", "Time", "Fees", "Capacity", "Age", "Actions"].map(
+                      (h) => (
+                        <th key={h} className="p-3 text-center">
+                          {h}
+                        </th>
+                      )
+                    )}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {events.map((e) => (
+                    <tr key={e._id} className="border-t hover:bg-gray-50">
+                      {/* CODE */}
+                      <td className="p-3 text-center font-semibold text-indigo-600">
+                        {e.code || "-"}
+                      </td>
+
+                      <td className="p-3 text-center font-medium">{e.title}</td>
+                      <td className="text-center">{e.date}</td>
+
+                      <td className="text-center">
+                        {format12Hour(e.startTime)} – {format12Hour(e.endTime)}
+                      </td>
+
+                      <td className="text-center">{e.fees || "-"}</td>
+                      <td className="text-center">{e.capacity || "-"}</td>
+                      <td className="text-center">{e.ageGroup || "-"}</td>
+
+                      <td className="flex gap-2 justify-center p-2">
+                        <button
+                          onClick={() => editEvent(e)}
+                          className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded"
+                        >
+                          Edit
+                        </button>
+
+                        <button
+                          onClick={() => navigate("/dashboard/manage-pages")}
+                          className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded"
+                        >
+                          Manage Page
+                        </button>
+
+                        <button
+                          onClick={async () => {
+                            const res = await Swal.fire({
+                              title: "Delete Event?",
+                              text: "This event will be permanently deleted",
+                              icon: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: "#dc2626",
+                            });
+
+                            if (res.isConfirmed) {
+                              await axios.delete(`${API}/events/${e._id}`);
+                              fetchAll();
+                              Swal.fire("Deleted!", "Event removed", "success");
+                            }
+                          }}
+                          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+                        >
+                          Delete
+                        </button>
+                      </td>
+
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </>
       )}
@@ -584,6 +661,7 @@ const ManageEvents = () => {
                   <input
                     type="checkbox"
                     checked={manualBlock}
+                    disabled={isPastDate(blockForm.date)}
                     onChange={() => setManualBlock(!manualBlock)}
                   />
                   Manual Time Selection
@@ -619,6 +697,19 @@ const ManageEvents = () => {
                           const past = isPastSlot(blockForm.date, slot);
                           const disabled = status !== "available" || past;
 
+                          // ✅ ADD THIS BLOCK
+                          let slotClass = "border-gray-300 bg-white hover:bg-gray-100";
+
+                          if (status === "blocked") {
+                            slotClass = "border-red-500 bg-red-50 text-red-600 cursor-not-allowed";
+                          } else if (status === "event") {
+                            slotClass = "border-blue-500 bg-blue-50 text-blue-600 cursor-not-allowed";
+                          } else if (past) {
+                            slotClass = "border-gray-300 bg-gray-100 text-gray-400 cursor-not-allowed";
+                          } else if (blockForm.startTime === slot) {
+                            slotClass = "border-red-600 bg-red-600 text-white";
+                          }
+
                           return (
                             <button
                               key={slot}
@@ -630,19 +721,7 @@ const ManageEvents = () => {
                                   endTime: end,
                                 })
                               }
-                              className={`py-2 text-xs rounded-lg border-2 transition
-  ${past
-                                  ? "border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed"
-                                  : status === "blocked"
-                                    ? "border-red-500 bg-red-50 text-red-600 cursor-not-allowed"
-                                    : status === "event"
-                                      ? "border-blue-500 bg-blue-50 text-blue-600 cursor-not-allowed"
-                                      : blockForm.startTime === slot
-                                        ? "border-red-600 bg-red-600 text-white"
-                                        : "border-gray-300 bg-white hover:bg-gray-100"
-                                }
-`}
-                            >
+                              className={`py-2 text-xs rounded-lg border-2 transition ${slotClass}`}>
                               {format12Hour(slot)} – {format12Hour(end)}
                             </button>
                           );
@@ -653,15 +732,18 @@ const ManageEvents = () => {
                   <>
                     <input
                       type="time"
-                      className="border p-3 rounded-lg w-full mb-2"
+                      disabled={isPastDate(blockForm.date)}
+                      className="border p-3 rounded-lg w-full mb-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       value={blockForm.startTime}
                       onChange={(e) =>
                         setBlockForm({ ...blockForm, startTime: e.target.value })
                       }
                     />
+
                     <input
                       type="time"
-                      className="border p-3 rounded-lg w-full"
+                      disabled={isPastDate(blockForm.date)}
+                      className="border p-3 rounded-lg w-full disabled:bg-gray-100 disabled:cursor-not-allowed"
                       value={blockForm.endTime}
                       onChange={(e) =>
                         setBlockForm({ ...blockForm, endTime: e.target.value })
@@ -691,66 +773,67 @@ const ManageEvents = () => {
           </div>
 
           {/* LIST */}
-          <div className="bg-white rounded-xl shadow overflow-hidden">
-            <table className="w-full text-sm">
-              <thead className="bg-red-600 text-white">
-                <tr>
-                  {["Date", "Time", "Reason", "Actions"].map((h) => (
-                    <th key={h} className="p-3">
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {blocked.map((b) => (
-                  <tr key={b._id} className="border-t hover:bg-gray-50">
-                    <td className="p-3 font-medium">{b.date}</td>
-                    <td>
-                      {format12Hour(b.startTime)} – {format12Hour(b.endTime)}
-                    </td>
-                    <td>{b.reason || "-"}</td>
-                    <td className="flex gap-2 justify-center p-2">
-                      <button
-                        onClick={() => editBlock(b)}
-                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={async () => {
-                          const res = await Swal.fire({
-                            title: "Remove blocked slot?",
-                            text: "This blocked slot will be removed",
-                            icon: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#dc2626",
-                          });
-                          if (res.isConfirmed) {
-                            await axios.delete(
-                              `${API}/blocked-dates/${b._id}`
-                            );
-                            fetchAll();
-                            Swal.fire("Removed!", "Blocked slot removed", "success");
-                          }
-                        }}
-                        className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-                      >
-                        Remove
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-
-                {blocked.length === 0 && (
+          <div className="flex justify-center">
+            <div className="bg-white rounded-xl shadow overflow-hidden w-full max-w-5xl">
+              <table className="w-full text-sm">
+                <thead className="bg-red-600 text-white">
                   <tr>
-                    <td colSpan="4" className="text-center p-6 text-gray-500">
-                      No blocked slots found
-                    </td>
+                    {["Date", "Time", "Reason", "Actions"].map((h) => (
+                      <th key={h} className="p-3 text-center">
+                        {h}
+                      </th>
+                    ))}
                   </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+
+                <tbody>
+                  {blocked.map((b) => (
+                    <tr key={b._id} className="border-t hover:bg-gray-50">
+                      <td className="p-3 text-center font-medium">{b.date}</td>
+                      <td className="text-center">
+                        {format12Hour(b.startTime)} – {format12Hour(b.endTime)}
+                      </td>
+                      <td className="text-center">{b.reason || "-"}</td>
+                      <td className="flex gap-2 justify-center p-2">
+                        <button
+                          onClick={() => editBlock(b)}
+                          className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={async () => {
+                            const res = await Swal.fire({
+                              title: "Remove blocked slot?",
+                              text: "This blocked slot will be removed",
+                              icon: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: "#dc2626",
+                            });
+                            if (res.isConfirmed) {
+                              await axios.delete(`${API}/blocked-dates/${b._id}`);
+                              fetchAll();
+                              Swal.fire("Removed!", "Blocked slot removed", "success");
+                            }
+                          }}
+                          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+
+                  {blocked.length === 0 && (
+                    <tr>
+                      <td colSpan="4" className="text-center p-6 text-gray-500">
+                        No blocked slots found
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </>
       )}
