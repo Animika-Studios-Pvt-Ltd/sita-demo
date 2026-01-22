@@ -271,20 +271,20 @@ function updateTargets() {
     const elCenter = rect.top + rect.height / 2;
     const distance = elCenter - viewportCenter;
 
-    const strength = i === 0 ? 0.045 : 0.035;
+    const strength = i === 0 ? 0.1 : 0.2;
     target[i] = -distance * strength;
   });
 }
 
 function animate() {
-  time += 0.01;
+  time += 0.03;
 
   decorEls.forEach((el, i) => {
     // Smooth follow
     current[i] = lerp(current[i], target[i], 0.08);
 
     // Gentle breathing float
-    const float = Math.sin(time + i) * 15;
+    const float = Math.sin(time + i) * 20;
 
     el.style.transform = `translateY(${current[i] + float}px)`;
   });
