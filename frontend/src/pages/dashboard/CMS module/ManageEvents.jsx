@@ -323,6 +323,7 @@ const ManageEvents = () => {
       capacity: "",
       ageGroup: "",
       description: "",
+      bookingUrl: "",
       date: null,
       startTime: "",
       endTime: "",
