@@ -53,31 +53,35 @@ const isTimeOverlap = (start1, end1, start2, end2) => {
 const upsertEvent = async (req, res) => {
   try {
     const { id } = req.params;
+
     let {
       code,
       title,
       date,
       startTime,
       endTime,
+      location,
+      mode,
+      availability,
       fees,
       capacity,
       ageGroup,
       description,
-      bookingUrl, // ✅ NEW
+      bookingUrl, // optional now
     } = req.body;
-
-    if (!bookingUrl) {
-      return res.status(400).json({
-        message: "Booking URL is required",
-      });
-    }
 
     // ✅ Auto-generate code on CREATE
     if (!id) {
       code = await generateEventCode(title, date);
     }
 
-    // ⛔ Check BLOCKED slots
+    availability = Number(availability);
+
+    if (isNaN(availability) || availability < 0) {
+      availability = 0;
+    }
+
+    // ⛔ Blocked slot check
     const blockedSlots = await BlockedDate.find({ date });
     for (const slot of blockedSlots) {
       if (isTimeOverlap(startTime, endTime, slot.startTime, slot.endTime)) {
@@ -87,7 +91,7 @@ const upsertEvent = async (req, res) => {
       }
     }
 
-    // ⛔ Check EVENT overlaps
+    // ⛔ Event overlap check
     const events = await Event.find({
       date,
       ...(id && { _id: { $ne: id } }),
@@ -107,11 +111,14 @@ const upsertEvent = async (req, res) => {
       date,
       startTime,
       endTime,
+      location,
+      mode,
       fees,
       capacity,
+      availability,
       ageGroup,
       description,
-      bookingUrl,
+      bookingUrl: bookingUrl || null, // ✅ safe default
     };
 
     const event = id

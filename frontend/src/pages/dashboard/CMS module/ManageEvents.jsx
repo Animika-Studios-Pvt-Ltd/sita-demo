@@ -163,8 +163,11 @@ const ManageEvents = () => {
 
   const [eventForm, setEventForm] = useState({
     title: "",
+    location: "",
+    mode: "Offline",
     fees: "",
     capacity: "",
+    availability: "",
     ageGroup: "",
     description: "",
     bookingUrl: "",
@@ -223,10 +226,6 @@ const ManageEvents = () => {
     if (toMinutes(eventForm.startTime) >= toMinutes(eventForm.endTime))
       return errorAlert("Invalid time", "End time must be after start");
 
-    if (!eventForm.bookingUrl.trim()) {
-      return errorAlert("Missing booking URL", "Booking URL is required");
-    }
-
     const date = toDateStr(eventForm.date);
 
     if (
@@ -243,6 +242,7 @@ const ManageEvents = () => {
       );
     }
 
+    // bookingUrl can be empty now ✅
     const payload = { ...eventForm, date };
 
     try {
@@ -261,6 +261,7 @@ const ManageEvents = () => {
       errorAlert("Error", err.response?.data?.message || "Failed");
     }
   };
+
   useEffect(() => {
     if (isPastDate(eventForm.date)) {
       setManualEvent(false);
@@ -275,15 +276,20 @@ const ManageEvents = () => {
 
   const editEvent = (e) => {
     setEditingEventId(e._id);
-    setManualEvent(true); // allow editing exact times
+    setManualEvent(true);
 
     setEventForm({
-      title: e.title,
+      title: e.title || "",
+      location: e.location || "",
+      mode: e.mode || "Offline",
+      availability: e.availability || "",
+
       fees: e.fees || "",
       capacity: e.capacity || "",
       ageGroup: e.ageGroup || "",
       description: e.description || "",
       bookingUrl: e.bookingUrl || "",
+
       date: new Date(e.date),
       startTime: e.startTime,
       endTime: e.endTime,
@@ -319,6 +325,9 @@ const ManageEvents = () => {
     setManualEvent(false);
     setEventForm({
       title: "",
+      location: "",
+      mode: "Offline",
+      availability: "",
       fees: "",
       capacity: "",
       ageGroup: "",
@@ -328,6 +337,7 @@ const ManageEvents = () => {
       startTime: "",
       endTime: "",
     });
+
   };
 
   /* ================= BLOCK ================= */
@@ -422,6 +432,47 @@ const ManageEvents = () => {
                   }
                 />
               ))}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              {/* LOCATION */}
+              <input
+                placeholder="Workshop Location"
+                className="border p-3 rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none"
+                value={eventForm.location}
+                onChange={(e) =>
+                  setEventForm({ ...eventForm, location: e.target.value })
+                }
+              />
+
+              {/* MODE */}
+              <select
+                className="border p-3 rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none bg-white"
+                value={eventForm.mode}
+                onChange={(e) =>
+                  setEventForm({ ...eventForm, mode: e.target.value })
+                }
+              >
+                <option value="Online">Online</option>
+                <option value="In Person">In Person</option>
+                <option value="Hybrid">Hybrid</option>
+              </select>
+
+              {/* AVAILABILITY */}
+              <input
+                type="number"
+                min="0"
+                placeholder="Availability"
+                className="border p-3 rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none"
+                value={eventForm.availability}
+                onChange={(e) =>
+                  setEventForm({
+                    ...eventForm,
+                    availability: Math.max(0, Number(e.target.value || 0)),
+                  })
+                }
+              />
+
             </div>
 
             <input
@@ -572,72 +623,125 @@ const ManageEvents = () => {
               <table className="w-full text-sm">
                 <thead className="bg-indigo-600 text-white">
                   <tr>
-                    {["Code", "Title", "Date", "Time", "Fees", "Capacity", "Age", "Actions"].map(
-                      (h) => (
-                        <th key={h} className="p-3 text-center">
-                          {h}
-                        </th>
-                      )
-                    )}
+                    {[
+                      "Code",
+                      "Title",
+                      "Schedule",
+                      "Mode",
+                      "Pricing & Slots",
+                      "Age",
+                      "Actions",
+                    ].map((h) => (
+                      <th key={h} className="p-3 text-center text-xs font-semibold uppercase tracking-wide">
+                        {h}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
+
                 <tbody>
                   {events.map((e) => (
                     <tr key={e._id} className="border-t hover:bg-gray-50">
                       {/* CODE */}
-                      <td className="p-3 text-center font-semibold text-indigo-600">
+                      <td className="p-3 text-center font-semibold text-indigo-600 text-sm">
                         {e.code || "-"}
                       </td>
 
-                      <td className="p-3 text-center font-medium">{e.title}</td>
-                      <td className="text-center">{e.date}</td>
-
-                      <td className="text-center">
-                        {format12Hour(e.startTime)} – {format12Hour(e.endTime)}
+                      {/* TITLE */}
+                      <td className="p-3 text-center font-medium text-sm">
+                        {e.title}
                       </td>
 
-                      <td className="text-center">{e.fees || "-"}</td>
-                      <td className="text-center">{e.capacity || "-"}</td>
-                      <td className="text-center">{e.ageGroup || "-"}</td>
-
-                      <td className="flex gap-2 justify-center p-2">
-                        <button
-                          onClick={() => editEvent(e)}
-                          className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded"
-                        >
-                          Edit
-                        </button>
-
-                        <button
-                          onClick={() => navigate("/dashboard/manage-pages")}
-                          className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded"
-                        >
-                          Manage Page
-                        </button>
-
-                        <button
-                          onClick={async () => {
-                            const res = await Swal.fire({
-                              title: "Delete Event?",
-                              text: "This event will be permanently deleted",
-                              icon: "warning",
-                              showCancelButton: true,
-                              confirmButtonColor: "#dc2626",
-                            });
-
-                            if (res.isConfirmed) {
-                              await axios.delete(`${API}/events/${e._id}`);
-                              fetchAll();
-                              Swal.fire("Deleted!", "Event removed", "success");
-                            }
-                          }}
-                          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-                        >
-                          Delete
-                        </button>
+                      {/* SCHEDULE */}
+                      <td className="p-3 text-center text-sm">
+                        <div className="flex flex-col gap-0.5">
+                          <span className="font-medium text-gray-800">{e.date}</span>
+                          <span className="text-gray-600">
+                            {format12Hour(e.startTime)} – {format12Hour(e.endTime)}
+                          </span>
+                          <span className="text-xs text-gray-500 truncate">
+                            {e.location || "Location N/A"}
+                          </span>
+                        </div>
                       </td>
 
+                      {/* MODE */}
+                      <td className="p-3 text-center">
+                        <span className="px-2 py-0.5 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700">
+                          {e.mode || "-"}
+                        </span>
+                      </td>
+
+                      {/* PRICING + SLOTS */}
+                      <td className="p-3 text-center text-sm">
+                        <div className="flex flex-col gap-0.5">
+                          <span className="text-gray-700">
+                            Fees: {e.fees || "-"}
+                          </span>
+
+                          <span className="text-gray-600 text-xs">
+                            Cap: {e.capacity || "-"}
+                          </span>
+
+                          <span
+                            className={`text-xs font-semibold ${e.availability === 0
+                              ? "text-red-600"
+                              : e.availability < 5
+                                ? "text-yellow-600"
+                                : "text-green-600"
+                              }`}
+                          >
+                            Avl: {e.availability ?? "-"}
+                          </span>
+                        </div>
+                      </td>
+
+                      {/* AGE */}
+                      <td className="p-3 text-center text-sm">
+                        {e.ageGroup || "-"}
+                      </td>
+
+                      {/* ACTIONS */}
+                      <td className="p-3">
+                        <div className="flex gap-2 justify-center">
+                          <button
+                            onClick={() => editEvent(e)}
+                            className="px-3 py-1 text-xs rounded bg-yellow-500 hover:bg-yellow-600 text-white"
+                          >
+                            Edit
+                          </button>
+
+                          <button
+                            onClick={() => navigate("/dashboard/manage-pages")}
+                            className="px-3 py-1 text-xs rounded bg-indigo-600 hover:bg-indigo-700 text-white"
+                          >
+                            Page
+                          </button>
+
+                          <button
+                            onClick={async () => {
+                              const res = await Swal.fire({
+                                title: "Delete Event?",
+                                text: "This event will be permanently deleted",
+                                icon: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#dc2626",
+                              });
+
+                              if (res.isConfirmed) {
+                                await axios.delete(`${API}/events/${e._id}`);
+                                fetchAll();
+                                Swal.fire("Deleted!", "Event removed", "success");
+                              }
+                            }}
+                            className="px-3 py-1 text-xs rounded bg-red-600 hover:bg-red-700 text-white"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </td>
                     </tr>
+
                   ))}
                 </tbody>
               </table>

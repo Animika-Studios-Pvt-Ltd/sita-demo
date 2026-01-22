@@ -14,12 +14,23 @@ const eventSchema = new mongoose.Schema(
     startTime: { type: String, required: true },  // HH:mm
     endTime: { type: String, required: true },    // HH:mm
 
+    location: { type: String },
+    mode: { type: String },
+    availability: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+
     fees: { type: String },
     capacity: { type: String },
     ageGroup: { type: String },
     description: { type: String },
 
-    bookingUrl: { type: String, required: true },
+    bookingUrl: {
+      type: String,
+      default: null,
+    },
 
     imageUrl: { type: String },
   },
