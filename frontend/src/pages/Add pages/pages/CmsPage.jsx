@@ -192,7 +192,6 @@ export default function CmsPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
       <main>
         {cms.sections.map((section, i) => {
           console.log(`🎨 Rendering section ${i}:`, section.key, section.content);
