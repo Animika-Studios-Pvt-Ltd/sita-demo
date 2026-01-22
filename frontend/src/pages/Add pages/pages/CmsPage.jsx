@@ -153,7 +153,6 @@ export default function CmsPage() {
   if (!cms || error) {
     return (
       <div className="flex flex-col min-h-screen">
-        <Header />
         <div className="flex-1 flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
           <div className="text-center max-w-md mx-auto p-8">
             <div className="text-gray-400 mb-6">
@@ -182,7 +181,6 @@ export default function CmsPage() {
             </div>
           </div>
         </div>
-        <Footer />
       </div>
     );
   }
