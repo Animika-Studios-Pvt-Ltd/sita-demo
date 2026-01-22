@@ -167,6 +167,7 @@ const ManageEvents = () => {
     capacity: "",
     ageGroup: "",
     description: "",
+    bookingUrl: "",
     date: null,
     startTime: "",
     endTime: "",
@@ -221,6 +222,10 @@ const ManageEvents = () => {
 
     if (toMinutes(eventForm.startTime) >= toMinutes(eventForm.endTime))
       return errorAlert("Invalid time", "End time must be after start");
+
+    if (!eventForm.bookingUrl.trim()) {
+      return errorAlert("Missing booking URL", "Booking URL is required");
+    }
 
     const date = toDateStr(eventForm.date);
 
@@ -278,6 +283,7 @@ const ManageEvents = () => {
       capacity: e.capacity || "",
       ageGroup: e.ageGroup || "",
       description: e.description || "",
+      bookingUrl: e.bookingUrl || "",
       date: new Date(e.date),
       startTime: e.startTime,
       endTime: e.endTime,
@@ -416,6 +422,15 @@ const ManageEvents = () => {
                 />
               ))}
             </div>
+
+            <input
+              placeholder="Booking URL * (example: Yoga-Therapy)"
+              className="border p-3 rounded-lg w-full mb-4 focus:ring-2 focus:ring-indigo-400 outline-none"
+              value={eventForm.bookingUrl}
+              onChange={(e) =>
+                setEventForm({ ...eventForm, bookingUrl: e.target.value })
+              }
+            />
 
             <textarea
               placeholder="Description"

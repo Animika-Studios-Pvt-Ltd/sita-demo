@@ -19,7 +19,7 @@ const eventSchema = new mongoose.Schema(
     ageGroup: { type: String },
     description: { type: String },
 
-    isBlocked: { type: Boolean, default: false },
+    bookingUrl: { type: String, required: true },
 
     imageUrl: { type: String },
   },

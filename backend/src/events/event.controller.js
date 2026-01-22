@@ -63,7 +63,14 @@ const upsertEvent = async (req, res) => {
       capacity,
       ageGroup,
       description,
+      bookingUrl, // ✅ NEW
     } = req.body;
+
+    if (!bookingUrl) {
+      return res.status(400).json({
+        message: "Booking URL is required",
+      });
+    }
 
     // ✅ Auto-generate code on CREATE
     if (!id) {
@@ -104,6 +111,7 @@ const upsertEvent = async (req, res) => {
       capacity,
       ageGroup,
       description,
+      bookingUrl,
     };
 
     const event = id
