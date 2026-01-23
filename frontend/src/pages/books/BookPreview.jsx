@@ -198,11 +198,6 @@ const BookPreview = () => {
                 <h1 className="text-[32px] sm:text-[34px] md:text-[50px] font-playfair font-light text-black leading-snug mb-4 mt-4 text-center">
                     {book.title} Preview
                 </h1>
-                <img
-                    src="/motif.webp"
-                    alt="feather"
-                    className="absolute bottom-0 w-20 sm:w-24 md:w-32 lg:w-32 h-auto opacity-15 pointer-events-none"
-                />
             </div>
 
             <div
@@ -340,12 +335,6 @@ function renderPage(page, index, book) {
             key={index}
             className="relative p-6 sm:p-10 bg-white rounded-2xl flex flex-col justify-between border border-gray-100 shadow-sm overflow-hidden"
         >
-            <img
-                src="/motif.webp"
-                alt="motif"
-                className="absolute inset-0 m-auto opacity-10 pointer-events-none object-contain
-             w-32 sm:w-40 md:w-52 lg:w-60 xl:w-72"
-            />
             <div className="relative z-10">
                 {page.chapterTitle && (
                     <h3 className="text-center text-2xl font-semibold mb-4 text-[#c86836]">

@@ -91,11 +91,6 @@ const BlogsPage = () => {
           <h1 className="text-[32px] sm:text-[34px] md:text-[50px] font-playfair font-light text-black font-display leading-snug mb-1 mt-5 relative">
             <span className="relative inline-block">
               Blogs By Sita
-              <img
-                src="/motif.webp"
-                alt="feather"
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 sm:w-24 md:w-32 lg:w-32 h-auto opacity-15 pointer-events-none z-0"
-              />
             </span>
           </h1>
         </div>

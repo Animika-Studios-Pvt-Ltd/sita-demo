@@ -161,11 +161,6 @@ const BlogDetailPage = () => {
               data-aos-duration="1300">
               <h1 className="relative text-[30px] sm:text-[34px] md:text-[50px] font-playfair font-light leading-snug inline-block">
                 {blog.title}
-                <img
-                  src="/motif.webp"
-                  alt="feather"
-                  className="absolute inset-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 sm:w-24 md:w-32 lg:w-32 h-auto opacity-15 invert -z-10"
-                />
               </h1>
             </div>
           </div>
@@ -274,11 +269,6 @@ const BlogDetailPage = () => {
               data-aos-duration="1300">
               Latest Blogs
             </h1>
-            <img
-              src="/motif.webp"
-              alt="feather"
-              className="absolute left-1/2 -bottom-1 transform -translate-x-1/2 w-20 sm:w-24 md:w-32 lg:w-32 h-auto [opacity:0.15] mb-1"
-            />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-10 gap-10">

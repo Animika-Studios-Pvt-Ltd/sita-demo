@@ -149,13 +149,6 @@ const DynamicPage = ({ page: propPage }) => {
               <h1 className="text-[28px] xs:text-[26px] sm:text-[30px] md:text-[36px] lg:text-[50px] font-playfair font-light text-black leading-snug mb-2 break-words">
                 {sec.title}
               </h1>
-              {page.motif && (
-                <img
-                  src={page.motif || "/motif.webp"}
-                  alt="motif"
-                  className="absolute left-1/2 -bottom-5 transform -translate-x-1/2 w-16 xs:w-14 sm:w-20 md:w-24 lg:w-32 opacity-15 pointer-events-none select-none"
-                />
-              )}
             </div>
           )}
 
@@ -253,13 +246,6 @@ const DynamicPage = ({ page: propPage }) => {
         <h1 className="text-[28px] xs:text-[26px] sm:text-[30px] md:text-[36px] lg:text-[50px] font-playfair font-light text-black leading-snug mb-2 break-words">
           {page.title}
         </h1>
-        {page.title && page.motif && (
-          <img
-            src={page.motif || "/motif.webp"}
-            alt="motif"
-            className="absolute left-1/2 -bottom-4 transform -translate-x-1/2 w-16 xs:w-14 sm:w-20 md:w-24 lg:w-32 opacity-15"
-          />
-        )}
       </div>
 
       {["top", "top-left", "top-right"].includes(page.bannerPosition)

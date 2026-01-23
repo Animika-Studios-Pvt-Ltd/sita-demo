@@ -235,11 +235,6 @@ const OrderPage = () => {
             <h1 className="text-[32px] sm:text-[34px] md:text-[50px] font-playfair font-light text-black font-display leading-snug">
               Your Orders
             </h1>
-            <img
-              src="/motif.webp"
-              alt="feather"
-              className="absolute left-1/2 -bottom-4 transform -translate-x-1/2 w-20 sm:w-24 md:w-32 lg:w-32 h-auto opacity-15 mb-0"
-            />
           </div>
 
           <div
@@ -276,11 +271,6 @@ const OrderPage = () => {
           <h1 className="text-[32px] sm:text-[34px] md:text-[50px] font-playfair font-light text-black font-display leading-snug">
             Your Orders
           </h1>
-          <img
-            src="/motif.webp"
-            alt="feather"
-            className="absolute left-1/2 -bottom-4 transform -translate-x-1/2 w-20 sm:w-24 md:w-32 lg:w-32 h-auto opacity-15 mb-0"
-          />
         </div>
 
         {ordersWithImages.map((order, index) => (

@@ -98,11 +98,6 @@ const LetterFromLangshott = () => {
           <h1 className="text-[28px] sm:text-[32px] md:text-[40px] lg:text-[50px] font-playfair font-light text-black leading-snug mb-4 mt-4">
             Letters from Langshott
           </h1>
-          <img
-            src="/motif.webp"
-            alt="feather"
-            className="absolute left-1/2 -bottom-1 transform -translate-x-1/2 w-16 sm:w-20 md:w-24 lg:w-32 h-auto [opacity:0.15] mb-2"
-          />
         </div>
 
         <div

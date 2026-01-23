@@ -737,11 +737,6 @@ const CheckoutPage = () => {
             <h1 className="text-[32px] sm:text-[34px] md:text-[50px] font-playfair font-light text-black font-display leading-snug mb-4 mt-10">
               Checkout
             </h1>
-            <img
-              src="/motif.webp"
-              alt="feather"
-              className="absolute left-1/2 -bottom-1 transform -translate-x-1/2 w-20 sm:w-24 md:w-32 lg:w-32 h-auto [opacity:0.15] mb-1"
-            />
           </div>
 
           <div
