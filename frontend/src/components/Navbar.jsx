@@ -726,7 +726,7 @@ const Navbar = () => {
                 {/* Foundation */}
                 <li className="navbar-main-menu relative">
                   <div className="flex items-center gap-1 cursor-pointer">
-                    <Link to="/foundation">THE FOUNDATION</Link>
+                    <Link to="/foundation">THE SITA FACTOR</Link>
                     {FoundationSubPages.length > 0 && (
                       <ExpandMoreIcon
                         fontSize="small"

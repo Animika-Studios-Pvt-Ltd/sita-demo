@@ -108,7 +108,7 @@ const Footer = () => {
                 )}
               </li>
               <li>
-                <Link to="/foundation">The Foundation</Link>
+                <Link to="/foundation">THE SITA FACTOR</Link>
               </li>
               <li>
                 {isBlog ? (
