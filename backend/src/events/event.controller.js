@@ -55,82 +55,97 @@ const upsertEvent = async (req, res) => {
     const { id } = req.params;
 
     let {
-      code,
       title,
       date,
       startTime,
       endTime,
       location,
       mode,
-      availability,
       fees,
       capacity,
       ageGroup,
       description,
-      bookingUrl, // optional now
+      bookingUrl,
     } = req.body;
 
-    // ✅ Auto-generate code on CREATE
+    capacity = Number(capacity);
+    if (isNaN(capacity) || capacity < 0) capacity = 0;
+
+    /* ================= CREATE EVENT ================= */
     if (!id) {
-      code = await generateEventCode(title, date);
+      const code = await generateEventCode(title, date);
+
+      const event = await Event.create({
+        code,
+        title,
+        date,
+        startTime,
+        endTime,
+        location,
+        mode,
+        fees,
+        capacity,
+        availability: capacity, // ✅ auto-set
+        ageGroup,
+        description,
+        bookingUrl: bookingUrl || null,
+      });
+
+      return res.json({
+        message: "Event created",
+        event,
+      });
     }
 
-    availability = Number(availability);
+    /* ================= UPDATE EVENT ================= */
+    // 👇👇👇 THIS IS WHERE YOUR CODE BELONGS 👇👇👇
 
-    if (isNaN(availability) || availability < 0) {
-      availability = 0;
+    const existingEvent = await Event.findById(id);
+    if (!existingEvent) {
+      return res.status(404).json({ message: "Event not found" });
     }
 
-    // ⛔ Blocked slot check
-    const blockedSlots = await BlockedDate.find({ date });
-    for (const slot of blockedSlots) {
-      if (isTimeOverlap(startTime, endTime, slot.startTime, slot.endTime)) {
-        return res.status(403).json({
-          message: `Blocked: ${slot.reason}`,
-        });
-      }
+    const bookedCount =
+      existingEvent.capacity - existingEvent.availability;
+
+    // ❌ Prevent shrinking below existing bookings
+    if (capacity < bookedCount) {
+      return res.status(409).json({
+        message: `Cannot reduce capacity below ${bookedCount} bookings`,
+      });
     }
 
-    // ⛔ Event overlap check
-    const events = await Event.find({
-      date,
-      ...(id && { _id: { $ne: id } }),
+    const newAvailability = capacity - bookedCount;
+
+    const event = await Event.findByIdAndUpdate(
+      id,
+      {
+        title,
+        date,
+        startTime,
+        endTime,
+        location,
+        mode,
+        fees,
+        capacity,
+        availability: newAvailability, // ✅ recalculated
+        ageGroup,
+        description,
+        bookingUrl: bookingUrl || null,
+      },
+      { new: true }
+    );
+
+    res.json({
+      message: "Event updated",
+      event,
     });
-
-    for (const ev of events) {
-      if (isTimeOverlap(startTime, endTime, ev.startTime, ev.endTime)) {
-        return res.status(409).json({
-          message: "Time slot already booked",
-        });
-      }
-    }
-
-    const payload = {
-      code,
-      title,
-      date,
-      startTime,
-      endTime,
-      location,
-      mode,
-      fees,
-      capacity,
-      availability,
-      ageGroup,
-      description,
-      bookingUrl: bookingUrl || null, // ✅ safe default
-    };
-
-    const event = id
-      ? await Event.findByIdAndUpdate(id, payload, { new: true })
-      : await Event.create(payload);
-
-    res.json({ message: "Saved successfully", event });
   } catch (err) {
     console.error("❌ Event save error:", err);
     res.status(500).json({ message: err.message });
   }
 };
+
 
 
 /**

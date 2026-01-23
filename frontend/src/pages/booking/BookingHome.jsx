@@ -4,77 +4,100 @@ import { Link } from "react-router-dom";
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const BookingHome = () => {
-    const [pages, setPages] = useState([]);
+    const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchPages = async () => {
-            try {
-                const res = await fetch(`${API_URL}/api/pages`);
-                const data = await res.json();
-                // Filter for pages designated for booking subdomain
-                const bookingPages = data.filter(
-                    (p) =>
-                        p.displayLocations &&
-                        p.displayLocations.includes("booking") &&
-                        !p.suspended
-                );
-                setPages(bookingPages);
-            } catch (err) {
-                console.error("Failed to fetch pages", err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchPages();
+        fetch(`${API_URL}/api/events`)
+            .then((res) => res.json())
+            .then((data) => setEvents(data))
+            .finally(() => setLoading(false));
     }, []);
 
     if (loading) {
         return (
             <div className="flex justify-center items-center min-h-screen">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                <div className="animate-spin h-10 w-10 border-4 border-indigo-500 border-t-transparent rounded-full" />
             </div>
         );
     }
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-4xl font-playfair text-center mb-12">Events & Workshops</h1>
+        <div className="max-w-7xl mx-auto px-4 py-10">
+            <h1 className="text-4xl text-center font-serif text-red-700 mb-10">
+                WORKSHOP CALENDAR
+            </h1>
 
-            {pages.length === 0 ? (
-                <div className="text-center text-gray-500 text-xl">
-                    No upcoming events or workshops at the moment.
-                </div>
+            {events.length === 0 ? (
+                <p className="text-center text-gray-500">
+                    No workshops available
+                </p>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {pages.map((page) => (
-                        <div key={page._id} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105">
-                            {page.bannerImage && (
-                                <div className="h-48 overflow-hidden">
-                                    <img
-                                        src={page.bannerImage.src}
-                                        alt={page.bannerImage.alt || page.title}
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                            )}
-                            <div className="p-6">
-                                <h2 className="text-2xl font-semibold mb-3 font-playfair">{page.title}</h2>
-                                {page.metaDescription && (
-                                    <p className="text-gray-600 mb-4 line-clamp-3">
-                                        {page.metaDescription}
-                                    </p>
-                                )}
-                                <Link
-                                    to={`/${page.slug}`}
-                                    className="inline-block px-6 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition-colors"
-                                >
-                                    View Details
-                                </Link>
-                            </div>
-                        </div>
-                    ))}
+                <div className="overflow-x-auto">
+                    <table className="w-full border border-gray-300 text-sm text-center">
+                        <thead className="bg-gray-100 font-semibold">
+                            <tr>
+                                <th className="border px-3 py-2">Code</th>
+                                <th className="border px-3 py-2">Workshop Title</th>
+                                <th className="border px-3 py-2">Workshop Date</th>
+                                <th className="border px-3 py-2">Workshop Location</th>
+                                <th className="border px-3 py-2">Workshop Mode</th>
+                                <th className="border px-3 py-2">Fees</th>
+                                <th className="border px-3 py-2">Capacity</th>
+                                <th className="border px-3 py-2">Availability</th>
+                                <th className="border px-3 py-2">Age Group</th>
+                                <th className="border px-3 py-2">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {events.map((event) => (
+                                <tr key={event._id} className="hover:bg-gray-50">
+                                    <td className="border px-3 py-2">{event.code}</td>
+                                    <td className="border px-3 py-2 font-medium">
+                                        {event.title}
+                                    </td>
+                                    <td className="border px-3 py-2">{event.date}</td>
+                                    <td className="border px-3 py-2">
+                                        {event.location || "-"}
+                                    </td>
+                                    <td className="border px-3 py-2">
+                                        {event.mode || "-"}
+                                    </td>
+                                    <td className="border px-3 py-2">
+                                        {event.fees || "-"}
+                                    </td>
+                                    <td className="border px-3 py-2">
+                                        {event.capacity || "-"}
+                                    </td>
+                                    <td className="border px-3 py-2">
+                                        {event.availability ?? "-"}
+                                    </td>
+                                    <td className="border px-3 py-2">
+                                        {event.ageGroup || "-"}
+                                    </td>
+                                    <td className="border px-3 py-2">
+                                        {Number(event.availability) === 0 ? (
+                                            <span className="text-red-600 font-semibold">
+                                                Booking Closed
+                                            </span>
+                                        ) : event.bookingUrl ? (
+                                            <Link
+                                                to={`/${event.bookingUrl}`}
+                                                className="inline-block px-4 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                                            >
+                                                Book Now
+                                            </Link>
+                                        ) : (
+                                            <span className="inline-block px-4 py-1 bg-lime-600 text-white rounded">
+                                                Coming Soon
+                                            </span>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             )}
         </div>

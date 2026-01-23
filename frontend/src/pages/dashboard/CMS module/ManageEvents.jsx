@@ -457,22 +457,6 @@ const ManageEvents = () => {
                 <option value="In Person">In Person</option>
                 <option value="Hybrid">Hybrid</option>
               </select>
-
-              {/* AVAILABILITY */}
-              <input
-                type="number"
-                min="0"
-                placeholder="Availability"
-                className="border p-3 rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none"
-                value={eventForm.availability}
-                onChange={(e) =>
-                  setEventForm({
-                    ...eventForm,
-                    availability: Math.max(0, Number(e.target.value || 0)),
-                  })
-                }
-              />
-
             </div>
 
             <input

@@ -16,14 +16,19 @@ const eventSchema = new mongoose.Schema(
 
     location: { type: String },
     mode: { type: String },
+    
+    capacity: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+
     availability: {
       type: Number,
-      default: 0,
       min: 0,
     },
 
     fees: { type: String },
-    capacity: { type: String },
     ageGroup: { type: String },
     description: { type: String },
 
