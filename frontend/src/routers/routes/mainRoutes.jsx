@@ -4,6 +4,8 @@ import LetterFromLangshott from "../../pages/letters/letter-from-langshott";
 import Contact from "../../pages/contact/contact";
 import DynamicPage from "../../pages/Add pages/DynamicPage";
 import Publications from "../../pages/publications/Publications";
+import EventList from "../../pages/events/EventList";
+import EventDetail from "../../pages/events/EventDetail";
 import CartPage from "../../pages/books/CartPage"; // Kept for main domain fallback/access if desired, or remove if strict separation
 // Actually, strict separation is better. Removing Cart/Checkout from Main. 
 // Re-importing only what is strictly Main.
@@ -32,6 +34,9 @@ export const mainRoutes = [
             // Publications is effectively "The Store" listing. 
             // If we want it on Main domain too as "Publications" page:
             { path: "publications", element: <Publications /> },
+
+            { path: "events", element: <EventList /> },
+            { path: "events/:id", element: <EventDetail /> },
 
             { path: "letters", element: <LetterFromLangshott /> },
 

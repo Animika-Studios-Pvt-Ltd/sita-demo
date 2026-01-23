@@ -1,5 +1,6 @@
 const Event = require("./event.model");
 const { uploadToCloudinary } = require("../config/cloudinary");
+const Page = require("../pages/pages.model");
 const BlockedDate = require("../blockedDates/blockedDate.model");
 
 
@@ -61,12 +62,25 @@ const upsertEvent = async (req, res) => {
       endTime,
       location,
       mode,
-      fees,
+      fees,   // User input string (e.g. "500")
+      price,  // User input number (e.g. 500)
       capacity,
       ageGroup,
       description,
       bookingUrl,
     } = req.body;
+
+    // Unified Price/Fees Logic:
+    // If 'price' is provided, use it. If 'fees' is provided, try to parse it as price.
+    // 'fees' will be stored as the string representation of the price.
+
+    let finalPrice = Number(price);
+    if (isNaN(finalPrice)) {
+      finalPrice = Number(fees) || 0;
+    }
+
+    // Ensure fees matches price for display consistency
+    fees = finalPrice.toString();
 
     capacity = Number(capacity);
     if (isNaN(capacity) || capacity < 0) capacity = 0;
@@ -84,12 +98,35 @@ const upsertEvent = async (req, res) => {
         location,
         mode,
         fees,
+        price: finalPrice,
         capacity,
         availability: capacity, // ✅ auto-set
         ageGroup,
         description,
         bookingUrl: bookingUrl || null,
       });
+
+      // ✅ AUTO-CREATE PAGE Logic
+      if (bookingUrl) {
+        try {
+          const existingPage = await Page.findOne({ slug: bookingUrl });
+          if (!existingPage) {
+            await Page.create({
+              title: title,
+              slug: bookingUrl,
+              content: `<h1>${title}</h1><p>${description || 'Event Details'}</p>`,
+              status: 'published', // or draft
+              sections: [],
+              metaTitle: title,
+              metaDescription: description
+            });
+            console.log(`✅ Auto-created page for event: ${bookingUrl}`);
+          }
+        } catch (pageErr) {
+          console.error("⚠️ Failed to auto-create page:", pageErr.message);
+          // Don't fail the event creation just because page creation failed
+        }
+      }
 
       return res.json({
         message: "Event created",
@@ -127,6 +164,7 @@ const upsertEvent = async (req, res) => {
         location,
         mode,
         fees,
+        price: finalPrice,
         capacity,
         availability: newAvailability, // ✅ recalculated
         ageGroup,

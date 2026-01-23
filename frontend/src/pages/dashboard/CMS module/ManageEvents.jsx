@@ -166,6 +166,7 @@ const ManageEvents = () => {
     location: "",
     mode: "Offline",
     fees: "",
+    price: "",
     capacity: "",
     availability: "",
     ageGroup: "",
@@ -285,6 +286,7 @@ const ManageEvents = () => {
       availability: e.availability || "",
 
       fees: e.fees || "",
+      price: e.price || "",
       capacity: e.capacity || "",
       ageGroup: e.ageGroup || "",
       description: e.description || "",
@@ -418,7 +420,7 @@ const ManageEvents = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
               {[
                 { label: "Title*", value: eventForm.title, key: "title" },
-                { label: "Fees", value: eventForm.fees, key: "fees" },
+                { label: "Price (INR)", value: eventForm.price, key: "price" },
                 { label: "Capacity", value: eventForm.capacity, key: "capacity" },
                 { label: "Age Group", value: eventForm.ageGroup, key: "ageGroup" },
               ].map((f) => (
@@ -612,7 +614,7 @@ const ManageEvents = () => {
                       "Title",
                       "Schedule",
                       "Mode",
-                      "Pricing & Slots",
+                      "Price & Slots",
                       "Age",
                       "Actions",
                     ].map((h) => (
@@ -659,8 +661,8 @@ const ManageEvents = () => {
                       {/* PRICING + SLOTS */}
                       <td className="p-3 text-center text-sm">
                         <div className="flex flex-col gap-0.5">
-                          <span className="text-gray-700">
-                            Fees: {e.fees || "-"}
+                          <span className="text-gray-700 font-bold">
+                            ₹{e.price || 0}
                           </span>
 
                           <span className="text-gray-600 text-xs">
@@ -689,6 +691,13 @@ const ManageEvents = () => {
                       <td className="p-3">
                         <div className="flex gap-2 justify-center">
                           <button
+                            onClick={() => navigate(`/dashboard/manage-events/${e._id}/bookings`)}
+                            className="px-3 py-1 text-xs rounded bg-purple-600 hover:bg-purple-700 text-white"
+                          >
+                            Bookings
+                          </button>
+
+                          <button
                             onClick={() => editEvent(e)}
                             className="px-3 py-1 text-xs rounded bg-yellow-500 hover:bg-yellow-600 text-white"
                           >
@@ -696,10 +705,16 @@ const ManageEvents = () => {
                           </button>
 
                           <button
-                            onClick={() => navigate("/dashboard/manage-pages")}
+                            onClick={() => {
+                              if (e.bookingUrl) {
+                                navigate(`/dashboard/cms/edit/${e.bookingUrl}`);
+                              } else {
+                                Swal.fire("No Page Linked", "This event does not have a Booking URL set.", "info");
+                              }
+                            }}
                             className="px-3 py-1 text-xs rounded bg-indigo-600 hover:bg-indigo-700 text-white"
                           >
-                            Page
+                            Edit Page
                           </button>
 
                           <button

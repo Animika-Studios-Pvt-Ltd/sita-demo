@@ -15,6 +15,7 @@ import {
   Type,
   Code,
   HelpCircle,
+  Ticket,
 } from "lucide-react";
 
 // Import form components
@@ -22,6 +23,7 @@ import HeroForm from "./forms/HeroForm";
 import FaqForm from "./forms/FaqForm";
 import HtmlForm from "./forms/HtmlForm";
 import LinksForm from "./forms/LinksForm";
+import BookingForm from "./forms/BookingForm";
 /* ================= GLASS BUTTON STYLES ================= */
 const glassBtn =
   "inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium " +
@@ -349,6 +351,7 @@ export default function EnhancedCmsEditor() {
                 <AddSectionButton icon={HelpCircle} label="FAQ" onClick={() => addSection("faq")} />
                 <AddSectionButton icon={Code} label="HTML" onClick={() => addSection("html")} />
                 <AddSectionButton icon={LinkIcon} label="Links" onClick={() => addSection("links")} />
+                <AddSectionButton icon={Ticket} label="Booking" onClick={() => addSection("booking")} />
               </div>
             </div>
 
@@ -375,6 +378,7 @@ export default function EnhancedCmsEditor() {
                               onUpdate={(field, value) => updateSection(section.id, field, value)}
                               isExpanded={expandedSections.has(section.id)}
                               onToggle={() => toggleSection(section.id)}
+                              pageSlug={pageSlug}
                             />
                           </div>
                         )}
@@ -433,13 +437,14 @@ function AddSectionButton({ icon: Icon, label, onClick }) {
 }
 
 // Section Card Component
-function SectionCard({ section, dragHandleProps, onDelete, onUpdate, isExpanded, onToggle }) {
+function SectionCard({ section, dragHandleProps, onDelete, onUpdate, isExpanded, onToggle, pageSlug }) {
   const getSectionIcon = (key) => {
     const icons = {
       hero: Type,
       faq: HelpCircle,
       html: Code,
       links: LinkIcon,
+      booking: Ticket,
     };
     const Icon = icons[key] || Type;
     return <Icon size={20} />;
@@ -451,6 +456,7 @@ function SectionCard({ section, dragHandleProps, onDelete, onUpdate, isExpanded,
       faq: "text-green-600 bg-green-50",
       html: "text-blue-600 bg-blue-50",
       links: "text-orange-600 bg-orange-50",
+      booking: "text-indigo-600 bg-indigo-50",
     };
     return colors[key] || "text-gray-600 bg-gray-50";
   };
@@ -506,6 +512,9 @@ function SectionCard({ section, dragHandleProps, onDelete, onUpdate, isExpanded,
           {section.key === "links" && (
             <LinksForm content={section.content} onUpdate={onUpdate} />
           )}
+          {section.key === "booking" && (
+            <BookingForm content={section.content} onUpdate={onUpdate} pageSlug={pageSlug} />
+          )}
         </div>
       )}
     </div>
@@ -549,8 +558,14 @@ function getDefaultContent(type) {
         { label: "Documentation", href: "/docs" },
         { label: "Support", href: "/support" },
         { label: "Blog", href: "/blog" },
+        { label: "Blog", href: "/blog" },
       ],
     },
+    booking: {
+      eventId: "",
+      buttonText: "Book Now",
+      alignment: "center"
+    }
   };
   return defaults[type] || {};
 }

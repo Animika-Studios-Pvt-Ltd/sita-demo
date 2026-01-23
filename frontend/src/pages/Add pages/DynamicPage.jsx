@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import parse from "html-react-parser";
+import BookingModal from "../../components/BookingModal";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -9,6 +10,16 @@ const DynamicPage = ({ page: propPage }) => {
   const [page, setPage] = useState(propPage || null);
   const [loading, setLoading] = useState(!propPage);
   const [error, setError] = useState(null);
+
+  // Modal State
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEventId, setSelectedEventId] = useState(null);
+
+  const openBooking = (eventId) => {
+    if (!eventId) return;
+    setSelectedEventId(eventId);
+    setIsModalOpen(true);
+  };
 
   useEffect(() => {
     if (propPage) return;
@@ -90,112 +101,150 @@ const DynamicPage = ({ page: propPage }) => {
   };
 
   const renderSections = () => {
-    return page.sections.map((sec, idx) => (
-      <div
-        key={idx}
-        className="max-w-8xl mx-auto mb-10 mt-0 p-4 sm:p-6 rounded-lg"
-        style={{ backgroundColor: sec.backgroundColor || "#fff" }}
-      >
-        {sec.title?.trim() && (
-          <div className="text-center mb-2 mt-4 relative inline-block w-full">
-            <h1 className="text-[28px] xs:text-[26px] sm:text-[30px] md:text-[36px] lg:text-[50px] font-playfair font-light text-black leading-snug mb-2 break-words">
-              {sec.title}
-            </h1>
-            {page.motif && (
-              <img
-                src={page.motif || "/motif.webp"}
-                alt="motif"
-                className="absolute left-1/2 -bottom-5 transform -translate-x-1/2 w-16 xs:w-14 sm:w-20 md:w-24 lg:w-32 opacity-15 pointer-events-none select-none"
-              />
+    if (!page.sections || !Array.isArray(page.sections)) return null;
+
+    return page.sections.map((sec, idx) => {
+      const key = (sec.key || "").toLowerCase();
+
+      // 1. BOOKING SECTION
+      if (key === 'booking' && sec.content) {
+        const alignClass = `text-${sec.content.alignment || 'center'}`;
+
+        return (
+          <div key={idx} className={`max-w-7xl mx-auto mb-10 p-4 ${alignClass}`}>
+            <button
+              onClick={() => openBooking(sec.content.eventId)}
+              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1"
+            >
+              {sec.content.buttonText || "Book Now"}
+            </button>
+          </div>
+        );
+      }
+
+      // 2. HERO SECTION
+      if (key === 'hero' && sec.content) {
+        return (
+          <div key={idx} className="bg-blue-600 text-white py-20 px-6 text-center mb-10 rounded-xl mx-4">
+            <h1 className="text-4xl font-bold mb-4">{sec.content.title}</h1>
+            <p className="text-xl opacity-90 mb-8">{sec.content.subtitle}</p>
+            {sec.content.primaryCta && (
+              <a href={sec.content.primaryCta.href} className="bg-white text-blue-600 px-6 py-3 rounded-full font-bold inline-block hover:bg-gray-100 transition">
+                {sec.content.primaryCta.label}
+              </a>
             )}
           </div>
-        )}
+        );
+      }
 
-        {sec.subtitle?.trim() && (
-          <h3 className="text-[14px] xs:text-[13px] sm:text-[16px] md:text-[18px] lg:text-[20px] font-Figtree font-regular leading-snug text-gray-600 italic text-center mb-4 px-2 sm:px-6">
-            {sec.subtitle}
-          </h3>
-        )}
-
+      // 3. GENERIC / LEGACY SECTIONS
+      return (
         <div
-          className={`flex flex-col gap-6 md:gap-8 items-center md:items-stretch md:flex-row md:justify-between flex-wrap ${sec.layout === "image-left"
+          key={idx}
+          className="max-w-8xl mx-auto mb-10 mt-0 p-4 sm:p-6 rounded-lg"
+          style={{ backgroundColor: sec.backgroundColor || "#fff" }}
+        >
+          {sec.title?.trim() && (
+            <div className="text-center mb-2 mt-4 relative inline-block w-full">
+              <h1 className="text-[28px] xs:text-[26px] sm:text-[30px] md:text-[36px] lg:text-[50px] font-playfair font-light text-black leading-snug mb-2 break-words">
+                {sec.title}
+              </h1>
+              {page.motif && (
+                <img
+                  src={page.motif || "/motif.webp"}
+                  alt="motif"
+                  className="absolute left-1/2 -bottom-5 transform -translate-x-1/2 w-16 xs:w-14 sm:w-20 md:w-24 lg:w-32 opacity-15 pointer-events-none select-none"
+                />
+              )}
+            </div>
+          )}
+
+          {sec.subtitle?.trim() && (
+            <h3 className="text-[14px] xs:text-[13px] sm:text-[16px] md:text-[18px] lg:text-[20px] font-Figtree font-regular leading-snug text-gray-600 italic text-center mb-4 px-2 sm:px-6">
+              {sec.subtitle}
+            </h3>
+          )}
+
+          <div
+            className={`flex flex-col gap-6 md:gap-8 items-center md:items-stretch md:flex-row md:justify-between flex-wrap ${sec.layout === "image-left"
               ? "md:flex-row"
               : sec.layout === "image-right"
                 ? "md:flex-row-reverse"
                 : ""
-            }`}
-        >
-          {sec.images?.map((img, i) => (
-            <div
-              key={i}
-              className={`flex-shrink-0 w-full md:w-auto ${img.alignment === "left"
+              }`}
+          >
+            {sec.images?.map((img, i) => (
+              <div
+                key={i}
+                className={`flex-shrink-0 w-full md:w-auto ${img.alignment === "left"
                   ? "self-start"
                   : img.alignment === "right"
                     ? "self-end"
                     : "self-center"
-                }`}
-            >
-              <img
-                src={img.src}
-                alt={img.alt}
-                className="rounded-lg object-cover w-full max-w-full xs:h-auto sm:h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px]"
-              />
-            </div>
-          ))}
-
-          {sec.contentBlocks && sec.contentBlocks.length > 0 && (
-            <div className="flex-1 w-full mt-4 md:w-auto min-w-0">
-              <div
-                className="mb-4 break-words text-sm sm:text-base md:text-base lg:text-lg p-2 sm:p-3 rounded-md"
-                style={{
-                  textAlign: sec.contentBlocks[0].alignment || "left",
-                  backgroundColor: sec.backgroundColor || "transparent",
-                }}
+                  }`}
               >
-                {parse(sec.contentBlocks[0].text, {
-                  replace: (domNode) => {
-                    if (domNode.attribs?.style) {
-                      domNode.attribs.style = domNode.attribs.style
-                        .split(";")
-                        .filter((s) => !s.includes("background"))
-                        .join(";");
-                    }
-                    return domNode;
-                  },
-                })}
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="rounded-lg object-cover w-full max-w-full xs:h-auto sm:h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px]"
+                />
               </div>
+            ))}
+
+            {sec.contentBlocks && sec.contentBlocks.length > 0 && (
+              <div className="flex-1 w-full mt-4 md:w-auto min-w-0">
+                <div
+                  className="mb-4 break-words text-sm sm:text-base md:text-base lg:text-lg p-2 sm:p-3 rounded-md"
+                  style={{
+                    textAlign: sec.contentBlocks[0].alignment || "left",
+                    backgroundColor: sec.backgroundColor || "transparent",
+                  }}
+                >
+                  {parse(sec.contentBlocks[0].text || "", {
+                    replace: (domNode) => {
+                      if (domNode.attribs?.style) {
+                        domNode.attribs.style = domNode.attribs.style
+                          .split(";")
+                          .filter((s) => !s.includes("background"))
+                          .join(";");
+                      }
+                      return domNode;
+                    },
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {sec.contentBlocks && sec.contentBlocks.length > 1 && (
+            <div className="mt-4 sm:mt-6 max-w-8xl mx-auto px-2 sm:px-4 md:px-0">
+              {sec.contentBlocks.slice(1).map((cb, i) => (
+                <div
+                  key={i}
+                  className="mb-4 break-words text-sm sm:text-base md:text-base lg:text-lg p-2 sm:p-3 rounded-md"
+                  style={{
+                    textAlign: cb.alignment || "left",
+                    backgroundColor: sec.backgroundColor || "transparent",
+                  }}
+                >
+                  {parse(cb.text || "", {
+                    replace: (domNode) => {
+                      if (domNode.attribs?.style) {
+                        domNode.attribs.style = domNode.attribs.style
+                          .split(";")
+                          .filter((s) => !s.includes("background"))
+                          .join(";");
+                      }
+                      return domNode;
+                    },
+                  })}
+                </div>
+              ))}
             </div>
           )}
         </div>
-
-        {sec.contentBlocks && sec.contentBlocks.length > 1 && (
-          <div className="mt-4 sm:mt-6 max-w-8xl mx-auto px-2 sm:px-4 md:px-0">
-            {sec.contentBlocks.slice(1).map((cb, i) => (
-              <div
-                key={i}
-                className="mb-4 break-words text-sm sm:text-base md:text-base lg:text-lg p-2 sm:p-3 rounded-md"
-                style={{
-                  textAlign: cb.alignment || "left",
-                  backgroundColor: sec.backgroundColor || "transparent",
-                }}
-              >
-                {parse(cb.text, {
-                  replace: (domNode) => {
-                    if (domNode.attribs?.style) {
-                      domNode.attribs.style = domNode.attribs.style
-                        .split(";")
-                        .filter((s) => !s.includes("background"))
-                        .join(";");
-                    }
-                    return domNode;
-                  },
-                })}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    ));
+      );
+    });
   };
 
   return (
@@ -220,6 +269,12 @@ const DynamicPage = ({ page: propPage }) => {
       {renderSections()}
 
       {page.bannerPosition === "bottom" && renderBanner()}
+
+      <BookingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        eventId={selectedEventId}
+      />
     </div>
   );
 };

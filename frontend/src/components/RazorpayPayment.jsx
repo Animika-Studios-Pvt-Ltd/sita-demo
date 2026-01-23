@@ -1,93 +1,73 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 
-const RazorpayPayment = ({ amount, bookDetails, onSuccess }) => {
-  const [loading, setLoading] = useState(false);
+const RazorpayPayment = ({
+  amount,
+  currency = "INR",
+  orderId,
+  name = "Sita",
+  description,
+  image = "https://res.cloudinary.com/duq4lad3e/image/upload/v1758535613/banner/nghvs5xkhliotx6ljd2h.webp",
+  onVerify,
+  onClose
+}) => {
 
-  const handlePayment = async () => {
-    setLoading(true);
+  useEffect(() => {
+    // Load Razorpay SDK
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
 
-    try {
-      const { data } = await axios.post(
-        'https://bookstore-backend-hshq.onrender.com/api/payment/create-order',
-        {
-          amount: amount,
-          receipt: `book_${Date.now()}`,
-          notes: {
-            book: bookDetails?.title || 'Book Purchase',
-          },
-        }
-      );
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
-      if (!data.success) {
-        alert('Failed to create order');
-        setLoading(false);
-        return;
-      }
-
-      const options = {
-        key: data.key,
-        amount: data.amount,
-        currency: data.currency,
-        name: 'Sita',
-        description: bookDetails?.title || 'Book Purchase',
-        image: 'https://res.cloudinary.com/duq4lad3e/image/upload/v1758535613/banner/nghvs5xkhliotx6ljd2h.webp',
-        order_id: data.orderId,
-        handler: async function (response) {
-          try {
-            const verifyRes = await axios.post(
-              'https://bookstore-backend-hshq.onrender.com/api/payment/verify-payment',
-              {
-                orderId: data.orderId,
-                paymentId: response.razorpay_payment_id,
-                signature: response.razorpay_signature,
-              }
-            );
-
-            if (verifyRes.data.success) {
-              alert('Payment Successful!');
-              if (onSuccess) {
-                onSuccess(response.razorpay_payment_id);
-              }
-            } else {
-              alert('Payment verification failed');
-            }
-          } catch (error) {
-            console.error('Verification error:', error);
-            alert('Payment verification failed');
-          }
-        },
-        prefill: {
-          name: '',
-          email: '',
-          contact: '',
-        },
-        theme: {
-          color: '#1a202c',
-        },
-        modal: {
-          ondismiss: function () {
-            setLoading(false);
-          },
-        },
-      };
-      const razorpay = new window.Razorpay(options);
-      razorpay.open();
-      setLoading(false);
-    } catch (error) {
-      console.error('Payment Error:', error);
-      alert('Payment failed. Please try again.');
-      setLoading(false);
+  const handlePayment = () => {
+    if (!window.Razorpay) {
+      alert("Razorpay SDK not loaded. Please check your internet connection.");
+      return;
     }
+
+    const options = {
+      key: "rzp_test_YourKeyHere", // Replace with your actual key or env variable if possible in frontend build
+      amount: amount * 100, // Amount is in paise, but if passed as orderId amount, this is ignored usually
+      currency: currency,
+      name: name,
+      description: description,
+      image: image,
+      order_id: orderId, // This is the Order ID created from Backend
+      handler: function (response) {
+        // Send response to parent to verify
+        if (onVerify) {
+          onVerify(response);
+        }
+      },
+      prefill: {
+        name: "",
+        email: "",
+        contact: "",
+      },
+      theme: {
+        color: "#4f46e5",
+      },
+      modal: {
+        ondismiss: function () {
+          if (onClose) onClose();
+        },
+      },
+    };
+
+    const razorpay = new window.Razorpay(options);
+    razorpay.open();
   };
 
   return (
     <button
       onClick={handlePayment}
-      disabled={loading}
-      className="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 disabled:opacity-50"
+      className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 font-semibold shadow-md transition-transform transform hover:-translate-y-0.5"
     >
-      {loading ? 'Processing...' : `Pay ₹${amount}`}
+      Pay ₹{amount}
     </button>
   );
 };

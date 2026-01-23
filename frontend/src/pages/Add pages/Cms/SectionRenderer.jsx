@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import BookingModal from '../../../components/BookingModal'; // Import BookingModal
 
 export default function SectionRenderer({ section }) {
   if (!section || !section.key) return null;
@@ -20,11 +21,42 @@ export default function SectionRenderer({ section }) {
       return <LinksSection content={content} />;
     case 'faq':
       return <FaqSection content={content} />;
+    case 'booking': // Added Booking Case
+      return <BookingSection content={content} />;
     case 'main':
       return <MainSection content={content} />;
     default:
       return null;
   }
+}
+
+// Booking Section Component
+function BookingSection({ content }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { eventId, buttonText = "Book Now", alignment = "center" } = content;
+
+  if (!eventId) return null;
+
+  return (
+    <>
+      <section className={`py-12 px-4 text-${alignment}`}>
+        <div className="container mx-auto">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 inline-block"
+          >
+            {buttonText}
+          </button>
+        </div>
+      </section>
+
+      <BookingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        eventId={eventId}
+      />
+    </>
+  );
 }
 
 // Hero Section Component
@@ -36,7 +68,7 @@ function HeroSection({ content }) {
     title = 'Welcome',
     subtitle = '',
     description = '',
-    
+
     // Background options
     backgroundType = 'color',
     backgroundColor = '#ffffff',
@@ -46,11 +78,11 @@ function HeroSection({ content }) {
     overlayEnabled = false,
     overlayOpacity = 50,
     textColor = '#000000',
-    
+
     // CTAs
     primaryCta = {},
     secondaryCta = {},
-    
+
     // Layout
     textAlign = 'center',
     height = 'medium',
@@ -112,7 +144,7 @@ function HeroSection({ content }) {
 
   const handleSecondaryClick = () => {
     const href = secondaryCta.href || secondaryCta.action;
-    
+
     if (href === 'hospitalLogin') {
       loginWithRedirect({
         authorizationParams: {
@@ -214,8 +246,8 @@ function HtmlSection({ content }) {
 
   // Handle both old (single content) and new (columns array) formats
   const hasColumns = content.columns && Array.isArray(content.columns) && content.columns.length > 0;
-  const columns = hasColumns 
-    ? content.columns 
+  const columns = hasColumns
+    ? content.columns
     : [{ id: 'col-1', content: content.content || '', colSize: 12 }];
 
   // Helper function to convert Bootstrap column size to Tailwind classes
@@ -265,8 +297,8 @@ function HtmlSection({ content }) {
           // Single column layout (backward compatible)
           <div
             className="html-content"
-            dangerouslySetInnerHTML={{ 
-              __html: columns[0]?.content || content.content || '' 
+            dangerouslySetInnerHTML={{
+              __html: columns[0]?.content || content.content || ''
             }}
           />
         )}
@@ -335,18 +367,18 @@ function FaqSection({ content }) {
     <section className={`${padding}`} style={{ backgroundColor }}>
       <div className="container mx-auto px-4">
         {title && (
-          <h2 
+          <h2
             className="text-3xl font-bold text-center mb-12"
             style={{ color: titleColor }}
           >
             {title}
           </h2>
         )}
-        
+
         <div className="max-w-3xl mx-auto space-y-4">
           {items.map((item, i) => (
-            <div 
-              key={i} 
+            <div
+              key={i}
               className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
               style={{ borderColor: accentColor + '30' }}
             >
@@ -354,30 +386,30 @@ function FaqSection({ content }) {
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
                 className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors"
               >
-                <span 
+                <span
                   className="font-semibold pr-4"
                   style={{ color: questionColor }}
                 >
                   {item.q}
                 </span>
                 {openIndex === i ? (
-                  <ChevronUp 
-                    className="w-5 h-5 flex-shrink-0" 
-                    style={{ color: accentColor }} 
+                  <ChevronUp
+                    className="w-5 h-5 flex-shrink-0"
+                    style={{ color: accentColor }}
                   />
                 ) : (
-                  <ChevronDown 
-                    className="w-5 h-5 flex-shrink-0" 
-                    style={{ color: accentColor }} 
+                  <ChevronDown
+                    className="w-5 h-5 flex-shrink-0"
+                    style={{ color: accentColor }}
                   />
                 )}
               </button>
               {openIndex === i && (
-                <div 
+                <div
                   className="p-4 border-t"
-                  style={{ 
+                  style={{
                     borderColor: accentColor + '30',
-                    backgroundColor: backgroundColor === '#ffffff' ? '#f9fafb' : backgroundColor 
+                    backgroundColor: backgroundColor === '#ffffff' ? '#f9fafb' : backgroundColor
                   }}
                 >
                   <p style={{ color: answerColor }}>{item.a}</p>

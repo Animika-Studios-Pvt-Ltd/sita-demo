@@ -16,7 +16,7 @@ const eventSchema = new mongoose.Schema(
 
     location: { type: String },
     mode: { type: String },
-    
+
     capacity: {
       type: Number,
       required: true,
@@ -29,6 +29,7 @@ const eventSchema = new mongoose.Schema(
     },
 
     fees: { type: String },
+    price: { type: Number, default: 0 },
     ageGroup: { type: String },
     description: { type: String },
 
