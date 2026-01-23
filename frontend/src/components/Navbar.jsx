@@ -216,74 +216,78 @@ const Navbar = () => {
                         </Link>
                       ))}
                   </div>
-                  {isAuthenticated ? (
-                    <>
-                      <IconButton
-                        onClick={handleUserClick}
-                        size="small"
-                        className="user-avatar">
-                        <Avatar
-                          className="navbar-avatar"
-                          src={currentUser?.picture}
-                          alt={currentUser?.name || currentUser?.email}>
-                          {currentUser?.name?.charAt(0).toUpperCase() ||
-                            currentUser?.email?.charAt(0).toUpperCase()}
-                        </Avatar>
-                      </IconButton>
-                      <Menu
-                        anchorEl={userAnchor}
-                        open={isUserOpen}
-                        onClose={handleUserClose}
-                        anchorOrigin={{
-                          vertical: "bottom",
-                          horizontal: "right",
-                        }}
-                        transformOrigin={{
-                          vertical: "top",
-                          horizontal: "right",
-                        }}
-                        classes={{ paper: "navbar-menu-dropdown" }}>
-                        <MenuItem
-                          component={Link}
-                          to="/my-profile"
-                          onClick={handleUserClose}
-                          className="navbar-menu-item">
-                          Profile
-                        </MenuItem>
-                        <MenuItem
-                          component={Link}
-                          to="/orders"
-                          onClick={handleUserClose}
-                          className="navbar-menu-item">
-                          My Orders
-                        </MenuItem>
-                        {/* <MenuItem component={Link} to="/cart" onClick={handleUserClose} className="navbar-menu-item">
-                          Cart
-                        </MenuItem>
-                        <MenuItem component={Link} to="/checkout" onClick={handleUserClose} className="navbar-menu-item">
-                          Checkout
-                        </MenuItem> */}
-                        <MenuItem
-                          onClick={handleLogOut}
-                          className="navbar-menu-item">
-                          Logout
-                        </MenuItem>
-                      </Menu>
-                    </>
-                  ) : (
-                    <button
-                      onClick={() => loginWithRedirect()}
-                      className="login-btn"
-                      aria-label="Login">
-                      <PersonOutlineIcon className="icon" />
-                    </button>
+                  {(currentSubdomain === 'store' || currentSubdomain === 'booking') && (
+                    isAuthenticated ? (
+                      <>
+                        <IconButton
+                          onClick={handleUserClick}
+                          size="small"
+                          className="user-avatar">
+                          <Avatar
+                            className="navbar-avatar"
+                            src={currentUser?.picture}
+                            alt={currentUser?.name || currentUser?.email}>
+                            {currentUser?.name?.charAt(0).toUpperCase() ||
+                              currentUser?.email?.charAt(0).toUpperCase()}
+                          </Avatar>
+                        </IconButton>
+                        <Menu
+                          anchorEl={userAnchor}
+                          open={isUserOpen}
+                          onClose={handleUserClose}
+                          anchorOrigin={{
+                            vertical: "bottom",
+                            horizontal: "right",
+                          }}
+                          transformOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                          }}
+                          classes={{ paper: "navbar-menu-dropdown" }}>
+                          <MenuItem
+                            component={Link}
+                            to="/my-profile"
+                            onClick={handleUserClose}
+                            className="navbar-menu-item">
+                            Profile
+                          </MenuItem>
+                          <MenuItem
+                            component={Link}
+                            to="/orders"
+                            onClick={handleUserClose}
+                            className="navbar-menu-item">
+                            My Orders
+                          </MenuItem>
+                          {/* <MenuItem component={Link} to="/cart" onClick={handleUserClose} className="navbar-menu-item">
+                            Cart
+                          </MenuItem>
+                          <MenuItem component={Link} to="/checkout" onClick={handleUserClose} className="navbar-menu-item">
+                            Checkout
+                          </MenuItem> */}
+                          <MenuItem
+                            onClick={handleLogOut}
+                            className="navbar-menu-item">
+                            Logout
+                          </MenuItem>
+                        </Menu>
+                      </>
+                    ) : (
+                      <button
+                        onClick={() => loginWithRedirect()}
+                        className="login-btn"
+                        aria-label="Login">
+                        <PersonOutlineIcon className="icon" />
+                      </button>
+                    )
                   )}
-                  <Link to="/cart" className="cart-link" aria-label="Cart">
-                    <ShoppingCartOutlinedIcon className="icon" />
-                    {cartItems.length > 0 && (
-                      <span className="cart-badge">{cartItems.length}</span>
-                    )}
-                  </Link>
+                  {currentSubdomain === 'store' && (
+                    <Link to="/cart" className="cart-link" aria-label="Cart">
+                      <ShoppingCartOutlinedIcon className="icon" />
+                      {cartItems.length > 0 && (
+                        <span className="cart-badge">{cartItems.length}</span>
+                      )}
+                    </Link>
+                  )}
                   <Link to="/contact" className="contact-link">
                     Contact Me
                   </Link>
