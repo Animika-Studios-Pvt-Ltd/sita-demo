@@ -379,7 +379,7 @@ const ManageEvents = () => {
       </h1>
 
       {/* TOGGLE */}
-      <div className="flex justify-center mb-10">
+      {/* <div className="flex justify-center mb-10">
         <div className="inline-flex bg-gray-100 rounded-full p-1 shadow-inner">
           <button
             onClick={() => setActiveTab("events")}
@@ -405,7 +405,7 @@ const ManageEvents = () => {
             Blocked
           </button>
         </div>
-      </div>
+      </div> */}
 
 
       {/* ================= EVENTS ================= */}
