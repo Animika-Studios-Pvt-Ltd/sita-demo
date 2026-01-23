@@ -117,9 +117,9 @@ const Footer = () => {
                   <a href={getAppUrl('blog', '/blogs')}>Blogs</a>
                 )}
               </li>
-              <li>
+              {/* <li>
                 <Link to="/letters">Letters From Langshott</Link>
-              </li>
+              </li> */}
               {footerPages.length > 0 &&
                 footerPages
                   .filter((page) => !page.suspended)

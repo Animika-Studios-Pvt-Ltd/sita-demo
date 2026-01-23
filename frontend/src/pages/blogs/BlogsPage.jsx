@@ -90,7 +90,7 @@ const BlogsPage = () => {
           data-aos-duration="1300">
           <h1 className="text-[32px] sm:text-[34px] md:text-[50px] font-playfair font-light text-black font-display leading-snug mb-1 mt-5 relative">
             <span className="relative inline-block">
-              Blogs By Anil Kumar
+              Blogs By Sita
               <img
                 src="/motif.webp"
                 alt="feather"

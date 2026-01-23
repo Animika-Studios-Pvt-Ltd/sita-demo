@@ -185,11 +185,11 @@ const Navbar = () => {
           <div className="col-lg-4 col-md-4 col-sm-4 col-5">
             {currentSubdomain ? (
               <a href={getAppUrl(null, '/')} className="navbar-logo">
-                <img src="/ak-logo.webp" alt="Anil Kumar Logo" />
+                <img src="/sita-logo.webp" alt="Sita Logo" />
               </a>
             ) : (
               <Link to="/" className="navbar-logo">
-                <img src="/ak-logo.webp" alt="Anil Kumar Logo" />
+                <img src="/sita-logo.webp" alt="Sita Logo" />
               </Link>
             )}
           </div>
@@ -522,12 +522,12 @@ const Navbar = () => {
                       justifyContent: "space-between",
                       alignItems: "center",
                     }}>
-                    <Link
+                    {/* <Link
                       to="/letters"
                       onClick={handleHamburgerClose}
                       style={{ textDecoration: "none", color: "inherit" }}>
                       Letters from Langshott
-                    </Link>
+                    </Link> */}
                     {letterSubPages?.length > 0 && (
                       <ExpandMoreIcon
                         fontSize="small"
@@ -809,7 +809,7 @@ const Navbar = () => {
                 </li>
 
                 {/* Letters */}
-                <li className="navbar-main-menu relative">
+                {/* <li className="navbar-main-menu relative">
                   <div className="flex items-center gap-1 cursor-pointer">
                     <Link to="/letters">LETTERS FROM LANGSHOTT</Link>
                     {letterSubPages.length > 0 && (
@@ -835,7 +835,7 @@ const Navbar = () => {
                       ))}
                     </ul>
                   )}
-                </li>
+                </li> */}
                 {/* NEW HEADING PAGES */}
                 {mainMenuPages.map((p) => (
                   <li key={p._id} className="navbar-main-menu relative">
