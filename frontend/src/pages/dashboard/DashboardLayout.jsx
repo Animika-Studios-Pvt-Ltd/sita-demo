@@ -174,7 +174,7 @@ const DashboardLayout = () => {
               {(isExpanded || mobileSidebar) && <span className="text-base">Manage Blogs</span>}
             </Link>
 
-            <Link
+            {/* <Link
               to="/dashboard/manage-letters"
               className={`no-underline flex items-center ${isExpanded || mobileSidebar ? "gap-4 px-4" : "justify-center px-2"
                 } py-3 rounded-lg transition-all duration-300 ${isActive("/dashboard/manage-letters")
@@ -184,7 +184,7 @@ const DashboardLayout = () => {
             >
               <MailOutlineIcon className="w-6 h-6 flex-shrink-0" />
               {(isExpanded || mobileSidebar) && <span className="text-base">Manage Letters</span>}
-            </Link>
+            </Link> */}
 
             <Link
               to="/dashboard/cms"
