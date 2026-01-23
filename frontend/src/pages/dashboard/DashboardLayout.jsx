@@ -4,13 +4,12 @@ import axios from "axios"
 import DashboardIcon from "@mui/icons-material/Dashboard"
 import MenuBookIcon from "@mui/icons-material/MenuBook"
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks"
-import MailOutlineIcon from "@mui/icons-material/MailOutline"
+import ImageIcon from "@mui/icons-material/Image"
+import SecurityIcon from "@mui/icons-material/Security"
 import LogoutIcon from "@mui/icons-material/Logout"
 import MenuIcon from "@mui/icons-material/Menu"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"
-import ImageIcon from "@mui/icons-material/Image"
-import SecurityIcon from "@mui/icons-material/Security"
 import useIdleTimeout from "../../hooks/useIdleTimeout"
 
 const DashboardLayout = () => {
@@ -80,9 +79,9 @@ const DashboardLayout = () => {
   const isActive = (path) => location.pathname === path
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 font-montserrat">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#0D0842]"></div>
           <p className="mt-4 text-gray-600">Verifying authentication...</p>
         </div>
       </div>
@@ -93,7 +92,7 @@ const DashboardLayout = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-100 font-figtree font-normal leading-snug">
+    <div className="flex min-h-screen bg-gray-50 font-montserrat leading-snug">
       {isMobile && mobileSidebar && (
         <div
           className="fixed inset-0 bg-black/40 z-30"
@@ -101,14 +100,14 @@ const DashboardLayout = () => {
         ></div>
       )}
       <aside
-        className={`fixed top-0 h-screen bg-gray-800 text-white flex flex-col justify-between py-6 px-3 shadow-lg z-40 transition-all duration-300 ${isMobile
+        className={`fixed top-0 h-screen bg-[#0D0842] text-white flex flex-col justify-between py-6 px-3 shadow-2xl z-40 transition-all duration-300 ${isMobile
           ? mobileSidebar
-            ? "w-60 left-0"
-            : "w-0 -left-60"
+            ? "w-64 left-0"
+            : "w-0 -left-64"
           : isExpanded
-            ? "w-60 left-0"
+            ? "w-64 left-0"
             : "w-20 left-0"
-          } overflow-hidden`}
+          } overflow-hidden border-r border-[#1a1655]`}
       >
         <div>
           <div
@@ -119,19 +118,24 @@ const DashboardLayout = () => {
               <img
                 src="/adminprofile.jpg"
                 alt="Admin Profile"
-                className="w-12 h-12 rounded-full object-cover"
+                className="w-12 h-12 rounded-full object-cover border-2 border-[#c86836]"
               />
               {(isExpanded && !isMobile) || mobileSidebar ? (
-                <span className="text-lg font-playfair font-light text-white leading-tight">
-                  Admin
-                </span>
+                <div className="flex flex-col">
+                  <span className="text-lg font-pt-serif font-bold text-white leading-tight">
+                    Sita Admin
+                  </span>
+                  <span className="text-xs text-[#c86836] font-montserrat font-medium">
+                    Foundation Dashboard
+                  </span>
+                </div>
               ) : null}
             </div>
 
             {!isMobile && (
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="text-gray-300 hover:text-white"
+                className="text-gray-400 hover:text-[#c86836] transition-colors"
                 aria-label="Toggle sidebar"
               >
                 {isExpanded ? <ChevronLeftIcon fontSize="small" /> : <ChevronRightIcon fontSize="small" />}
@@ -139,132 +143,102 @@ const DashboardLayout = () => {
             )}
           </div>
 
-          <nav className="space-y-3">
+          <nav className="space-y-2">
             <Link
               to="/dashboard"
               className={`no-underline flex items-center ${isExpanded || mobileSidebar ? "gap-4 px-4" : "justify-center px-2"
-                } py-3 rounded-lg transition-all duration-300 ${isActive("/dashboard") ? "bg-purple-600 text-white" : "hover:bg-purple-600 text-gray-300 hover:text-white"
+                } py-3 rounded-lg transition-all duration-300 ${isActive("/dashboard") ? "bg-[#c86836] text-white shadow-md relative overflow-hidden" : "hover:bg-[#1a1655] text-gray-300 hover:text-white"
                 }`}
             >
-              <DashboardIcon className="w-6 h-6 flex-shrink-0" />
-              {(isExpanded || mobileSidebar) && <span className="text-base">Dashboard</span>}
+              {isActive("/dashboard") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-white/20"></div>}
+              <DashboardIcon className="w-5 h-5 flex-shrink-0" />
+              {(isExpanded || mobileSidebar) && <span className="text-sm font-medium">Dashboard</span>}
             </Link>
 
             <Link
               to="/dashboard/manage-books"
               className={`no-underline flex items-center ${isExpanded || mobileSidebar ? "gap-4 px-4" : "justify-center px-2"
                 } py-3 rounded-lg transition-all duration-300 ${isActive("/dashboard/manage-books")
-                  ? "bg-purple-600 text-white"
-                  : "hover:bg-purple-600 text-gray-300 hover:text-white"
+                  ? "bg-[#c86836] text-white shadow-md relative overflow-hidden"
+                  : "hover:bg-[#1a1655] text-gray-300 hover:text-white"
                 }`}
             >
-              <MenuBookIcon className="w-6 h-6 flex-shrink-0" />
-              {(isExpanded || mobileSidebar) && <span className="text-base">Manage Books</span>}
+              {isActive("/dashboard/manage-books") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-white/20"></div>}
+              <MenuBookIcon className="w-5 h-5 flex-shrink-0" />
+              {(isExpanded || mobileSidebar) && <span className="text-sm font-medium">Manage Books</span>}
             </Link>
 
             <Link
               to="/dashboard/add-blogs"
               className={`no-underline flex items-center ${isExpanded || mobileSidebar ? "gap-4 px-4" : "justify-center px-2"
                 } py-3 rounded-lg transition-all duration-300 ${isActive("/dashboard/add-blogs")
-                  ? "bg-purple-600 text-white"
-                  : "hover:bg-purple-600 text-gray-300 hover:text-white"
+                  ? "bg-[#c86836] text-white shadow-md relative overflow-hidden"
+                  : "hover:bg-[#1a1655] text-gray-300 hover:text-white"
                 }`}
             >
-              <LibraryBooksIcon className="w-6 h-6 flex-shrink-0" />
-              {(isExpanded || mobileSidebar) && <span className="text-base">Manage Blogs</span>}
+              {isActive("/dashboard/add-blogs") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-white/20"></div>}
+              <LibraryBooksIcon className="w-5 h-5 flex-shrink-0" />
+              {(isExpanded || mobileSidebar) && <span className="text-sm font-medium">Manage Blogs</span>}
             </Link>
-
-            {/* <Link
-              to="/dashboard/manage-letters"
-              className={`no-underline flex items-center ${isExpanded || mobileSidebar ? "gap-4 px-4" : "justify-center px-2"
-                } py-3 rounded-lg transition-all duration-300 ${isActive("/dashboard/manage-letters")
-                  ? "bg-purple-600 text-white"
-                  : "hover:bg-purple-600 text-gray-300 hover:text-white"
-                }`}
-            >
-              <MailOutlineIcon className="w-6 h-6 flex-shrink-0" />
-              {(isExpanded || mobileSidebar) && <span className="text-base">Manage Letters</span>}
-            </Link> */}
 
             <Link
               to="/dashboard/cms"
               className={`no-underline flex items-center ${isExpanded || mobileSidebar ? "gap-4 px-4" : "justify-center px-2"
                 } py-3 rounded-lg transition-all duration-300 ${isActive("/dashboard/cms")
-                  ? "bg-purple-600 text-white"
-                  : "hover:bg-purple-600 text-gray-300 hover:text-white"
+                  ? "bg-[#c86836] text-white shadow-md relative overflow-hidden"
+                  : "hover:bg-[#1a1655] text-gray-300 hover:text-white"
                 }`}
             >
-              <ImageIcon className="w-6 h-6 flex-shrink-0" />
-              {(isExpanded || mobileSidebar) && <span className="text-base">CMS Module</span>}
+              {isActive("/dashboard/cms") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-white/20"></div>}
+              <ImageIcon className="w-5 h-5 flex-shrink-0" />
+              {(isExpanded || mobileSidebar) && <span className="text-sm font-medium">CMS Module</span>}
             </Link>
           </nav>
         </div>
 
-        <div className={`${isExpanded || mobileSidebar ? "px-4 space-y-3" : "flex flex-col items-center space-y-3"} transition-all duration-300`}>
+        <div className={`${isExpanded || mobileSidebar ? "px-4 space-y-2" : "flex flex-col items-center space-y-2"} transition-all duration-300 border-t border-[#1a1655] pt-6`}>
           <Link
             to="/dashboard/settings/mfa"
             className={`no-underline flex items-center gap-3 px-4 py-3 rounded-lg w-full transition-all duration-300 ${isActive("/dashboard/settings/mfa")
-              ? "bg-orange-600 text-white"
-              : "text-orange-400 hover:text-white hover:bg-orange-600"
+              ? "bg-[#c86836] text-white shadow-md"
+              : "text-gray-300 hover:text-white hover:bg-[#1a1655]"
               } ${isExpanded || mobileSidebar ? "justify-start" : "justify-center"}`}
           >
             <SecurityIcon className="w-5 h-5 flex-shrink-0" />
-            {(isExpanded || mobileSidebar) && <span className="text-base">Security</span>}
+            {(isExpanded || mobileSidebar) && <span className="text-sm font-medium">Security</span>}
           </Link>
 
           <button
             onClick={handleLogout}
-            className={`flex items-center gap-3 px-4 py-3 text-red-500 hover:text-white hover:bg-red-600 rounded-lg w-full transition-all duration-300 ${isExpanded || mobileSidebar ? "justify-start" : "justify-center"
+            className={`flex items-center gap-3 px-4 py-3 text-red-400 hover:text-white hover:bg-red-600/20 rounded-lg w-full transition-all duration-300 ${isExpanded || mobileSidebar ? "justify-start" : "justify-center"
               }`}
             aria-label="Logout"
           >
             <LogoutIcon className="w-5 h-5 flex-shrink-0" />
-            {(isExpanded || mobileSidebar) && <span className="text-base">Logout</span>}
+            {(isExpanded || mobileSidebar) && <span className="text-sm font-medium">Logout</span>}
           </button>
         </div>
       </aside>
 
       <div
-        className={`flex-1 flex flex-col transition-all duration-300 ${isExpanded && !isMobile ? "ml-60" : !isMobile ? "ml-20" : "ml-0"
+        className={`flex-1 flex flex-col transition-all duration-300 ${isExpanded && !isMobile ? "ml-64" : !isMobile ? "ml-20" : "ml-0"
           }`}
       >
         <header
-          className={`fixed top-0 z-20 flex flex-col items-center justify-center px-6 py-4 bg-white shadow-sm transition-all duration-300 ${isExpanded && !isMobile ? "left-60" : !isMobile ? "left-20" : "left-0"
+          className={`fixed top-0 z-20 flex flex-col items-center justify-center px-6 py-4 bg-white/90 backdrop-blur-sm shadow-sm transition-all duration-300 ${isExpanded && !isMobile ? "left-64" : !isMobile ? "left-20" : "left-0"
             } right-0`}
         >
-          {/* <div className="relative w-full flex flex-col items-center justify-center text-center py-6">
-            <img
-              src="/1-langshott-foundation-logo.webp"
-              alt="Langshott Logo"
-              className="absolute w-40 sm:w-48 md:w-48 lg:w-48 h-auto opacity-20 object-contain"
-              style={{
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                filter: "brightness(0)",
-                zIndex: 0,
-              }}
-            />
-
-            <h1
-              className="relative z-10 text-[20px] sm:text-[22px] md:text-[22px] lg:text-[24px] font-playfair font-semibold text-black leading-snug max-w-3xl px-4"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              Welcome to{" "}
-              <span className="text-indigo-700">Sita</span> Admin Panel
-            </h1>
-          </div> */}
           {isMobile && (
             <button
               onClick={() => setMobileSidebar(true)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-700 hover:text-black"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-[#0D0842] hover:text-[#c86836]"
               aria-label="Open menu"
             >
               <MenuIcon fontSize="medium" />
             </button>
           )}
         </header>
-        <main className="flex-1 px-4 sm:px-6 md:px-8 pb-10 pt-[100px]">
+        <main className="flex-1 px-4 sm:px-6 md:px-8 pb-10 pt-[20px]">
           <Outlet />
         </main>
       </div>

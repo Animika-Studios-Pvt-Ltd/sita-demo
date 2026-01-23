@@ -16,6 +16,8 @@ module.exports = {
         figtree: ['Figtree', 'sans-serif'],
         playfair: ['Playfair Display', 'serif'],
         bellmt: ['"Bell MT"', 'Georgia', 'serif'],
+        'pt-serif': ['"PT Serif"', 'serif'],
+        montserrat: ['Montserrat', 'sans-serif'],
       },
       keyframes: {
         'fade-in': {
@@ -37,7 +39,7 @@ module.exports = {
         'slide-in-right': 'slide-in-right 0.8s ease-out',
       },
       maxWidth: {
-        '8xl': '90rem', 
+        '8xl': '90rem',
         '9xl': '105rem',
       },
       screens: {
@@ -55,7 +57,7 @@ module.exports = {
         md: "768px",
         lg: "1024px",
         xl: "1280px",
-        "2xl": "1920px", 
+        "2xl": "1920px",
       },
     },
   },
