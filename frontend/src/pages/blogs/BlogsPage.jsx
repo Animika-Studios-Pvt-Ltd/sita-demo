@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { getAppUrl } from "../../utils/subdomain";
 import { ArrowLeft, CalendarDays, ArrowRight } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -63,7 +64,7 @@ const BlogsPage = () => {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb m-0 p-0 flex gap-0 text-sm">
               <li className="breadcrumb-item">
-                <a href="/" className="text-gray-500 hover:underline">
+                <a href={getAppUrl(null, '/')} className="text-gray-500 hover:underline">
                   Home
                 </a>
               </li>

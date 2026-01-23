@@ -7,10 +7,15 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import "./Footer.css";
 import { useEffect, useState } from "react";
+import { getSubdomain, getAppUrl } from "../utils/subdomain";
 
 const BACKEND_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const Footer = () => {
+  const currentSubdomain = getSubdomain();
+  const isStore = currentSubdomain === 'store';
+  const isBlog = currentSubdomain === 'blog';
+
   const { data: books = [] } = useFetchAllBooksQuery();
   const activeBooks = books.filter((book) => !book.suspended);
   const sortedBooks = activeBooks.sort(
@@ -96,13 +101,21 @@ const Footer = () => {
                 <Link to="/Anilkumar">About</Link>
               </li>
               <li>
-                <Link to="/publications">Publications</Link>
+                {isStore ? (
+                  <Link to="/">Publications</Link>
+                ) : (
+                  <a href={getAppUrl('store', '/')}>Publications</a>
+                )}
               </li>
               <li>
                 <Link to="/foundation">The Foundation</Link>
               </li>
               <li>
-                <Link to="/blogs">Blogs</Link>
+                {isBlog ? (
+                  <Link to="/blogs">Blogs</Link>
+                ) : (
+                  <a href={getAppUrl('blog', '/blogs')}>Blogs</a>
+                )}
               </li>
               <li>
                 <Link to="/letters">Letters From Langshott</Link>
@@ -129,24 +142,46 @@ const Footer = () => {
           <div className="col-lg-3 col-md-6 col-sm-6 col-12 footer-section2">
             <h4 className="footer-heading">Featured Books</h4>
             {recentBooks.length > 0 ? (
-              recentBooks.map((book, index) => (
-                <Link
-                  to={`/books/${book.slug || book._id}`}
-                  key={index}
-                  className="featured-book">
-                  <img
-                    src={book?.coverImage || "/placeholder-book.jpg"}
-                    alt={book?.title}
-                  />
-                  <div>
-                    <p>{book?.title}</p>
-                    <span>
-                      <span style={{ color: "#983120" }}>₹ </span>
-                      {book?.newPrice}
-                    </span>
-                  </div>
-                </Link>
-              ))
+              recentBooks.map((book, index) => {
+                const linkPath = `/books/${book.slug || book._id}`;
+                const destination = isStore ? linkPath : getAppUrl('store', linkPath);
+
+                return isStore ? (
+                  <Link
+                    to={linkPath}
+                    key={index}
+                    className="featured-book">
+                    <img
+                      src={book?.coverImage || "/placeholder-book.jpg"}
+                      alt={book?.title}
+                    />
+                    <div>
+                      <p>{book?.title}</p>
+                      <span>
+                        <span style={{ color: "#983120" }}>₹ </span>
+                        {book?.newPrice}
+                      </span>
+                    </div>
+                  </Link>
+                ) : (
+                  <a
+                    href={destination}
+                    key={index}
+                    className="featured-book">
+                    <img
+                      src={book?.coverImage || "/placeholder-book.jpg"}
+                      alt={book?.title}
+                    />
+                    <div>
+                      <p>{book?.title}</p>
+                      <span>
+                        <span style={{ color: "#983120" }}>₹ </span>
+                        {book?.newPrice}
+                      </span>
+                    </div>
+                  </a>
+                );
+              })
             ) : (
               <p>No featured books available</p>
             )}
@@ -166,34 +201,66 @@ const Footer = () => {
             <h4 className="footer-heading footer-posts">Recent Blogs</h4>
             <div className="popular-posts">
               {blogs.length > 0 ? (
-                blogs.map((blog, index) => (
-                  <Link
-                    to={`/blogs/${blog.slug || blog._id}`}
-                    key={index}
-                    className="post">
-                    <img
-                      src={
-                        blog.image?.startsWith("http")
-                          ? blog.image
-                          : `${BACKEND_BASE_URL}${blog.image}`
-                      }
-                      alt={blog.title}
-                    />
-                    <div className="overlay">
-                      <p>{blog.title}</p>
-                      <span>
-                        {new Date(blog.createdAt).toLocaleDateString(
-                          undefined,
-                          {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          }
-                        )}
-                      </span>
-                    </div>
-                  </Link>
-                ))
+                blogs.map((blog, index) => {
+                  const linkPath = `/blogs/${blog.slug || blog._id}`;
+                  const destination = isBlog ? linkPath : getAppUrl('blog', linkPath);
+
+                  return isBlog ? (
+                    <Link
+                      to={linkPath}
+                      key={index}
+                      className="post">
+                      <img
+                        src={
+                          blog.image?.startsWith("http")
+                            ? blog.image
+                            : `${BACKEND_BASE_URL}${blog.image}`
+                        }
+                        alt={blog.title}
+                      />
+                      <div className="overlay">
+                        <p>{blog.title}</p>
+                        <span>
+                          {new Date(blog.createdAt).toLocaleDateString(
+                            undefined,
+                            {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            }
+                          )}
+                        </span>
+                      </div>
+                    </Link>
+                  ) : (
+                    <a
+                      href={destination}
+                      key={index}
+                      className="post">
+                      <img
+                        src={
+                          blog.image?.startsWith("http")
+                            ? blog.image
+                            : `${BACKEND_BASE_URL}${blog.image}`
+                        }
+                        alt={blog.title}
+                      />
+                      <div className="overlay">
+                        <p>{blog.title}</p>
+                        <span>
+                          {new Date(blog.createdAt).toLocaleDateString(
+                            undefined,
+                            {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            }
+                          )}
+                        </span>
+                      </div>
+                    </a>
+                  );
+                })
               ) : (
                 <p>No recent blogs available</p>
               )}

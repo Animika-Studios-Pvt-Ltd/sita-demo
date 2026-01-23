@@ -11,10 +11,14 @@ import { useAuth } from "../context/AuthContext";
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import "./Navbar.css";
+import { getSubdomain, getAppUrl } from "../utils/subdomain";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const Navbar = () => {
+  const currentSubdomain = getSubdomain();
+  const isStore = currentSubdomain === 'store';
+  const isBlog = currentSubdomain === 'blog';
   const cartItems = useSelector((state) => state.cart.cartItems);
   const { currentUser, isAuthenticated, isLoading, loginWithRedirect, logout } =
     useAuth();
@@ -179,9 +183,15 @@ const Navbar = () => {
       <nav className="container-fluid navbar-container">
         <div className="row">
           <div className="col-lg-4 col-md-4 col-sm-4 col-5">
-            <Link to="/" className="navbar-logo">
-              <img src="/ak-logo.webp" alt="Anil Kumar Logo" />
-            </Link>
+            {currentSubdomain ? (
+              <a href={getAppUrl(null, '/')} className="navbar-logo">
+                <img src="/ak-logo.webp" alt="Anil Kumar Logo" />
+              </a>
+            ) : (
+              <Link to="/" className="navbar-logo">
+                <img src="/ak-logo.webp" alt="Anil Kumar Logo" />
+              </Link>
+            )}
           </div>
           <div className="col-lg-8 col-md-8 col-sm-8 col-7">
             <div className="navbar-right-wrapper">
@@ -308,18 +318,33 @@ const Navbar = () => {
                         alignItems: "center",
                         gap: "8px",
                       }}>
-                      <Link
-                        to="/"
-                        onClick={handleHamburgerClose}
-                        style={{
-                          textDecoration: "none",
-                          color: "inherit",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "8px",
-                        }}>
-                        <HomeIcon sx={{ fontSize: 18 }} />
-                      </Link>
+                      {currentSubdomain ? (
+                        <a
+                          href={getAppUrl(null, '/')}
+                          onClick={handleHamburgerClose}
+                          style={{
+                            textDecoration: "none",
+                            color: "inherit",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px",
+                          }}>
+                          <HomeIcon sx={{ fontSize: 18 }} />
+                        </a>
+                      ) : (
+                        <Link
+                          to="/"
+                          onClick={handleHamburgerClose}
+                          style={{
+                            textDecoration: "none",
+                            color: "inherit",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px",
+                          }}>
+                          <HomeIcon sx={{ fontSize: 18 }} />
+                        </Link>
+                      )}
                     </MenuItem>
                   )}
 
@@ -370,12 +395,21 @@ const Navbar = () => {
                       justifyContent: "space-between",
                       alignItems: "center",
                     }}>
-                    <Link
-                      to="/publications"
-                      onClick={handleHamburgerClose}
-                      style={{ textDecoration: "none", color: "inherit" }}>
-                      Publications
-                    </Link>
+                    {isStore ? (
+                      <Link
+                        to="/"
+                        onClick={handleHamburgerClose}
+                        style={{ textDecoration: "none", color: "inherit" }}>
+                        Publications
+                      </Link>
+                    ) : (
+                      <a
+                        href={getAppUrl('store', '/')}
+                        onClick={handleHamburgerClose}
+                        style={{ textDecoration: "none", color: "inherit" }}>
+                        Publications
+                      </a>
+                    )}
                     {publicationSubPages.length > 0 && (
                       <ExpandMoreIcon
                         fontSize="small"
@@ -447,8 +481,8 @@ const Navbar = () => {
                   {isBlogsExpanded && (
                     <>
                       <MenuItem
-                        component={Link}
-                        to="/blogs"
+                        component={isBlog ? Link : 'a'}
+                        {...(isBlog ? { to: "/blogs" } : { href: getAppUrl('blog', '/blogs') })}
                         onClick={handleHamburgerClose}
                         className="navbar-submenu-item">
                         Blogs
@@ -608,9 +642,15 @@ const Navbar = () => {
                 {/* Home Icon - show only if not on Home page */}
                 {!isHomePage && (
                   <li className="navbar-main-menu">
-                    <Link to="/" className="flex items-center gap-3">
-                      <HomeIcon className="navbar-home-icon" />
-                    </Link>
+                    {currentSubdomain ? (
+                      <a href={getAppUrl(null, '/')} className="flex items-center gap-3">
+                        <HomeIcon className="navbar-home-icon" />
+                      </a>
+                    ) : (
+                      <Link to="/" className="flex items-center gap-3">
+                        <HomeIcon className="navbar-home-icon" />
+                      </Link>
+                    )}
                   </li>
                 )}
 
@@ -621,9 +661,8 @@ const Navbar = () => {
                     {authorSubPages.length > 0 && (
                       <ExpandMoreIcon
                         fontSize="small"
-                        className={`transition-transform ${
-                          openSubmenus["about"] ? "rotate-180" : ""
-                        }`}
+                        className={`transition-transform ${openSubmenus["about"] ? "rotate-180" : ""
+                          }`}
                         onClick={(e) => {
                           e.stopPropagation();
                           toggleSubmenu("about");
@@ -647,13 +686,16 @@ const Navbar = () => {
                 {/* Publications */}
                 <li className="navbar-main-menu relative">
                   <div className="flex items-center gap-1 cursor-pointer">
-                    <Link to="/publications">PUBLICATIONS</Link>
+                    {isStore ? (
+                      <Link to="/">PUBLICATIONS</Link>
+                    ) : (
+                      <a href={getAppUrl('store', '/')}>PUBLICATIONS</a>
+                    )}
                     {publicationSubPages.length > 0 && (
                       <ExpandMoreIcon
                         fontSize="small"
-                        className={`transition-transform ${
-                          openSubmenus["publications"] ? "rotate-180" : ""
-                        }`}
+                        className={`transition-transform ${openSubmenus["publications"] ? "rotate-180" : ""
+                          }`}
                         onClick={(e) => {
                           e.stopPropagation();
                           toggleSubmenu("publications");
@@ -684,9 +726,8 @@ const Navbar = () => {
                     {FoundationSubPages.length > 0 && (
                       <ExpandMoreIcon
                         fontSize="small"
-                        className={`transition-transform ${
-                          openSubmenus["foundation"] ? "rotate-180" : ""
-                        }`}
+                        className={`transition-transform ${openSubmenus["foundation"] ? "rotate-180" : ""
+                          }`}
                         onClick={(e) => {
                           e.stopPropagation();
                           toggleSubmenu("foundation");
@@ -713,12 +754,15 @@ const Navbar = () => {
                 {/* Blogs */}
                 <li className="navbar-main-menu relative">
                   <div className="flex items-center gap-1 cursor-pointer">
-                    <Link to="/blogs">BLOGS</Link>
+                    {isBlog ? (
+                      <Link to="/blogs">BLOGS</Link>
+                    ) : (
+                      <a href={getAppUrl('blog', '/blogs')}>BLOGS</a>
+                    )}
                     <ExpandMoreIcon
                       fontSize="small"
-                      className={`transition-transform ${
-                        openSubmenus["blogs"] ? "rotate-180" : ""
-                      }`}
+                      className={`transition-transform ${openSubmenus["blogs"] ? "rotate-180" : ""
+                        }`}
                       onClick={(e) => {
                         e.stopPropagation();
                         toggleSubmenu("blogs");
@@ -728,9 +772,16 @@ const Navbar = () => {
                   {openSubmenus["blogs"] && (
                     <ul className="navbar-menu-dropdown absolute top-full left-0 mt-2">
                       <li>
-                        <Link to="/blogs" className="navbar-menu-item">
-                          Blogs
-                        </Link>
+
+                        {isBlog ? (
+                          <Link to="/blogs" className="navbar-menu-item">
+                            Blogs
+                          </Link>
+                        ) : (
+                          <a href={getAppUrl('blog', '/blogs')} className="navbar-menu-item">
+                            Blogs
+                          </a>
+                        )}
                       </li>
                       <li>
                         <Link
@@ -764,9 +815,8 @@ const Navbar = () => {
                     {letterSubPages.length > 0 && (
                       <ExpandMoreIcon
                         fontSize="small"
-                        className={`transition-transform ${
-                          openSubmenus["letters"] ? "rotate-180" : ""
-                        }`}
+                        className={`transition-transform ${openSubmenus["letters"] ? "rotate-180" : ""
+                          }`}
                         onClick={(e) => {
                           e.stopPropagation();
                           toggleSubmenu("letters");
@@ -801,9 +851,8 @@ const Navbar = () => {
                       {subPagesMap[p._id]?.length > 0 && (
                         <ExpandMoreIcon
                           fontSize="small"
-                          className={`transition-transform ${
-                            openSubmenus[p._id] ? "rotate-180" : ""
-                          }`}
+                          className={`transition-transform ${openSubmenus[p._id] ? "rotate-180" : ""
+                            }`}
                           onClick={(e) => {
                             e.stopPropagation();
                             toggleSubmenu(p._id);

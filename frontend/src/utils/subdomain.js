@@ -25,3 +25,24 @@ export const getSubdomain = () => {
 
     return null;
 };
+
+export const getAppUrl = (targetSubdomain, path = '/') => {
+    const hostname = window.location.hostname;
+    const protocol = window.location.protocol;
+    const port = window.location.port ? `:${window.location.port}` : '';
+    
+    // Determine root domain
+    let rootDomain = hostname;
+    const currentSub = getSubdomain();
+    
+    if (currentSub) {
+        // Remove subdomain from start
+        // Be careful with simple replace, check start
+        if (hostname.startsWith(`${currentSub}.`)) {
+            rootDomain = hostname.substring(currentSub.length + 1);
+        }
+    }
+
+    const newHost = targetSubdomain ? `${targetSubdomain}.${rootDomain}` : rootDomain;
+    return `${protocol}//${newHost}${port}${path.startsWith('/') ? path : '/' + path}`;
+};

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { getAppUrl } from "../../utils/subdomain";
 import { Link, useNavigate } from "react-router-dom";
 import { useFetchAllBooksQuery } from "../../redux/features/books/booksApi";
 import { useDispatch, useSelector } from "react-redux";
@@ -73,7 +74,7 @@ const Publications = () => {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb m-0 p-0">
               <li className="breadcrumb-item">
-                <a href="/" className="text-gray">
+                <a href={getAppUrl(null, '/')} className="text-gray">
                   Home
                 </a>
               </li>
@@ -121,9 +122,8 @@ const Publications = () => {
                     <img
                       src={book?.coverImage || "/placeholder-book.jpg"}
                       alt={book?.title}
-                      className={`object-cover w-full h-full z-0 ${
-                        isSuspended ? "opacity-60 grayscale" : ""
-                      }`}
+                      className={`object-cover w-full h-full z-0 ${isSuspended ? "opacity-60 grayscale" : ""
+                        }`}
                     />
 
                     {isSuspended && (
@@ -196,7 +196,7 @@ const Publications = () => {
                         <span className="text-sm sm:text-base md:text-lg lg:text-xl bg-[#993333] text-white px-1 py-0.5 font-figtree font-light rounded-sm">
                           {Math.round(
                             ((book.oldPrice - book.newPrice) / book.oldPrice) *
-                              100
+                            100
                           )}
                           % off
                         </span>

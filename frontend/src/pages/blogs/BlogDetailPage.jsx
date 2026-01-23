@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { getSubdomain, getAppUrl } from "../../utils/subdomain";
 import { CalendarDays, ArrowRight, ArrowLeft } from "lucide-react";
 import { useFetchAllBooksQuery } from "../../redux/features/books/booksApi";
 import AOS from "aos";
@@ -134,14 +135,16 @@ const BlogDetailPage = () => {
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb m-0 p-0 flex gap-0 text-[14px]">
                   <li className="breadcrumb-item">
-                    <a href="/" className="text-gray-300 hover:underline">
+                    <a href={getAppUrl(null, '/')} className="text-gray-300 hover:underline">
                       Home
                     </a>
                   </li>
                   <li className="breadcrumb-item">
-                    <a href="/blogs" className="text-gray-300 hover:underline">
-                      Blogs
-                    </a>
+                    {getSubdomain() === 'blog' ? (
+                      <Link to="/blogs" className="text-gray-300 hover:underline">Blogs</Link>
+                    ) : (
+                      <a href={getAppUrl('blog', '/blogs')} className="text-gray-300 hover:underline">Blogs</a>
+                    )}
                   </li>
                   <li
                     className="breadcrumb-item text-gray-200 truncate max-w-[120px]"
@@ -200,36 +203,38 @@ const BlogDetailPage = () => {
                 </h3>
                 {activeBooks.length > 0 && (
                   <div className="flex flex-col items-center text-center rounded-lg overflow-hidden relative flex-grow">
-                    <div
-                      key={activeBooks[currentIndex]?._id}
-                      className={`flex flex-col items-center absolute transition-all duration-700 ease-in-out transform will-change-transform ${fade
-                        ? "opacity-100 translate-x-0"
-                        : "opacity-0 -translate-x-10"
-                        }`}>
-                      <Link
-                        to={`/books/${activeBooks[currentIndex]?.slug ||
-                          activeBooks[currentIndex]?._id
-                          }`}
-                        className="no-underline">
-                        <img
-                          src={
-                            activeBooks[currentIndex]?.coverImage ||
-                            "/placeholder-book.jpg"
-                          }
-                          alt={activeBooks[currentIndex]?.title}
-                          className="w-40 h-58 object-cover mb-4 cursor-pointer hover:scale-105 transition-transform duration-500"
-                        />
-                      </Link>
-
-                      <Link
-                        to={`/books/${activeBooks[currentIndex]?.slug ||
-                          activeBooks[currentIndex]?._id
-                          }`}
-                        className="no-underline">
-                        <h4 className="text-[16px] sm:text-[18px] md:text-[20px] text-black font-Figtree mb-3 hover:text-[#993333] transition-colors duration-300 cursor-pointer">
-                          {activeBooks[currentIndex]?.title}
-                        </h4>
-                      </Link>
+                    <div className={`flex flex-col items-center absolute transition-all duration-700 ease-in-out transform will-change-transform ${fade ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
+                      {getSubdomain() === 'store' ? (
+                        <>
+                          <Link to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`} className="no-underline">
+                            <img
+                              src={activeBooks[currentIndex]?.coverImage || "/placeholder-book.jpg"}
+                              alt={activeBooks[currentIndex]?.title}
+                              className="w-40 h-58 object-cover mb-4 cursor-pointer hover:scale-105 transition-transform duration-500"
+                            />
+                          </Link>
+                          <Link to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`} className="no-underline">
+                            <h4 className="text-[16px] sm:text-[18px] md:text-[20px] text-black font-Figtree mb-3 hover:text-[#993333] transition-colors duration-300 cursor-pointer">
+                              {activeBooks[currentIndex]?.title}
+                            </h4>
+                          </Link>
+                        </>
+                      ) : (
+                        <>
+                          <a href={getAppUrl('store', `/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`)} className="no-underline">
+                            <img
+                              src={activeBooks[currentIndex]?.coverImage || "/placeholder-book.jpg"}
+                              alt={activeBooks[currentIndex]?.title}
+                              className="w-40 h-58 object-cover mb-4 cursor-pointer hover:scale-105 transition-transform duration-500"
+                            />
+                          </a>
+                          <a href={getAppUrl('store', `/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`)} className="no-underline">
+                            <h4 className="text-[16px] sm:text-[18px] md:text-[20px] text-black font-Figtree mb-3 hover:text-[#993333] transition-colors duration-300 cursor-pointer">
+                              {activeBooks[currentIndex]?.title}
+                            </h4>
+                          </a>
+                        </>
+                      )}
                     </div>
 
                     <div className="flex items-center justify-center gap-6 mt-auto relative z-10">
@@ -320,18 +325,18 @@ const BlogDetailPage = () => {
                       ),
                     }}
                   />
-                  <div className="mt-auto">
-                    <Link
-                      to={`/blogs/${blog.slug || blog._id}`}
-                      className="flex items-center gap-2 mx-auto font-figtree text-[16px] sm:text-[18px] transition group no-underline">
-                      <span className="inline-flex text-[#993333] items-center gap-1 text-[16px] sm:text-[18px] font-regular no-underline">
-                        Read More
-                      </span>
-                      <span className="text-[#993333] transform transition-transform duration-200 group-hover:translate-x-[5px]">
-                        <ArrowRight size={20} strokeWidth={2} />
-                      </span>
-                    </Link>
-                  </div>
+                </div>
+                <div className="mt-auto">
+                  <Link
+                    to={`/blogs/${blog.slug || blog._id}`}
+                    className="flex items-center gap-2 mx-auto font-figtree text-[16px] sm:text-[18px] transition group no-underline">
+                    <span className="inline-flex text-[#993333] items-center gap-1 text-[16px] sm:text-[18px] font-regular no-underline">
+                      Read More
+                    </span>
+                    <span className="text-[#993333] transform transition-transform duration-200 group-hover:translate-x-[5px]">
+                      <ArrowRight size={20} strokeWidth={2} />
+                    </span>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -395,7 +400,7 @@ const BlogDetailPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

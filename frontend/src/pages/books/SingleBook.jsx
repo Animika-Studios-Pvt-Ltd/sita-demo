@@ -1,5 +1,6 @@
 import "./SingleBook.css";
 import { useState, useEffect } from "react";
+import { getAppUrl } from "../../utils/subdomain";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, clearCart } from "../../redux/features/cart/cartSlice";
@@ -310,7 +311,7 @@ const SingleBook = () => {
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <a href="/">Home</a>
+              <a href={getAppUrl(null, '/')}>Home</a>
             </li>
             <li className="breadcrumb-item">
               <a href="/publications">Publications</a>
@@ -361,9 +362,8 @@ const SingleBook = () => {
                     <img
                       src={book.coverImage || "/placeholder-book.jpg"}
                       alt="Front View"
-                      className={`thumb-img ${
-                        isSuspended ? "opacity-60 grayscale" : ""
-                      }`}
+                      className={`thumb-img ${isSuspended ? "opacity-60 grayscale" : ""
+                        }`}
                       onClick={() => setSelectedImage(book.coverImage)}
                     />
                   </div>
@@ -373,9 +373,8 @@ const SingleBook = () => {
                     <img
                       src={book.backImage || "/placeholder-book.jpg"}
                       alt="Back View"
-                      className={`thumb-img ${
-                        isSuspended ? "opacity-60 grayscale" : ""
-                      }`}
+                      className={`thumb-img ${isSuspended ? "opacity-60 grayscale" : ""
+                        }`}
                       onClick={() => setSelectedImage(book.backImage)}
                     />
                   </div>
@@ -839,7 +838,7 @@ const SingleBook = () => {
                             <span className="discount">
                               {Math.round(
                                 ((rv.oldPrice - rv.newPrice) / rv.oldPrice) *
-                                  100
+                                100
                               )}
                               % off
                             </span>
