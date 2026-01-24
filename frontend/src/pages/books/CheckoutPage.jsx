@@ -313,22 +313,30 @@ const CheckoutPage = () => {
     handlePayment(data);
   };
 
+  // Check if Razorpay is loaded
+  const loadRazorpay = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
   const handlePayment = async (formData) => {
     if (!formData) return;
-
-    if (!cashfree) {
-      Swal.fire({
-        title: "Payment Gateway Loading",
-        text: "Please wait while we load the payment gateway...",
-        icon: "info",
-        confirmButtonColor: "#C76F3B",
-      });
-      return;
-    }
 
     setLoading(true);
 
     try {
+      const res = await loadRazorpay();
+      if (!res) {
+        Swal.fire("Error", "Razorpay SDK failed to load. Are you online?", "error");
+        setLoading(false);
+        return;
+      }
+
       const formattedPhone = formatPhoneNumber(formData.phone);
       const { data } = await axios.post(
         `${getBaseUrl()}/api/payment/create-order`,
@@ -348,116 +356,56 @@ const CheckoutPage = () => {
       if (!data.success) {
         throw new Error("Failed to create payment order");
       }
-      const orderData = {
-        cashfreeOrderId: data.orderId,
-        paymentSessionId: data.paymentSessionId,
-        formData: formData,
-        finalAmount: finalAmount,
+
+      const options = {
+        key: data.key,
+        amount: data.amount * 100, // in paise
+        currency: data.currency,
+        name: "Sita Store",
+        description: "Book Purchase",
+        image: "/sita-logo.webp", // Ensure you have a logo path
+        order_id: data.orderId,
+        handler: async function (response) {
+          try {
+            await processPaymentSuccess(
+              data.orderId,
+              formData,
+              response.razorpay_payment_id,
+              response.razorpay_signature
+            );
+          } catch (error) {
+            Swal.fire("Error", "Payment Verification Failed", "error");
+          }
+        },
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          contact: formattedPhone,
+        },
+        theme: {
+          color: "#C76F3B",
+        },
       };
 
-      sessionStorage.setItem("pendingOrder", JSON.stringify(orderData));
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+      setLoading(false);
 
-      const checkoutOptions = {
-        paymentSessionId: data.paymentSessionId,
-        returnUrl: `${window.location.origin}/checkout?payment_status=success&order_id=${data.orderId}`,
-      };
-
-      cashfree
-        .checkout(checkoutOptions)
-        .then(async function (result) {
-          if (result.error) {
-            sessionStorage.removeItem("pendingOrder");
-            Swal.fire({
-              title: "Payment Failed",
-              text: result.error.message || "Payment initialization failed",
-              icon: "error",
-              confirmButtonColor: "#C76F3B",
-            });
-            setLoading(false);
-            return;
-          }
-
-          if (result.redirect === true) {
-          } else {
-            sessionStorage.removeItem("pendingOrder");
-            await processPaymentSuccess(data.orderId, formData);
-          }
-        })
-        .catch((error) => {
-          sessionStorage.removeItem("pendingOrder");
-          Swal.fire({
-            title: "Payment Failed",
-            text: error.message || "Failed to initialize payment",
-            icon: "error",
-            confirmButtonColor: "#C76F3B",
-          });
-          setLoading(false);
-        });
     } catch (error) {
-      sessionStorage.removeItem("pendingOrder");
+      console.error("Payment Error:", error);
       Swal.fire({
         title: "Payment Failed",
-        text:
-          error.response?.data?.message ||
-          error.message ||
-          "Failed to process payment",
+        text: error.response?.data?.message || error.message || "Failed to process payment",
         icon: "error",
         confirmButtonColor: "#C76F3B",
       });
       setLoading(false);
-    }
-  };
-
-  const processPaymentSuccess = async (cashfreeOrderId, formData) => {
-    try {
-      setLoading(true);
-
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-
-      const verifyResponse = await axios.post(
-        `${getBaseUrl()}/api/payment/verify-payment`,
-        {
-          orderId: cashfreeOrderId,
-        }
-      );
-
-      if (!verifyResponse.data.success) {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-
-        const retryVerify = await axios.post(
-          `${getBaseUrl()}/api/payment/verify-payment`,
-          {
-            orderId: cashfreeOrderId,
-          }
-        );
-
-        if (!retryVerify.data.success) {
-          throw new Error(
-            `Payment verification failed. Order ID: ${cashfreeOrderId}`
-          );
-        }
-      }
-
-      const paymentId = verifyResponse.data.paymentId;
-      await createOrderAfterPayment(formData, cashfreeOrderId, paymentId);
-    } catch (error) {
-      console.error("❌ Payment processing error:", error);
-      setLoading(false);
-      Swal.fire({
-        title: "Order Processing Failed",
-        html: `
-    <p>Order ID: ${cashfreeOrderId}</p>
-    <p class="text-sm text-gray-600">If any money was debited, please contact support with this Order ID.</p>
-  `,
-        icon: "error",
-        confirmButtonColor: "#C76F3B",
-      });
     }
   };
 
   const createOrderAfterPayment = async (
     formData,
-    cashfreeOrderId,
+    razorpayOrderId,
     paymentId
   ) => {
     try {
@@ -502,7 +450,7 @@ const CheckoutPage = () => {
             }
             : null,
         paymentId: paymentId,
-        cashfreeOrderId: cashfreeOrderId,
+        cashfreeOrderId: razorpayOrderId, // Reusing field
       };
 
       const response = await axios.post(
@@ -545,7 +493,7 @@ const CheckoutPage = () => {
           "Failed to create order"
           }</p>
           <p class="text-sm text-gray-600 mt-2">Payment ID: ${paymentId}</p>
-          <p class="text-sm text-gray-600">Cashfree Order: ${cashfreeOrderId}</p>
+          <p class="text-sm text-gray-600">Order ID: ${razorpayOrderId}</p>
           <p class="text-sm text-gray-600 mt-2">Please contact support with these IDs.</p>
         `,
         icon: "error",
@@ -554,55 +502,36 @@ const CheckoutPage = () => {
     }
   };
 
-  useEffect(() => {
-  }, []);
+  const processPaymentSuccess = async (razorpayOrderId, formData, paymentId, signature) => {
+    try {
+      setLoading(true);
 
-  // Handle payment return from Cashfree
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const paymentStatus = urlParams.get("payment_status");
-    const orderId = urlParams.get("order_id");
-
-    if (paymentStatus === "success" && orderId) {
-      const pendingOrderData = sessionStorage.getItem("pendingOrder");
-
-      if (pendingOrderData) {
-        const { formData } = JSON.parse(pendingOrderData);
-        processPaymentSuccess(orderId, formData);
-        sessionStorage.removeItem("pendingOrder");
-        window.history.replaceState(
-          {},
-          document.title,
-          window.location.pathname
-        );
-      }
-    }
-  }, []);
-
-  // Initialize Cashfree
-  useEffect(() => {
-    const initializeCashfree = () => {
-      try {
-        if (window.Cashfree) {
-          const cashfreeInstance = window.Cashfree({
-            mode: "production",
-          });
-          setCashfree(cashfreeInstance);
-        } else {
-          setTimeout(initializeCashfree, 1000);
+      const verifyResponse = await axios.post(
+        `${getBaseUrl()}/api/payment/verify-payment`,
+        {
+          razorpay_order_id: razorpayOrderId,
+          razorpay_payment_id: paymentId,
+          razorpay_signature: signature
         }
-      } catch (error) {
-        console.error("❌ Failed to initialize Cashfree:", error);
-      }
-    };
+      );
 
-    if (document.readyState === "complete") {
-      initializeCashfree();
-    } else {
-      window.addEventListener("load", initializeCashfree);
-      return () => window.removeEventListener("load", initializeCashfree);
+      if (!verifyResponse.data.success) {
+        throw new Error("Payment verification failed on server");
+      }
+
+      await createOrderAfterPayment(formData, razorpayOrderId, paymentId);
+    } catch (error) {
+      console.error("❌ Payment processing error:", error);
+      setLoading(false);
+      Swal.fire({
+        title: "Order Processing Failed",
+        text: "Payment verified but order creation failed. Please contact support.",
+        icon: "error",
+        confirmButtonColor: "#C76F3B",
+      });
     }
-  }, []);
+  };
+
 
   useEffect(() => {
     const fetchGiftWrapCharge = async () => {

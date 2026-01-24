@@ -1,76 +1,55 @@
 const express = require('express');
-const { Cashfree } = require('cashfree-pg');
+const Razorpay = require('razorpay');
+const crypto = require('crypto');
 const Payment = require('./payment.model');
 
 const router = express.Router();
 
-// ✅ SDK v4.3.10 Initialization
-Cashfree.XClientId = process.env.CASHFREE_APP_ID;
-Cashfree.XClientSecret = process.env.CASHFREE_SECRET_KEY;
-Cashfree.XEnvironment = Cashfree.Environment.PRODUCTION;
+// Initialize Razorpay
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID || "rzp_test_YourKeyHere",
+  key_secret: process.env.RAZORPAY_SECRET || process.env.RAZORPAY_KEY_SECRET || "YourSecretHere",
+});
 
-console.log('💳 Cashfree v4.3.10 initialized');
-console.log('🔑 AppID:', process.env.CASHFREE_APP_ID?.substring(0, 10) + '...');
+console.log('💳 Razorpay initialized');
 
-// Create Order
+// Create Order (Store)
 router.post('/create-order', async (req, res) => {
-  console.log('\n🚀 Payment endpoint hit');
-  
+  console.log('\n🚀 Store Payment endpoint hit');
+
   try {
     const { amount, receipt, notes, name, email, phone } = req.body;
-    
+
     // Validate
     if (!amount || amount <= 0) {
       return res.status(400).json({ success: false, message: 'Invalid amount' });
     }
-    if (!name || !email || !phone) {
-      return res.status(400).json({ success: false, message: 'Missing customer details' });
-    }
 
-    // Format
-    const customerId = (notes?.userId || 'guest').replace(/[^a-zA-Z0-9_-]/g, '_');
-    let formattedPhone = phone.toString().replace(/\D/g, '');
-    if (!formattedPhone.startsWith('91') && formattedPhone.length === 10) {
-      formattedPhone = '91' + formattedPhone;
-    }
-    
-    const orderId = receipt || `order_${Date.now()}`;
-    
-    // Request
-    const request = {
-      order_amount: parseFloat(amount),
-      order_currency: 'INR',
-      order_id: orderId,
-      customer_details: {
-        customer_id: customerId,
-        customer_phone: formattedPhone,
+    const options = {
+      amount: Math.round(amount * 100), // amount in paise
+      currency: "INR",
+      receipt: receipt || `store_${Date.now()}`,
+      notes: {
+        ...notes,
         customer_name: name,
         customer_email: email,
-      },
-      order_meta: {
-        return_url: 'https://www.langshott.in/orders?status=success',
-      },
+        customer_phone: phone
+      }
     };
 
-    console.log('📝 Creating Cashfree order...');
-    
-    // ✅ v4.3.10 Method
-    const response = await Cashfree.PGCreateOrder("2023-08-01", request);
-    
-    console.log('✅ Order created successfully');
-
-    const orderData = response.data;
+    console.log('📝 Creating Razorpay order...');
+    const order = await razorpay.orders.create(options);
+    console.log('✅ Order created successfully:', order.id);
 
     // Save to DB
     const payment = new Payment({
-      cashfreeOrderId: orderData.order_id,
-      paymentSessionId: orderData.payment_session_id,
-      amount: orderData.order_amount,
-      currency: orderData.order_currency,
+      cashfreeOrderId: order.id, // Reusing field name for Razorpay Order ID to minimize schema changes
+      amount: amount,
+      currency: order.currency,
       status: 'created',
       userId: notes?.userId || 'guest',
       notes: notes,
-      receipt: orderData.order_id,
+      receipt: order.receipt,
     });
 
     await payment.save();
@@ -78,22 +57,18 @@ router.post('/create-order', async (req, res) => {
 
     res.json({
       success: true,
-      orderId: orderData.order_id,
-      paymentSessionId: orderData.payment_session_id,
-      amount: orderData.order_amount,
-      currency: orderData.order_currency,
+      orderId: order.id,
+      amount: amount,
+      currency: order.currency,
+      key: process.env.RAZORPAY_KEY_ID
     });
 
   } catch (error) {
-    console.error('❌ Error:', error.message);
-    if (error.response?.data) {
-      console.error('❌ Cashfree API:', error.response.data);
-    }
-    
+    console.error('❌ Error:', error);
     res.status(500).json({
       success: false,
-      message: 'Payment failed',
-      error: error.response?.data?.message || error.message,
+      message: 'Payment initiation failed',
+      error: error.message,
     });
   }
 });
@@ -101,44 +76,42 @@ router.post('/create-order', async (req, res) => {
 // Verify Payment
 router.post('/verify-payment', async (req, res) => {
   try {
-    const { orderId } = req.body;
-    
-    if (!orderId) {
-      return res.status(400).json({ success: false, message: 'Order ID required' });
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+      return res.status(400).json({ success: false, message: 'Missing verification details' });
     }
 
-    const response = await Cashfree.PGOrderFetchPayments("2023-08-01", orderId);
-    const payments = response.data || [];
-    
-    let status = 'failed';
-    let paymentId = null;
+    const secret = process.env.RAZORPAY_SECRET || process.env.RAZORPAY_KEY_SECRET;
+    const generated_signature = crypto
+      .createHmac("sha256", secret)
+      .update(razorpay_order_id + "|" + razorpay_payment_id)
+      .digest("hex");
 
-    const successfulPayment = payments.find(p => p.payment_status === 'SUCCESS');
-    
-    if (successfulPayment) {
-      status = 'paid';
-      paymentId = successfulPayment.cf_payment_id;
+    if (generated_signature !== razorpay_signature) {
+      return res.status(400).json({ success: false, message: "Payment verification failed" });
     }
 
+    // Success
     const payment = await Payment.findOneAndUpdate(
-      { cashfreeOrderId: orderId },
+      { cashfreeOrderId: razorpay_order_id },
       {
-        cashfreePaymentId: paymentId,
-        status: status,
-        paidAt: status === 'paid' ? new Date() : null,
+        cashfreePaymentId: razorpay_payment_id, // Reusing field
+        status: 'paid',
+        paidAt: new Date(),
       },
       { new: true }
     );
 
     if (!payment) {
-      return res.status(404).json({ success: false, message: 'Payment not found' });
+      return res.status(404).json({ success: false, message: 'Payment record not found' });
     }
 
     res.json({
-      success: status === 'paid',
-      message: status === 'paid' ? 'Verified' : 'Failed',
-      paymentId: paymentId,
-      status: status,
+      success: true,
+      message: 'Verified',
+      paymentId: razorpay_payment_id,
+      status: 'paid',
     });
 
   } catch (error) {

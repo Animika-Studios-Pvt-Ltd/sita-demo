@@ -107,8 +107,7 @@ function getDeviceInfo(ua) {
  */
 app.use((req, res, next) => {
   // Pages to track
-  const tracked = ['/api/books', '/api/author', '/api/blogs', '/api/letters',
-    '/api/foundation', '/api/home/banner', '/api/contact',
+  const tracked = ['/api/books', '/api/blogs',
     '/api/orders', '/api/reviews', '/api/pages']
 
   // Skip if not tracked or health check
@@ -350,18 +349,9 @@ app.use("/api/orders", orderRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/reviews", reviewRoutes)
 app.use("/api/blogs", blogRoutes)
-app.use("/api/letters", letterRoutes)
 app.use("/api/pages", pageRoutes)
 app.use("/api/cms/pages", pageRoutes) // For listing and management
 app.use("/api/cms", pageRoutes) // For /upload
-app.use("/api/precepts", preceptsRoutes)
-app.use("/api/home/banner", bannerRoutes)
-app.use("/api/foundation", foundationRoutes)
-app.use("/api/home/corners", cornerRoutes)
-app.use("/api/reader-thoughts", readerThoughtRoutes)
-app.use("/api/inspiration-images", inspirationRoutes)
-app.use("/api/author", authorRoutes)
-app.use("/api/contact", contactRoutes)
 app.use("/api/trust-certificates", trustRoutes)
 app.use("/api/admin-auth", adminAuthRoutes)
 app.use('/api/payment', paymentRoutes)

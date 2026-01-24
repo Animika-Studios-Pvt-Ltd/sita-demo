@@ -24,6 +24,8 @@ class SMSService {
       return { success: true, skipped: true };
     }
 
+    /* 
+    // DISABLED: SMS SERVICE BLOCKED
     try {
       const mobileStr = String(mobile || '');
       const cleanMobile = mobileStr.replace(/^(\+91|91)/, '').replace(/\D/g, '').trim();
@@ -62,6 +64,9 @@ class SMSService {
         error: error.message
       };
     }
+    */
+    console.log(`🔕 SMS DISABLED: Would have sent SMS to ${mobile} for Order ${orderCode}`);
+    return { success: true, skipped: true, message: 'SMS Service Disabled' };
   }
 
   formatDate(date) {

@@ -94,28 +94,17 @@ function App() {
         }
 
         const [
-          bannerRes, booksRes, blogsRes, lettersRes, cornersRes,
-          readerThoughtsRes, authorRes, pagesRes, reviewsRes
+          booksRes, blogsRes, pagesRes, reviewsRes
         ] = await Promise.all([
-          safeFetch(`${baseUrl}/api/home/banner`, 'Banner'),
           safeFetch(`${baseUrl}/api/books`, 'Books'),
           safeFetch(`${baseUrl}/api/blogs`, 'Blogs'),
-          safeFetch(`${baseUrl}/api/letters`, 'Letters'),
-          safeFetch(`${baseUrl}/api/home/corners`, 'Corners'),
-          safeFetch(`${baseUrl}/api/reader-thoughts`, 'Reader Thoughts'),
-          safeFetch(`${baseUrl}/api/author`, 'Author'),
           safeFetch(`${baseUrl}/api/pages`, 'Pages'),
           safeFetch(`${baseUrl}/api/reviews/all?approved=true`, 'Reviews')
         ])
 
         const data = {
-          banner: bannerRes ? await bannerRes.json() : null,
           books: booksRes ? await booksRes.json() : [],
           blogs: blogsRes ? await blogsRes.json() : [],
-          letters: lettersRes ? await lettersRes.json() : [],
-          corners: cornersRes ? await cornersRes.json() : [],
-          readerThoughts: readerThoughtsRes ? await readerThoughtsRes.json() : null,
-          author: authorRes ? await authorRes.json() : null,
           pages: pagesRes ? await pagesRes.json() : [],
           reviews: reviewsRes ? await reviewsRes.json() : []
         }

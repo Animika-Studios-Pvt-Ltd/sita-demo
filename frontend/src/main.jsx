@@ -25,7 +25,13 @@ createRoot(document.getElementById("root")).render(
       useRefreshTokens={true}
     >
       <AuthProvider>
-        <RouterProvider router={router} />
+        <RouterProvider
+          router={router}
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
+        />
       </AuthProvider>
     </Auth0Provider>
   </Provider>

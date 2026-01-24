@@ -9,7 +9,7 @@ const NIMBUSPOST_PASSWORD = process.env.NIMBUSPOST_PASSWORD;
 
 const verifyAdmin = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
-  
+
   if (!token) {
     return res.status(401).json({
       success: false,
@@ -101,7 +101,7 @@ const getRealTimeShippingRates = async (origin, destination, weight, orderAmount
 
       // Filter for Ekart couriers (since Shadowfax not available)
       const ekartCouriers = couriers.filter(c => c.name && c.name.includes('Ekart'));
-      
+
       // If no Ekart, use all available couriers
       const availableCouriers = ekartCouriers.length > 0 ? ekartCouriers : couriers;
 
@@ -145,12 +145,12 @@ const calculateShippingWithCommission = async (destination, weightGrams, orderAm
     // ✅ FIX: Check if we have valid courier data
     if (!ratesData || !ratesData.cheapest || !ratesData.cheapest.freight_charges) {
       console.warn('⚠️ No valid courier data received, using fallback pricing');
-      
+
       // Fallback pricing based on weight
-      const fallbackBaseCharge = weightGrams <= 500 ? 68 : 
-                                 weightGrams <= 1000 ? 75 : 
-                                 weightGrams <= 2000 ? 90 : 120;
-      
+      const fallbackBaseCharge = weightGrams <= 500 ? 68 :
+        weightGrams <= 1000 ? 75 :
+          weightGrams <= 2000 ? 90 : 120;
+
       const commission = fallbackBaseCharge * (PRICING_CONFIG.commission_percentage / 100);
       const totalWithCommission = fallbackBaseCharge + commission;
       const gst = totalWithCommission * (PRICING_CONFIG.gst_percentage / 100);
@@ -223,14 +223,14 @@ const calculateShippingWithCommission = async (destination, weightGrams, orderAm
     };
   } catch (error) {
     console.error('❌ Error calculating shipping:', error.message);
-    
+
     // ✅ CRITICAL FIX: Return fallback pricing instead of throwing error
     console.warn('⚠️ Using fallback pricing due to API error');
-    
-    const fallbackBaseCharge = weightGrams <= 500 ? 68 : 
-                               weightGrams <= 1000 ? 75 : 
-                               weightGrams <= 2000 ? 90 : 120;
-    
+
+    const fallbackBaseCharge = weightGrams <= 500 ? 68 :
+      weightGrams <= 1000 ? 75 :
+        weightGrams <= 2000 ? 90 : 120;
+
     const commission = fallbackBaseCharge * (PRICING_CONFIG.commission_percentage / 100);
     const totalWithCommission = fallbackBaseCharge + commission;
     const gst = totalWithCommission * (PRICING_CONFIG.gst_percentage / 100);
@@ -265,9 +265,19 @@ const calculateShippingWithCommission = async (destination, weightGrams, orderAm
 };
 
 
+// ✅ Get Gift Wrap Charge
+router.get('/gift-wrap-charge', (req, res) => {
+  res.json({
+    success: true,
+    charge: 15,
+    message: 'Gift wrap charge fetched successfully'
+  });
+});
+
 // ✅ Calculate shipping rates endpoint with real-time API
 router.post('/calculate-shipping', async (req, res) => {
   try {
+    console.log('📦 Shipping Calculation Payload:', JSON.stringify(req.body, null, 2));
     const { destination_pincode, weight, order_amount } = req.body;
 
     if (!destination_pincode || !weight) {
@@ -433,8 +443,14 @@ router.post('/create-shipment', async (req, res) => {
       ewaybill: '',
     };
 
-    console.log('📤 Sending to Nimbuspost API...');
+    console.log('⚠️ NIMBUSPOST DISABLED: Returning Mock AWB');
 
+    // Mock Response
+    const mockAwb = `MOCK-${Date.now()}`;
+    const mockShipmentId = `SHIP-${Date.now()}`;
+
+    /* 
+    // DISABLED for now - Just return mock success
     const response = await axios.post(
       `${NIMBUSPOST_API_URL}/shipments`,
       shipmentPayload,
@@ -446,33 +462,33 @@ router.post('/create-shipment', async (req, res) => {
         timeout: 30000,
       }
     );
+    */
 
-    console.log('📥 Nimbuspost Response Status:', response.data.status);
+    // Simulate success
+    const shipmentData = {
+      awb_number: mockAwb,
+      shipment_id: mockShipmentId,
+      label_url: 'https://via.placeholder.com/400x600?text=Mock+Label', // Dummy Label
+      courier_name: selectedCourier.name,
+      courier_id: selectedCourier.id,
+    };
 
-    if (response.data && response.data.status) {
-      const shipmentData = response.data.data;
+    console.log('========================================');
+    console.log('✅ MOCK SHIPMENT CREATED (REAL APIs DISABLED)');
+    console.log('========================================');
+    console.log('AWB:', shipmentData.awb_number);
+    console.log('Shipment ID:', shipmentData.shipment_id);
+    console.log('========================================\n');
 
-      console.log('========================================');
-      console.log('✅ SHIPMENT CREATED SUCCESSFULLY');
-      console.log('========================================');
-      console.log('AWB:', shipmentData.awb_number || shipmentData.awb);
-      console.log('Shipment ID:', shipmentData.shipment_id || shipmentData.id);
-      console.log('Actual Courier:', shipmentData.courier_name);
-      console.log('Actual Courier ID:', shipmentData.courier_id);
-      console.log('========================================\n');
-
-      res.json({
-        success: true,
-        message: 'Shipment created successfully',
-        awb_number: shipmentData.awb_number || shipmentData.awb,
-        shipment_id: shipmentData.shipment_id || shipmentData.id,
-        label_url: shipmentData.label || shipmentData.label_url,
-        courier_name: shipmentData.courier_name,
-        courier_id: shipmentData.courier_id,
-      });
-    } else {
-      throw new Error(response.data.message || 'Shipment creation failed');
-    }
+    res.json({
+      success: true,
+      message: 'Shipment created successfully (Mock)',
+      awb_number: shipmentData.awb_number,
+      shipment_id: shipmentData.shipment_id,
+      label_url: shipmentData.label_url,
+      courier_name: shipmentData.courier_name,
+      courier_id: shipmentData.courier_id,
+    });
   } catch (error) {
     console.error('\n========================================');
     console.error('❌ SHIPMENT CREATION FAILED');
@@ -756,12 +772,12 @@ router.get('/track/:awb', async (req, res) => {
 router.get('/billing/invoices', verifyAdmin, async (req, res) => {
   try {
     const { start_date, end_date, page = 1, limit = 10 } = req.query;
-    
+
     console.log('📊 Fetching invoices from Nimbuspost...');
 
     const token = await getNimbuspostToken();
-    
-    // Try different possible endpoints
+
+    // Fetch from Nimbuspost
     let response;
     try {
       response = await axios.get(
@@ -781,21 +797,19 @@ router.get('/billing/invoices', verifyAdmin, async (req, res) => {
         }
       );
     } catch (apiError) {
-      // If billing endpoint doesn't work, return empty data instead of error
       console.warn('⚠️ Billing invoices endpoint not available:', apiError.message);
-      
+      // Return empty list if endpoint fails (common capability issue)
       return res.json({
         success: false,
         message: 'Nimbuspost billing endpoint not available for this account',
         invoices: [],
-        pagination: { page: parseInt(page), limit: parseInt(limit), total: 0 },
-        note: 'This feature may require additional permissions in your Nimbuspost account'
+        pagination: { page: parseInt(page), limit: parseInt(limit), total: 0 }
       });
     }
 
     console.log('✅ Invoices fetched successfully');
 
-    if (response.data && response.data.status) {
+    if (response && response.data && response.data.status) {
       res.json({
         success: true,
         invoices: response.data.data || [],
@@ -806,8 +820,9 @@ router.get('/billing/invoices', verifyAdmin, async (req, res) => {
         }
       });
     } else {
-      throw new Error(response.data.message || 'Failed to fetch invoices');
+      throw new Error(response?.data?.message || 'Failed to fetch invoices');
     }
+
   } catch (error) {
     console.error('❌ Billing fetch error:', error.message);
     res.status(200).json({
