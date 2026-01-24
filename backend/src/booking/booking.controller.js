@@ -55,6 +55,11 @@ const initiateBooking = async (req, res) => {
     if (totalAmount === 0) {
       event.availability -= seats;
       await event.save();
+
+      const { sendBookingConfirmationEmail } = require("../services/emailService");
+      // Populate event for email
+      const populatedBooking = await Booking.findById(booking._id).populate("event");
+      await sendBookingConfirmationEmail(populatedBooking);
     }
 
     res.json({
@@ -108,6 +113,10 @@ const verifyBooking = async (req, res) => {
       event.availability -= booking.seats;
       await event.save();
     }
+
+    // Send Confirmation Email
+    const { sendBookingConfirmationEmail } = require("../services/emailService");
+    await sendBookingConfirmationEmail(booking);
 
     res.json({ success: true, message: "Booking confirmed!" });
 

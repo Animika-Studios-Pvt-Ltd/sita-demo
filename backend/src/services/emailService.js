@@ -21,7 +21,7 @@ async function sendEmail({ to, subject, html, text }) {
   try {
     const from = process.env.EMAIL_USER;
     const storeName = process.env.STORE_NAME || 'Sita';
-    
+
     const utf8Subject = `=?utf-8?B?${Buffer.from(subject).toString('base64')}?=`;
     const messageParts = [
       `From: ${storeName} <${from}>`,
@@ -34,7 +34,7 @@ async function sendEmail({ to, subject, html, text }) {
     ];
 
     const message = messageParts.join('\n');
-    
+
     const encodedMessage = Buffer.from(message)
       .toString('base64')
       .replace(/\+/g, '-')
@@ -294,7 +294,7 @@ async function sendOrderPlacedEmailAdmin(order) {
 async function sendShippedEmail(order) {
   try {
     const orderId = order.guestOrderCode || order._id.toString().slice(-8).toUpperCase();
-    
+
     // ✅ CHECK: Only send if order has tracking ID
     if (!order.trackingId) {
       console.log('⚠️ No tracking ID provided. Skipping shipped email.');
@@ -1079,7 +1079,7 @@ async function sendReviewNotificationToAdmin(review) {
     `;
 
     const result = await sendEmail({ to: adminEmail, subject, html });
-    
+
     if (result?.messageId) {
       console.log('✅ Review notification email sent:', result.messageId);
     } else {
@@ -1180,7 +1180,7 @@ async function sendReviewDisapprovedEmail(reviewData, reason) {
 async function sendContactFormEmail({ name, email, subject, message, contactId }) {
   try {
     const enquiriesEmail = 'india.lumos@gmail.com';
-    
+
     const html = `
       <!DOCTYPE html>
       <html>
@@ -1265,11 +1265,11 @@ ${message}
           </div>
           
           <div class="metadata">
-            <p><strong>Received:</strong> ${new Date().toLocaleString('en-IN', { 
-              dateStyle: 'full', 
-              timeStyle: 'long',
-              timeZone: 'Asia/Kolkata'
-            })}</p>
+            <p><strong>Received:</strong> ${new Date().toLocaleString('en-IN', {
+      dateStyle: 'full',
+      timeStyle: 'long',
+      timeZone: 'Asia/Kolkata'
+    })}</p>
           </div>
         </div>
       </body>
@@ -1292,6 +1292,81 @@ ${message}
 }
 
 
+/**
+ * 8. EVENT BOOKING CONFIRMATION
+ */
+async function sendBookingConfirmationEmail(booking) {
+  try {
+    const eventParams = booking.event || {};
+    const eventDate = new Date(eventParams.date).toLocaleDateString('en-IN', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+
+    const html = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      </head>
+      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: linear-gradient(135deg, #c86836 0%, #0D0842 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="margin: 0; font-size: 28px;">Booking Confirmed! 🎉</h1>
+            <p style="margin: 10px 0 0 0; font-size: 16px;">We look forward to seeing you, ${booking.userName}!</p>
+          </div>
+          
+          <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px;">
+            <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+              <h2 style="margin: 0 0 15px 0; color: #c86836; font-size: 20px;">Event Details</h2>
+              <p style="margin: 8px 0;"><strong>Event:</strong> ${eventParams.title || 'Sita Event'}</p>
+              <p style="margin: 8px 0;"><strong>Date:</strong> ${eventDate}</p>
+              <p style="margin: 8px 0;"><strong>Time:</strong> ${eventParams.startTime} - ${eventParams.endTime}</p>
+              <p style="margin: 8px 0;"><strong>Mode:</strong> ${eventParams.mode}</p>
+              <p style="margin: 8px 0;"><strong>Location:</strong> ${eventParams.location || 'Online'}</p>
+            </div>
+
+            <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+              <h3 style="margin: 0 0 15px 0; color: #333;">Booking Summary</h3>
+              <p style="margin: 5px 0;"><strong>Name:</strong> ${booking.userName}</p>
+              <p style="margin: 5px 0;"><strong>Seats:</strong> ${booking.seats}</p>
+              <p style="margin: 5px 0;"><strong>Amount Paid:</strong> <span style="color: #28a745; font-weight: bold;">₹${booking.totalAmount}</span></p>
+              <p style="margin: 5px 0;"><strong>Booking ID:</strong> #${booking._id.toString().slice(-6).toUpperCase()}</p>
+            </div>
+
+            <div style="background: #f0f7ff; padding: 20px; border-radius: 8px; border-left: 4px solid #0056b3;">
+              <p style="margin: 0; color: #004085;">
+                <strong>💡 Need Help?</strong><br>
+                If you have any questions or need to reschedule, please reply to this email or contact us at ${process.env.ADMIN_EMAIL}.
+              </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+              <p style="margin: 15px 0 0 0; font-size: 12px; color: #999;">
+                Sita
+              </p>
+            </div>
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+
+    await sendEmail({
+      to: booking.userEmail,
+      subject: `Booking Confirmed: ${eventParams.title}`,
+      html
+    });
+
+    console.log(`✅ Booking confirmation email sent to ${booking.userEmail}`);
+  } catch (error) {
+    console.error('❌ Booking email error:', error.message);
+  }
+}
+
 module.exports = {
   sendEmail,
   sendOrderPlacedEmailCustomer,
@@ -1306,4 +1381,5 @@ module.exports = {
   sendReviewNotificationToAdmin,
   sendReviewDisapprovedEmail,
   sendContactFormEmail,
+  sendBookingConfirmationEmail
 };
