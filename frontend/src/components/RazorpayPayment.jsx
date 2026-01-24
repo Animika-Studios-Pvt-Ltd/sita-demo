@@ -8,7 +8,8 @@ const RazorpayPayment = ({
   description,
   image = "https://res.cloudinary.com/duq4lad3e/image/upload/v1758535613/banner/nghvs5xkhliotx6ljd2h.webp",
   onVerify,
-  onClose
+  onClose,
+  rzpKey
 }) => {
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const RazorpayPayment = ({
     }
 
     const options = {
-      key: "rzp_test_YourKeyHere", // Replace with your actual key or env variable if possible in frontend build
+      key: rzpKey,
       amount: amount * 100, // Amount is in paise, but if passed as orderId amount, this is ignored usually
       currency: currency,
       name: name,

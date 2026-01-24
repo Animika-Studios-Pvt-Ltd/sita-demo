@@ -39,6 +39,16 @@ const BookingEvent = () => {
       .finally(() => setLoading(false));
   }, [eventId]);
 
+  const loadScript = (src) => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
   /* ================= BOOK ================= */
   const bookSession = async () => {
     if (!user.name || !user.email) {
@@ -50,29 +60,94 @@ const BookingEvent = () => {
     }
 
     try {
-      await fetch(`${API}/api/bookings`, {
+      // 1. Load Razorpay SDK
+      const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+      if (!res) {
+        return Swal.fire("Error", "Razorpay SDK failed to load. Are you online?", "error");
+      }
+
+      // 2. Initiate Booking (Create Order)
+      const initiateRes = await fetch(`${API}/api/bookings/initiate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           eventId,
-          date: event.date,
-          startTime: event.startTime,
-          endTime: event.endTime,
+          date: event.date, // Sending date for validation if needed
+          seats: 1, // Defaulting to 1 seat for now
           userName: user.name,
           userEmail: user.email,
           userPhone: user.phone,
         }),
       });
 
-      Swal.fire(
-        "Success",
-        "Your booking has been confirmed",
-        "success"
-      );
+      const data = await initiateRes.json();
 
-      setUser({ name: "", email: "", phone: "" });
+      if (!initiateRes.ok) {
+        throw new Error(data.message || "Failed to initiate booking");
+      }
+
+      // 3. Handle Free Event
+      if (data.amount === 0) {
+        Swal.fire("Success", "Your free booking has been confirmed!", "success");
+        setUser({ name: "", email: "", phone: "" });
+        return;
+      }
+
+      // 4. Handle Paid Event (Razorpay Checkout)
+      const options = {
+        key: data.key, // Enter the Key ID generated from the Dashboard
+        amount: data.amount * 100, // Amount is in currency subunits. Default currency is INR.
+        currency: data.currency,
+        name: "Sita Foundation",
+        description: `Booking for ${event.title}`,
+        image: "/sita-logo.webp", // Ensure you have a logo at this path or use a remote URL
+        order_id: data.razorpayOrderId,
+        handler: async function (response) {
+          try {
+            // 5. Verify Payment
+            const verifyRes = await fetch(`${API}/api/bookings/verify`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                bookingId: data.bookingId,
+              }),
+            });
+
+            const verifyData = await verifyRes.json();
+
+            if (verifyRes.ok && verifyData.success) {
+              Swal.fire("Success", "Payment successful! Booking confirmed.", "success");
+              setUser({ name: "", email: "", phone: "" });
+            } else {
+              Swal.fire("Error", "Payment verification failed. Please contact support.", "error");
+            }
+          } catch (error) {
+            console.error("Verification error:", error);
+            Swal.fire("Error", "Payment verification error", "error");
+          }
+        },
+        prefill: {
+          name: user.name,
+          email: user.email,
+          contact: user.phone,
+        },
+        notes: {
+          address: "Sita Foundation Event",
+        },
+        theme: {
+          color: "#c86836", // Sita Bronze
+        },
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+
     } catch (err) {
-      Swal.fire("Error", "Booking failed", "error");
+      console.error("Booking error:", err);
+      Swal.fire("Error", err.message || "Booking failed", "error");
     }
   };
 

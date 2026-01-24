@@ -207,6 +207,7 @@ const BookingModal = ({ isOpen, onClose, eventId }) => {
                                         description={`Booking for ${event.title}`}
                                         onVerify={handleVerify}
                                         onClose={() => setBookingStep("details")}
+                                        rzpKey={orderData?.key}
                                     />
                                 </div>
 
