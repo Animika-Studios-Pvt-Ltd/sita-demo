@@ -7,17 +7,18 @@ import { getSubdomain, getAppUrl } from "../utils/subdomain";
 // Import local images if needed, or assume they are in public/images
 // For now, using standard paths as per the HTML
 
-const BACKEND_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const BACKEND_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const Footer = () => {
   const currentSubdomain = getSubdomain();
-  const isStore = currentSubdomain === 'store';
-  const isBlog = currentSubdomain === 'blog';
+  const isStore = currentSubdomain === "store";
+  const isBlog = currentSubdomain === "blog";
 
   const { data: books = [] } = useFetchAllBooksQuery();
   const activeBooks = books.filter((book) => !book.suspended);
   const sortedBooks = activeBooks.sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
   );
   const recentBooks = sortedBooks.slice(0, 5); // Get more books for carousel if needed
 
@@ -31,10 +32,10 @@ const Footer = () => {
         const res = await fetch(`${BACKEND_BASE_URL}/api/blogs`);
         const data = await res.json();
         const activeBlogs = data.filter(
-          (blog) => !blog.suspended && blog.type === "blogs"
+          (blog) => !blog.suspended && blog.type === "blogs",
         );
         const sortedBlogs = activeBlogs.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
         );
         const recent = sortedBlogs.slice(0, 2);
         setBlogs(recent);
@@ -62,7 +63,9 @@ const Footer = () => {
   const handleMouseLeave = () => setIsHovered(false);
 
   const prevSlide = () => {
-    setActiveSlide((prev) => (prev - 1 + recentBooks.length) % recentBooks.length);
+    setActiveSlide(
+      (prev) => (prev - 1 + recentBooks.length) % recentBooks.length,
+    );
   };
 
   const nextSlide = () => {
@@ -76,26 +79,46 @@ const Footer = () => {
         <div className="footer-top-flex">
           <div className="footer-col footer-col-factor footer-links">
             <h6 className="footer-title">THE SITA FACTOR</h6>
-            <a href="https://sita-demo.netlify.app/yoga-therapy.html">Yoga Therapy</a>
-            <a href="https://sita-demo.netlify.app/ayurveda-nutrition.html">Ayurveda – Nutrition & Integration</a>
-            <a href="https://sita-demo.netlify.app/kosha-counseling.html">Kosha Counseling</a>
-            <a href="https://sita-demo.netlify.app/soul-curriculum.html">Soul Curriculum</a>
-            <a href="https://sita-demo.netlify.app/release-karmic-patterns.html">Release Karmic Patterns</a>
+            <a href="https://sita-demo.netlify.app/yoga-therapy.html">
+              Yoga Therapy
+            </a>
+            <a href="https://sita-demo.netlify.app/ayurveda-nutrition.html">
+              Ayurveda – Nutrition & Integration
+            </a>
+            <a href="https://sita-demo.netlify.app/kosha-counseling.html">
+              Kosha Counseling
+            </a>
+            <a href="https://sita-demo.netlify.app/soul-curriculum.html">
+              Soul Curriculum
+            </a>
+            <a href="https://sita-demo.netlify.app/release-karmic-patterns.html">
+              Release Karmic Patterns
+            </a>
           </div>
           <div className="footer-col footer-col-workshops footer-links">
             <h6 className="footer-title">WORKSHOPS</h6>
-            <a href="https://sita-demo.netlify.app/teacher-training.html">Teacher Training</a>
-            <a href="https://sita-demo.netlify.app/corporate-training.html">Corporate Training</a>
-            <a href="https://sita-demo.netlify.app/shakthi-leadership.html">Shakthi Leadership</a>
-            <a href="https://sita-demo.netlify.app/group-sessions.html">Group Sessions</a>
-            <a href="https://sita-demo.netlify.app/private-sessions.html">Private Sessions</a>
+            <a href="https://sita-demo.netlify.app/teacher-training.html">
+              Teacher Training
+            </a>
+            <a href="https://sita-demo.netlify.app/corporate-training.html">
+              Corporate Training
+            </a>
+            <a href="https://sita-demo.netlify.app/shakthi-leadership.html">
+              Shakthi Leadership
+            </a>
+            <a href="https://sita-demo.netlify.app/group-sessions.html">
+              Group Sessions
+            </a>
+            <a href="https://sita-demo.netlify.app/private-sessions.html">
+              Private Sessions
+            </a>
           </div>
           <div className="footer-col footer-col-resources footer-links">
             <h6 className="footer-title">RESOURCES</h6>
             {isBlog ? (
               <Link to="/blogs">Blogs</Link>
             ) : (
-              <a href={getAppUrl('blog', '/blogs')}>Blogs</a>
+              <a href={getAppUrl("blog", "/blogs")}>Blogs</a>
             )}
             <a href="https://sita-demo.netlify.app/articles.html">Articles</a>
             <a href="https://sita-demo.netlify.app/podcasts.html">Podcasts</a>
@@ -105,8 +128,7 @@ const Footer = () => {
             <div
               className="publication-carousel"
               onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
+              onMouseLeave={handleMouseLeave}>
               {/* Uncomment arrows if functionality desired
                             <button className="pub-arrow pub-prev" aria-label="Previous book" onClick={prevSlide}>
                                 <i className="fa-solid fa-chevron-left"></i>
@@ -117,29 +139,35 @@ const Footer = () => {
                 {recentBooks.length > 0 ? (
                   recentBooks.map((book, index) => {
                     const linkPath = `/books/${book.slug || book._id}`;
-                    const destination = isStore ? linkPath : getAppUrl('store', linkPath);
+                    const destination = isStore
+                      ? linkPath
+                      : getAppUrl("store", linkPath);
 
                     return (
                       <div
                         key={book._id || index}
-                        className={`publication-slide ${index === activeSlide ? "active" : ""}`}
-                      >
+                        className={`publication-slide ${index === activeSlide ? "active" : ""}`}>
                         {isStore ? (
                           <Link to={linkPath}>
-                            <img src={book.coverImage || "/images/anaya-book.webp"} alt={book.title} />
+                            <img
+                              src={book.coverImage || "/images/anaya-book.webp"}
+                              alt={book.title}
+                            />
                           </Link>
                         ) : (
                           <a href={destination}>
-                            <img src={book.coverImage || "/images/anaya-book.webp"} alt={book.title} />
+                            <img
+                              src={book.coverImage || "/images/anaya-book.webp"}
+                              alt={book.title}
+                            />
                           </a>
                         )}
 
                         <p>
                           <strong>{book.title}</strong>
                           <br />
-                          <span style={{ fontSize: '14px' }}>{book.subtitle || 'Book'}</span>
-                          <br />
-                          ${book.newPrice}
+                          <span>{book.subtitle || "Book"}</span>
+                          <br />${book.newPrice}
                         </p>
                       </div>
                     );
@@ -163,43 +191,67 @@ const Footer = () => {
             {blogs.length > 0 ? (
               blogs.map((blog, index) => {
                 const linkPath = `/blogs/${blog.slug || blog._id}`;
-                const destination = isBlog ? linkPath : getAppUrl('blog', linkPath);
+                const destination = isBlog
+                  ? linkPath
+                  : getAppUrl("blog", linkPath);
 
                 return isBlog ? (
-                  <Link to={linkPath} key={blog._id || index} className="blog-item" style={{ textDecoration: 'none' }}>
+                  <Link
+                    to={linkPath}
+                    key={blog._id || index}
+                    className="blog-item"
+                    style={{ textDecoration: "none" }}>
                     <img
-                      src={blog.image?.startsWith("http") ? blog.image : `${BACKEND_BASE_URL}${blog.image}`}
+                      src={
+                        blog.image?.startsWith("http")
+                          ? blog.image
+                          : `${BACKEND_BASE_URL}${blog.image}`
+                      }
                       alt={blog.title}
                     />
                     <div className="blog-overlay">
                       <span>
-                        {new Date(blog.createdAt).toLocaleDateString(undefined, {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        })}
+                        {new Date(blog.createdAt).toLocaleDateString(
+                          undefined,
+                          {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          },
+                        )}
                       </span>
                       <p>{blog.title.substring(0, 15)}...</p>
                     </div>
                   </Link>
                 ) : (
-                  <a href={destination} key={blog._id || index} className="blog-item" style={{ textDecoration: 'none' }}>
+                  <a
+                    href={destination}
+                    key={blog._id || index}
+                    className="blog-item"
+                    style={{ textDecoration: "none" }}>
                     <img
-                      src={blog.image?.startsWith("http") ? blog.image : `${BACKEND_BASE_URL}${blog.image}`}
+                      src={
+                        blog.image?.startsWith("http")
+                          ? blog.image
+                          : `${BACKEND_BASE_URL}${blog.image}`
+                      }
                       alt={blog.title}
                     />
                     <div className="blog-overlay">
                       <span>
-                        {new Date(blog.createdAt).toLocaleDateString(undefined, {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        })}
+                        {new Date(blog.createdAt).toLocaleDateString(
+                          undefined,
+                          {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          },
+                        )}
                       </span>
                       <p>{blog.title.substring(0, 15)}...</p>
                     </div>
                   </a>
-                )
+                );
               })
             ) : (
               <p>No recent blogs</p>
@@ -209,7 +261,11 @@ const Footer = () => {
         {/* FOOTER MIDDLE */}
         <div className="footer-middle-flex">
           <div className="footer-middle-left">
-            <img src="/sita-logo.webp" className="footer-logo" alt="Sita Logo" />
+            <img
+              src="/sita-logo.webp"
+              className="footer-logo"
+              alt="Sita Logo"
+            />
           </div>
           <div className="footer-middle-center">
             <Link to="/privacy-policy">Privacy Policy</Link>
@@ -241,7 +297,9 @@ const Footer = () => {
           <p>Copyright © 2026 Sita. All Rights Reserved.</p>
           <p>
             Powered By:
-            <a href="https://lumos.in/" target="_blank" rel="noreferrer">LUMOS.in</a>
+            <a href="https://lumos.in/" target="_blank" rel="noreferrer">
+              LUMOS.in
+            </a>
           </p>
         </div>
       </div>
