@@ -15,12 +15,14 @@ const {
   getAdminRatings,
   approveRating,
   deleteRating,
+  triggerRatingEmail,
 } = require("./eventRating.controller");
 
 // Public
 router.get("/test", (req, res) => res.json({ message: "Events route working!" }));
 router.get("/", getEvents);
 router.post("/rate", submitRating);
+router.post("/test-email/:bookingId", triggerRatingEmail); // Test route
 
 // Admin - Ratings
 router.get("/admin/ratings", getAdminRatings);

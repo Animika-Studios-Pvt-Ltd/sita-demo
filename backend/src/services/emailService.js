@@ -1434,6 +1434,68 @@ async function sendEventRatingEmail(booking, event) {
   }
 }
 
+
+/**
+ * 10. EVENT RATED - Notify Admin of new rating
+ */
+async function sendEventRatedEmailAdmin(rating, booking) {
+  try {
+    const adminEmail = process.env.ADMIN_EMAIL;
+    if (!adminEmail) {
+      console.log('⚠️ No admin email configured for rating notification');
+      return;
+    }
+
+    const html = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      </head>
+      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="margin: 0; font-size: 28px;">New Event Rating ⭐</h1>
+            <p style="margin: 10px 0 0 0; font-size: 16px;">${booking.event?.title || 'Unknown Event'}</p>
+          </div>
+          
+          <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px;">
+            <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+              <h2 style="margin: 0 0 15px 0; color: #F57C00; font-size: 20px;">Rating Details</h2>
+              <p style="margin: 5px 0;"><strong>User:</strong> ${rating.userName} (${rating.userEmail})</p>
+              <p style="margin: 5px 0;"><strong>Rating:</strong> ${'⭐'.repeat(rating.rating)} (${rating.rating}/5)</p>
+              <p style="margin: 5px 0;"><strong>Date:</strong> ${new Date().toLocaleString('en-IN')}</p>
+            </div>
+
+            <div style="background: #fff3cd; padding: 20px; border-radius: 8px; border-left: 4px solid #F57C00;">
+              <h3 style="margin: 0 0 10px 0; color: #856404;">Comment</h3>
+              <p style="margin: 0; color: #856404; font-style: italic;">"${rating.comment || 'No comment provided'}"</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+              <p style="margin: 5px 0; color: #666; font-size: 14px;">
+                Review this rating in your admin dashboard to approve/disapprove it.
+              </p>
+            </div>
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+
+    await sendEmail({
+      to: adminEmail,
+      subject: `New Rating: ${rating.rating}⭐ for ${booking.event?.title}`,
+      html
+    });
+
+    console.log(`✅ Admin event rating email sent to ${adminEmail}`);
+  } catch (error) {
+    console.error('❌ Admin rating email error:', error.message);
+  }
+}
+
 module.exports = {
   sendEmail,
   sendOrderPlacedEmailCustomer,
@@ -1449,5 +1511,7 @@ module.exports = {
   sendReviewDisapprovedEmail,
   sendContactFormEmail,
   sendBookingConfirmationEmail,
-  sendEventRatingEmail
+  sendEventRatingEmail,
+  sendEventRatedEmailAdmin
 };
+

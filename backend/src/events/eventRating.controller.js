@@ -1,6 +1,7 @@
 const EventRating = require("./eventRating.model");
 const Booking = require("../booking/booking.model");
 const Event = require("./event.model");
+const emailService = require("../services/emailService");
 
 // Submit a rating for an event
 exports.submitRating = async (req, res) => {
@@ -35,6 +36,12 @@ exports.submitRating = async (req, res) => {
         });
 
         await newRating.save();
+
+        // 4. Send email notification to admin
+        // Non-blocking catch to ensure response is sent even if email fails
+        emailService.sendEventRatedEmailAdmin(newRating, booking).catch(err =>
+            console.error("Failed to send admin rating email:", err)
+        );
 
         res.status(201).json({ message: "Rating submitted successfully", rating: newRating });
     } catch (error) {
@@ -113,3 +120,36 @@ exports.deleteRating = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+
+// --- TEST FUNCTIONALITY ---
+
+// Manually trigger the "Rate Event" email for a booking (for testing/debug)
+exports.triggerRatingEmail = async (req, res) => {
+    try {
+        const { bookingId } = req.params;
+        const Booking = require("../booking/booking.model"); // Dynamic import to avoid circular dependency if any
+
+        const booking = await Booking.findById(bookingId).populate("event");
+        if (!booking) {
+            return res.status(404).json({ message: "Booking not found" });
+        }
+
+        if (!booking.event) {
+            return res.status(404).json({ message: "Event associated with booking not found" });
+        }
+
+        console.log(`👉 Manually triggering rating email for booking ${bookingId}`);
+
+        const emailSent = await emailService.sendEventRatingEmail(booking, booking.event);
+
+        if (emailSent) {
+            res.json({ message: `Rating email triggered for ${booking.userEmail}` });
+        } else {
+            res.status(500).json({ message: "Failed to send rating email (check logs)" });
+        }
+    } catch (error) {
+        console.error("Error triggering rating email:", error);
+        res.status(500).json({ message: "Failed to trigger email", error: error.message });
+    }
+};
+

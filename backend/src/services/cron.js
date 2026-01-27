@@ -6,8 +6,8 @@ const emailService = require("./emailService");
 const setupCronJobs = () => {
     console.log("⏰ Cron jobs initialized");
 
-    // Run every hour to check for ended events and send rating emails
-    cron.schedule("0 * * * *", async () => {
+    // Run every 5 minutes to check for ended events and send rating emails
+    cron.schedule("*/5 * * * *", async () => {
         console.log("Create rating email check started...");
         try {
             // 1. Find events that have ended recently (e.g., in the last 24 hours) 
@@ -53,10 +53,10 @@ const setupCronJobs = () => {
 
                 const eventEndDateTime = new Date(year, month - 1, day, hours, minutes);
 
-                // If event ended at least 1 hour ago
-                const oneHourAfterEnd = new Date(eventEndDateTime.getTime() + 60 * 60 * 1000);
+                // If event ended at least 5 minutes ago
+                const fiveMinutesAfterEnd = new Date(eventEndDateTime.getTime() + 5 * 60 * 1000);
 
-                if (now >= oneHourAfterEnd) {
+                if (now >= fiveMinutesAfterEnd) {
                     // Send email
                     const emailSent = await emailService.sendEventRatingEmail(booking, event);
 
