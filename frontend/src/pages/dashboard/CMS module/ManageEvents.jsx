@@ -798,7 +798,7 @@ const ManageEvents = () => {
             >
               <option value="upcoming">Upcoming</option>
               <option value="all">All</option>
-              <option value="past">Past</option>
+              <option value="past">Completed</option>
             </select>
           </div>
 
@@ -1151,7 +1151,7 @@ const ManageEvents = () => {
             >
               <option value="upcoming">Upcoming</option>
               <option value="all">All</option>
-              <option value="past">Past</option>
+              <option value="past">Completed</option>
             </select>
           </div>
 
