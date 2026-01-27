@@ -118,16 +118,17 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>${e.availability ?? "-"}</td>
             <td>${e.ageGroup || "-"}</td>
             <td>
-              ${Number(e.availability) === 0
-            ? `<span class="sita-booking-closed">Booking Closed</span>`
-            : e.bookingUrl
-              ? `<a href="${BOOKING_BASE_URL}/${e.bookingUrl}"
+              ${
+                Number(e.availability) === 0
+                  ? `<span class="sita-booking-closed">Booking Closed</span>`
+                  : e.bookingUrl
+                    ? `<a href="${BOOKING_BASE_URL}/${e.bookingUrl}"
                          class="sita-book-now"
                          target="_blank">Book Now</a>`
-              : `<button disabled class="sita-book-now disabled">
+                    : `<button disabled class="sita-book-now disabled">
                          Coming Soon
                        </button>`
-          }
+              }
             </td>
           </tr>
         `;
@@ -141,7 +142,6 @@ document.addEventListener("DOMContentLoaded", () => {
         </tr>`;
     });
 });
-
 
 /* -------------------------------- SITA FACTOR SECTION -------------------------------- */
 const decorEls = document.querySelectorAll(".sita-decor");
@@ -198,20 +198,61 @@ animate();
 const slides = document.querySelectorAll(".publication-slide");
 const prevBtn = document.querySelector(".pub-prev");
 const nextBtn = document.querySelector(".pub-next");
+const carousel = document.querySelector(".publication-carousel");
 
 let currentIndex = 0;
+let autoSlideInterval;
 
+/* Show slide */
 function showSlide(index) {
   slides.forEach((slide) => slide.classList.remove("active"));
   slides[index].classList.add("active");
 }
 
-prevBtn.addEventListener("click", () => {
-  currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-  showSlide(currentIndex);
-});
-
-nextBtn.addEventListener("click", () => {
+/* Next slide */
+function nextSlide() {
   currentIndex = (currentIndex + 1) % slides.length;
   showSlide(currentIndex);
-});
+}
+
+/* Previous slide */
+function prevSlide() {
+  currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+  showSlide(currentIndex);
+}
+
+/* Start auto scroll */
+function startAutoSlide() {
+  autoSlideInterval = setInterval(nextSlide, 4000); // 4 sec
+}
+
+/* Stop auto scroll */
+function stopAutoSlide() {
+  clearInterval(autoSlideInterval);
+}
+
+/* Arrow clicks (optional) */
+if (nextBtn) {
+  nextBtn.addEventListener("click", () => {
+    stopAutoSlide();
+    nextSlide();
+    startAutoSlide();
+  });
+}
+
+if (prevBtn) {
+  prevBtn.addEventListener("click", () => {
+    stopAutoSlide();
+    prevSlide();
+    startAutoSlide();
+  });
+}
+
+/* 👉 Pause on hover */
+if (carousel) {
+  carousel.addEventListener("mouseenter", stopAutoSlide);
+  carousel.addEventListener("mouseleave", startAutoSlide);
+}
+
+/* Init */
+startAutoSlide();
