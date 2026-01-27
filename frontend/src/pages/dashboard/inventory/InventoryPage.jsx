@@ -84,7 +84,7 @@ const InventoryPage = () => {
   );
 
   return (
-    <div className="container mt-24 px-4 md:px-8">
+    <div className="container mt-10 px-4 md:px-8">
       <div className="max-w-8xl mx-auto">
         <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg p-6 md:p-8 mb-5 shadow-lg">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

@@ -7,29 +7,20 @@ const AdminManagePages = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="p-6">
+    <div className="p-4 pt-0 mt-10">
       {/* HEADER */}
-      <div className="relative mb-8 flex items-center">
-        {/* BACK BUTTON (LEFT) */}
+      <div className="mb-6">
         <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-1 rounded-full bg-gradient-to-r from-blue-600 to-blue-800
-                     hover:from-blue-800 hover:to-blue-600 transition-all duration-300
-                     text-white px-3 py-1.5 z-10"
+          onClick={() => navigate("/dashboard/cms")}
+          className="flex items-center justify-center rounded-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400 transition-all duration-300 text-white font-medium rounded-[6px] px-2 py-1"
         >
-          <ArrowBackIcon fontSize="small" />
+          <ArrowBackIcon className="w-2 h-2" />
           Back
         </button>
-
-        {/* CENTER TITLE */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-          <h1 className="text-2xl font-bold text-gray-800">
-            Manage Pages
-          </h1>
-          <p className="text-gray-500 text-sm">
-            Organize and manage your Events content.
-          </p>
-        </div>
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2 text-center"> Manage Pages</h2>
+        <p className="text-sm text-gray-600 mt-1 text-center">
+          Organize and manage your Events content.
+        </p>
       </div>
 
       {/* CONTENT */}

@@ -25,10 +25,10 @@ export default function CmsDashboard() {
 
   /* ================= MAIN LAYOUT ================= */
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-indigo-50 via-purple-50 to-sky-50 overflow-x-hidden">
+    <div className="min-h-screen mt-10 rounded-lg flex flex-col bg-gradient-to-br from-indigo-50 via-purple-50 to-sky-50 overflow-x-hidden">
 
       {/* ================= HEADER (COPIED STYLE) ================= */}
-      <header className="sticky top-0 z-40 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 shadow">
+      <header className="sticky rounded-lg top-0 z-40 bg-gradient-to-r from-orange-400 to-orange-600 hover:orange-600 shadow">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex items-center justify-between gap-3">
 
@@ -57,8 +57,8 @@ export default function CmsDashboard() {
             </button>
 
             {/* Title */}
-            <div className="flex-1 text-center truncate">
-              <h1 className="text-base sm:text-2xl font-bold text-white truncate">
+            <div className="flex-1 text-center">
+              <h1 className="text-2xl font-bold text-white text-center">
                 {isEditing
                   ? slug
                     ? "Edit Page"

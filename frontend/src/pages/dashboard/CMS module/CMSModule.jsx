@@ -18,11 +18,11 @@ const CMSModule = () => {
       icon: <WorkspacePremiumIcon fontSize="large" className="text-green-600" />,
       route: "/dashboard/certificates/trust-certificate",
     },
-    // {
-    //   name: "Manage Pages",
-    //   icon: <DescriptionIcon fontSize="large" className="text-purple-600" />,
-    //   route: "/dashboard/manage-pages",
-    // },
+    {
+      name: "Manage Pages",
+      icon: <DescriptionIcon fontSize="large" className="text-purple-600" />,
+      route: "/dashboard/manage-pages",
+    },
     {
       name: "Workshop / Event Calendar",
       icon: <DescriptionIcon fontSize="large" className="text-orange-600" />,
@@ -33,7 +33,7 @@ const CMSModule = () => {
   const isCardActive = (route) => location.pathname === route;
 
   return (
-    <div className="container mx-auto mt-20 px-4">
+    <div className="container mx-auto mt-10 px-4">
       <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
         CMS Module
       </h2>

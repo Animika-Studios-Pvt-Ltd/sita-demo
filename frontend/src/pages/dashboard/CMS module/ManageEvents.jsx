@@ -373,13 +373,13 @@ const ManageEvents = () => {
 
   /* ================= UI ================= */
   return (
-    <div className="max-w-7xl mx-auto p-6">
-      <h1 className="text-3xl font-bold text-center mb-10 text-indigo-700">
+    <div className="max-w-7xl mx-auto p-4 mt-10">
+      <h1 className="text-3xl font-playfair font-bold text-center mb-10 text-indigo-700">
         Admin Event & Availability Manager
       </h1>
 
       {/* TOGGLE */}
-      {/* <div className="flex justify-center mb-10">
+      <div className="flex justify-center mb-10">
         <div className="inline-flex bg-gray-100 rounded-full p-1 shadow-inner">
           <button
             onClick={() => setActiveTab("events")}
@@ -405,7 +405,7 @@ const ManageEvents = () => {
             Blocked
           </button>
         </div>
-      </div> */}
+      </div>
 
 
       {/* ================= EVENTS ================= */}

@@ -372,17 +372,17 @@ const ManageBooks = () => {
     };
 
     return (
-        <div className="container mt-[100px]">
+        <div className="container mt-[40px]">
             <div className="max-w-8xl mx-auto rounded-lg">
                 <button
                     onClick={() => navigate(-1)}
-                    className="flex items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-800 hover:to-blue-600 transition-all duration-300 text-white font-medium rounded-[6px] px-2 py-1"
+                    className="flex items-center justify-center rounded-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400 transition-all duration-300 text-white font-medium rounded-[6px] px-2 py-1"
                 >
-                    <ArrowBackIcon className="w-4 h-4 mr-1" />
+                    <ArrowBackIcon className="w-2 h-2" />
                     Back
                 </button>
                 <div className="relative flex justify-center mb-8 bg-gray-200 rounded-full p-1 max-w-md mx-auto shadow-inner">
-                    <div className={`absolute top-1 left-1 w-1/2 h-10 bg-gradient-to-r from-blue-600 to-blue-800 rounded-full shadow-md transform transition-transform duration-300 ${viewMode === "form" ? "translate-x-full" : ""}`}></div>
+                    <div className={`absolute top-1 left-1 w-1/2 h-10 bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400 rounded-full shadow-md transform transition-transform duration-300 ${viewMode === "form" ? "translate-x-full" : ""}`}></div>
                     <button
                         className={`relative flex-1 py-2 flex items-center justify-center gap-2 rounded-full font-semibold text-md transition-all duration-300 transform ${viewMode === "list" ? "text-white" : "text-gray-700 hover:text-gray-900 hover:scale-105"}`}
                         onClick={() => {
@@ -669,7 +669,7 @@ const ManageBooks = () => {
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className={`py-2 mt-4 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-800 hover:to-blue-600 transition-all duration-300 rounded-full transition text-white font-regular px-7 flex items-center justify-center gap-2 ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
+                                        className={`py-2 mt-4 bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400 transition-all duration-300 rounded-full transition text-white font-regular px-7 flex items-center justify-center gap-2 ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
                                     >
                                         {isSubmitting ? (
                                             <>

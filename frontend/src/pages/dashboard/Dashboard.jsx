@@ -228,7 +228,7 @@ const Dashboard = () => {
   const PIE_COLORS = [BRONZE, DARK_BLUE, GOLD, "#10B981", "#EF4444", "#8B5CF6"];
 
   return (
-    <div className="container mx-auto mt-24 px-4 sm:px-6 lg:px-8 font-montserrat">
+    <div className="container mx-auto mt-10 px-4 sm:px-6 lg:px-8 font-montserrat">
       <motion.div
         className="text-center mb-12 px-2 sm:px-0"
         initial={{ opacity: 0, y: -20 }}

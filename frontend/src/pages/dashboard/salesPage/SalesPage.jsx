@@ -218,7 +218,7 @@ const SalesPage = () => {
     };
 
     return (
-        <div className="container mt-24 px-4 md:px-8">
+        <div className="container mt-10 px-4 md:px-8">
             <div className="max-w-8xl mx-auto">
                 <div className="bg-gradient-to-r from-green-600 to-green-800 rounded-lg p-6 md:p-8 mb-5 shadow-lg">
                     <h2 className="text-3xl font-bold text-white mb-3 flex items-center gap-2">

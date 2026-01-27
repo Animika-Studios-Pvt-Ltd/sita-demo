@@ -37,9 +37,10 @@ export default function CmsList() {
     /* ---------- SORT: Draft first, then latest ---------- */
     const sortedPages = [...pages].sort((a, b) => {
         // status="draft" should come before "published"
-        if (a.status !== b.status) {
-            return a.status === "draft" ? -1 : 1;
+        if (a.suspended !== b.suspended) {
+            return a.suspended ? -1 : 1; // drafts first
         }
+
         return new Date(b.updatedAt) - new Date(a.updatedAt);
     });
 
@@ -54,30 +55,34 @@ export default function CmsList() {
             return;
         }
 
-        const nextStatus = !page.suspended ? true : false; // suspended=true means Hidden/Draft
+        const nextSuspended = !page.suspended;
 
         const res = await Swal.fire({
-            title: !page.suspended
-                ? "Unpublish this page?"
-                : "Publish this page?",
-            text: !page.suspended
+            title: nextSuspended ? "Unpublish this page?" : "Publish this page?",
+            text: nextSuspended
                 ? "This page will no longer be visible to users."
                 : "This page will go live immediately.",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonText: !page.suspended ? "Unpublish" : "Publish",
+            confirmButtonText: nextSuspended ? "Unpublish" : "Publish",
         });
 
         if (!res.isConfirmed) return;
 
         try {
             await api.put(`/api/cms/pages/${page._id}/suspend`, {
-                suspended: nextStatus,
+                suspended: nextSuspended,
             });
 
             setPages((prev) =>
                 prev.map((p) =>
-                    p._id === page._id ? { ...p, suspended: nextStatus } : p
+                    p._id === page._id
+                        ? {
+                            ...p,
+                            suspended: nextSuspended,
+                            status: nextSuspended ? "draft" : "published",
+                        }
+                        : p
                 )
             );
 
@@ -87,6 +92,7 @@ export default function CmsList() {
             Swal.fire("Error!", "Failed to update status", "error");
         }
     };
+
 
     /* ---------- DELETE ---------- */
     const deletePage = async (page) => {
@@ -139,7 +145,7 @@ export default function CmsList() {
             <div className="mb-4 flex justify-end">
                 <button
                     onClick={() => navigate("/dashboard/cms/new")}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-sm text-sm font-medium"
+                    className="flex items-center gap-2 px-4 py-2 text-white rounded-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400 transition shadow-sm text-sm font-medium"
                 >
                     <Plus className="w-4 h-4" />
                     New Page
@@ -159,7 +165,7 @@ export default function CmsList() {
                 <tbody>
                     {sortedPages.map((p) => {
                         const isSystem = SYSTEM_PAGES.includes(p.slug);
-                        const isPublished = p.status === "published";
+                        const isPublished = !p.suspended;
 
                         return (
                             <tr

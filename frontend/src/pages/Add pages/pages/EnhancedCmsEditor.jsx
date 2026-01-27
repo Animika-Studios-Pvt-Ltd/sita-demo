@@ -265,12 +265,7 @@ export default function EnhancedCmsEditor() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="
-  sticky top-0 z-50
-  bg-white/60 backdrop-blur-xl
-  border border-slate-400/70
-  rounded-2xl
-">
+      <div className="sticky top-0 z-50 bg-white/60 backdrop-blur-xl border border-slate-400/70 rounded-2xl">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between gap-4 flex-wrap">
 
@@ -308,10 +303,10 @@ export default function EnhancedCmsEditor() {
                 Cancel
               </button>
 
-              <button className={glassBtn} onClick={() => setPreviewMode(!previewMode)}>
+              {/* <button className={glassBtn} onClick={() => setPreviewMode(!previewMode)}>
                 <Eye size={16} />
                 {previewMode ? "Edit Mode" : "Preview"}
-              </button>
+              </button> */}
 
               <button className={glassBtnWarning} onClick={() => save("draft")}>
                 Save Draft

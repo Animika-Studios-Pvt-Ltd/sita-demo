@@ -215,14 +215,14 @@ const ManageReviews = () => {
     activeCategory === "pending" ? pendingReviews : approvedReviews;
 
   return (
-    <div className="container mx-auto px-4 py-8 font-figtree font-normal leading-snug">
+    <div className="container mx-auto px-4 font-figtree font-normal leading-snug">
       <div className="mb-6 mt-5">
         <div className="flex justify-between items-center mb-6">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-800 hover:to-blue-600 transition-all duration-300 text-white font-medium rounded-[6px] px-2 py-1"
+            className="flex items-center justify-center rounded-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400 transition-all duration-300 text-white font-medium rounded-[6px] px-2 py-1"
           >
-            <ArrowBackIcon className="w-4 h-4 mr-1" />
+            <ArrowBackIcon className="w-2 h-2" />
             Back
           </button>
 
@@ -250,7 +250,7 @@ const ManageReviews = () => {
 
         <div className="relative flex justify-center mb-8 mt-8 bg-gray-200 rounded-full p-1 max-w-md mx-auto shadow-inner">
           <div
-            className={`absolute top-1 left-1 w-1/2 h-10 rounded-full bg-gradient-to-r ${activeTab === 'books' ? 'from-blue-600 to-blue-800' : 'from-purple-600 to-purple-800'} transform transition-transform duration-300 ${activeCategory === "approved" ? "translate-x-full" : ""
+            className={`absolute top-1 left-1 w-1/2 h-10 rounded-full bg-gradient-to-r ${activeTab === 'books' ? 'from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400' : 'from-purple-600 to-purple-800'} transform transition-transform duration-300 ${activeCategory === "approved" ? "translate-x-full" : ""
               }`}
           ></div>
           <button

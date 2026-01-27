@@ -189,12 +189,12 @@ const TrustCertificate = () => {
 
 
   return (
-    <div className="container mt-[100px]">
+    <div className="container mt-[40px]">
       <div className="max-w-8xl mx-auto bg-white p-6 md:p-8 rounded-lg shadow-md">
         <div className="mb-6">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-800 hover:to-blue-600 transition-all duration-300 text-white font-medium rounded-[6px] px-2 py-1"
+            className="flex items-center justify-center rounded-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400 transition-all duration-300 text-white font-medium rounded-[6px] px-2 py-1"
           >
             <ArrowBackIcon className="w-4 h-4 mr-1" />
             Back
@@ -243,7 +243,7 @@ const TrustCertificate = () => {
               <button
                 onClick={handleSave}
                 disabled={loading || images.length === 0}
-                className={`w-auto py-2 px-3 rounded-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-800 hover:to-blue-600 text-white font-semibold rounded-full transition-colors flex items-center justify-center gap-2 ${loading || images.length === 0 ? "opacity-50 cursor-not-allowed" : ""
+                className={`w-auto py-2 px-3 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400 text-white font-semibold rounded-full transition-colors flex items-center justify-center gap-2 ${loading || images.length === 0 ? "opacity-50 cursor-not-allowed" : ""
                   }`}
               >
                 {loading ? (
@@ -354,7 +354,7 @@ const TrustCertificate = () => {
                   <p className="text-xs mb-4">Upload your first trust certificate to get started</p>
                   <button
                     onClick={() => document.getElementById("uploadInput").click()}
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                    className="px-4 py-2 text-white rounded-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400"
                   >
                     Upload Now
                   </button>
