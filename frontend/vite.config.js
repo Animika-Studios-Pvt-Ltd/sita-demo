@@ -7,14 +7,14 @@ import staticRoutes from './src/sitemap.config.js'
 const isLocal = process.env.NODE_ENV !== 'production';
 const backendUrl = isLocal
   ? 'http://localhost:5000'
-  : 'https://bookstore-backend-hshq.onrender.com';
+  : 'http://localhost:5000';
 
 // Fetch dynamic book routes
 async function getDynamicBookRoutes() {
   try {
     const response = await fetch(`${backendUrl}/api/books`);
     const books = await response.json();
-    
+
     return books
       .filter(book => !book.suspended) // Only active books
       .map(book => ({
@@ -34,7 +34,7 @@ async function getDynamicBlogRoutes() {
   try {
     const response = await fetch(`${backendUrl}/api/blogs`);
     const blogs = await response.json();
-    
+
     return blogs.map(blog => ({
       path: `/blogs/${blog._id}`,
       priority: 0.7,
@@ -106,7 +106,7 @@ export default defineConfig(async () => {
         ],
       }),
     ],
-    
+
     // Dev server configuration
     server: {
       port: 5173,
@@ -118,7 +118,7 @@ export default defineConfig(async () => {
         },
       },
     },
-    
+
     // ✅ Preview server configuration (same as dev)
     preview: {
       port: 4173,

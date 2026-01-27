@@ -798,66 +798,66 @@ async function sendReturnApprovedEmail(order) {
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      </head>
-      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
-        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="margin: 0; font-size: 28px;">Return Request Approved ✅</h1>
-            <p style="margin: 10px 0 0 0; font-size: 16px;">Order #${orderId}</p>
+        </head>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
+          <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+            <div style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+              <h1 style="margin: 0; font-size: 28px;">Return Request Approved ✅</h1>
+              <p style="margin: 10px 0 0 0; font-size: 16px;">Order #${orderId}</p>
+            </div>
+
+            <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px;">
+              <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <h2 style="margin: 0 0 15px 0; color: #28a745; font-size: 20px;">Hi ${order.name},</h2>
+                <p style="margin: 10px 0; font-size: 16px; line-height: 1.8;">
+                  Good news! Your return request for order <strong>#${orderId}</strong> has been approved.
+                </p>
+              </div>
+
+              <div style="background: #d4edda; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #28a745;">
+                <h3 style="margin: 0 0 10px 0; color: #155724;">✅ Return Approved</h3>
+                <p style="margin: 0; color: #155724;">Please follow the instructions below to complete your return.</p>
+              </div>
+
+              <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <h3 style="margin: 0 0 15px 0; color: #333;">Return Instructions</h3>
+                <ol style="margin: 10px 0; padding-left: 20px; line-height: 2;">
+                  <li>Pack the items securely in original packaging (if possible)</li>
+                  <li>Include a copy of your order confirmation</li>
+                  <li>Contact us for pickup arrangements</li>
+                  <li>Refund will be processed after we receive the return</li>
+                </ol>
+              </div>
+
+              <div style="background: #e3f2fd; padding: 20px; margin-top: 20px; border-radius: 8px; border-left: 4px solid #2196f3;">
+                <h3 style="margin: 0 0 10px 0; color: #1565c0;">💰 Refund Information</h3>
+                <p style="margin: 5px 0;"><strong>Refund Amount:</strong> ₹${order.totalPrice.toFixed(2)}</p>
+                <p style="margin: 5px 0; font-size: 14px; color: #1565c0;">
+                  Refund will be credited within 5-7 business days after return verification.
+                </p>
+              </div>
+
+              <!-- Footer -->
+              <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #dee2e6;">
+                <p style="margin: 5px 0; color: #666; font-size: 14px;">Questions? We're here to help!</p>
+                <p style="margin: 10px 0;">
+                  <a href="mailto:${process.env.ADMIN_EMAIL}"
+                    style="display: inline-block; background: #155724; color: white; padding: 10px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                    Contact Support
+                  </a>
+                </p>
+                <p style="margin: 15px 0 5px 0; font-size: 13px; color: #888;">
+                  Email: <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #155724; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>
+                </p>
+                <p style="margin: 15px 0 0 0; font-size: 12px; color: #999;">
+                  This is an automated email. Please do not reply directly to this message.
+                </p>
+              </div>
+            </div>
           </div>
-          
-          <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px;">
-            <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-              <h2 style="margin: 0 0 15px 0; color: #28a745; font-size: 20px;">Hi ${order.name},</h2>
-              <p style="margin: 10px 0; font-size: 16px; line-height: 1.8;">
-                Good news! Your return request for order <strong>#${orderId}</strong> has been approved.
-              </p>
-            </div>
-
-            <div style="background: #d4edda; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #28a745;">
-              <h3 style="margin: 0 0 10px 0; color: #155724;">✅ Return Approved</h3>
-              <p style="margin: 0; color: #155724;">Please follow the instructions below to complete your return.</p>
-            </div>
-
-            <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-              <h3 style="margin: 0 0 15px 0; color: #333;">Return Instructions</h3>
-              <ol style="margin: 10px 0; padding-left: 20px; line-height: 2;">
-                <li>Pack the items securely in original packaging (if possible)</li>
-                <li>Include a copy of your order confirmation</li>
-                <li>Contact us for pickup arrangements</li>
-                <li>Refund will be processed after we receive the return</li>
-              </ol>
-            </div>
-
-            <div style="background: #e3f2fd; padding: 20px; margin-top: 20px; border-radius: 8px; border-left: 4px solid #2196f3;">
-              <h3 style="margin: 0 0 10px 0; color: #1565c0;">💰 Refund Information</h3>
-              <p style="margin: 5px 0;"><strong>Refund Amount:</strong> ₹${order.totalPrice.toFixed(2)}</p>
-              <p style="margin: 5px 0; font-size: 14px; color: #1565c0;">
-                Refund will be credited within 5-7 business days after return verification.
-              </p>
-            </div>
-
-            <!-- Footer -->
-            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #dee2e6;">
-              <p style="margin: 5px 0; color: #666; font-size: 14px;">Questions? We're here to help!</p>
-              <p style="margin: 10px 0;">
-                <a href="mailto:${process.env.ADMIN_EMAIL}" 
-                   style="display: inline-block; background: #155724; color: white; padding: 10px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">
-                  Contact Support
-                </a>
-              </p>
-              <p style="margin: 15px 0 5px 0; font-size: 13px; color: #888;">
-                Email: <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #155724; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>
-              </p>
-              <p style="margin: 15px 0 0 0; font-size: 12px; color: #999;">
-                This is an automated email. Please do not reply directly to this message.
-              </p>
-            </div>
-          </div>
-        </div>
-      </body>
+        </body>
       </html>
-    `;
+  `;
 
     await sendEmail({
       to: order.email,
@@ -879,60 +879,60 @@ async function sendReturnRejectedEmail(order, rejectionReason) {
     const orderId = order.guestOrderCode || order._id.toString().slice(-8).toUpperCase();
 
     const html = `
-      <!DOCTYPE html>
+    < !DOCTYPE html >
       <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      </head>
-      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
-        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="margin: 0; font-size: 28px;">Return Request Declined</h1>
-            <p style="margin: 10px 0 0 0; font-size: 16px;">Order #${orderId}</p>
-          </div>
-          
-          <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px;">
-            <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-              <h2 style="margin: 0 0 15px 0; color: #dc3545; font-size: 20px;">Hi ${order.name},</h2>
-              <p style="margin: 10px 0; font-size: 16px; line-height: 1.8;">
-                We regret to inform you that your return request for order <strong>#${orderId}</strong> has been declined.
-              </p>
-            </div>
+        <head>
+          <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            </head>
+            <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
+              <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                <div style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+                  <h1 style="margin: 0; font-size: 28px;">Return Request Declined</h1>
+                  <p style="margin: 10px 0 0 0; font-size: 16px;">Order #${orderId}</p>
+                </div>
 
-            <div style="background: #f8d7da; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #dc3545;">
-              <h3 style="margin: 0 0 10px 0; color: #721c24;">Reason for Rejection</h3>
-              <p style="margin: 0; color: #721c24;">${rejectionReason}</p>
-            </div>
+                <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px;">
+                  <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <h2 style="margin: 0 0 15px 0; color: #dc3545; font-size: 20px;">Hi ${order.name},</h2>
+                    <p style="margin: 10px 0; font-size: 16px; line-height: 1.8;">
+                      We regret to inform you that your return request for order <strong>#${orderId}</strong> has been declined.
+                    </p>
+                  </div>
 
-            <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-              <h3 style="margin: 0 0 15px 0; color: #333;">Have Questions?</h3>
-              <p style="margin: 0; line-height: 1.8;">
-                If you have any questions or concerns about this decision, please don't hesitate to contact us. We're here to help!
-              </p>
-            </div>
+                  <div style="background: #f8d7da; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #dc3545;">
+                    <h3 style="margin: 0 0 10px 0; color: #721c24;">Reason for Rejection</h3>
+                    <p style="margin: 0; color: #721c24;">${rejectionReason}</p>
+                  </div>
 
-            <!-- Footer -->
-            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #dee2e6;">
-              <p style="margin: 5px 0; color: #666; font-size: 14px;">Questions? We're here to help!</p>
-              <p style="margin: 10px 0;">
-                <a href="mailto:${process.env.ADMIN_EMAIL}" 
-                   style="display: inline-block; background: #dc3545; color: white; padding: 10px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">
-                  Contact Support
-                </a>
-              </p>
-              <p style="margin: 15px 0 5px 0; font-size: 13px; color: #888;">
-                Email: <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #dc3545; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>
-              </p>
-              <p style="margin: 15px 0 0 0; font-size: 12px; color: #999;">
-                This is an automated email. Please do not reply directly to this message.
-              </p>
-            </div>
-          </div>
-        </div>
-      </body>
-      </html>
-    `;
+                  <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <h3 style="margin: 0 0 15px 0; color: #333;">Have Questions?</h3>
+                    <p style="margin: 0; line-height: 1.8;">
+                      If you have any questions or concerns about this decision, please don't hesitate to contact us. We're here to help!
+                    </p>
+                  </div>
+
+                  <!-- Footer -->
+                  <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #dee2e6;">
+                    <p style="margin: 5px 0; color: #666; font-size: 14px;">Questions? We're here to help!</p>
+                    <p style="margin: 10px 0;">
+                      <a href="mailto:${process.env.ADMIN_EMAIL}"
+                        style="display: inline-block; background: #dc3545; color: white; padding: 10px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                        Contact Support
+                      </a>
+                    </p>
+                    <p style="margin: 15px 0 5px 0; font-size: 13px; color: #888;">
+                      Email: <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #dc3545; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>
+                    </p>
+                    <p style="margin: 15px 0 0 0; font-size: 12px; color: #999;">
+                      This is an automated email. Please do not reply directly to this message.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </body>
+          </html>
+          `;
 
     await sendEmail({
       to: order.email,
@@ -954,65 +954,65 @@ async function sendTrackingUpdateEmail(order, trackingId) {
     const orderId = order.guestOrderCode || order._id.toString().slice(-8).toUpperCase();
 
     const html = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      </head>
-      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
-        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="margin: 0; font-size: 28px;">Tracking Information Updated 📦</h1>
-            <p style="margin: 10px 0 0 0; font-size: 16px;">Order #${orderId}</p>
-          </div>
-          
-          <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px;">
-            <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-              <h2 style="margin: 0 0 15px 0; color: #2196f3; font-size: 20px;">Hi ${order.name},</h2>
-              <p style="margin: 10px 0; font-size: 16px; line-height: 1.8;">
-                Your order <strong>#${orderId}</strong> tracking information has been updated.
-              </p>
-            </div>
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                </head>
+                <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
+                  <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                    <div style="background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+                      <h1 style="margin: 0; font-size: 28px;">Tracking Information Updated 📦</h1>
+                      <p style="margin: 10px 0 0 0; font-size: 16px;">Order #${orderId}</p>
+                    </div>
 
-            <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-              <h3 style="margin: 0 0 15px 0; color: #333; text-align: center;">Tracking ID</h3>
-              <div style="background: #e3f2fd; padding: 20px; border-radius: 4px; text-align: center;">
-                <p style="margin: 0; font-size: 24px; font-weight: bold; color: #2196f3; letter-spacing: 1px;">${trackingId}</p>
-              </div>
-              <p style="margin: 15px 0 0 0; font-size: 14px; color: #666; text-align: center;">
-                Use this tracking ID to monitor your shipment
-              </p>
-            </div>
+                    <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px;">
+                      <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <h2 style="margin: 0 0 15px 0; color: #2196f3; font-size: 20px;">Hi ${order.name},</h2>
+                        <p style="margin: 10px 0; font-size: 16px; line-height: 1.8;">
+                          Your order <strong>#${orderId}</strong> tracking information has been updated.
+                        </p>
+                      </div>
 
-            <div style="background: #e3f2fd; padding: 20px; margin-top: 20px; border-radius: 8px; border-left: 4px solid #2196f3;">
-              <p style="margin: 0; color: #1565c0;">
-                <strong>📍 Track Your Shipment:</strong><br>
-                You can use this tracking ID to monitor your shipment's progress and estimated delivery time.
-              </p>
-            </div>
+                      <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <h3 style="margin: 0 0 15px 0; color: #333; text-align: center;">Tracking ID</h3>
+                        <div style="background: #e3f2fd; padding: 20px; border-radius: 4px; text-align: center;">
+                          <p style="margin: 0; font-size: 24px; font-weight: bold; color: #2196f3; letter-spacing: 1px;">${trackingId}</p>
+                        </div>
+                        <p style="margin: 15px 0 0 0; font-size: 14px; color: #666; text-align: center;">
+                          Use this tracking ID to monitor your shipment
+                        </p>
+                      </div>
 
-            <!-- Footer -->
-            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #dee2e6;">
-              <p style="margin: 5px 0; color: #666; font-size: 14px;">Questions? We're here to help!</p>
-              <p style="margin: 10px 0;">
-                <a href="mailto:${process.env.ADMIN_EMAIL}" 
-                   style="display: inline-block; background: #2196f3; color: white; padding: 10px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">
-                  Contact Support
-                </a>
-              </p>
-              <p style="margin: 15px 0 5px 0; font-size: 13px; color: #888;">
-                Email: <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #2196f3; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>
-              </p>
-              <p style="margin: 15px 0 0 0; font-size: 12px; color: #999;">
-                This is an automated email. Please do not reply directly to this message.
-              </p>
-            </div>
-          </div>
-        </div>
-      </body>
-      </html>
-    `;
+                      <div style="background: #e3f2fd; padding: 20px; margin-top: 20px; border-radius: 8px; border-left: 4px solid #2196f3;">
+                        <p style="margin: 0; color: #1565c0;">
+                          <strong>📍 Track Your Shipment:</strong><br>
+                            You can use this tracking ID to monitor your shipment's progress and estimated delivery time.
+                        </p>
+                      </div>
+
+                      <!-- Footer -->
+                      <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #dee2e6;">
+                        <p style="margin: 5px 0; color: #666; font-size: 14px;">Questions? We're here to help!</p>
+                        <p style="margin: 10px 0;">
+                          <a href="mailto:${process.env.ADMIN_EMAIL}"
+                            style="display: inline-block; background: #2196f3; color: white; padding: 10px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                            Contact Support
+                          </a>
+                        </p>
+                        <p style="margin: 15px 0 5px 0; font-size: 13px; color: #888;">
+                          Email: <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #2196f3; text-decoration: none;">${process.env.ADMIN_EMAIL}</a>
+                        </p>
+                        <p style="margin: 15px 0 0 0; font-size: 12px; color: #999;">
+                          This is an automated email. Please do not reply directly to this message.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </body>
+              </html>
+              `;
 
     await sendEmail({
       to: order.email,
@@ -1039,44 +1039,44 @@ async function sendReviewNotificationToAdmin(review) {
 
     const subject = `New Review Received - ${review.rating}⭐`;
     const html = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      </head>
-      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
-        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="margin: 0; font-size: 28px;">⭐ New Review Received</h1>
-            <p style="margin: 10px 0 0 0; font-size: 16px;">${'⭐'.repeat(review.rating || 0)}</p>
-          </div>
-          
-          <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px;">
-            <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-              <h2 style="margin: 0 0 15px 0; color: #ffc107; font-size: 20px;">Review Details</h2>
-              <p style="margin: 5px 0;"><strong>Review ID:</strong> ${review._id || 'N/A'}</p>
-              <p style="margin: 5px 0;"><strong>User:</strong> ${review.userName || 'N/A'}</p>
-              <p style="margin: 5px 0;"><strong>Email:</strong> ${review.userEmail || 'N/A'}</p>
-              <p style="margin: 5px 0;"><strong>Rating:</strong> ${review.rating || 0}/5</p>
-              <p style="margin: 5px 0;"><strong>Book:</strong> ${review.bookTitle || review.bookId || 'Unknown'}</p>
-            </div>
+              <!DOCTYPE html>
+              <html>
+                <head>
+                  <meta charset="utf-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    </head>
+                    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
+                      <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                        <div style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+                          <h1 style="margin: 0; font-size: 28px;">⭐ New Review Received</h1>
+                          <p style="margin: 10px 0 0 0; font-size: 16px;">${'⭐'.repeat(review.rating || 0)}</p>
+                        </div>
 
-            <div style="background: #fff3cd; padding: 20px; border-radius: 8px; border-left: 4px solid #ffc107;">
-              <h3 style="margin: 0 0 10px 0; color: #856404;">Comment</h3>
-              <p style="margin: 0; color: #856404;">${review.comment || 'No comment provided'}</p>
-            </div>
+                        <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px;">
+                          <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <h2 style="margin: 0 0 15px 0; color: #ffc107; font-size: 20px;">Review Details</h2>
+                            <p style="margin: 5px 0;"><strong>Review ID:</strong> ${review._id || 'N/A'}</p>
+                            <p style="margin: 5px 0;"><strong>User:</strong> ${review.userName || 'N/A'}</p>
+                            <p style="margin: 5px 0;"><strong>Email:</strong> ${review.userEmail || 'N/A'}</p>
+                            <p style="margin: 5px 0;"><strong>Rating:</strong> ${review.rating || 0}/5</p>
+                            <p style="margin: 5px 0;"><strong>Book:</strong> ${review.bookTitle || review.bookId || 'Unknown'}</p>
+                          </div>
 
-            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
-              <p style="margin: 5px 0; color: #666; font-size: 14px;">
-                Review this in your admin dashboard
-              </p>
-            </div>
-          </div>
-        </div>
-      </body>
-      </html>
-    `;
+                          <div style="background: #fff3cd; padding: 20px; border-radius: 8px; border-left: 4px solid #ffc107;">
+                            <h3 style="margin: 0 0 10px 0; color: #856404;">Comment</h3>
+                            <p style="margin: 0; color: #856404;">${review.comment || 'No comment provided'}</p>
+                          </div>
+
+                          <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+                            <p style="margin: 5px 0; color: #666; font-size: 14px;">
+                              Review this in your admin dashboard
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </body>
+                  </html>
+                  `;
 
     const result = await sendEmail({ to: adminEmail, subject, html });
 
@@ -1096,71 +1096,71 @@ async function sendReviewDisapprovedEmail(reviewData, reason) {
     const { userName, bookName, comment, rating, userEmail } = reviewData;
 
     const html = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
-  <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-    <!-- Header -->
-    <div style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-      <h1 style="margin: 0; font-size: 28px;">⚠️ Review Not Approved</h1>
-      <p style="margin: 10px 0 0 0; font-size: 16px;">Your review has been disapproved</p>
-    </div>
+                  <!DOCTYPE html>
+                  <html>
+                    <head>
+                      <meta charset="utf-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        </head>
+                        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
+                          <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                            <!-- Header -->
+                            <div style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+                              <h1 style="margin: 0; font-size: 28px;">⚠️ Review Not Approved</h1>
+                              <p style="margin: 10px 0 0 0; font-size: 16px;">Your review has been disapproved</p>
+                            </div>
 
-    <!-- Content -->
-    <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px;">
-      <!-- User Info -->
-      <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-        <h2 style="margin: 0 0 15px 0; color: #dc3545; font-size: 20px;">Hi ${userName},</h2>
-        <p style="margin: 10px 0; font-size: 16px; line-height: 1.8;">
-          We regret to inform you that your review for <strong>${bookName}</strong> has been disapproved and will not be published on our website.
-        </p>
-      </div>
+                            <!-- Content -->
+                            <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px;">
+                              <!-- User Info -->
+                              <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                <h2 style="margin: 0 0 15px 0; color: #dc3545; font-size: 20px;">Hi ${userName},</h2>
+                                <p style="margin: 10px 0; font-size: 16px; line-height: 1.8;">
+                                  We regret to inform you that your review for <strong>${bookName}</strong> has been disapproved and will not be published on our website.
+                                </p>
+                              </div>
 
-      <!-- Review Details -->
-      <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-        <h3 style="margin: 0 0 15px 0; color: #333;">Your Review</h3>
-        <p style="margin: 5px 0;"><strong>Book:</strong> ${bookName}</p>
-        <p style="margin: 5px 0;"><strong>Rating:</strong> ${'⭐'.repeat(rating)}</p>
-        <p style="margin: 5px 0;"><strong>Comment:</strong></p>
-        <div style="background: #f5f5f5; padding: 15px; border-radius: 4px; margin-top: 10px;">
-          <p style="margin: 0; font-style: italic; color: #666;">"${comment}"</p>
-        </div>
-      </div>
+                              <!-- Review Details -->
+                              <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                <h3 style="margin: 0 0 15px 0; color: #333;">Your Review</h3>
+                                <p style="margin: 5px 0;"><strong>Book:</strong> ${bookName}</p>
+                                <p style="margin: 5px 0;"><strong>Rating:</strong> ${'⭐'.repeat(rating)}</p>
+                                <p style="margin: 5px 0;"><strong>Comment:</strong></p>
+                                <div style="background: #f5f5f5; padding: 15px; border-radius: 4px; margin-top: 10px;">
+                                  <p style="margin: 0; font-style: italic; color: #666;">"${comment}"</p>
+                                </div>
+                              </div>
 
-      <!-- Reason -->
-      <div style="background: #f8d7da; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #dc3545;">
-        <h3 style="margin: 0 0 10px 0; color: #721c24;">Reason for Disapproval</h3>
-        <p style="margin: 0; color: #721c24;">${reason}</p>
-      </div>
+                              <!-- Reason -->
+                              <div style="background: #f8d7da; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #dc3545;">
+                                <h3 style="margin: 0 0 10px 0; color: #721c24;">Reason for Disapproval</h3>
+                                <p style="margin: 0; color: #721c24;">${reason}</p>
+                              </div>
 
-      <!-- Guidelines -->
-      <div style="background: #e7f3ff; padding: 20px; margin-top: 20px; border-radius: 8px; border-left: 4px solid #2196f3;">
-        <p style="margin: 0; color: #1565c0;">
-          <strong>💡 Review Guidelines:</strong><br>
-          • Be respectful and constructive<br>
-          • Focus on the book content<br>
-          • Avoid inappropriate language<br>
-          • Share genuine experiences
-        </p>
-      </div>
+                              <!-- Guidelines -->
+                              <div style="background: #e7f3ff; padding: 20px; margin-top: 20px; border-radius: 8px; border-left: 4px solid #2196f3;">
+                                <p style="margin: 0; color: #1565c0;">
+                                  <strong>💡 Review Guidelines:</strong><br>
+                                    • Be respectful and constructive<br>
+                                      • Focus on the book content<br>
+                                        • Avoid inappropriate language<br>
+                                          • Share genuine experiences
+                                        </p>
+                                      </div>
 
-      <!-- Footer -->
-      <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
-        <p style="margin: 5px 0; color: #666;">Have questions? Contact us at</p>
-        <p style="margin: 5px 0;"><a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #667eea; text-decoration: none;">${process.env.ADMIN_EMAIL}</a></p>
-        <p style="margin: 15px 0 0 0; font-size: 12px; color: #999;">
-          This is an automated email. Please do not reply directly to this message.
-        </p>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
-    `;
+                                      <!-- Footer -->
+                                      <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+                                        <p style="margin: 5px 0; color: #666;">Have questions? Contact us at</p>
+                                        <p style="margin: 5px 0;"><a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #667eea; text-decoration: none;">${process.env.ADMIN_EMAIL}</a></p>
+                                        <p style="margin: 15px 0 0 0; font-size: 12px; color: #999;">
+                                          This is an automated email. Please do not reply directly to this message.
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </body>
+                              </html>
+                              `;
 
     // ✅ CORRECTED: Pass object with named properties
     await sendEmail({
@@ -1182,99 +1182,99 @@ async function sendContactFormEmail({ name, email, subject, message, contactId }
     const enquiriesEmail = 'india.lumos@gmail.com';
 
     const html = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <style>
-          body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
+                              <!DOCTYPE html>
+                              <html>
+                                <head>
+                                  <style>
+                                    body {
+                                      font - family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                    line-height: 1.6;
+                                    color: #333;
           }
-          .header {
-            background: linear-gradient(135deg, #002bebff 0%, #65b2faff 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-            border-radius: 10px 10px 0 0;
+                                    .header {
+                                      background: linear-gradient(135deg, #002bebff 0%, #65b2faff 100%);
+                                    color: white;
+                                    padding: 30px;
+                                    text-align: center;
+                                    border-radius: 10px 10px 0 0;
           }
-          .content {
-            background: #f9f9f9;
-            padding: 30px;
-            border: 1px solid #e0e0e0;
+                                    .content {
+                                      background: #f9f9f9;
+                                    padding: 30px;
+                                    border: 1px solid #e0e0e0;
           }
-          .info-box {
-            background: white;
-            padding: 20px;
-            margin: 15px 0;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
+                                    .info-box {
+                                      background: white;
+                                    padding: 20px;
+                                    margin: 15px 0;
+                                    border-radius: 8px;
+                                    border-left: 4px solid #667eea;
           }
-          .label {
-            font-weight: bold;
-            color: #667eea;
-            display: inline-block;
-            min-width: 100px;
+                                    .label {
+                                      font - weight: bold;
+                                    color: #667eea;
+                                    display: inline-block;
+                                    min-width: 100px;
           }
-          .message-box {
-            background: white;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
-            white-space: pre-wrap;
-            word-wrap: break-word;
+                                    .message-box {
+                                      background: white;
+                                    padding: 20px;
+                                    margin: 20px 0;
+                                    border-radius: 8px;
+                                    border: 1px solid #e0e0e0;
+                                    white-space: pre-wrap;
+                                    word-wrap: break-word;
           }
-          .footer {
-            background: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-            border-radius: 0 0 10px 10px;
-            font-size: 12px;
+                                    .footer {
+                                      background: #333;
+                                    color: #fff;
+                                    padding: 20px;
+                                    text-align: center;
+                                    border-radius: 0 0 10px 10px;
+                                    font-size: 12px;
           }
-          .metadata {
-            font-size: 12px;
-            color: #666;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
+                                    .metadata {
+                                      font - size: 12px;
+                                    color: #666;
+                                    margin-top: 20px;
+                                    padding-top: 20px;
+                                    border-top: 1px solid #ddd;
           }
-        </style>
-      </head>
-      <body style="max-width: 600px; margin: 0 auto; padding: 20px;">
-        <div class="header">
-          <h1 style="margin: 0;">New Contact Form Submission</h1>
-          <p style="margin: 10px 0 0 0; opacity: 0.9;">Sita</p>
-        </div>
-        
-        <div class="content">
-          <p style="font-size: 16px; margin-bottom: 20px;">
-            You have received a new message from your website contact form.
-          </p>
-          
-          <div class="info-box">
-            <p><span class="label">From:</span> ${name}</p>
-            <p><span class="label">Email:</span> <a href="mailto:${email}">${email}</a></p>
-            <p><span class="label">Subject:</span> ${subject}</p>
-          </div>
-          
-          <h3 style="color: #667eea; margin-top: 30px;">Message:</h3>
-          <div class="message-box">
-${message}
-          </div>
-          
-          <div class="metadata">
-            <p><strong>Received:</strong> ${new Date().toLocaleString('en-IN', {
+                                  </style>
+                                </head>
+                                <body style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                                  <div class="header">
+                                    <h1 style="margin: 0;">New Contact Form Submission</h1>
+                                    <p style="margin: 10px 0 0 0; opacity: 0.9;">Sita</p>
+                                  </div>
+
+                                  <div class="content">
+                                    <p style="font-size: 16px; margin-bottom: 20px;">
+                                      You have received a new message from your website contact form.
+                                    </p>
+
+                                    <div class="info-box">
+                                      <p><span class="label">From:</span> ${name}</p>
+                                      <p><span class="label">Email:</span> <a href="mailto:${email}">${email}</a></p>
+                                      <p><span class="label">Subject:</span> ${subject}</p>
+                                    </div>
+
+                                    <h3 style="color: #667eea; margin-top: 30px;">Message:</h3>
+                                    <div class="message-box">
+                                      ${message}
+                                    </div>
+
+                                    <div class="metadata">
+                                      <p><strong>Received:</strong> ${new Date().toLocaleString('en-IN', {
       dateStyle: 'full',
       timeStyle: 'long',
       timeZone: 'Asia/Kolkata'
     })}</p>
-          </div>
-        </div>
-      </body>
-      </html>
-    `;
+                                    </div>
+                                  </div>
+                                </body>
+                              </html>
+                              `;
 
     // Send to enquiries@langshott.org
     await sendEmail({
@@ -1306,54 +1306,54 @@ async function sendBookingConfirmationEmail(booking) {
     });
 
     const html = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      </head>
-      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
-        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #c86836 0%, #0D0842 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="margin: 0; font-size: 28px;">Booking Confirmed! 🎉</h1>
-            <p style="margin: 10px 0 0 0; font-size: 16px;">We look forward to seeing you, ${booking.userName}!</p>
-          </div>
-          
-          <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px;">
-            <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-              <h2 style="margin: 0 0 15px 0; color: #c86836; font-size: 20px;">Event Details</h2>
-              <p style="margin: 8px 0;"><strong>Event:</strong> ${eventParams.title || 'Sita Event'}</p>
-              <p style="margin: 8px 0;"><strong>Date:</strong> ${eventDate}</p>
-              <p style="margin: 8px 0;"><strong>Time:</strong> ${eventParams.startTime} - ${eventParams.endTime}</p>
-              <p style="margin: 8px 0;"><strong>Mode:</strong> ${eventParams.mode}</p>
-              <p style="margin: 8px 0;"><strong>Location:</strong> ${eventParams.location || 'Online'}</p>
-            </div>
+                              <!DOCTYPE html>
+                              <html>
+                                <head>
+                                  <meta charset="utf-8">
+                                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                    </head>
+                                    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
+                                      <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                                        <div style="background: linear-gradient(135deg, #c86836 0%, #0D0842 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+                                          <h1 style="margin: 0; font-size: 28px;">Booking Confirmed! 🎉</h1>
+                                          <p style="margin: 10px 0 0 0; font-size: 16px;">We look forward to seeing you, ${booking.userName}!</p>
+                                        </div>
 
-            <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-              <h3 style="margin: 0 0 15px 0; color: #333;">Booking Summary</h3>
-              <p style="margin: 5px 0;"><strong>Name:</strong> ${booking.userName}</p>
-              <p style="margin: 5px 0;"><strong>Seats:</strong> ${booking.seats}</p>
-              <p style="margin: 5px 0;"><strong>Amount Paid:</strong> <span style="color: #28a745; font-weight: bold;">₹${booking.totalAmount}</span></p>
-              <p style="margin: 5px 0;"><strong>Booking ID:</strong> #${booking._id.toString().slice(-6).toUpperCase()}</p>
-            </div>
+                                        <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px;">
+                                          <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                            <h2 style="margin: 0 0 15px 0; color: #c86836; font-size: 20px;">Event Details</h2>
+                                            <p style="margin: 8px 0;"><strong>Event:</strong> ${eventParams.title || 'Sita Event'}</p>
+                                            <p style="margin: 8px 0;"><strong>Date:</strong> ${eventDate}</p>
+                                            <p style="margin: 8px 0;"><strong>Time:</strong> ${eventParams.startTime} - ${eventParams.endTime}</p>
+                                            <p style="margin: 8px 0;"><strong>Mode:</strong> ${eventParams.mode}</p>
+                                            <p style="margin: 8px 0;"><strong>Location:</strong> ${eventParams.location || 'Online'}</p>
+                                          </div>
 
-            <div style="background: #f0f7ff; padding: 20px; border-radius: 8px; border-left: 4px solid #0056b3;">
-              <p style="margin: 0; color: #004085;">
-                <strong>💡 Need Help?</strong><br>
-                If you have any questions or need to reschedule, please reply to this email or contact us at ${process.env.ADMIN_EMAIL}.
-              </p>
-            </div>
+                                          <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                            <h3 style="margin: 0 0 15px 0; color: #333;">Booking Summary</h3>
+                                            <p style="margin: 5px 0;"><strong>Name:</strong> ${booking.userName}</p>
+                                            <p style="margin: 5px 0;"><strong>Seats:</strong> ${booking.seats}</p>
+                                            <p style="margin: 5px 0;"><strong>Amount Paid:</strong> <span style="color: #28a745; font-weight: bold;">₹${booking.totalAmount}</span></p>
+                                            <p style="margin: 5px 0;"><strong>Booking ID:</strong> #${booking._id.toString().slice(-6).toUpperCase()}</p>
+                                          </div>
 
-            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
-              <p style="margin: 15px 0 0 0; font-size: 12px; color: #999;">
-                Sita
-              </p>
-            </div>
-          </div>
-        </div>
-      </body>
-      </html>
-    `;
+                                          <div style="background: #f0f7ff; padding: 20px; border-radius: 8px; border-left: 4px solid #0056b3;">
+                                            <p style="margin: 0; color: #004085;">
+                                              <strong>💡 Need Help?</strong><br>
+                                                If you have any questions or need to reschedule, please reply to this email or contact us at ${process.env.ADMIN_EMAIL}.
+                                            </p>
+                                          </div>
+
+                                          <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+                                            <p style="margin: 15px 0 0 0; font-size: 12px; color: #999;">
+                                              Sita
+                                            </p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </body>
+                                  </html>
+                                  `;
 
     await sendEmail({
       to: booking.userEmail,
@@ -1364,6 +1364,73 @@ async function sendBookingConfirmationEmail(booking) {
     console.log(`✅ Booking confirmation email sent to ${booking.userEmail}`);
   } catch (error) {
     console.error('❌ Booking email error:', error.message);
+  }
+}
+
+/**
+ * 9. EVENT RATING - Invite user to rate event
+ */
+async function sendEventRatingEmail(booking, event) {
+  try {
+    const userEmail = booking.userEmail;
+    const userName = booking.userName;
+    const eventName = event.title;
+    const ratingLink = `${process.env.BOOKING_FRONTEND_URL || 'http://booking.localhost:5173'}/rate-event/${booking._id}`;
+
+    const html = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      </head>
+      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: linear-gradient(135deg, #FF6B6B 0%, #EE5253 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="margin: 0; font-size: 28px;">How was the event? 🌟</h1>
+            <p style="margin: 10px 0 0 0; font-size: 16px;">We'd love to hear your thoughts!</p>
+          </div>
+          
+          <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px;">
+            <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+              <h2 style="margin: 0 0 15px 0; color: #EE5253; font-size: 20px;">Hi ${userName},</h2>
+              <p style="margin: 10px 0; font-size: 16px; line-height: 1.8;">
+                Thank you for attending <strong>${eventName}</strong>. We hope you had a great time!
+              </p>
+              <p style="margin: 10px 0; font-size: 16px; line-height: 1.8;">
+                Your feedback helps us create better experiences for our community. Please take a moment to rate the event.
+              </p>
+            </div>
+
+            <div style="text-align: center; margin: 30px 0;">
+              <a href="${ratingLink}" 
+                 style="display: inline-block; background: #EE5253; color: white; padding: 15px 35px; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 6px rgba(238, 82, 83, 0.3);">
+                Rate This Event
+              </a>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #dee2e6;">
+              <p style="margin: 15px 0 0 0; font-size: 12px; color: #999;">
+                If you didn't attend this event, you can ignore this email.
+              </p>
+            </div>
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+
+    await sendEmail({
+      to: userEmail,
+      subject: `How was ${eventName}? - Rate your experience`,
+      html
+    });
+
+    console.log(`✅ Rating email sent to ${userEmail} for event ${eventName}`);
+    return true;
+  } catch (error) {
+    console.error('❌ Rating email error:', error.message);
+    return false;
   }
 }
 
@@ -1381,5 +1448,6 @@ module.exports = {
   sendReviewNotificationToAdmin,
   sendReviewDisapprovedEmail,
   sendContactFormEmail,
-  sendBookingConfirmationEmail
+  sendBookingConfirmationEmail,
+  sendEventRatingEmail
 };

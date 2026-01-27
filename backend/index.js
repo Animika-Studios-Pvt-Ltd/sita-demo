@@ -13,6 +13,7 @@ const Book = require("./src/books/book.model")
 const app = express()
 const port = process.env.PORT || 5000
 
+// Force restart for new routes
 // ============================================
 // PERFORMANCE OPTIMIZATIONS
 // ============================================
@@ -419,8 +420,14 @@ async function main() {
 
     mongoose.set('bufferCommands', false)
 
+    const setupCronJobs = require("./src/services/cron");
+
+    // ... inside main function ...
     console.log("✅ MongoDB connected successfully!")
     console.log(`📊 Database: ${mongoose.connection.name}`)
+
+    // Initialize Cron Jobs
+    setupCronJobs();
 
     server.listen(port, '0.0.0.0', () => {
       console.log(`🚀 Server running on port ${port} (${process.env.NODE_ENV})`)

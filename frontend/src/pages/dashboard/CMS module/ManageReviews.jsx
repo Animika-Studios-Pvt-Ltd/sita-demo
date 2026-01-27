@@ -6,11 +6,13 @@ import axios from "axios";
 import { io } from "socket.io-client";
 import PendingIcon from "@mui/icons-material/Pending";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import EventIcon from "@mui/icons-material/Event";
+import BookIcon from "@mui/icons-material/Book";
 
 const BACKEND_BASE_URL =
   window.location.hostname === "localhost"
     ? "http://localhost:5000"
-    : "https://bookstore-backend-hshq.onrender.com";
+    : "http://localhost:5000";
 
 axios.defaults.baseURL = BACKEND_BASE_URL;
 
@@ -21,6 +23,7 @@ const socket = io(BACKEND_BASE_URL, {
 const ManageReviews = () => {
   const [reviews, setReviews] = useState([]);
   const [activeCategory, setActiveCategory] = useState("pending");
+  const [activeTab, setActiveTab] = useState("books"); // 'books' or 'events'
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,68 +34,86 @@ const ManageReviews = () => {
       console.error("❌ Socket connection error:", err.message);
     });
 
-    const fetchReviews = async () => {
-      try {
-        const res = await axios.get("/api/reviews/admin");
-
-        const data = Array.isArray(res.data)
-          ? res.data
-          : res.data.reviews || [];
-
-        setReviews(data);
-      } catch (err) {
-        console.error("❌ Failed to fetch reviews:", err);
-        setReviews([]);
-      }
-    };
-
-    fetchReviews();
-
+    // Listen for real-time updates (Books only for now, can extend for Events)
     socket.on("newReview", (review) => {
-      Swal.fire({
-        title: "New Review Submitted!",
-        html: `<b>${review.userName}</b> rated ${review.rating} stars<br>${review.comment}<br>Book: ${review.bookName || "Unknown"}`,
-        icon: "info",
-      });
+      if (activeTab === "books") {
+        Swal.fire({
+          title: "New Review Submitted!",
+          html: `<b>${review.userName}</b> rated ${review.rating} stars<br>${review.comment}<br>Book: ${review.bookName || "Unknown"}`,
+          icon: "info",
+        });
 
-      setReviews((prev) => [{ ...review, isNew: true }, ...(prev || [])]);
+        setReviews((prev) => [{ ...review, isNew: true }, ...(prev || [])]);
 
-      setTimeout(() => {
-        setReviews((prev) =>
-          (prev || []).map((r) =>
-            r._id === review._id ? { ...r, isNew: false } : r
-          )
-        );
-      }, 5000);
+        setTimeout(() => {
+          setReviews((prev) =>
+            (prev || []).map((r) =>
+              r._id === review._id ? { ...r, isNew: false } : r
+            )
+          );
+        }, 5000);
+      }
     });
 
     socket.on("reviewUpdated", (review) => {
-      Swal.fire({
-        title: "Review Updated!",
-        html: `<b>${review.userName}</b> updated their review<br>${review.comment}<br>Book: ${review.bookName || "Unknown"}`,
-        icon: "warning",
-      });
+      if (activeTab === "books") {
+        Swal.fire({
+          title: "Review Updated!",
+          html: `<b>${review.userName}</b> updated their review<br>${review.comment}<br>Book: ${review.bookName || "Unknown"}`,
+          icon: "warning",
+        });
 
-      setReviews((prev) =>
-        (prev || []).map((r) =>
-          r._id === review._id ? { ...review, isNew: true } : r
-        )
-      );
-
-      setTimeout(() => {
         setReviews((prev) =>
           (prev || []).map((r) =>
-            r._id === review._id ? { ...r, isNew: false } : r
+            r._id === review._id ? { ...review, isNew: true } : r
           )
         );
-      }, 5000);
+
+        setTimeout(() => {
+          setReviews((prev) =>
+            (prev || []).map((r) =>
+              r._id === review._id ? { ...r, isNew: false } : r
+            )
+          );
+        }, 5000);
+      }
     });
 
     return () => {
       socket.off("newReview");
       socket.off("reviewUpdated");
     };
-  }, []);
+  }, [activeTab]);
+
+  // Fetch Reviews/Ratings when tab or category changes
+  useEffect(() => {
+    const fetchReviews = async () => {
+      setReviews([]); // Clear while loading
+      try {
+        let res;
+        if (activeTab === "books") {
+          res = await axios.get("/api/reviews/admin");
+        } else {
+          res = await axios.get("/api/events/admin/ratings");
+        }
+
+        // Normalize data
+        const data = Array.isArray(res.data)
+          ? res.data
+          : res.data.reviews || res.data.ratings || [];
+
+        console.log(`📊 fetched ${activeTab} raw res:`, res.data);
+        console.log(`📊 fetched ${activeTab} normalized data:`, data);
+
+        setReviews(data);
+      } catch (err) {
+        console.error(`❌ Failed to fetch ${activeTab}:`, err);
+        setReviews([]);
+      }
+    };
+
+    fetchReviews();
+  }, [activeTab]);
 
   const approveReview = async (id) => {
     const confirm = await Swal.fire({
@@ -106,12 +127,19 @@ const ManageReviews = () => {
     if (!confirm.isConfirmed) return;
 
     try {
-      const res = await axios.patch(`/api/reviews/${id}/approve`, {
+      const endpoint = activeTab === "books"
+        ? `/api/reviews/${id}/approve`
+        : `/api/events/admin/ratings/${id}/approve`;
+
+      const res = await axios.patch(endpoint, {
         approved: true,
       });
 
+      // Backend response format might differ slightly
+      const updatedItem = res.data.review || res.data.rating;
+
       setReviews((prev) =>
-        (prev || []).map((r) => (r._id === id ? res.data.review : r))
+        (prev || []).map((r) => (r._id === id ? updatedItem : r))
       );
 
       Swal.fire("Approved!", "Review approved successfully.", "success");
@@ -119,7 +147,12 @@ const ManageReviews = () => {
       Swal.fire("Error", "Failed to approve review", "error");
     }
   };
-  const disapproveReview = async (id, userName, userEmail) => {
+
+  const disapproveReview = async (id, userName) => {
+    // For Books, we ask for a reason. For Events, we just delete for now (simpler logic backend)
+    // But let's keep the reason UI for consistency, even if we don't fully use it in Event backend yet.
+
+    // Actually, event deleteRating doesn't take a body reason, but passing it won't hurt.
     const { value: reason, isConfirmed } = await Swal.fire({
       title: "Disapprove Review?",
       html: `
@@ -145,7 +178,12 @@ const ManageReviews = () => {
     if (!isConfirmed || !reason) return;
 
     try {
-      const res = await axios.delete(`/api/reviews/${id}/disapprove`, {
+      const endpoint = activeTab === "books"
+        ? `/api/reviews/${id}/disapprove`
+        : `/api/events/admin/ratings/${id}/disapprove`;
+
+      // DELETE requests with body need 'data' key in axios
+      await axios.delete(endpoint, {
         data: { reason },
       });
 
@@ -153,7 +191,7 @@ const ManageReviews = () => {
 
       Swal.fire({
         title: "Disapproved!",
-        text: "Review has been disapproved and user notified.",
+        text: "Review has been disapproved.",
         icon: "success",
       });
     } catch (err) {
@@ -179,16 +217,40 @@ const ManageReviews = () => {
   return (
     <div className="container mx-auto px-4 py-8 font-figtree font-normal leading-snug">
       <div className="mb-6 mt-5">
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-800 hover:to-blue-600 transition-all duration-300 text-white font-medium rounded-[6px] px-2 py-1"
-        >
-          <ArrowBackIcon className="w-4 h-4 mr-1" />
-          Back
-        </button>
+        <div className="flex justify-between items-center mb-6">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-800 hover:to-blue-600 transition-all duration-300 text-white font-medium rounded-[6px] px-2 py-1"
+          >
+            <ArrowBackIcon className="w-4 h-4 mr-1" />
+            Back
+          </button>
+
+          {/* TAB SWITCHER */}
+          <div className="flex bg-white rounded-lg p-1 shadow-sm border border-gray-200">
+            <button
+              onClick={() => setActiveTab("books")}
+              className={`flex items-center px-4 py-2 rounded-md transition-all ${activeTab === "books" ? "bg-blue-100 text-blue-700 font-bold" : "text-gray-500 hover:bg-gray-50"
+                }`}
+            >
+              <BookIcon className="w-5 h-5 mr-2" />
+              Book Reviews
+            </button>
+            <div className="w-px bg-gray-200 mx-1"></div>
+            <button
+              onClick={() => setActiveTab("events")}
+              className={`flex items-center px-4 py-2 rounded-md transition-all ${activeTab === "events" ? "bg-purple-100 text-purple-700 font-bold" : "text-gray-500 hover:bg-gray-50"
+                }`}
+            >
+              <EventIcon className="w-5 h-5 mr-2" />
+              Event Ratings
+            </button>
+          </div>
+        </div>
+
         <div className="relative flex justify-center mb-8 mt-8 bg-gray-200 rounded-full p-1 max-w-md mx-auto shadow-inner">
           <div
-            className={`absolute top-1 left-1 w-1/2 h-10 rounded-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-800 hover:to-blue-600 transform transition-transform duration-300 ${activeCategory === "approved" ? "translate-x-full" : ""
+            className={`absolute top-1 left-1 w-1/2 h-10 rounded-full bg-gradient-to-r ${activeTab === 'books' ? 'from-blue-600 to-blue-800' : 'from-purple-600 to-purple-800'} transform transition-transform duration-300 ${activeCategory === "approved" ? "translate-x-full" : ""
               }`}
           ></div>
           <button
@@ -218,13 +280,13 @@ const ManageReviews = () => {
         <div className="text-center font-figtree mb-10">
           <h3 className="text-2xl md:text-3xl font-playfair text-gray-800 mb-2 mt-6 text-center">
             {activeCategory === "pending"
-              ? "Pending Reviews"
-              : "Approved Reviews"}
+              ? `Pending ${activeTab === "books" ? "Book Reviews" : "Event Ratings"}`
+              : `Approved ${activeTab === "books" ? "Book Reviews" : "Event Ratings"}`}
           </h3>
           <p className="text-lg text-gray-600 mt-1">
             {activeCategory === "pending"
-              ? "Review and approve customer feedback"
-              : "View all approved customer reviews"}
+              ? "Review and approve feedback"
+              : "View all approved feedback"}
           </p>
         </div>
 
@@ -234,14 +296,13 @@ const ManageReviews = () => {
               {activeCategory === "pending" ? (
                 <>
                   <PendingIcon className="w-12 h-12 mb-2 text-gray-400" />
-                  <p className="text-sm font-medium">No pending reviews</p>
-                  <p className="text-xs">All reviews have been processed</p>
+                  <p className="text-sm font-medium">No pending {activeTab === "books" ? "reviews" : "ratings"}</p>
+                  <p className="text-xs">All processed!</p>
                 </>
               ) : (
                 <>
                   <CheckCircleIcon className="w-12 h-12 mb-2 text-gray-400" />
-                  <p className="text-sm font-medium">No approved reviews</p>
-                  <p className="text-xs">Approved reviews will appear here</p>
+                  <p className="text-sm font-medium">No approved {activeTab === "books" ? "reviews" : "ratings"}</p>
                 </>
               )}
             </div>
@@ -264,14 +325,20 @@ const ManageReviews = () => {
                         <span className="text-xs text-gray-500">
                           {new Date(review.createdAt).toLocaleDateString()}
                         </span>
+                        {/* Identify context if needed */}
+                        <span className={`text-xs px-2 py-0.5 rounded ${activeTab === "books" ? "bg-blue-100 text-blue-800" : "bg-purple-100 text-purple-800"}`}>
+                          {activeTab === "books" ? "Book" : "Event"}
+                        </span>
                       </div>
-                      <p className="text-gray-700 italic mb-2">
-                        {review.comment}
-                      </p>
+
+                      {/* 1. Name */}
                       <p className="text-sm text-gray-500 mb-2">
-                        Book: <strong>{review.bookName || "Unknown"}</strong>
+                        {activeTab === "books" ? "Book: " : "Event: "}
+                        <strong className="text-gray-900 text-base">{review.bookName || review.event?.title || "Unknown"}</strong>
                       </p>
-                      <div className="flex items-center gap-1">
+
+                      {/* 2. Stars */}
+                      <div className="flex items-center gap-1 mb-2">
                         {Array.from({ length: review.rating }).map((_, i) => (
                           <span key={i} className="text-yellow-500 text-lg">
                             ★
@@ -285,6 +352,11 @@ const ManageReviews = () => {
                           )
                         )}
                       </div>
+
+                      {/* 3. Comment */}
+                      <p className="text-gray-700 italic mb-2">
+                        "{review.comment}"
+                      </p>
                     </div>
 
                     <div className="flex gap-2">
@@ -292,7 +364,7 @@ const ManageReviews = () => {
                         <>
                           <button
                             onClick={() => approveReview(review._id)}
-                            className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-gradient-to-r from-green-600 to-green-800 hover:from-green-800 hover:to-green-600 text-white text-sm font-medium transition-colors"
+                            className={`inline-flex items-center justify-center px-4 py-2 rounded-full text-white text-sm font-medium transition-colors ${activeTab === 'books' ? 'bg-gradient-to-r from-green-600 to-green-800 hover:from-green-800 hover:to-green-600' : 'bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-700 hover:to-teal-500'}`}
                           >
                             Approve
                           </button>

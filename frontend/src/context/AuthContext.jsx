@@ -16,7 +16,7 @@ const getBaseUrl = () => {
   if (import.meta.env.MODE === "development") {
     return "http://localhost:5000";
   }
-  return "https://bookstore-backend-hshq.onrender.com";
+  return "http://localhost:5000";
 };
 
 const API_BASE_URL = getBaseUrl();

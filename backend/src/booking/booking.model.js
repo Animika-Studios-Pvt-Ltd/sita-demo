@@ -29,6 +29,8 @@ const bookingSchema = new mongoose.Schema(
       default: 'pending'
     },
 
+    ratingEmailSent: { type: Boolean, default: false },
+
     bookedAt: { type: Date, default: Date.now },
   },
   { timestamps: true }

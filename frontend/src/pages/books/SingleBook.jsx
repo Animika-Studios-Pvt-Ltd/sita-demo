@@ -193,7 +193,7 @@ const SingleBook = () => {
 
   const BASE_URL =
     process.env.NODE_ENV === "production"
-      ? "https://bookstore-backend-hshq.onrender.com"
+      ? "http://localhost:5000"
       : "http://localhost:5000";
 
   const handleReviewSubmit = async (e) => {
