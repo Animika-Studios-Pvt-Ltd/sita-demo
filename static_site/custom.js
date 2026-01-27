@@ -1,6 +1,4 @@
-/* =========================
-   HEADER SECTION
-========================= */
+/* -------------------------------- HEADER SECTION -------------------------------- */
 document.addEventListener("DOMContentLoaded", function () {
   const currentPath = window.location.pathname.split("/").pop() || "index.html";
 
@@ -19,9 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-/* =========================
-   HAMBURGER SECTION
-========================= */
+/* -------------------------------- HAMBURGER SECTION -------------------------------- */
 document.addEventListener("DOMContentLoaded", function () {
   const toggler = document.querySelector(".navbar-toggler");
   const menu = document.querySelector("#sita-mainNav");
@@ -36,9 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
   );
 });
 
-/* =========================
-   TESTIMONIALS SECTION
-========================= */
+/* -------------------------------- TESTIMONIALS SECTION -------------------------------- */
 document.addEventListener("DOMContentLoaded", function () {
   const carousel = document.getElementById("testimonialCarousel");
   const nameEl = document.querySelector(".sita-testimonial-name");
@@ -58,10 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
   carousel.addEventListener("slid.bs.carousel", updateMeta);
 });
 
-/* =========================
-   WORKSHOP / EVENTS SECTION
-   (ONLY PLACE FOR EVENTS)
-========================= */
+/* -------------------------------- WORKSHOP / EVENTS SECTION -------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
   const tbody = document.getElementById("workshopTableBody");
   if (!tbody) return;
@@ -113,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-/* SITA FACTOR SECTION */
+/* -------------------------------- SITA FACTOR SECTION -------------------------------- */
 const decorEls = document.querySelectorAll(".sita-decor");
 
 let current = [];
@@ -163,3 +154,25 @@ window.addEventListener("resize", updateTargets);
 
 updateTargets();
 animate();
+
+/* -------------------------------- Footer Publications Section -------------------------------- */
+const slides = document.querySelectorAll(".publication-slide");
+const prevBtn = document.querySelector(".pub-prev");
+const nextBtn = document.querySelector(".pub-next");
+
+let currentIndex = 0;
+
+function showSlide(index) {
+  slides.forEach((slide) => slide.classList.remove("active"));
+  slides[index].classList.add("active");
+}
+
+prevBtn.addEventListener("click", () => {
+  currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+  showSlide(currentIndex);
+});
+
+nextBtn.addEventListener("click", () => {
+  currentIndex = (currentIndex + 1) % slides.length;
+  showSlide(currentIndex);
+});
