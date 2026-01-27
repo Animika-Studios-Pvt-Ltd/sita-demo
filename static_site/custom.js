@@ -28,11 +28,11 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!toggler || !menu) return;
 
   menu.addEventListener("shown.bs.collapse", () =>
-    toggler.setAttribute("aria-expanded", "true")
+    toggler.setAttribute("aria-expanded", "true"),
   );
 
   menu.addEventListener("hidden.bs.collapse", () =>
-    toggler.setAttribute("aria-expanded", "false")
+    toggler.setAttribute("aria-expanded", "false"),
   );
 });
 
@@ -69,8 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const BOOKING_BASE_URL = "http://booking.localhost:5173";
 
   fetch("http://localhost:5000/api/events")
-    .then(res => res.json())
-    .then(events => {
+    .then((res) => res.json())
+    .then((events) => {
       const tbody = document.getElementById("workshopTableBody");
       tbody.innerHTML = "";
 
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      events.forEach(e => {
+      events.forEach((e) => {
         tbody.innerHTML += `
         <tr>
           <td>${e.code}</td>
@@ -95,20 +95,71 @@ document.addEventListener("DOMContentLoaded", () => {
           <td>${e.availability ?? "-"}</td>
           <td>${e.ageGroup || "-"}</td>
          <td>
-  ${Number(e.availability) === 0
-            ? `<span class="sita-booking-closed">Booking Closed</span>`
-            : e.bookingUrl
-              ? `<a href="${BOOKING_BASE_URL}/${e.bookingUrl}"
+  ${
+    Number(e.availability) === 0
+      ? `<span class="sita-booking-closed">Booking Closed</span>`
+      : e.bookingUrl
+        ? `<a href="${BOOKING_BASE_URL}/${e.bookingUrl}"
                  class="sita-book-now"
                  target="_blank">Book Now</a>`
-              : `<button disabled class="sita-book-now disabled">
+        : `<button disabled class="sita-book-now disabled">
                  Coming Soon
                </button>`
-          }
+  }
 </td>
         </tr>
       `;
       });
     });
-
 });
+
+/* SITA FACTOR SECTION */
+const decorEls = document.querySelectorAll(".sita-decor");
+
+let current = [];
+let target = [];
+let time = 0;
+
+decorEls.forEach((_, i) => {
+  current[i] = 0;
+  target[i] = 0;
+});
+
+function lerp(a, b, n) {
+  return (1 - n) * a + n * b;
+}
+
+function updateTargets() {
+  const viewportCenter = window.innerHeight / 2;
+
+  decorEls.forEach((el, i) => {
+    const rect = el.getBoundingClientRect();
+    const elCenter = rect.top + rect.height / 2;
+    const distance = elCenter - viewportCenter;
+
+    const strength = i === 0 ? 0.1 : 0.2;
+    target[i] = -distance * strength;
+  });
+}
+
+function animate() {
+  time += 0.03;
+
+  decorEls.forEach((el, i) => {
+    // Smooth follow
+    current[i] = lerp(current[i], target[i], 0.08);
+
+    // Gentle breathing float
+    const float = Math.sin(time + i) * 20;
+
+    el.style.transform = `translateY(${current[i] + float}px)`;
+  });
+
+  requestAnimationFrame(animate);
+}
+
+window.addEventListener("scroll", updateTargets, { passive: true });
+window.addEventListener("resize", updateTargets);
+
+updateTargets();
+animate();
