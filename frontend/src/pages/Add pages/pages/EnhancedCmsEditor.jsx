@@ -272,7 +272,7 @@ export default function EnhancedCmsEditor() {
             {/* LEFT */}
             <div className="flex-1 max-w-md">
               <label className="block text-md font-medium text-black-600 mb-1">
-                Page Link
+                Event Page Link
               </label>
               <input
                 type="text"

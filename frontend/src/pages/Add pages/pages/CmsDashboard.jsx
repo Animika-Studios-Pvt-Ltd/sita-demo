@@ -34,7 +34,7 @@ export default function CmsDashboard() {
 
             {/* Back button */}
             <button
-              onClick={() => navigate(backPath)}
+              onClick={() => navigate(-1)}
               className="
     inline-flex items-center gap-2
     px-2.5 py-1.5 text-xs sm:text-sm rounded-full
@@ -61,8 +61,8 @@ export default function CmsDashboard() {
               <h1 className="text-2xl font-bold text-white text-center">
                 {isEditing
                   ? slug
-                    ? "Edit Page"
-                    : "Create Page"
+                    ? "Edit Event Page"
+                    : "Create Event Page"
                   : "Content Management"}
               </h1>
             </div>

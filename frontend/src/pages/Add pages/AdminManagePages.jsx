@@ -17,7 +17,7 @@ const AdminManagePages = () => {
           <ArrowBackIcon className="w-2 h-2" />
           Back
         </button>
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2 text-center"> Manage Pages</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2 text-center"> Manage Event Pages</h2>
         <p className="text-sm text-gray-600 mt-1 text-center">
           Organize and manage your Events content.
         </p>

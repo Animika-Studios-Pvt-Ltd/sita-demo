@@ -6,6 +6,7 @@ import "react-day-picker/dist/style.css";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import BlockIcon from "@mui/icons-material/Block";
 import { useNavigate } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const API = "http://localhost:5000/api";
 
@@ -160,6 +161,19 @@ const ManageEvents = () => {
   const [manualEvent, setManualEvent] = useState(false);
   const [manualBlock, setManualBlock] = useState(false);
   const navigate = useNavigate();
+  const [showEventForm, setShowEventForm] = useState(false);
+  const [showBlockForm, setShowBlockForm] = useState(false);
+  const eventFormRef = React.useRef(null);
+  const blockFormRef = React.useRef(null);
+  const [eventFilter, setEventFilter] = useState("upcoming");
+  const [blockFilter, setBlockFilter] = useState("upcoming");
+  const EVENT_LIMIT = 10;
+  const BLOCK_LIMIT = 10;
+  const [eventPage, setEventPage] = useState(1);
+  const [blockPage, setBlockPage] = useState(1);
+  const [eventSubmitting, setEventSubmitting] = useState(false);
+  const [blockSubmitting, setBlockSubmitting] = useState(false);
+  const isPastEvent = (event) => !isUpcomingEvent(event);
 
   const [eventForm, setEventForm] = useState({
     title: "",
@@ -215,38 +229,119 @@ const ManageEvents = () => {
 
     return false;
   };
+  const isUpcomingEvent = (event) => {
+    const now = new Date();
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const [y, m, d] = event.date.split("-").map(Number);
+    const eventDate = new Date(y, m - 1, d);
+    eventDate.setHours(0, 0, 0, 0);
+
+    // ✅ Future date
+    if (eventDate > today) return true;
+
+    // ❌ Past date
+    if (eventDate < today) return false;
+
+    // 🕒 Today → compare end time
+    const endMinutes = toMinutes(event.endTime);
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+
+    return endMinutes > nowMinutes;
+  };
+  const isUpcomingDate = (dateStr) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const d = new Date(dateStr);
+    d.setHours(0, 0, 0, 0);
+
+    return d >= today;
+  };
+
+  const isPastDateStr = (dateStr) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const d = new Date(dateStr);
+    d.setHours(0, 0, 0, 0);
+
+    return d < today;
+  };
+
+  const isUpcomingBlocked = (block) => {
+    const now = new Date();
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const [y, m, d] = block.date.split("-").map(Number);
+    const blockDate = new Date(y, m - 1, d);
+    blockDate.setHours(0, 0, 0, 0);
+
+    // ✅ Future date
+    if (blockDate > today) return true;
+
+    // ❌ Past date
+    if (blockDate < today) return false;
+
+    // 🕒 Today → compare end time
+    const endMinutes = toMinutes(block.endTime);
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+
+    return endMinutes > nowMinutes;
+  };
+
+  const isPastBlocked = (block) => !isUpcomingBlocked(block);
+
+
+  const filteredEvents = events.filter((e) => {
+    if (eventFilter === "upcoming") return isUpcomingEvent(e);
+    if (eventFilter === "past") return isPastEvent(e);
+    return true; // all
+  });
+
+  const filteredBlocked = blocked.filter((b) => {
+    if (blockFilter === "upcoming") return isUpcomingBlocked(b);
+    if (blockFilter === "past") return isPastBlocked(b);
+    return true; // all
+  });
 
   /* ================= EVENT ================= */
   const submitEvent = async () => {
-    if (!eventForm.title.trim())
-      return errorAlert("Missing title", "Event title is required");
-
-    if (!eventForm.date || !eventForm.startTime || !eventForm.endTime)
-      return errorAlert("Missing fields", "Date & time required");
-
-    if (toMinutes(eventForm.startTime) >= toMinutes(eventForm.endTime))
-      return errorAlert("Invalid time", "End time must be after start");
-
-    const date = toDateStr(eventForm.date);
-
-    if (
-      isSlotDisabled(
-        date,
-        eventForm.startTime,
-        toMinutes(eventForm.endTime) - toMinutes(eventForm.startTime),
-        editingEventId
-      )
-    ) {
-      return errorAlert(
-        "Time conflict",
-        "This slot overlaps with another event or blocked slot"
-      );
-    }
-
-    // bookingUrl can be empty now ✅
-    const payload = { ...eventForm, date };
+    if (eventSubmitting) return; // 🔒 prevent double click
+    setEventSubmitting(true);
 
     try {
+      if (!eventForm.title.trim())
+        return errorAlert("Missing title", "Event title is required");
+
+      if (!eventForm.date || !eventForm.startTime || !eventForm.endTime)
+        return errorAlert("Missing fields", "Date & time required");
+
+      if (toMinutes(eventForm.startTime) >= toMinutes(eventForm.endTime))
+        return errorAlert("Invalid time", "End time must be after start");
+
+      const date = toDateStr(eventForm.date);
+
+      if (
+        isSlotDisabled(
+          date,
+          eventForm.startTime,
+          toMinutes(eventForm.endTime) - toMinutes(eventForm.startTime),
+          editingEventId
+        )
+      ) {
+        return errorAlert(
+          "Time conflict",
+          "This slot overlaps with another event or blocked slot"
+        );
+      }
+
+      const payload = { ...eventForm, date };
+
       editingEventId
         ? await axios.put(`${API}/events/${editingEventId}`, payload)
         : await axios.post(`${API}/events`, payload);
@@ -260,6 +355,8 @@ const ManageEvents = () => {
       fetchAll();
     } catch (err) {
       errorAlert("Error", err.response?.data?.message || "Failed");
+    } finally {
+      setEventSubmitting(false); // ✅ always re-enable
     }
   };
 
@@ -268,6 +365,19 @@ const ManageEvents = () => {
       setManualEvent(false);
     }
   }, [eventForm.date]);
+  useEffect(() => {
+    // Close all forms when switching tabs
+    setShowEventForm(false);
+    setShowBlockForm(false);
+
+    // Reset editing states
+    setEditingEventId(null);
+    setEditingBlockId(null);
+
+    // Reset manual toggles
+    setManualEvent(false);
+    setManualBlock(false);
+  }, [activeTab]);
 
   useEffect(() => {
     if (isPastDate(blockForm.date)) {
@@ -275,7 +385,35 @@ const ManageEvents = () => {
     }
   }, [blockForm.date]);
 
+  useEffect(() => {
+    setEventPage(1);
+  }, [eventFilter]);
+
+  useEffect(() => {
+    setBlockPage(1);
+  }, [blockFilter]);
+
+  useEffect(() => {
+    setEventPage(1);
+    setBlockPage(1);
+  }, [activeTab]);
+
+  const eventTotal = filteredEvents.length;
+
+  const paginatedEvents = filteredEvents.slice(
+    (eventPage - 1) * EVENT_LIMIT,
+    eventPage * EVENT_LIMIT
+  );
+
+  const blockTotal = filteredBlocked.length;
+
+  const paginatedBlocked = filteredBlocked.slice(
+    (blockPage - 1) * BLOCK_LIMIT,
+    blockPage * BLOCK_LIMIT
+  );
+
   const editEvent = (e) => {
+    setShowEventForm(true);
     setEditingEventId(e._id);
     setManualEvent(true);
 
@@ -284,19 +422,22 @@ const ManageEvents = () => {
       location: e.location || "",
       mode: e.mode || "Offline",
       availability: e.availability || "",
-
       fees: e.fees || "",
       price: e.price || "",
       capacity: e.capacity || "",
       ageGroup: e.ageGroup || "",
       description: e.description || "",
       bookingUrl: e.bookingUrl || "",
-
       date: new Date(e.date),
       startTime: e.startTime,
       endTime: e.endTime,
     });
+
+    setTimeout(() => {
+      eventFormRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
   };
+
 
   const isPastDate = (date) => {
     if (!date) return false;
@@ -311,8 +452,9 @@ const ManageEvents = () => {
   };
 
   const editBlock = (b) => {
+    setShowBlockForm(true);
     setEditingBlockId(b._id);
-    setManualBlock(true); // allow editing exact times
+    setManualBlock(true);
 
     setBlockForm({
       reason: b.reason || "",
@@ -320,10 +462,16 @@ const ManageEvents = () => {
       startTime: b.startTime,
       endTime: b.endTime,
     });
+
+    setTimeout(() => {
+      blockFormRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
   };
+
 
   const resetEvent = () => {
     setEditingEventId(null);
+    setShowEventForm(false);
     setManualEvent(false);
     setEventForm({
       title: "",
@@ -339,18 +487,21 @@ const ManageEvents = () => {
       startTime: "",
       endTime: "",
     });
-
   };
+
 
   /* ================= BLOCK ================= */
   const submitBlock = async () => {
-    if (!blockForm.date || !blockForm.startTime || !blockForm.endTime)
-      return errorAlert("Missing fields", "Date & time required");
-
-    if (toMinutes(blockForm.startTime) >= toMinutes(blockForm.endTime))
-      return errorAlert("Invalid time", "End time must be after start");
+    if (blockSubmitting) return;
+    setBlockSubmitting(true);
 
     try {
+      if (!blockForm.date || !blockForm.startTime || !blockForm.endTime)
+        return errorAlert("Missing fields", "Date & time required");
+
+      if (toMinutes(blockForm.startTime) >= toMinutes(blockForm.endTime))
+        return errorAlert("Invalid time", "End time must be after start");
+
       const payload = { ...blockForm, date: toDateStr(blockForm.date) };
 
       editingBlockId
@@ -362,24 +513,40 @@ const ManageEvents = () => {
       fetchAll();
     } catch (err) {
       errorAlert("Error", err.response?.data?.message || "Failed");
+    } finally {
+      setBlockSubmitting(false);
     }
   };
 
   const resetBlock = () => {
     setEditingBlockId(null);
+    setShowBlockForm(false);
     setManualBlock(false);
     setBlockForm({ reason: "", date: null, startTime: "", endTime: "" });
   };
 
   /* ================= UI ================= */
   return (
-    <div className="max-w-7xl mx-auto p-4 mt-10">
-      <h1 className="text-3xl font-playfair font-bold text-center mb-10 text-indigo-700">
-        Admin Event & Availability Manager
-      </h1>
+    <div className="max-w-7xl mx-auto p-4 pt-0 mt-10">
+      <div className="relative flex items-center justify-center mb-6">
+        {/* BACK BUTTON */}
+        <button
+          onClick={() => navigate(-1)}
+          className="absolute left-0 flex items-center gap-1 bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400 transition-all duration-300 text-white font-medium px-3 py-1.5 rounded-full"
+        >
+          <ArrowBackIcon fontSize="small" />
+          Back
+        </button>
+
+        {/* TITLE */}
+        <h1 className="text-3xl font-playfair font-bold text-gray-900 text-center">
+          Admin Event & Availability Manager
+        </h1>
+      </div>
 
       {/* TOGGLE */}
-      <div className="flex justify-center mb-10">
+
+      {/* <div className="flex justify-center mb-0">
         <div className="inline-flex bg-gray-100 rounded-full p-1 shadow-inner">
           <button
             onClick={() => setActiveTab("events")}
@@ -405,202 +572,234 @@ const ManageEvents = () => {
             Blocked
           </button>
         </div>
-      </div>
-
+      </div> */}
 
       {/* ================= EVENTS ================= */}
       {activeTab === "events" && (
         <>
-          {/* FORM */}
-          <div className="bg-white p-6 rounded-xl shadow-lg mb-8 border">
-            <h2 className="text-xl font-semibold text-indigo-700 mb-4">
-              {editingEventId ? "Edit Event" : "Create New Event"}
-            </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-              {[
-                { label: "Title*", value: eventForm.title, key: "title" },
-                { label: "Price (INR)", value: eventForm.price, key: "price" },
-                { label: "Capacity", value: eventForm.capacity, key: "capacity" },
-                { label: "Age Group", value: eventForm.ageGroup, key: "ageGroup" },
-              ].map((f) => (
+          <div className="flex justify-end mb-2">
+            <button
+              onClick={() => setShowEventForm((v) => !v)}
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg font-semibold"
+            >
+              {showEventForm ? "Close Event Form" : "Create Event"}
+            </button>
+          </div>
+
+          {/* FORM */}
+          {showEventForm && (
+            <div ref={eventFormRef} className="bg-white p-6 rounded-xl shadow-lg mb-8 border">
+              <h2 className="text-xl font-semibold text-indigo-700 mb-4">
+                {editingEventId ? "Edit Event" : "Create New Event"}
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                {[
+                  { label: "Title*", value: eventForm.title, key: "title" },
+                  { label: "Price (INR)", value: eventForm.price, key: "price" },
+                  { label: "Capacity", value: eventForm.capacity, key: "capacity" },
+                  { label: "Age Group", value: eventForm.ageGroup, key: "ageGroup" },
+                ].map((f) => (
+                  <input
+                    key={f.key}
+                    placeholder={f.label}
+                    className="border p-3 rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none"
+                    value={f.value}
+                    onChange={(e) =>
+                      setEventForm({ ...eventForm, [f.key]: e.target.value })
+                    }
+                  />
+                ))}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                {/* LOCATION */}
                 <input
-                  key={f.key}
-                  placeholder={f.label}
+                  placeholder="Workshop Location"
                   className="border p-3 rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none"
-                  value={f.value}
+                  value={eventForm.location}
                   onChange={(e) =>
-                    setEventForm({ ...eventForm, [f.key]: e.target.value })
+                    setEventForm({ ...eventForm, location: e.target.value })
                   }
                 />
-              ))}
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-              {/* LOCATION */}
+                {/* MODE */}
+                <select
+                  className="border p-3 rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none bg-white"
+                  value={eventForm.mode}
+                  onChange={(e) =>
+                    setEventForm({ ...eventForm, mode: e.target.value })
+                  }
+                >
+                  <option value="Online">Online</option>
+                  <option value="In Person">In Person</option>
+                  <option value="Hybrid">Hybrid</option>
+                </select>
+              </div>
+
               <input
-                placeholder="Workshop Location"
-                className="border p-3 rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none"
-                value={eventForm.location}
+                placeholder="Booking URL * (example: Yoga-Therapy)"
+                className="border p-3 rounded-lg w-full mb-4 focus:ring-2 focus:ring-indigo-400 outline-none"
+                value={eventForm.bookingUrl}
                 onChange={(e) =>
-                  setEventForm({ ...eventForm, location: e.target.value })
+                  setEventForm({ ...eventForm, bookingUrl: e.target.value })
                 }
               />
 
-              {/* MODE */}
-              <select
-                className="border p-3 rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none bg-white"
-                value={eventForm.mode}
+              <textarea
+                placeholder="Description"
+                className="border p-3 rounded-lg w-full mb-6 focus:ring-2 focus:ring-indigo-400 outline-none"
+                value={eventForm.description}
                 onChange={(e) =>
-                  setEventForm({ ...eventForm, mode: e.target.value })
+                  setEventForm({ ...eventForm, description: e.target.value })
                 }
-              >
-                <option value="Online">Online</option>
-                <option value="In Person">In Person</option>
-                <option value="Hybrid">Hybrid</option>
-              </select>
-            </div>
-
-            <input
-              placeholder="Booking URL * (example: Yoga-Therapy)"
-              className="border p-3 rounded-lg w-full mb-4 focus:ring-2 focus:ring-indigo-400 outline-none"
-              value={eventForm.bookingUrl}
-              onChange={(e) =>
-                setEventForm({ ...eventForm, bookingUrl: e.target.value })
-              }
-            />
-
-            <textarea
-              placeholder="Description"
-              className="border p-3 rounded-lg w-full mb-6 focus:ring-2 focus:ring-indigo-400 outline-none"
-              value={eventForm.description}
-              onChange={(e) =>
-                setEventForm({ ...eventForm, description: e.target.value })
-              }
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <DayPicker
-                mode="single"
-                selected={eventForm.date}
-                onSelect={(d) => setEventForm({ ...eventForm, date: d })}
-                disabled={{ before: new Date() }}
               />
-              <div>
-                <label className="flex items-center gap-2 mb-3 font-medium">
-                  <input
-                    type="checkbox"
-                    checked={manualEvent}
-                    disabled={isPastDate(eventForm.date)}
-                    onChange={() => setManualEvent(!manualEvent)}
-                  />
 
-                  Manual Time Selection
-                </label>
-
-                {!manualEvent ? (
-                  <>
-                    <select
-                      className="border p-3 rounded-lg w-full mb-3"
-                      value={eventDuration}
-                      onChange={(e) => setEventDuration(Number(e.target.value))}
-                    >
-                      {[15, 30, 45, 60, 90, 120].map((d) => (
-                        <option key={d} value={d}>
-                          {d} minutes
-                        </option>
-                      ))}
-                    </select>
-
-                    <div className="grid grid-cols-3 gap-2 max-h-56 overflow-y-auto pr-1">
-                      {eventForm.date &&
-                        generateSlots(eventDuration).map((slot) => {
-                          const end = toTime(toMinutes(slot) + eventDuration);
-                          const status = getSlotStatus(
-                            toDateStr(eventForm.date),
-                            slot,
-                            eventDuration,
-                            events,
-                            blocked,
-                            editingEventId
-                          );
-
-                          const past = isPastSlot(eventForm.date, slot);
-                          const disabled = status !== "available" || past;
-
-                          let slotClass = "border-gray-300 bg-white hover:bg-gray-100";
-
-                          if (status === "blocked") {
-                            slotClass = "border-red-500 bg-red-50 text-red-600 cursor-not-allowed";
-                          } else if (status === "event") {
-                            slotClass = "border-blue-500 bg-blue-50 text-blue-600 cursor-not-allowed";
-                          } else if (past) {
-                            slotClass = "border-gray-300 bg-gray-100 text-gray-400 cursor-not-allowed";
-                          } else if (eventForm.startTime === slot) {
-                            slotClass = "border-indigo-600 bg-indigo-600 text-white";
-                          }
-
-                          return (
-                            <button
-                              key={slot}
-                              disabled={disabled}
-                              onClick={() =>
-                                setEventForm({
-                                  ...eventForm,
-                                  startTime: slot,
-                                  endTime: end,
-                                })
-                              }
-                              className={`py-2 text-xs rounded-lg border-2 transition ${slotClass}`}>
-                              {format12Hour(slot)} – {format12Hour(end)}
-                            </button>
-                          );
-                        })}
-                    </div>
-                  </>
-                ) : (
-                  <>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <DayPicker
+                  mode="single"
+                  selected={eventForm.date}
+                  onSelect={(d) => setEventForm({ ...eventForm, date: d })}
+                  disabled={{ before: new Date() }}
+                />
+                <div>
+                  <label className="flex items-center gap-2 mb-3 font-medium">
                     <input
-                      type="time"
+                      type="checkbox"
+                      checked={manualEvent}
                       disabled={isPastDate(eventForm.date)}
-                      className="border p-3 rounded-lg w-full mb-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
-                      value={eventForm.startTime}
-                      onChange={(e) =>
-                        setEventForm({ ...eventForm, startTime: e.target.value })
-                      }
+                      onChange={() => setManualEvent(!manualEvent)}
                     />
 
-                    <input
-                      type="time"
-                      disabled={isPastDate(eventForm.date)}
-                      className="border p-3 rounded-lg w-full disabled:bg-gray-100 disabled:cursor-not-allowed"
-                      value={eventForm.endTime}
-                      onChange={(e) =>
-                        setEventForm({ ...eventForm, endTime: e.target.value })
-                      }
-                    />
+                    Manual Time Selection
+                  </label>
 
-                  </>
+                  {!manualEvent ? (
+                    <>
+                      <select
+                        className="border p-3 rounded-lg w-full mb-3"
+                        value={eventDuration}
+                        onChange={(e) => setEventDuration(Number(e.target.value))}
+                      >
+                        {[15, 30, 45, 60, 90, 120].map((d) => (
+                          <option key={d} value={d}>
+                            {d} minutes
+                          </option>
+                        ))}
+                      </select>
+
+                      <div className="grid grid-cols-3 gap-2 max-h-56 overflow-y-auto pr-1">
+                        {eventForm.date &&
+                          generateSlots(eventDuration).map((slot) => {
+                            const end = toTime(toMinutes(slot) + eventDuration);
+                            const status = getSlotStatus(
+                              toDateStr(eventForm.date),
+                              slot,
+                              eventDuration,
+                              events,
+                              blocked,
+                              editingEventId
+                            );
+
+                            const past = isPastSlot(eventForm.date, slot);
+                            const disabled = status !== "available" || past;
+
+                            let slotClass = "border-gray-300 bg-white hover:bg-gray-100";
+
+                            if (status === "blocked") {
+                              slotClass = "border-red-500 bg-red-50 text-red-600 cursor-not-allowed";
+                            } else if (status === "event") {
+                              slotClass = "border-blue-500 bg-blue-50 text-blue-600 cursor-not-allowed";
+                            } else if (past) {
+                              slotClass = "border-gray-300 bg-gray-100 text-gray-400 cursor-not-allowed";
+                            } else if (eventForm.startTime === slot) {
+                              slotClass = "border-indigo-600 bg-indigo-600 text-white";
+                            }
+
+                            return (
+                              <button
+                                key={slot}
+                                disabled={disabled}
+                                onClick={() =>
+                                  setEventForm({
+                                    ...eventForm,
+                                    startTime: slot,
+                                    endTime: end,
+                                  })
+                                }
+                                className={`py-2 text-xs rounded-lg border-2 transition ${slotClass}`}>
+                                {format12Hour(slot)} – {format12Hour(end)}
+                              </button>
+                            );
+                          })}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <input
+                        type="time"
+                        disabled={isPastDate(eventForm.date)}
+                        className="border p-3 rounded-lg w-full mb-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        value={eventForm.startTime}
+                        onChange={(e) =>
+                          setEventForm({ ...eventForm, startTime: e.target.value })
+                        }
+                      />
+
+                      <input
+                        type="time"
+                        disabled={isPastDate(eventForm.date)}
+                        className="border p-3 rounded-lg w-full disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        value={eventForm.endTime}
+                        onChange={(e) =>
+                          setEventForm({ ...eventForm, endTime: e.target.value })
+                        }
+                      />
+
+                    </>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex gap-3 mt-6">
+                <button
+                  onClick={submitEvent}
+                  disabled={eventSubmitting}
+                  className={`px-6 py-2 rounded-lg text-white font-medium transition
+    ${eventSubmitting
+                      ? "bg-indigo-400 cursor-not-allowed"
+                      : "bg-indigo-600 hover:bg-indigo-700"
+                    }`}
+                >
+                  {eventSubmitting
+                    ? "Saving..."
+                    : editingEventId
+                      ? "Update Event"
+                      : "Add Event"}
+                </button>
+                {editingEventId && (
+                  <button
+                    onClick={resetEvent}
+                    className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg"
+                  >
+                    Cancel
+                  </button>
                 )}
               </div>
             </div>
+          )}
 
-            <div className="flex gap-3 mt-6">
-              <button
-                onClick={submitEvent}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg"
-              >
-                {editingEventId ? "Update Event" : "Add Event"}
-              </button>
-              {editingEventId && (
-                <button
-                  onClick={resetEvent}
-                  className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg"
-                >
-                  Cancel
-                </button>
-              )}
-            </div>
+          <div className="flex justify-left items-center mb-3">
+            <select
+              value={eventFilter}
+              onChange={(e) => setEventFilter(e.target.value)}
+              className="border px-3 py-1.5 rounded-lg text-sm focus:ring-2 focus:ring-indigo-400"
+            >
+              <option value="upcoming">Upcoming</option>
+              <option value="all">All</option>
+              <option value="past">Past</option>
+            </select>
           </div>
 
           {/* LIST */}
@@ -626,7 +825,7 @@ const ManageEvents = () => {
                 </thead>
 
                 <tbody>
-                  {events.map((e) => (
+                  {paginatedEvents.map((e) => (
                     <tr key={e._id} className="border-t hover:bg-gray-50">
                       {/* CODE */}
                       <td className="p-3 text-center font-semibold text-indigo-600 text-sm">
@@ -746,149 +945,214 @@ const ManageEvents = () => {
               </table>
             </div>
           </div>
+          <div className="container mx-auto px-4 mt-6 mb-12 flex items-center justify-center">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => {
+                  if (eventPage > 1) setEventPage((p) => p - 1);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                disabled={eventPage <= 1}
+                className={`px-4 py-2 rounded-lg border ${eventPage <= 1
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-gray-100"
+                  }`}
+              >
+                Prev
+              </button>
+
+              <div className="px-2 py-2 rounded-lg border">
+                Page {eventPage} of {Math.max(1, Math.ceil(eventTotal / EVENT_LIMIT))}
+              </div>
+
+              <button
+                onClick={() => {
+                  const totalPages = Math.max(1, Math.ceil(eventTotal / EVENT_LIMIT));
+                  if (eventPage < totalPages) setEventPage((p) => p + 1);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                disabled={eventPage >= Math.ceil(eventTotal / EVENT_LIMIT)}
+                className={`px-4 py-2 rounded-lg border ${eventPage >= Math.ceil(eventTotal / EVENT_LIMIT)
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-gray-100"
+                  }`}
+              >
+                Next
+              </button>
+            </div>
+          </div>
         </>
       )}
 
       {/* ================= BLOCKED ================= */}
       {activeTab === "blocked" && (
         <>
+
+          <div className="flex justify-end mb-2">
+            <button
+              onClick={() => setShowBlockForm((v) => !v)}
+              className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg font-semibold"
+            >
+              {showBlockForm ? "Close Block Form" : "Block Time Slot"}
+            </button>
+          </div>
+
           {/* FORM */}
-          <div className="bg-white p-6 rounded-xl shadow-lg mb-8 border">
-            <h2 className="text-xl font-semibold text-red-600 mb-4">
-              {editingBlockId ? "Edit Blocked Slot" : "Block Time Slot"}
-            </h2>
+          {showBlockForm && (
+            <div ref={blockFormRef} className="bg-white p-6 rounded-xl shadow-lg mb-8 border">
+              <h2 className="text-xl font-semibold text-red-600 mb-4">
+                {editingBlockId ? "Edit Blocked Slot" : "Block Time Slot"}
+              </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <DayPicker
-                mode="single"
-                selected={blockForm.date}
-                onSelect={(d) => setBlockForm({ ...blockForm, date: d })}
-                disabled={{ before: new Date() }}
-              />
-
-              <div>
-                <input
-                  placeholder="Reason (optional)"
-                  className="border p-3 rounded-lg w-full mb-3 focus:ring-2 focus:ring-red-400 outline-none"
-                  value={blockForm.reason}
-                  onChange={(e) =>
-                    setBlockForm({ ...blockForm, reason: e.target.value })
-                  }
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <DayPicker
+                  mode="single"
+                  selected={blockForm.date}
+                  onSelect={(d) => setBlockForm({ ...blockForm, date: d })}
+                  disabled={{ before: new Date() }}
                 />
 
-                <label className="flex items-center gap-2 mb-3 font-medium">
+                <div>
                   <input
-                    type="checkbox"
-                    checked={manualBlock}
-                    disabled={isPastDate(blockForm.date)}
-                    onChange={() => setManualBlock(!manualBlock)}
+                    placeholder="Reason (optional)"
+                    className="border p-3 rounded-lg w-full mb-3 focus:ring-2 focus:ring-red-400 outline-none"
+                    value={blockForm.reason}
+                    onChange={(e) =>
+                      setBlockForm({ ...blockForm, reason: e.target.value })
+                    }
                   />
-                  Manual Time Selection
-                </label>
 
-                {!manualBlock ? (
-                  <>
-                    <select
-                      className="border p-3 rounded-lg w-full mb-3"
-                      value={blockDuration}
-                      onChange={(e) => setBlockDuration(Number(e.target.value))}
-                    >
-                      {[15, 30, 45, 60, 90, 120].map((d) => (
-                        <option key={d} value={d}>
-                          {d} minutes
-                        </option>
-                      ))}
-                    </select>
-
-                    <div className="grid grid-cols-3 gap-2 max-h-56 overflow-y-auto pr-1">
-                      {blockForm.date &&
-                        generateSlots(blockDuration).map((slot) => {
-                          const end = toTime(toMinutes(slot) + blockDuration);
-                          const status = getSlotStatus(
-                            toDateStr(blockForm.date),
-                            slot,
-                            blockDuration,
-                            events,
-                            blocked,
-                            editingBlockId
-                          );
-
-                          const past = isPastSlot(blockForm.date, slot);
-                          const disabled = status !== "available" || past;
-
-                          // ✅ ADD THIS BLOCK
-                          let slotClass = "border-gray-300 bg-white hover:bg-gray-100";
-
-                          if (status === "blocked") {
-                            slotClass = "border-red-500 bg-red-50 text-red-600 cursor-not-allowed";
-                          } else if (status === "event") {
-                            slotClass = "border-blue-500 bg-blue-50 text-blue-600 cursor-not-allowed";
-                          } else if (past) {
-                            slotClass = "border-gray-300 bg-gray-100 text-gray-400 cursor-not-allowed";
-                          } else if (blockForm.startTime === slot) {
-                            slotClass = "border-red-600 bg-red-600 text-white";
-                          }
-
-                          return (
-                            <button
-                              key={slot}
-                              disabled={disabled}
-                              onClick={() =>
-                                setBlockForm({
-                                  ...blockForm,
-                                  startTime: slot,
-                                  endTime: end,
-                                })
-                              }
-                              className={`py-2 text-xs rounded-lg border-2 transition ${slotClass}`}>
-                              {format12Hour(slot)} – {format12Hour(end)}
-                            </button>
-                          );
-                        })}
-                    </div>
-                  </>
-                ) : (
-                  <>
+                  <label className="flex items-center gap-2 mb-3 font-medium">
                     <input
-                      type="time"
+                      type="checkbox"
+                      checked={manualBlock}
                       disabled={isPastDate(blockForm.date)}
-                      className="border p-3 rounded-lg w-full mb-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
-                      value={blockForm.startTime}
-                      onChange={(e) =>
-                        setBlockForm({ ...blockForm, startTime: e.target.value })
-                      }
+                      onChange={() => setManualBlock(!manualBlock)}
                     />
+                    Manual Time Selection
+                  </label>
 
-                    <input
-                      type="time"
-                      disabled={isPastDate(blockForm.date)}
-                      className="border p-3 rounded-lg w-full disabled:bg-gray-100 disabled:cursor-not-allowed"
-                      value={blockForm.endTime}
-                      onChange={(e) =>
-                        setBlockForm({ ...blockForm, endTime: e.target.value })
-                      }
-                    />
-                  </>
-                )}
-              </div>
+                  {!manualBlock ? (
+                    <>
+                      <select
+                        className="border p-3 rounded-lg w-full mb-3"
+                        value={blockDuration}
+                        onChange={(e) => setBlockDuration(Number(e.target.value))}
+                      >
+                        {[15, 30, 45, 60, 90, 120].map((d) => (
+                          <option key={d} value={d}>
+                            {d} minutes
+                          </option>
+                        ))}
+                      </select>
 
-              <div className="flex gap-3 mt-6">
-                <button
-                  onClick={submitBlock}
-                  className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg"
-                >
-                  {editingBlockId ? "Update Block" : "Block Slot"}
-                </button>
-                {editingBlockId && (
+                      <div className="grid grid-cols-3 gap-2 max-h-56 overflow-y-auto pr-1">
+                        {blockForm.date &&
+                          generateSlots(blockDuration).map((slot) => {
+                            const end = toTime(toMinutes(slot) + blockDuration);
+                            const status = getSlotStatus(
+                              toDateStr(blockForm.date),
+                              slot,
+                              blockDuration,
+                              events,
+                              blocked,
+                              editingBlockId
+                            );
+
+                            const past = isPastSlot(blockForm.date, slot);
+                            const disabled = status !== "available" || past;
+
+                            // ✅ ADD THIS BLOCK
+                            let slotClass = "border-gray-300 bg-white hover:bg-gray-100";
+                            if (status === "blocked") {
+                              slotClass = "border-red-500 bg-red-50 text-red-600 cursor-not-allowed";
+                            } else if (status === "event") {
+                              slotClass = "border-blue-500 bg-blue-50 text-blue-600 cursor-not-allowed";
+                            } else if (past) {
+                              slotClass = "border-gray-300 bg-gray-100 text-gray-400 cursor-not-allowed";
+                            } else if (blockForm.startTime === slot) {
+                              slotClass = "border-red-600 bg-red-600 text-white";
+                            }
+
+                            return (
+                              <button
+                                key={slot}
+                                disabled={disabled}
+                                onClick={() =>
+                                  setBlockForm({
+                                    ...blockForm,
+                                    startTime: slot,
+                                    endTime: end,
+                                  })
+                                }
+                                className={`py-2 text-xs rounded-lg border-2 transition ${slotClass}`}>
+                                {format12Hour(slot)} – {format12Hour(end)}
+                              </button>
+                            );
+                          })}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <input
+                        type="time"
+                        disabled={isPastDate(blockForm.date)}
+                        className="border p-3 rounded-lg w-full mb-2 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        value={blockForm.startTime}
+                        onChange={(e) =>
+                          setBlockForm({ ...blockForm, startTime: e.target.value })
+                        }
+                      />
+                      <input
+                        type="time"
+                        disabled={isPastDate(blockForm.date)}
+                        className="border p-3 rounded-lg w-full disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        value={blockForm.endTime}
+                        onChange={(e) =>
+                          setBlockForm({ ...blockForm, endTime: e.target.value })
+                        }
+                      />
+                    </>
+                  )}
+                </div>
+                <div className="flex gap-3 mt-6">
                   <button
-                    onClick={resetBlock}
-                    className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg"
+                    onClick={submitBlock}
+                    disabled={blockSubmitting}
+                    className={`px-6 py-2 rounded-lg text-white font-medium transition
+    ${blockSubmitting
+                        ? "bg-red-400 cursor-not-allowed"
+                        : "bg-red-600 hover:bg-red-700"
+                      }`}
                   >
-                    Cancel
+                    {blockSubmitting
+                      ? "Saving..."
+                      : editingBlockId
+                        ? "Update Block"
+                        : "Block Slot"}
                   </button>
-                )}
+                  {editingBlockId && (
+                    <button
+                      onClick={resetBlock}
+                      className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
+          )}
+          <div className="flex justify-left items-center mb-3">
+            <select
+              value={blockFilter}
+              onChange={(e) => setBlockFilter(e.target.value)}
+              className="border px-3 py-1.5 rounded-lg text-sm focus:ring-2 focus:ring-red-400"
+            >
+              <option value="upcoming">Upcoming</option>
+              <option value="all">All</option>
+              <option value="past">Past</option>
+            </select>
           </div>
 
           {/* LIST */}
@@ -904,9 +1168,8 @@ const ManageEvents = () => {
                     ))}
                   </tr>
                 </thead>
-
                 <tbody>
-                  {blocked.map((b) => (
+                  {paginatedBlocked.map((b) => (
                     <tr key={b._id} className="border-t hover:bg-gray-50">
                       <td className="p-3 text-center font-medium">{b.date}</td>
                       <td className="text-center">
@@ -952,6 +1215,40 @@ const ManageEvents = () => {
                   )}
                 </tbody>
               </table>
+            </div>
+          </div>
+          <div className="container mx-auto px-4 mt-6 mb-12 flex items-center justify-center">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => {
+                  if (blockPage > 1) setBlockPage((p) => p - 1);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                disabled={blockPage <= 1}
+                className={`px-4 py-2 rounded-lg border ${blockPage <= 1
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-gray-100"
+                  }`}
+              >
+                Prev
+              </button>
+              <div className="px-2 py-2 rounded-lg border">
+                Page {blockPage} of {Math.max(1, Math.ceil(blockTotal / BLOCK_LIMIT))}
+              </div>
+              <button
+                onClick={() => {
+                  const totalPages = Math.max(1, Math.ceil(blockTotal / BLOCK_LIMIT));
+                  if (blockPage < totalPages) setBlockPage((p) => p + 1);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                disabled={blockPage >= Math.ceil(blockTotal / BLOCK_LIMIT)}
+                className={`px-4 py-2 rounded-lg border ${blockPage >= Math.ceil(blockTotal / BLOCK_LIMIT)
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-gray-100"
+                  }`}
+              >
+                Next
+              </button>
             </div>
           </div>
         </>
