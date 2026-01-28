@@ -7,7 +7,7 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 /* ================= CATEGORY IMAGE SET ================= */
 const categoryImages = {
     "Yoga Therapy": [
-        "https://images.unsplash.com/photo-1552058544-f2b08422138a",
+        "https://img.freepik.com/free-vector/international-yoga-day-woman-doing-posture-grass-with-text-space_1017-53205.jpg?t=st=1769598369~exp=1769601969~hmac=1a1a9372ca40d43fc1f1a39ada20b5f5956343346899ea083f0cd4d08e7d555b&w=1060",
         "https://images.unsplash.com/photo-1593810451137-5dc55105dace",
         "https://images.unsplash.com/photo-1506126613408-eca07ce68773",
     ],
@@ -114,35 +114,36 @@ const BookingHome = () => {
     return (
         <div className="container">
             <div className="max-w-6xl mx-auto px-4 mb-5">
+                {/* BREADCRUMB */}
                 <div
-                    className="breadcrumb-container w-full text-left mb-0 font-figtree font-light">
+                    className="breadcrumb-container w-full text-left font-figtree font-light">
                     <nav aria-label="breadcrumb">
-                        <ol className="breadcrumb m-0 p-0 flex gap-0 text-sm">
+                        <ol className="breadcrumb mt-0 mb-2 p-0">
                             <li className="breadcrumb-item">
-                                <a href={getAppUrl(null, '/')} className="text-gray-500 hover:underline">
+                                <a href={getAppUrl(null, '/')} className="text-gray-500 text-[16px] hover:underline">
                                     Home
                                 </a>
                             </li>
                             <li className="breadcrumb-item">
                                 <a
                                     href="/"
-                                    className="!text-gray-700 hover:underline breadcrumb-item truncate max-w-[120px] sm:max-w-[200px] md:max-w-full">
+                                    className="!text-gray-700 hover:underline breadcrumb-item text-[16px] truncate max-w-[120px] sm:max-w-[200px] md:max-w-full">
                                     Events
                                 </a>
                             </li>
                         </ol>
                     </nav>
                 </div>
-                <div className="flex flex-col items-center mb-8 mt-2">
-                    <h2
-                        className="text-4xl text-center text-[#8b171b]"
-                        style={{ fontFamily: "PTSerif-Regular" }}
-                    >
-                        WORKSHOP CALENDAR
-                    </h2>
-
-                    <img src="/sita-motif.webp" className="mt-0 w-48" />
-                </div>
+                {/* HEADER */}
+                <h2
+                    className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+                    WORKSHOP CALENDAR
+                </h2>
+                <img
+                    src="/sita-motif.webp"
+                    alt="Sita Motif"
+                    className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+                />
 
                 {upcomingEvents.length === 0 ? (
                     <p
@@ -152,7 +153,7 @@ const BookingHome = () => {
                         No upcoming workshops
                     </p>
                 ) : (
-                    <div className="space-y-6">
+                    <div className="space-y-6 px-10">
                         {upcomingEvents.map((event) => {
                             const dateObj = new Date(event.date);
                             const day = dateObj.getDate();
@@ -163,7 +164,7 @@ const BookingHome = () => {
                             return (
                                 <React.Fragment key={event._id}>
                                     {/* ================= DESKTOP VIEW (md+) ================= */}
-                                    <div className="hidden md:block relative h-40 rounded-xl overflow-hidden shadow-lg group cursor-pointer">
+                                    <div className="hidden md:block relative h-[230px] rounded-xl overflow-hidden shadow-lg group cursor-pointer">
                                         <div
                                             className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110"
                                             style={{
@@ -254,88 +255,91 @@ const BookingHome = () => {
                                     </div>
 
                                     {/* ================= MOBILE VIEW (< md) ================= */}
-                                    <div className="md:hidden relative flex flex-col h-auto rounded-xl overflow-hidden shadow-lg group cursor-pointer bg-white">
+                                    <div className="md:hidden rounded-2xl overflow-hidden shadow-md bg-white">
+
+                                        {/* Image */}
                                         <div
-                                            className="w-full h-48 bg-cover bg-center"
-                                            style={{
-                                                backgroundImage: `url(${eventImage})`,
-                                            }}
+                                            className="w-full aspect-[16/9] bg-cover bg-center"
+                                            style={{ backgroundImage: `url(${eventImage})` }}
                                         />
 
-                                        <div className="relative h-full flex flex-col items-start justify-between p-4 w-full text-gray-900 bg-white">
-                                            <div className="flex w-full items-center justify-between mb-4">
-                                                <div className="flex flex-col">
-                                                    <span className="text-sm font-bold text-[#8b171b] uppercase tracking-wider">
-                                                        {month} {day}
+                                        {/* Content */}
+                                        <div className="p-2 flex flex-col space-y-4">
+
+                                            {/* Title */}
+                                            <h3
+                                                className="text-lg font-bold text-gray-900 leading-snug"
+                                                style={{ fontFamily: "Montserrat-Regular" }}
+                                            >
+                                                {event.title}
+                                            </h3>
+
+                                            {/* Date + Time + Location */}
+                                            <div className="flex items-start gap-3">
+                                                {/* Date Badge */}
+                                                <div className="flex flex-col items-center justify-center px-3 py-2 bg-[#8b171b] text-white rounded-lg leading-none">
+                                                    <span className="text-xs uppercase tracking-wide">
+                                                        {month}
                                                     </span>
-                                                    <span
-                                                        className="text-xs text-gray-600"
-                                                        style={{ fontFamily: "Montserrat-Light" }}
-                                                    >
-                                                        {formatTimeRange(event.startTime, event.endTime)}
+                                                    <span className="text-lg font-bold">
+                                                        {day}
                                                     </span>
                                                 </div>
-                                            </div>
 
-                                            <div className="flex-1 mb-4 w-full">
-                                                <h3
-                                                    className="text-xl font-bold leading-tight text-gray-900"
-                                                    style={{ fontFamily: "Montserrat-Regular" }}
-                                                >
-                                                    {event.title}
-                                                </h3>
+                                                {/* Time + Location */}
+                                                <div className="flex flex-col text-sm text-gray-600">
+                                                    <span>
+                                                        {formatTimeRange(event.startTime, event.endTime)}
+                                                    </span>
 
-                                                <div className="inline-block mt-2 mb-1">
-                                                    <span
-                                                        className="px-0 py-0.5 text-xs font-semibold text-gray-600"
-                                                        style={{ fontFamily: "Montserrat-Light" }}
-                                                    >
+                                                    <span className="mt-0.5">
                                                         Location: {event.location || "Location TBA"}
                                                     </span>
                                                 </div>
                                             </div>
 
-                                            <div className="w-full text-left space-y-3 mt-auto">
-                                                {Number(event.availability) > 0 && (
-                                                    <p
-                                                        className="text-sm text-gray-700 font-medium"
-                                                        style={{ fontFamily: "Montserrat-Light" }}
-                                                    >
-                                                        Available Slots :{" "}
-                                                        <span className="font-bold text-[#8b171b]">
-                                                            {event.availability}
-                                                        </span>
-                                                    </p>
-                                                )}
+                                            {/* Availability */}
+                                            {Number(event.availability) > 0 && (
+                                                <p
+                                                    className="text-sm text-gray-700"
+                                                    style={{ fontFamily: "Montserrat-Light" }}
+                                                >
+                                                    Available Slots:{" "}
+                                                    <span className="font-semibold text-[#8b171b]">
+                                                        {event.availability}
+                                                    </span>
+                                                </p>
+                                            )}
 
-                                                <div className="flex">
-                                                    {Number(event.availability) === 0 ? (
-                                                        <span
-                                                            className="inline-block w-full text-center px-2 py-2 bg-gray-600 text-white text-sm rounded"
-                                                            style={{ fontFamily: "Montserrat-Regular" }}
-                                                        >
-                                                            Bookings Closed
-                                                        </span>
-                                                    ) : event.bookingUrl ? (
-                                                        <Link
-                                                            to={`/${event.bookingUrl}`}
-                                                            className="inline-block w-full text-center text-white no-underline px-6 py-2 bg-[#8b171b] text-sm font-semibold rounded transition-all duration-300 hover:bg-[#a62024] hover:shadow-lg hover:shadow-green-500/40"
-                                                            style={{ fontFamily: "Montserrat-Regular" }}
-                                                        >
-                                                            Book Now
-                                                        </Link>
-                                                    ) : (
-                                                        <span
-                                                            className="inline-block w-full text-center px-6 py-2 bg-lime-600 text-white text-sm font-semibold rounded"
-                                                            style={{ fontFamily: "Montserrat-Regular" }}
-                                                        >
-                                                            Coming Soon
-                                                        </span>
-                                                    )}
-                                                </div>
+                                            {/* CTA */}
+                                            <div className="pt-2">
+                                                {Number(event.availability) === 0 ? (
+                                                    <span
+                                                        className="block w-full text-center py-2 bg-gray-500 text-white text-sm rounded-lg"
+                                                        style={{ fontFamily: "Montserrat-Regular" }}
+                                                    >
+                                                        Bookings Closed
+                                                    </span>
+                                                ) : event.bookingUrl ? (
+                                                    <Link
+                                                        to={`/${event.bookingUrl}`}
+                                                        className="block w-full text-center py-2 bg-[#8b171b] text-white text-sm no-underline font-semibold rounded-lg transition hover:bg-[#a62024]"
+                                                        style={{ fontFamily: "Montserrat-Regular" }}
+                                                    >
+                                                        Book Now
+                                                    </Link>
+                                                ) : (
+                                                    <span
+                                                        className="block w-full text-center py-3 bg-lime-600 text-white text-sm font-semibold rounded-lg"
+                                                        style={{ fontFamily: "Montserrat-Regular" }}
+                                                    >
+                                                        Coming Soon
+                                                    </span>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
+
                                 </React.Fragment>
                             );
                         })}

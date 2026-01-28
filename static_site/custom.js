@@ -53,6 +53,19 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /* -------------------------------- WORKSHOP / EVENTS SECTION -------------------------------- */
+
+const getCategoryFromURL = () => {
+  const path = window.location.pathname.toLowerCase();
+
+  if (path.includes("yoga")) return "Yoga Therapy";
+  if (path.includes("ayurveda")) return "Ayurveda – Nutrition & Integration";
+  if (path.includes("kosha")) return "Kosha Counseling";
+  if (path.includes("soul")) return "Soul Curriculum";
+  if (path.includes("karmic")) return "Release Karmic Patterns";
+
+  return null; // fallback → show all
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const tbody = document.getElementById("workshopTableBody");
   if (!tbody) return;
@@ -93,7 +106,15 @@ document.addEventListener("DOMContentLoaded", () => {
       tbody.innerHTML = "";
 
       // ✅ FILTER OUT PAST EVENTS
-      const upcomingEvents = events.filter(isUpcomingEvent);
+      const pageCategory = getCategoryFromURL();
+
+      const upcomingEvents = events.filter((event) => {
+        const upcoming = isUpcomingEvent(event);
+
+        if (!pageCategory) return upcoming;
+
+        return upcoming && event.category === pageCategory;
+      });
 
       if (!upcomingEvents.length) {
         tbody.innerHTML = `
@@ -118,17 +139,16 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>${e.availability ?? "-"}</td>
             <td>${e.ageGroup || "-"}</td>
             <td>
-              ${
-                Number(e.availability) === 0
-                  ? `<span class="sita-booking-closed">Booking Closed</span>`
-                  : e.bookingUrl
-                    ? `<a href="${BOOKING_BASE_URL}/${e.bookingUrl}"
+              ${Number(e.availability) === 0
+            ? `<span class="sita-booking-closed">Booking Closed</span>`
+            : e.bookingUrl
+              ? `<a href="${BOOKING_BASE_URL}/${e.bookingUrl}"
                          class="sita-book-now"
                          target="_blank">Book Now</a>`
-                    : `<button disabled class="sita-book-now disabled">
+              : `<button disabled class="sita-book-now disabled">
                          Coming Soon
                        </button>`
-              }
+          }
             </td>
           </tr>
         `;

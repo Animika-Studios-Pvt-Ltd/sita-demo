@@ -166,7 +166,7 @@ function App() {
         <div className="frontend-wrapper">
           <ScrollToTop />
           <Navbar />
-          <main className="min-h-screen max-w-screen-3xl mx-auto px-0 py-3 font-primary">
+          <main className="min-h-screen max-w-screen-3xl mx-auto px-0 py-1 font-primary">
             <Outlet />
           </main>
           <Footer />
