@@ -4,8 +4,6 @@ import { useFetchAllBooksQuery } from "../redux/features/books/booksApi";
 import "./Footer.css";
 import { useEffect, useState, useRef } from "react";
 import { getSubdomain, getAppUrl } from "../utils/subdomain";
-// Import local images if needed, or assume they are in public/images
-// For now, using standard paths as per the HTML
 
 const BACKEND_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -20,7 +18,7 @@ const Footer = () => {
   const sortedBooks = activeBooks.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
   );
-  const recentBooks = sortedBooks.slice(0, 5); // Get more books for carousel if needed
+  const recentBooks = sortedBooks.slice(0, 5);
 
   const [blogs, setBlogs] = useState([]);
   const [activeSlide, setActiveSlide] = useState(0);
@@ -129,12 +127,6 @@ const Footer = () => {
               className="publication-carousel"
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}>
-              {/* Uncomment arrows if functionality desired
-                            <button className="pub-arrow pub-prev" aria-label="Previous book" onClick={prevSlide}>
-                                <i className="fa-solid fa-chevron-left"></i>
-                                {"<"}
-                            </button>
-                             */}
               <div className="publication-slides">
                 {recentBooks.length > 0 ? (
                   recentBooks.map((book, index) => {
@@ -178,12 +170,6 @@ const Footer = () => {
                   </div>
                 )}
               </div>
-              {/*
-                            <button className="pub-arrow pub-next" aria-label="Next book" onClick={nextSlide}>
-                                <i className="fa-solid fa-chevron-right"></i>
-                                {">"}
-                            </button>
-                            */}
             </div>
           </div>
           <div className="footer-col footer-col-blogs footer-blogs">
