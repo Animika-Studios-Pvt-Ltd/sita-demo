@@ -58,6 +58,7 @@ li {
 
 .sita-logo {
   width: 250px;
+  margin-left: 30px;
 }
 
 .sita-nav-rows {
@@ -69,7 +70,7 @@ li {
 
 .sita-nav {
   gap: 15px;
-  margin-right: 0;
+  margin-right: 30px;
 }
 
 .top-row-utils {
@@ -87,11 +88,14 @@ li {
   transition: all 0.3s ease;
 }
 
+.nav-link.nav-contact {
+  color: #8b171b !important;
+}
+
 .sita-nav .nav-link {
   font-family: "Montserrat-Regular";
   font-size: 17px;
-  color: #000000 !important;
-  /* Force Black */
+  color: #000000;
   padding: 6px 12px;
   white-space: nowrap;
   border: 1px solid transparent;
@@ -195,33 +199,97 @@ li {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.dropdown-menu.show {
+  padding: 0px;
+  border-radius: 0px;
+  border: none;
+}
+
+.dropdown-menu li {
+  margin-bottom: 0px;
+}
+
 .dropdown-item {
   font-family: "Montserrat-Regular";
   font-size: 16px;
   text-transform: uppercase;
   color: #000000 !important;
-  padding: 5px 10px;
+  padding: 5px 10px !important;
   transition: all 0.3s ease;
 }
 
 .dropdown-item:hover {
-  background: transparent;
+  background: transparent !important;
   color: #8b171b !important;
 }
 
 @media (max-width: 1440px) {
   .sita-logo {
     max-width: 200px;
+    margin-left: 50px;
   }
 
   .sita-nav-rows {
     gap: 12px;
   }
+
+  .sita-nav {
+    margin-right: 50px;
+  }
+}
+
+@media (max-width: 1366px) {
+  .sita-logo {
+    width: 180px;
+    margin-left: 50px;
+  }
+
+  .sita-nav-rows {
+    gap: 10px;
+  }
+
+  .sita-nav {
+    gap: 20px;
+    margin-right: 50px;
+  }
+
+  .sita-nav .nav-link {
+    font-size: 16px;
+  }
 }
 
 @media (max-width: 1200px) {
-  .sita-nav {
+  .sita-logo {
+    width: 170px;
+    margin-left: 30px;
+  }
+
+  .sita-nav-rows {
     gap: 8px;
+  }
+
+  .sita-nav {
+    margin-right: 30px;
+    gap: 8px;
+  }
+
+  .sita-nav .nav-link {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .sita-logo {
+    width: 140px;
+    margin-left: 40px;
+  }
+
+  .sita-nav {
+    margin-right: 40px;
+  }
+
+  .sita-nav .nav-link {
+    font-size: 15px;
   }
 }
 
@@ -229,11 +297,6 @@ li {
   .collapse.navbar-collapse {
     display: flex !important;
     visibility: visible !important;
-  }
-
-  .nav-item.dropdown:hover .dropdown-menu {
-    display: block;
-    margin-top: 0;
   }
 
   .sita-nav:not(.top-row-utils) .nav-link:not(.home-icon) {
@@ -244,10 +307,10 @@ li {
       linear-gradient(#8b171b, #8b171b);
     background-repeat: no-repeat;
     background-size:
-      0% 2px,
-      2px 0%,
-      0% 2px,
-      2px 0%;
+      0% 1px,
+      1px 0%,
+      0% 1px,
+      1px 0%;
 
     background-position:
       top left,
@@ -261,16 +324,30 @@ li {
 
   .sita-nav:not(.top-row-utils) .nav-link:not(.home-icon):hover {
     background-size:
-      100% 2px,
-      2px 100%,
-      100% 2px,
-      2px 100%;
+      100% 1px,
+      1px 100%,
+      100% 1px,
+      1px 100%;
+    color: #8b171b !important;
+    background-color: transparent !important;
+  }
+
+  .sita-nav:not(.top-row-utils) .nav-link.active:not(.home-icon) {
+    background-size:
+      100% 1px,
+      1px 100%,
+      100% 1px,
+      1px 100%;
     color: #8b171b !important;
     background-color: transparent !important;
   }
 }
 
 @media (max-width: 991px) {
+  .navbar {
+    padding: 0px;
+  }
+
   .navbar-collapse {
     background: #e5c4b5;
     z-index: 2000;
@@ -319,29 +396,97 @@ li {
     text-align: right !important;
     padding-right: 0;
   }
+
+  .dropdown-menu.show {
+    display: block;
+    padding: 0px 10px;
+  }
 }
 
 @media (max-width: 991px) {
   .sita-logo {
     width: 150px;
+    margin-left: 0px;
+  }
+
+  .sita-nav {
+    margin: 0px;
+  }
+
+  .dropdown-item {
+    font-size: 13px;
+    padding: 5px 0px !important;
   }
 }
 
 @media (max-width: 767px) {
+  .navbar {
+    padding: 3px 0px;
+  }
+
+  .navbar .container {
+    padding: 0px 0px;
+  }
+
   .sita-logo {
     width: 140px;
   }
 }
 
 @media (max-width: 575px) {
+  .navbar {
+    padding: 0px !important;
+  }
+
   .sita-logo {
     width: 130px;
+  }
+
+  .sita-nav-rows {
+    align-items: center !important;
+    padding-right: 0;
+  }
+
+  .sita-nav {
+    align-items: center !important;
+    text-align: center;
+  }
+
+  .sita-nav .nav-link,
+  .nav-contact,
+  .nav-icon-link {
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .sita-nav .nav-link {
+    font-size: 14px;
+    padding: 2px 0px;
+  }
+
+  .dropdown-item {
+    font-size: 12px;
+    padding: 3px 0px;
+    text-align: center !important;
+    padding-right: 0 !important;
   }
 }
 
 @media (max-width: 480px) {
   .sita-logo {
     width: 120px;
+  }
+
+  .navbar .container {
+    padding: 0px 20px;
+  }
+
+  .sita-nav .nav-link {
+    font-size: 13px;
+  }
+
+  .dropdown-item {
+    font-size: 11px;
   }
 }
 

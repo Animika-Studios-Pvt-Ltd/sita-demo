@@ -125,7 +125,7 @@ li {
   font-size: 16px;
   line-height: 1.4;
   margin-bottom: 0px;
-   font-family: "Montserrat-Light";
+  font-family: "Montserrat-Light";
 }
 
 /* Publications Carousel */
@@ -579,7 +579,8 @@ li {
   }
 
   .footer-logo {
-    max-width: 150px;
+    width: 150px;
+    margin: 0 auto;
   }
 
   .footer-socials {
@@ -637,7 +638,7 @@ li {
   }
 
   .footer-logo {
-    max-width: 130px;
+    width: 130px;
   }
 
   .footer-middle-center a {

@@ -1,5 +1,5 @@
-import { Link, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { NavLink, Link, useLocation } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useAuth } from "../context/AuthContext";
 import { getSubdomain, getAppUrl } from "../utils/subdomain";
@@ -19,12 +19,56 @@ const Navbar = () => {
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
   const [activeDropdown, setActiveDropdown] = useState(null);
 
+  const navRef = useRef(null);
+
   const location = useLocation();
+
+  const { pathname } = useLocation();
+
+  const sitaFactorPaths = [
+    "/yoga-therapy",
+    "/ayurveda-nutrition",
+    "/kosha-counseling",
+    "/soul-curriculum",
+    "/release-karmic-patterns",
+  ];
+
+  const isSitaFactorActive = sitaFactorPaths.some((path) =>
+    pathname.startsWith(path),
+  );
+
+  const workshopPaths = [
+    "/group-sessions",
+    "/private-sessions",
+    "/teacher-training",
+    "/corporate-training",
+    "/shakthi-leadership",
+  ];
+
+  const isWorkshopsActive = workshopPaths.some((path) =>
+    pathname.startsWith(path),
+  );
+
+  const isPublicationsActive = isStore || pathname.startsWith("/publications");
 
   useEffect(() => {
     setIsNavCollapsed(true);
     setActiveDropdown(null);
   }, [location]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target)) {
+        setActiveDropdown(null);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
@@ -35,7 +79,7 @@ const Navbar = () => {
 
   return (
     <header className="sita-header">
-      <nav className="navbar navbar-expand-lg navbar-light">
+      <nav className="navbar navbar-expand-lg navbar-light" ref={navRef}>
         <div className="container">
           {/* Center Logo */}
           {currentSubdomain ? (
@@ -56,7 +100,6 @@ const Navbar = () => {
             </Link>
           )}
 
-          {/* MOBILE ICONS (User + Cart) - OUTSIDE Collapse - Visible on Mobile Only (d-lg-none) */}
           <div className="d-flex d-lg-none align-items-center gap-3 ms-auto me-3 nav-icons-mobile-wrapper">
             {/* User Logic */}
             {(isStore || currentSubdomain === "booking") && (
@@ -247,22 +290,30 @@ const Navbar = () => {
                   )}
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/Anilkumar">
+                  <NavLink
+                    to="/about"
+                    className={({ isActive }) =>
+                      `nav-link ${isActive ? "active" : ""}`
+                    }>
                     ABOUT SITA
-                  </Link>
+                  </NavLink>
                 </li>
 
                 {/* THE SITA FACTOR Dropdown */}
                 <li
                   className={`nav-item dropdown ${activeDropdown === "sitaFactor" ? "show" : ""}`}>
                   <a
-                    className="nav-link dropdown-toggle"
+                    className={`nav-link dropdown-toggle ${isSitaFactorActive ? "active" : ""}`}
                     href="#"
                     role="button"
-                    onClick={(e) => toggleDropdown("sitaFactor", e)}
-                    aria-expanded={activeDropdown === "sitaFactor"}>
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      toggleDropdown("sitaFactor", e);
+                    }}>
                     THE SITA FACTOR
                   </a>
+
                   <ul
                     className={`dropdown-menu ${activeDropdown === "sitaFactor" ? "show" : ""}`}>
                     <li>
@@ -299,13 +350,17 @@ const Navbar = () => {
                 <li
                   className={`nav-item dropdown ${activeDropdown === "workshops" ? "show" : ""}`}>
                   <a
-                    className="nav-link dropdown-toggle"
+                    className={`nav-link dropdown-toggle ${isWorkshopsActive ? "active" : ""}`}
                     href="#"
                     role="button"
-                    onClick={(e) => toggleDropdown("workshops", e)}
-                    aria-expanded={activeDropdown === "workshops"}>
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      toggleDropdown("workshops", e);
+                    }}>
                     WORKSHOPS
                   </a>
+
                   <ul
                     className={`dropdown-menu ${activeDropdown === "workshops" ? "show" : ""}`}>
                     <li>
@@ -339,11 +394,15 @@ const Navbar = () => {
                 {/* PUBLICATIONS */}
                 <li className="nav-item">
                   {isStore ? (
-                    <Link className="nav-link" to="/">
+                    <Link
+                      to="/"
+                      className={`nav-link ${isPublicationsActive ? "active" : ""}`}>
                       PUBLICATIONS
                     </Link>
                   ) : (
-                    <a className="nav-link" href={getAppUrl("store", "/")}>
+                    <a
+                      href={getAppUrl("store", "/")}
+                      className={`nav-link ${isPublicationsActive ? "active" : ""}`}>
                       PUBLICATIONS
                     </a>
                   )}
