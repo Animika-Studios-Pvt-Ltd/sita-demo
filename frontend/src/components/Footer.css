@@ -196,7 +196,8 @@ li {
 
 .footer-blogs img {
   width: 100%;
-  height: auto;
+  aspect-ratio: 1.25 / 1;
+  object-fit: cover;
   display: block;
 }
 
