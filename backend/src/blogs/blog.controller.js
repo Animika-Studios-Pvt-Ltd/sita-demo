@@ -10,7 +10,7 @@ const slugify = (str) =>
 
 const postABlog = async (req, res) => {
   try {
-    const { title, description, type } = req.body;
+    const { title, description, type, author } = req.body;
     let imageUrl = null;
 
     if (req.file) {
@@ -31,6 +31,7 @@ const postABlog = async (req, res) => {
       description,
       image: imageUrl,
       type,
+      author,
     });
 
     await newBlog.save();

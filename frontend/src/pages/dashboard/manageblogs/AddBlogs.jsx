@@ -15,7 +15,7 @@ const BACKEND_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000"
 
 const AddBlogs = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm({
-    defaultValues: { title: "", description: "", image: null },
+    defaultValues: { title: "", author: "", description: "", image: null },
   });
 
   const [blogs, setBlogs] = useState([]);
@@ -55,6 +55,7 @@ const AddBlogs = () => {
     try {
       const formData = new FormData();
       formData.append("title", data.title);
+      formData.append("author", data.author);
       formData.append("description", description);
       formData.append("type", "blogs");
 
@@ -101,6 +102,7 @@ const AddBlogs = () => {
   const handleEdit = (blog) => {
     setEditingId(blog._id);
     setValue("title", blog.title);
+    setValue("author", blog.author);
     setDescription(blog.description);
 
     if (blog.image) {
@@ -290,6 +292,8 @@ const AddBlogs = () => {
                 month: "long",
                 day: "numeric",
               })}
+              <span className="w-1 h-1 bg-gray-500 rounded-full"></span>
+              <span>By {blog.author}</span>
             </p>
 
             {isLong ? (
@@ -408,6 +412,17 @@ const AddBlogs = () => {
                       className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
                     />
                     {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>}
+                  </div>
+
+                  <div>
+                    <label className="block font-semibold mb-1 text-gray-800">Author</label>
+                    <input
+                      type="text"
+                      placeholder="Enter author name"
+                      {...register("author", { required: "Author is required" })}
+                      className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+                    />
+                    {errors.author && <p className="text-red-500 text-sm mt-1">{errors.author.message}</p>}
                   </div>
 
                   <div>
