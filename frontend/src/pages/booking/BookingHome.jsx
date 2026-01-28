@@ -157,32 +157,24 @@ const BookingHome = () => {
                             const dateObj = new Date(event.date);
                             const day = dateObj.getDate();
                             const month = dateObj.toLocaleString("en-US", { month: "short" });
+                            // Call getCategoryImage ONCE to ensure consistent image and correct counter increment
+                            const eventImage = getCategoryImage(event.category);
 
                             return (
-                                <div
-                                    key={event._id}
-                                    className="relative flex flex-col md:flex-row h-auto md:h-40 rounded-xl overflow-hidden shadow-lg group cursor-pointer bg-white"
-                                >
-                                    <div
-                                        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110 hidden md:block"
-                                        style={{
-                                            backgroundImage: `url(${getCategoryImage(event.category)})`,
-                                        }}
-                                    />
-                                    {/* Mobile Image Background */}
-                                    <div
-                                        className="w-full h-48 md:hidden bg-cover bg-center"
-                                        style={{
-                                            backgroundImage: `url(${getCategoryImage(event.category)})`,
-                                        }}
-                                    />
+                                <React.Fragment key={event._id}>
+                                    {/* ================= DESKTOP VIEW (md+) ================= */}
+                                    <div className="hidden md:block relative h-40 rounded-xl overflow-hidden shadow-lg group cursor-pointer">
+                                        <div
+                                            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110"
+                                            style={{
+                                                backgroundImage: `url(${eventImage})`,
+                                            }}
+                                        />
 
-                                    <div className="absolute inset-0 bg-black/55 transition-all duration-500 group-hover:bg-black/70 hidden md:block" />
+                                        <div className="absolute inset-0 bg-black/55 transition-all duration-500 group-hover:bg-black/70" />
 
-                                    <div className="relative h-full flex flex-col md:flex-row items-start md:items-center justify-between p-4 md:px-6 w-full md:text-white transition-transform duration-500 md:group-hover:-translate-y-1 bg-white md:bg-transparent">
-                                        <div className="flex w-full md:w-auto items-center md:flex-col justify-between md:justify-center md:bg-white/95 md:border-l-4 md:border-[#8b171b] md:rounded-xl md:px-4 md:py-3 md:min-w-[110px] md:shadow-md mb-4 md:mb-0">
-                                            {/* Date Box for Desktop */}
-                                            <div className="hidden md:flex flex-col items-center">
+                                        <div className="relative h-full flex items-center justify-between px-6 text-white transition-transform duration-500 group-hover:-translate-y-1">
+                                            <div className="flex flex-col items-center justify-center bg-white/95 border-l-4 border-[#8b171b] rounded-xl px-4 py-3 min-w-[110px] shadow-md">
                                                 <span
                                                     className="text-[11px] uppercase tracking-widest text-gray-500"
                                                     style={{ fontFamily: "Montserrat-Light" }}
@@ -195,63 +187,48 @@ const BookingHome = () => {
                                                 >
                                                     {day}
                                                 </span>
-                                            </div>
-                                            {/* Date/Time for Mobile */}
-                                            <div className="md:hidden flex flex-col">
-                                                <span className="text-sm font-bold text-[#8b171b] uppercase tracking-wider">
-                                                    {month} {day}
-                                                </span>
                                                 <span
-                                                    className="text-xs text-gray-600"
+                                                    className="mt-1 text-[12px] font-semibold text-gray-700 whitespace-nowrap"
                                                     style={{ fontFamily: "Montserrat-Light" }}
                                                 >
-                                                    {formatTimeRange(event.startTime, event.endTime)}
+                                                    Time : {formatTimeRange(event.startTime, event.endTime)}
                                                 </span>
                                             </div>
 
-                                            <span
-                                                className="hidden md:block mt-1 text-[12px] font-semibold text-gray-700 whitespace-nowrap"
-                                                style={{ fontFamily: "Montserrat-Light" }}
-                                            >
-                                                Time : {formatTimeRange(event.startTime, event.endTime)}
-                                            </span>
-                                        </div>
-
-                                        <div className="flex-1 md:px-6 mb-4 md:mb-0 w-full">
-                                            <h3
-                                                className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight text-gray-900 md:text-white"
-                                                style={{ fontFamily: "Montserrat-Regular" }}
-                                            >
-                                                {event.title}
-                                            </h3>
-
-                                            <div className="inline-block mt-2 md:mt-1 mb-1">
-                                                <span
-                                                    className="px-0 md:px-3 py-0.5 md:rounded-full text-xs md:text-[12px] font-semibold text-gray-600 md:text-gray-900 md:bg-white/90"
-                                                    style={{ fontFamily: "Montserrat-Light" }}
+                                            <div className="flex-1 px-6">
+                                                <h3
+                                                    className="text-2xl md:text-3xl font-bold leading-tight"
+                                                    style={{ fontFamily: "Montserrat-Regular" }}
                                                 >
-                                                    <span className="md:hidden">Location: </span>{event.location || "Location TBA"}
-                                                </span>
-                                            </div>
-                                        </div>
+                                                    {event.title}
+                                                </h3>
 
-                                        <div className="w-full md:w-auto text-left md:text-right space-y-3 md:space-y-2 mt-auto md:mt-0">
-                                            {Number(event.availability) > 0 && (
-                                                <p
-                                                    className="text-sm text-gray-700 md:text-white font-medium"
-                                                    style={{ fontFamily: "Montserrat-Light" }}
-                                                >
-                                                    Available Slots :{" "}
-                                                    <span className="font-bold text-[#8b171b] md:text-white">
-                                                        {event.availability}
+                                                <div className="inline-block mt-1 mb-1">
+                                                    <span
+                                                        className="px-3 py-0.5 rounded-full text-[12px] font-semibold text-gray-900 bg-white/90"
+                                                        style={{ fontFamily: "Montserrat-Light" }}
+                                                    >
+                                                        Location : {event.location || "Location TBA"}
                                                     </span>
-                                                </p>
-                                            )}
+                                                </div>
+                                            </div>
 
-                                            <div className="flex md:block">
+                                            <div className="text-right space-y-2">
+                                                {Number(event.availability) > 0 && (
+                                                    <p
+                                                        className="text-sm text-white font-medium"
+                                                        style={{ fontFamily: "Montserrat-Light" }}
+                                                    >
+                                                        Available Slots :{" "}
+                                                        <span className="font-bold">
+                                                            {event.availability}
+                                                        </span>
+                                                    </p>
+                                                )}
+
                                                 {Number(event.availability) === 0 ? (
                                                     <span
-                                                        className="inline-block w-full md:w-auto text-center px-2 py-2 bg-gray-600 text-white text-sm rounded"
+                                                        className="inline-block px-2 py-2 bg-gray-600 text-sm rounded"
                                                         style={{ fontFamily: "Montserrat-Regular" }}
                                                     >
                                                         Bookings Closed
@@ -259,14 +236,14 @@ const BookingHome = () => {
                                                 ) : event.bookingUrl ? (
                                                     <Link
                                                         to={`/${event.bookingUrl}`}
-                                                        className="inline-block w-full md:w-auto text-center text-white no-underline px-6 py-2 bg-[#8b171b] md:bg-green-600 text-sm font-semibold rounded transition-all duration-300 hover:bg-[#a62024] md:hover:bg-green-700 hover:shadow-lg hover:shadow-green-500/40"
+                                                        className="inline-block text-white no-underline px-6 py-2 bg-green-600 text-sm font-semibold rounded transition-all duration-300 hover:bg-green-700 hover:shadow-lg hover:shadow-green-500/40"
                                                         style={{ fontFamily: "Montserrat-Regular" }}
                                                     >
                                                         Book Now
                                                     </Link>
                                                 ) : (
                                                     <span
-                                                        className="inline-block w-full md:w-auto text-center px-6 py-2 bg-lime-600 text-white text-sm font-semibold rounded"
+                                                        className="inline-block px-6 py-2 bg-lime-600 text-sm font-semibold rounded"
                                                         style={{ fontFamily: "Montserrat-Regular" }}
                                                     >
                                                         Coming Soon
@@ -275,7 +252,91 @@ const BookingHome = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+
+                                    {/* ================= MOBILE VIEW (< md) ================= */}
+                                    <div className="md:hidden relative flex flex-col h-auto rounded-xl overflow-hidden shadow-lg group cursor-pointer bg-white">
+                                        <div
+                                            className="w-full h-48 bg-cover bg-center"
+                                            style={{
+                                                backgroundImage: `url(${eventImage})`,
+                                            }}
+                                        />
+
+                                        <div className="relative h-full flex flex-col items-start justify-between p-4 w-full text-gray-900 bg-white">
+                                            <div className="flex w-full items-center justify-between mb-4">
+                                                <div className="flex flex-col">
+                                                    <span className="text-sm font-bold text-[#8b171b] uppercase tracking-wider">
+                                                        {month} {day}
+                                                    </span>
+                                                    <span
+                                                        className="text-xs text-gray-600"
+                                                        style={{ fontFamily: "Montserrat-Light" }}
+                                                    >
+                                                        {formatTimeRange(event.startTime, event.endTime)}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex-1 mb-4 w-full">
+                                                <h3
+                                                    className="text-xl font-bold leading-tight text-gray-900"
+                                                    style={{ fontFamily: "Montserrat-Regular" }}
+                                                >
+                                                    {event.title}
+                                                </h3>
+
+                                                <div className="inline-block mt-2 mb-1">
+                                                    <span
+                                                        className="px-0 py-0.5 text-xs font-semibold text-gray-600"
+                                                        style={{ fontFamily: "Montserrat-Light" }}
+                                                    >
+                                                        Location: {event.location || "Location TBA"}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div className="w-full text-left space-y-3 mt-auto">
+                                                {Number(event.availability) > 0 && (
+                                                    <p
+                                                        className="text-sm text-gray-700 font-medium"
+                                                        style={{ fontFamily: "Montserrat-Light" }}
+                                                    >
+                                                        Available Slots :{" "}
+                                                        <span className="font-bold text-[#8b171b]">
+                                                            {event.availability}
+                                                        </span>
+                                                    </p>
+                                                )}
+
+                                                <div className="flex">
+                                                    {Number(event.availability) === 0 ? (
+                                                        <span
+                                                            className="inline-block w-full text-center px-2 py-2 bg-gray-600 text-white text-sm rounded"
+                                                            style={{ fontFamily: "Montserrat-Regular" }}
+                                                        >
+                                                            Bookings Closed
+                                                        </span>
+                                                    ) : event.bookingUrl ? (
+                                                        <Link
+                                                            to={`/${event.bookingUrl}`}
+                                                            className="inline-block w-full text-center text-white no-underline px-6 py-2 bg-[#8b171b] text-sm font-semibold rounded transition-all duration-300 hover:bg-[#a62024] hover:shadow-lg hover:shadow-green-500/40"
+                                                            style={{ fontFamily: "Montserrat-Regular" }}
+                                                        >
+                                                            Book Now
+                                                        </Link>
+                                                    ) : (
+                                                        <span
+                                                            className="inline-block w-full text-center px-6 py-2 bg-lime-600 text-white text-sm font-semibold rounded"
+                                                            style={{ fontFamily: "Montserrat-Regular" }}
+                                                        >
+                                                            Coming Soon
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </React.Fragment>
                             );
                         })}
                     </div>
