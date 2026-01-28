@@ -1683,13 +1683,19 @@ nav[aria-label="breadcrumb"] {
 }
 
 .contact-form .form-control::placeholder {
+  color: transparent;
+}
+
+.contact-form .form-control:focus::placeholder {
   color: #cfcfcf;
-  opacity: 1;
 }
 
 .contact-form textarea::placeholder {
+  color: transparent;
+}
+
+.contact-form textarea:focus::placeholder {
   color: #cfcfcf;
-  opacity: 1;
 }
 
 .contact-form button {
