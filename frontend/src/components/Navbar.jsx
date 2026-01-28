@@ -66,52 +66,57 @@ const Navbar = () => {
             <div className="sita-nav-rows ms-auto">
               {/* TOP ROW: Contact + User + Cart */}
               <ul className="navbar-nav sita-nav justify-content-end top-row-utils">
+                {/* User Logic - Visible on Store and Booking */}
+                {(isStore || currentSubdomain === 'booking') && (
+                  <li className={`nav-item dropdown ${activeDropdown === 'user' ? 'show' : ''}`}>
+                    {isAuthenticated ? (
+                      <>
+                        <a
+                          className="nav-link dropdown-toggle nav-icon-link"
+                          href="#"
+                          role="button"
+                          onClick={(e) => toggleDropdown('user', e)}
+                        >
+                          {currentUser?.picture ? (
+                            <img src={currentUser.picture} alt="User" className="user-avatar-img" />
+                          ) : (
+                            <i className="fa-regular fa-user"></i>
+                          )}
+                        </a>
+                        <ul className={`dropdown-menu ${activeDropdown === 'user' ? 'show' : ''}`}>
+                          <li><Link className="dropdown-item" to="/my-profile">Profile</Link></li>
+                          <li><Link className="dropdown-item" to="/orders">My Orders</Link></li>
+                          <li><button className="dropdown-item" onClick={() => logout()}>Logout</button></li>
+                        </ul>
+                      </>
+                    ) : (
+                      <button
+                        className="nav-link btn-link nav-icon-link"
+                        onClick={() => loginWithRedirect()}
+                        style={{ background: 'none', border: 'none', padding: 0 }}
+                      >
+                        <i className="fa-regular fa-user"></i>
+                      </button>
+                    )}
+                  </li>
+                )}
+
+                {/* Cart Logic - Visible only on Store */}
+                {isStore && (
+                  <li className="nav-item">
+                    <Link className="nav-link cart-link-container nav-icon-link" to="/cart">
+                      <i className="fa-solid fa-cart-shopping"></i>
+                      {cartItems.length > 0 && (
+                        <span className="cart-badge">{cartItems.length}</span>
+                      )}
+                    </Link>
+                  </li>
+                )}
+
+                {/* Contact Us - Moved to far right */}
                 <li className="nav-item">
                   <Link className="nav-link nav-contact" to="/contact">
                     Contact Us
-                  </Link>
-                </li>
-
-                {/* User Logic - ALWAYS VISIBLE as per latest request */}
-                <li className={`nav-item dropdown ${activeDropdown === 'user' ? 'show' : ''}`}>
-                  {isAuthenticated ? (
-                    <>
-                      <a
-                        className="nav-link dropdown-toggle nav-icon-link"
-                        href="#"
-                        role="button"
-                        onClick={(e) => toggleDropdown('user', e)}
-                      >
-                        {currentUser?.picture ? (
-                          <img src={currentUser.picture} alt="User" className="user-avatar-img" />
-                        ) : (
-                          <i className="fa-regular fa-user"></i>
-                        )}
-                      </a>
-                      <ul className={`dropdown-menu ${activeDropdown === 'user' ? 'show' : ''}`}>
-                        <li><Link className="dropdown-item" to="/my-profile">Profile</Link></li>
-                        <li><Link className="dropdown-item" to="/orders">My Orders</Link></li>
-                        <li><button className="dropdown-item" onClick={() => logout()}>Logout</button></li>
-                      </ul>
-                    </>
-                  ) : (
-                    <button
-                      className="nav-link btn-link nav-icon-link"
-                      onClick={() => loginWithRedirect()}
-                      style={{ background: 'none', border: 'none', padding: 0 }}
-                    >
-                      <i className="fa-regular fa-user"></i>
-                    </button>
-                  )}
-                </li>
-
-                {/* Cart Logic - ALWAYS VISIBLE as per latest request */}
-                <li className="nav-item">
-                  <Link className="nav-link cart-link-container nav-icon-link" to="/cart">
-                    <i className="fa-solid fa-cart-shopping"></i>
-                    {cartItems.length > 0 && (
-                      <span className="cart-badge">{cartItems.length}</span>
-                    )}
                   </Link>
                 </li>
               </ul>
