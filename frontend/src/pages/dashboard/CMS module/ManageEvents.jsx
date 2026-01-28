@@ -177,8 +177,9 @@ const ManageEvents = () => {
 
   const [eventForm, setEventForm] = useState({
     title: "",
+    category: "",
     location: "",
-    mode: "Offline",
+    mode: "",
     fees: "",
     price: "",
     capacity: "",
@@ -324,6 +325,9 @@ const ManageEvents = () => {
       if (toMinutes(eventForm.startTime) >= toMinutes(eventForm.endTime))
         return errorAlert("Invalid time", "End time must be after start");
 
+      if (!eventForm.category)
+        return errorAlert("Missing category", "Please select a category");
+
       const date = toDateStr(eventForm.date);
 
       if (
@@ -419,6 +423,7 @@ const ManageEvents = () => {
 
     setEventForm({
       title: e.title || "",
+      category: e.category || "",
       location: e.location || "",
       mode: e.mode || "Offline",
       availability: e.availability || "",
@@ -631,15 +636,35 @@ const ManageEvents = () => {
                   onChange={(e) =>
                     setEventForm({ ...eventForm, mode: e.target.value })
                   }
-                >
+                ><option value="">Select mode *</option>
                   <option value="Online">Online</option>
                   <option value="In Person">In Person</option>
                   <option value="Hybrid">Hybrid</option>
                 </select>
+
+                <select
+                  className="border p-3 rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none bg-white"
+                  value={eventForm.category}
+                  onChange={(e) =>
+                    setEventForm({ ...eventForm, category: e.target.value })
+                  }
+                >
+                  <option value="">Select Category *</option>
+                  <option value="Yoga Therapy">Yoga Therapy</option>
+                  <option value="Ayurveda – Nutrition & Integration">
+                    Ayurveda – Nutrition & Integration
+                  </option>
+                  <option value="Kosha Counseling">Kosha Counseling</option>
+                  <option value="Soul Curriculum">Soul Curriculum</option>
+                  <option value="Release Karmic Patterns">
+                    Release Karmic Patterns
+                  </option>
+                  <option value="Others">Others</option>
+                </select>
               </div>
 
               <input
-                placeholder="Booking URL * (example: Yoga-Therapy)"
+                placeholder="Booking URL (example: Yoga-Therapy)"
                 className="border p-3 rounded-lg w-full mb-4 focus:ring-2 focus:ring-indigo-400 outline-none"
                 value={eventForm.bookingUrl}
                 onChange={(e) =>

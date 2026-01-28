@@ -56,7 +56,7 @@ const BlogsPage = () => {
 
   return (
     <div className="container" data-aos="fade-up" data-aos-duration="1000">
-      <div className="max-w-8xl mx-auto py-0 text-center flex flex-col justify-center items-center px-4">
+      <div className="max-w-6xl mx-auto py-0 text-center flex flex-col justify-center items-center px-4">
         <div
           className="breadcrumb-container w-full text-left mb-0 font-figtree font-light"
           data-aos="fade-right"
@@ -68,11 +68,6 @@ const BlogsPage = () => {
                   Home
                 </a>
               </li>
-              {/* <li className="breadcrumb-item">
-                <a href="/blogs" className="text-gray-500 hover:underline">
-                  Blogs
-                </a>
-              </li> */}
               <li className="breadcrumb-item">
                 <a
                   href="/blogs"
@@ -84,152 +79,114 @@ const BlogsPage = () => {
           </nav>
         </div>
 
-        <div
-          className="relative inline-block w-full text-center mb-4"
-          data-aos="zoom-in"
-          data-aos-duration="1300">
-          <h1 className="text-[32px] sm:text-[34px] md:text-[50px] font-playfair font-light text-black font-display leading-snug mb-1 mt-5 relative">
-            <span className="relative inline-block">
-              Blogs By Sita
-            </span>
-          </h1>
-        </div>
+        <div className="max-w-6xl mx-auto px-4 mt-2 text-center">
+          {/* TITLE */}
+          <h2
+            className="text-4xl text-[#8b171b]"
+            style={{ fontFamily: "PTSerif-Regular" }}
+          >
+            Blogs By Sita
+          </h2>
 
-        <div
-          className="max-w-8xl mx-auto min-h-screen mt-0"
-          data-aos="fade-up"
-          data-aos-duration="1200">
-          {blogs.length === 0 ? (
-            <p className="text-center text-gray-500">No blogs found.</p>
-          ) : (
-            <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-6">
-                {currentBlogs.map((blog, index) => (
-                  <div
-                    key={blog._id}
-                    data-aos="fade-up"
-                    data-aos-delay={index * 120}
-                    data-aos-duration="1300"
-                    className="group bg-white rounded-[10px] border-[2px] hover:shadow-[0_2px_5px_rgba(0,0,0,0.12)] transition duration-500 overflow-hidden hover:-translate-y-2 flex flex-col">
-                    {blog.image && (
-                      <div className="relative h-52 overflow-hidden">
-                        <img
-                          src={
-                            blog.image.startsWith("http")
-                              ? blog.image
-                              : `${BACKEND_BASE_URL}${blog.image}`
-                          }
-                          alt={blog.title}
-                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      </div>
-                    )}
+          {/* MOTIF */}
+          <img
+            src="/sita-motif.webp"
+            alt="Sita Motif"
+            className="mx-auto mt-1 w-48"
+          />
 
-                    <div className="p-4 text-left flex flex-col flex-grow">
-                      <p className="text-[18px] sm:text-[20px] md:text-[20px] lg:text-[22px] xl:text-[22px] font-Figtree font-medium leading-snug">
-                        {blog.title}
-                      </p>
+          {/* BLOG GRID */}
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {currentBlogs.map((blog, index) => {
+              const btnColors = [
+                "bg-[#d86c87]", // pink
+                "bg-[#e29a7a]", // peach
+                "bg-[#c36c6c]", // rose
+              ];
 
-                      <p className="flex items-center gap-2 text-gray-400 text-lg mt-1 mb-2">
-                        <CalendarDays className="w-5 h-5" />
-                        {new Date(blog.createdAt).toLocaleDateString(
-                          undefined,
-                          {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          }
-                        )}
-                      </p>
+              return (
+                <div
+                  key={blog._id}
+                  data-aos="fade-up"
+                  data-aos-delay={(index + 1) * 100}
+                  className="flex flex-col text-center aspect-[2/1] border-b border-[#8b171b]">
 
-                      <div
-                        className="text-[15px] sm:text-[17px] md:text-[17px] lg:text-[18px] xl:text-[18px] text-black-800 font-Figtree font-regular leading-snug mt-0 mb-2 px-1 sm:px-1"
+                  {/* IMAGE */}
+                  <div className="relative w-full aspect-[1.25/1] flex-shrink-0 overflow-hidden rounded-b-md mb-3">
+                    <img
+                      src={
+                        blog.image?.startsWith("http")
+                          ? blog.image
+                          : `${BACKEND_BASE_URL}${blog.image}`
+                      }
+                      alt={blog.title}
+                      className="w-full h-full object-cover"
+                    />
+
+                    {/* DATE */}
+                    <p
+                      className="absolute -bottom-4 left-1/2 -translate-x-1/2
+             bg-white px-4 py-1 text-[14px] rounded-t-md shadow"
+                      style={{ fontFamily: "Montserrat-Light" }}
+                    >
+                      {new Date(blog.createdAt).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "2-digit",
+                        year: "numeric",
+                      })}
+                    </p>
+
+                  </div>
+
+                  <div className="flex flex-col flex-grow px-1">
+                    {/* TITLE */}
+                    <h4
+                      className="text-[20px] mb-1 text-black leading-snug"
+                      style={{ fontFamily: "Montserrat-Light" }}
+                    >
+                      {blog.title}
+                    </h4>
+
+                    {/* DESCRIPTION (clamped & fixed height) */}
+                    <p className="text-[15px] text-black mb-1 leading-snug h-[70px] overflow-hidden">
+                      <span
                         dangerouslySetInnerHTML={{
                           __html: sanitizeDescription(
-                            blog.description.length > 160
-                              ? blog.description.slice(0, 160) + "..."
+                            blog.description.length > 200
+                              ? blog.description.slice(0, 200) + "..."
                               : blog.description
                           ),
                         }}
                       />
-
-                      <div className="mt-auto">
-                        <Link
-                          to={`/blogs/${blog.slug || blog._id}`}
-                          className="flex items-center gap-2 mx-auto font-figtree text-[16px] sm:text-[18px] transition group no-underline">
-                          <span className="inline-flex font-regular items-center gap-1 text-[#993333] text-[16px] sm:text-[18px] no-underline">
-                            Read More
-                          </span>
-                          <span className="text-[#993333] transform transition-transform duration-200 group-hover:translate-x-[5px]">
-                            <ArrowRight size={20} strokeWidth={2} />
-                          </span>
-                        </Link>
-                      </div>
-                    </div>
+                    </p>
                   </div>
-                ))}
-              </div>
 
-              {/* Pagination */}
-              <div
-                className="flex justify-center items-center gap-2 sm:gap-2 lg:gap-3 mt-10 mb-20 flex-wrap"
-                data-aos="fade-up"
-                data-aos-duration="1500">
-                <button
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.max(prev - 1, 1))
-                  }
-                  disabled={currentPage === 1}
-                  className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition">
-                  <ArrowLeft size={18} strokeWidth={2} />
-                </button>
+                  {/* AUTHOR */}
+                  <span
+                    className="text-[14px] italic mb-2 mt-2"
+                    style={{ fontFamily: "Montserrat-Light" }}
+                  >
+                    – {blog.author || "Sita Severson"}
+                  </span>
 
-                {currentPage > 3 && (
-                  <span className="text-gray-400 select-none">...</span>
-                )}
-                {Array.from({ length: totalPages }, (_, i) => i + 1)
-                  .filter((num) => {
-                    if (currentPage <= 2) {
-                      return num <= 3;
-                    } else if (currentPage >= totalPages - 1) {
-                      return num >= totalPages - 2;
-                    } else {
-                      return (
-                        num === currentPage - 1 ||
-                        num === currentPage ||
-                        num === currentPage + 1
-                      );
-                    }
-                  })
-                  .map((num) => (
-                    <button
-                      key={num}
-                      onClick={() => setCurrentPage(num)}
-                      className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
-          ${currentPage === num
-                          ? "bg-[#993333] text-white"
-                          : "border border-transparent text-black hover:border-black hover:bg-gray-100"
-                        }`}>
-                      {num}
-                    </button>
-                  ))}
 
-                {currentPage < totalPages - 2 && (
-                  <span className="text-gray-400 select-none">...</span>
-                )}
-
-                <button
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                  }
-                  disabled={currentPage === totalPages}
-                  className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition">
-                  <ArrowRight size={18} strokeWidth={2} />
-                </button>
-              </div>
-            </>
-          )}
+                  {/* CTA BUTTON */}
+                  <Link
+                    to={`/blogs/${blog.slug || blog._id}`}
+                    className={`
+    ${btnColors[index % btnColors.length]}
+    text-white px-4 py-2 text-[16px] mx-auto
+    [clip-path:polygon(10%_0%,90%_0%,100%_50%,90%_100%,10%_100%,0%_50%)]
+    transition hover:opacity-90 no-underline mb-3
+  `}
+                    style={{ fontFamily: "Montserrat-Light" }}
+                  >
+                    {blog.readMoreText || "Get insights"}
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

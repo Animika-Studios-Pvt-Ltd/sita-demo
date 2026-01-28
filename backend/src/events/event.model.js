@@ -28,6 +28,19 @@ const eventSchema = new mongoose.Schema(
       min: 0,
     },
 
+    category: {
+      type: String,
+      enum: [
+        "Yoga Therapy",
+        "Ayurveda – Nutrition & Integration",
+        "Kosha Counseling",
+        "Soul Curriculum",
+        "Release Karmic Patterns",
+        "Others",
+      ],
+      required: true,
+    },
+
     fees: { type: String },
     price: { type: Number, default: 0 },
     ageGroup: { type: String },

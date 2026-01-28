@@ -57,6 +57,7 @@ const upsertEvent = async (req, res) => {
 
     let {
       title,
+      category,
       date,
       startTime,
       endTime,
@@ -92,6 +93,7 @@ const upsertEvent = async (req, res) => {
       const event = await Event.create({
         code,
         title,
+        category,
         date,
         startTime,
         endTime,
@@ -158,6 +160,7 @@ const upsertEvent = async (req, res) => {
       id,
       {
         title,
+        category,
         date,
         startTime,
         endTime,
