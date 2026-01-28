@@ -15,7 +15,7 @@ const BACKEND_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000"
 
 const AddBlogs = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm({
-    defaultValues: { title: "", author: "", description: "", image: null },
+    defaultValues: { title: "", author: "", readMoreText: "", description: "", image: null },
   });
 
   const [blogs, setBlogs] = useState([]);
@@ -56,6 +56,7 @@ const AddBlogs = () => {
       const formData = new FormData();
       formData.append("title", data.title);
       formData.append("author", data.author);
+      formData.append("readMoreText", data.readMoreText);
       formData.append("description", description);
       formData.append("type", "blogs");
 
@@ -103,6 +104,7 @@ const AddBlogs = () => {
     setEditingId(blog._id);
     setValue("title", blog.title);
     setValue("author", blog.author);
+    setValue("readMoreText", blog.readMoreText);
     setDescription(blog.description);
 
     if (blog.image) {
@@ -307,7 +309,7 @@ const AddBlogs = () => {
                   onClick={toggleExpand}
                   className="text-blue-700 hover:text-blue-900 font-medium mt-2 flex items-center gap-1"
                 >
-                  {expanded ? "Hide Description" : "Read More"} {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                  {expanded ? "Hide Description" : (blog.readMoreText || "Read More")} {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                 </button>
               </>
             ) : (
@@ -423,6 +425,16 @@ const AddBlogs = () => {
                       className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
                     />
                     {errors.author && <p className="text-red-500 text-sm mt-1">{errors.author.message}</p>}
+                  </div>
+
+                  <div>
+                    <label className="block font-semibold mb-1 text-gray-800">Read More Button Text (Optional)</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Continue Reading"
+                      {...register("readMoreText")}
+                      className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+                    />
                   </div>
 
                   <div>
