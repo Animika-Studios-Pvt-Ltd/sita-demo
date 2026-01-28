@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAppUrl } from "../../utils/subdomain";
 import "./BookingHome.css";
+import { useRef } from "react";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -102,59 +103,70 @@ const BookingHome = () => {
             .finally(() => setLoading(false));
     }, []);
 
+    const decorRef = useRef(null);
+
     useEffect(() => {
-        const decorEls = document.querySelectorAll(".sita-decor");
-        if (decorEls.length === 0) return;
+        if (loading) return;
 
-        let current = [];
-        let target = [];
+        const decor = decorRef.current;
+        if (!decor) return;
+
+        let raf;
+        let currentY = 0;
+        let targetY = 0;
+        let scrollY = window.scrollY;
         let time = 0;
-        let animationFrameId;
 
-        decorEls.forEach((_, i) => {
-            current[i] = 0;
-            target[i] = 0;
-        });
+        const startOffset = 120;
+        const ease = 0.08; // 🔥 lower = smoother
 
-        const lerp = (a, b, n) => (1 - n) * a + n * b;
+        const doc = document.documentElement;
 
-        const updateTargets = () => {
-            const viewportCenter = window.innerHeight / 2;
+        // ✅ Calculate ONCE
+        const imgHeight = decor.offsetHeight || 350;
+        const scrollMax = doc.scrollHeight - window.innerHeight;
+        const maxTravel = Math.max(
+            doc.scrollHeight - window.innerHeight - imgHeight - startOffset,
+            0
+        );
 
-            decorEls.forEach((el, i) => {
-                const rect = el.getBoundingClientRect();
-                const elCenter = rect.top + rect.height / 2;
-                const distance = elCenter - viewportCenter;
+        // 🔥 Sync on mount
+        targetY = currentY = (scrollY / scrollMax) * maxTravel;
+        decor.style.transform = `translateY(${currentY}px)`;
 
-                const strength = i === 0 ? 0.1 : 0.2;
-                target[i] = -distance * strength;
-            });
+        const onScroll = () => {
+            scrollY = window.scrollY;
         };
 
         const animate = () => {
             time += 0.03;
 
-            decorEls.forEach((el, i) => {
-                current[i] = lerp(current[i], target[i], 0.08);
-                const float = Math.sin(time + i) * 20;
-                el.style.transform = `translateY(${current[i] + float}px)`;
-            });
+            // smooth target
+            targetY = (scrollY / scrollMax) * maxTravel;
 
-            animationFrameId = requestAnimationFrame(animate);
+            // smooth follow
+            currentY += (targetY - currentY) * ease;
+
+            // idle float only when not scrolling fast
+            const float =
+                Math.abs(targetY - currentY) < 0.5
+                    ? Math.sin(time) * 6
+                    : 0;
+
+            decor.style.transform = `translateY(${currentY + float}px)`;
+
+            raf = requestAnimationFrame(animate);
         };
 
-        window.addEventListener("scroll", updateTargets, { passive: true });
-        window.addEventListener("resize", updateTargets);
-
-        updateTargets();
+        window.addEventListener("scroll", onScroll, { passive: true });
         animate();
 
         return () => {
-            window.removeEventListener("scroll", updateTargets);
-            window.removeEventListener("resize", updateTargets);
-            cancelAnimationFrame(animationFrameId);
+            window.removeEventListener("scroll", onScroll);
+            cancelAnimationFrame(raf);
         };
-    }, [loading]); // Re-run if loading changes (though flower is static, good practice if structure changes)
+    }, [loading]);
+
 
     if (loading) {
         return (
@@ -170,11 +182,11 @@ const BookingHome = () => {
         <div className="relative w-full overflow-hidden">
             <div className="absolute inset-0 z-0 pointer-events-none h-full w-full flex flex-col items-end">
                 <img
+                    ref={decorRef}
                     src="/flower.webp"
-                    alt=""
                     className="sita-publications-decor sita-decor"
-                    aria-hidden="true"
                 />
+
             </div>
             <div className="container mx-auto relative z-10">
                 <div className="max-w-6xl mx-auto px-4 mb-5 relative">
