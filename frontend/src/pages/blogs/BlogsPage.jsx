@@ -71,7 +71,7 @@ const BlogsPage = () => {
                 <a
                   href="/"
                   className="!text-gray-700 hover:underline breadcrumb-item text-[16px] truncate max-w-[120px] sm:max-w-[200px] md:max-w-full">
-                  Events
+                  Blogs
                 </a>
               </li>
             </ol>

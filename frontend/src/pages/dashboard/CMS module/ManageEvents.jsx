@@ -651,14 +651,10 @@ const ManageEvents = () => {
                 >
                   <option value="">Select Category *</option>
                   <option value="Yoga Therapy">Yoga Therapy</option>
-                  <option value="Ayurveda – Nutrition & Integration">
-                    Ayurveda – Nutrition & Integration
-                  </option>
+                  <option value="Ayurveda – Nutrition & Integration">Ayurveda – Nutrition & Integration</option>
                   <option value="Kosha Counseling">Kosha Counseling</option>
                   <option value="Soul Curriculum">Soul Curriculum</option>
-                  <option value="Release Karmic Patterns">
-                    Release Karmic Patterns
-                  </option>
+                  <option value="Release Karmic Patterns">Release Karmic Patterns</option>
                   <option value="Others">Others</option>
                 </select>
               </div>
