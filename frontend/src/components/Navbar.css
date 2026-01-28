@@ -239,13 +239,9 @@ li {
   .sita-nav:not(.top-row-utils) .nav-link:not(.home-icon) {
     background-image:
       linear-gradient(#8b171b, #8b171b),
-      /* Top */
       linear-gradient(#8b171b, #8b171b),
-      /* Right */
       linear-gradient(#8b171b, #8b171b),
-      /* Bottom */
       linear-gradient(#8b171b, #8b171b);
-    /* Left */
     background-repeat: no-repeat;
     background-size:
       0% 2px,
