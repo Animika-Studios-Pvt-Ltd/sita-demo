@@ -73,9 +73,7 @@ li {
   margin-right: 0;
 }
 
-.sita-nav .home-icon i {
-  font-size: 16px;
-}
+
 
 /* Text Colors - Force Black/Brand Color */
 .top-row-utils {
@@ -111,42 +109,44 @@ li {
   color: #8b171b !important;
 }
 
-/* Box Hover Effect for Bottom Row (Main Menu) - Corner Animation */
-.sita-nav:not(.top-row-utils) .nav-link:not(.home-icon) {
-  background-image: 
-    linear-gradient(#8b171b, #8b171b), /* Top */
-    linear-gradient(#8b171b, #8b171b), /* Right */
-    linear-gradient(#8b171b, #8b171b), /* Bottom */
-    linear-gradient(#8b171b, #8b171b); /* Left */
-  background-repeat: no-repeat;
-  
-  /* Initial Sizes: 0 length */
-  background-size: 
-    0% 2px,   /* Top */
-    2px 0%,   /* Right */
-    0% 2px,   /* Bottom */
-    2px 0%;   /* Left */
+/* Box Hover Effect for Bottom Row (Main Menu) - Corner Animation - DESKTOP ONLY */
+@media (min-width: 992px) {
+  .sita-nav:not(.top-row-utils) .nav-link:not(.home-icon) {
+    background-image: 
+      linear-gradient(#8b171b, #8b171b), /* Top */
+      linear-gradient(#8b171b, #8b171b), /* Right */
+      linear-gradient(#8b171b, #8b171b), /* Bottom */
+      linear-gradient(#8b171b, #8b171b); /* Left */
+    background-repeat: no-repeat;
     
-  /* Positions from Corners: Top/Left from TL, Bottom/Right from BR */
-  background-position: 
-    top left, 
-    bottom right, 
-    bottom right, 
-    top left;
-    
-  transition: background-size 0.4s ease;
-  border-radius: 0 !important;
-  border: none !important;
-}
+    /* Initial Sizes: 0 length */
+    background-size: 
+      0% 2px,   /* Top */
+      2px 0%,   /* Right */
+      0% 2px,   /* Bottom */
+      2px 0%;   /* Left */
+      
+    /* Positions from Corners: Top/Left from TL, Bottom/Right from BR */
+    background-position: 
+      top left, 
+      bottom right, 
+      bottom right, 
+      top left;
+      
+    transition: background-size 0.4s ease;
+    border-radius: 0 !important;
+    border: none !important;
+  }
 
-.sita-nav:not(.top-row-utils) .nav-link:not(.home-icon):hover {
-  background-size: 
-    100% 2px, 
-    2px 100%, 
-    100% 2px, 
-    2px 100%;
-  color: #8b171b !important;
-  background-color: transparent !important;
+  .sita-nav:not(.top-row-utils) .nav-link:not(.home-icon):hover {
+    background-size: 
+      100% 2px, 
+      2px 100%, 
+      100% 2px, 
+      2px 100%;
+    color: #8b171b !important;
+    background-color: transparent !important;
+  }
 }
 
 .sita-nav .nav-link.active {
@@ -276,19 +276,49 @@ li {
   .navbar-collapse {
     background: #e5c4b5;
     padding-bottom: 20px;
+    z-index: 2000;
+  }
+  .navbar-collapse.show {
+    opacity: 1 !important;
+    visibility: visible !important;
   }
   .sita-nav-rows {
-    align-items: flex-start !important;
-    margin-left: 20px;
+    align-items: flex-end !important; /* Right Align */
+    width: 100%;
+    padding-right: 15px; /* Spacing from edge */
     gap: 15px;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
   .sita-nav {
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    width: 100%;
+    align-items: flex-end; /* Align items to right */
   }
-  .top-row-utils {
-    flex-direction: row;
-    gap: 20px;
-    margin-bottom: 10px;
+  /* Top row utils removed or simplified if empty */
+  
+  /* Ensure text is black and visible */
+  .sita-nav .nav-link,
+  .nav-contact,
+  .nav-icon-link {
+    color: #000000 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-align: right;
+    justify-content: flex-end; /* For flex flex items */
+  }
+
+  /* Mobile Dropdown Background */
+  .dropdown-menu {
+    background-color: #e5c4b5 !important;
+    border: none;
+    box-shadow: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .dropdown-item {
+    text-align: right;
+    padding-right: 0;
   }
 }
