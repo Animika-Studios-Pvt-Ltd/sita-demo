@@ -6,7 +6,7 @@ const blogSchema = new mongoose.Schema({
   description: { type: String, required: true },
   content: { type: Object },
   author: { type: String, required: true },
-  readMoreText: { type: String, required: false },
+  readMoreText: { type: String, required: false, default: 'Read More' },
   image: { type: String },
   suspended: { type: Boolean, default: false },
   type: {
