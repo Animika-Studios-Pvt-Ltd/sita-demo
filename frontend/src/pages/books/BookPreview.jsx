@@ -184,7 +184,7 @@ const BookPreview = () => {
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item"><a href="/">Home</a></li>
-                        <li className="breadcrumb-item"><a href="/publications">Publications</a></li>
+                        <li className="breadcrumb-item"><a href="/">Publications</a></li>
                         <li className="breadcrumb-item active" aria-current="page">{book.title} Preview</li>
                     </ol>
                 </nav>

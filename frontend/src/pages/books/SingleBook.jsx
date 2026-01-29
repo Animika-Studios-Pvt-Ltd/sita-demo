@@ -314,7 +314,7 @@ const SingleBook = () => {
               <a href={getAppUrl(null, '/')}>Home</a>
             </li>
             <li className="breadcrumb-item">
-              <a href="/publications">Publications</a>
+              <a href="/">Publications</a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
               {book.title}
