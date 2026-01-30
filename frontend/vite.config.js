@@ -4,10 +4,7 @@ import sitemap from 'vite-plugin-sitemap'
 import staticRoutes from './src/sitemap.config.js'
 
 // Environment detection
-const isLocal = process.env.NODE_ENV !== 'production';
-const backendUrl = isLocal
-  ? 'http://localhost:5000'
-  : 'http://localhost:5000';
+const backendUrl = process.env.VITE_API_URL || 'http://localhost:5000';
 
 // Fetch dynamic book routes
 async function getDynamicBookRoutes() {
