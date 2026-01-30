@@ -9,7 +9,7 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 /* ================= CATEGORY IMAGE SET ================= */
 const categoryImages = {
     "Yoga Therapy": [
-        "https://img.freepik.com/free-vector/international-yoga-day-woman-doing-posture-grass-with-text-space_1017-53205.jpg?t=st=1769598369~exp=1769601969~hmac=1a1a9372ca40d43fc1f1a39ada20b5f5956343346899ea083f0cd4d08e7d555b&w=1060",
+        "https://images.unsplash.com/photo-1496483353456-90997957cf99",
         "https://images.unsplash.com/photo-1593810451137-5dc55105dace",
         "https://images.unsplash.com/photo-1506126613408-eca07ce68773",
     ],
