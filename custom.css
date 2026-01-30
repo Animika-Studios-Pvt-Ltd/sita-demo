@@ -1509,80 +1509,6 @@ nav[aria-label="breadcrumb"] {
   height: auto;
 }
 
-@media (max-width: 1200px) {
-  .sita-about-content {
-    width: 60%;
-    text-align: center;
-  }
-
-  .sita-about-image {
-    width: 40%;
-    text-align: center;
-  }
-
-  .sita-side-img {
-    max-width: 95%;
-    height: auto;
-  }
-}
-
-@media (max-width: 991px) {
-  .sita-about-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0px;
-  }
-
-  .sita-about-content {
-    display: contents;
-  }
-
-  .sita-about-image,
-  .sita-inner-content-intro {
-    width: 100%;
-    text-align: center;
-  }
-
-  .sita-about-content h2 {
-    order: 1;
-  }
-
-  .sita-about-content .motif {
-    order: 2;
-    margin-bottom: 10px !important;
-  }
-
-  .sita-about-image {
-    order: 3;
-    margin: 10px 0;
-  }
-
-  .sita-about-content .sita-inner-content-intro {
-    order: 4;
-    text-align: left;
-  }
-
-  .sita-side-img {
-    max-width: 50%;
-    height: auto;
-  }
-}
-
-@media (max-width: 767px) {
-  .sita-side-img {
-    max-width: 60%;
-    height: auto;
-  }
-}
-
-@media (max-width: 575px) {
-  .sita-side-img {
-    max-width: 50%;
-    height: auto;
-  }
-}
-
 /* ----------------- CERTIFICATIONS & TRAINING SECTION ----------------- */
 .sita-certifications {
   padding: 40px 0;
@@ -1644,6 +1570,22 @@ nav[aria-label="breadcrumb"] {
 .sita-value-proposition p {
   line-height: 1.8;
   margin-bottom: 20px;
+}
+
+/* ------------------------------------------------- WORKSHOP SECTION ------------------------------------------------- */
+
+.sita-workshop-section {
+  padding: 20px 0px;
+}
+
+.sita-workshop-section h2 {
+  text-align: center;
+}
+
+.sita-workshop-section .motif {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 30px;
 }
 
 /* ------------------------------------------------- CONTACT US PAGE SECTION ------------------------------------------------- */
@@ -1723,7 +1665,7 @@ nav[aria-label="breadcrumb"] {
     font-size: 42px;
   }
 
-  p {
+  p, li {
     font-size: 17px;
   }
 
@@ -1738,7 +1680,7 @@ nav[aria-label="breadcrumb"] {
     font-size: 40px;
   }
 
-  p {
+  p, li {
     font-size: 16px;
   }
 
@@ -1757,7 +1699,7 @@ nav[aria-label="breadcrumb"] {
     font-size: 36px;
   }
 
-  p {
+  p, li {
     font-size: 15px;
   }
 
@@ -1776,7 +1718,7 @@ nav[aria-label="breadcrumb"] {
     font-size: 28px;
   }
 
-  p {
+  p, li {
     font-size: 14px;
   }
 
@@ -1791,7 +1733,7 @@ nav[aria-label="breadcrumb"] {
     font-size: 24px;
   }
 
-  p {
+  p, li {
     font-size: 13px;
   }
 
@@ -2382,7 +2324,6 @@ nav[aria-label="breadcrumb"] {
 }
 
 /* ------------------------------------------------- HOME PAGE RESPONSIVE CODE ------------------------------------------------- */
-
 /* Hero Section */
 @media (max-width: 1800px) {
   .sita-hero {
@@ -4025,6 +3966,80 @@ nav[aria-label="breadcrumb"] {
 }
 
 /* ------------------------------------------------- ABOUT PAGE RESPONSIVE CODE ------------------------------------------------- */
+/* ----------------- ABOUT CONTENT SECTION ----------------- */
+@media (max-width: 1200px) {
+  .sita-about-content {
+    width: 60%;
+    text-align: center;
+  }
+
+  .sita-about-image {
+    width: 40%;
+    text-align: center;
+  }
+
+  .sita-side-img {
+    max-width: 95%;
+    height: auto;
+  }
+}
+
+@media (max-width: 991px) {
+  .sita-about-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+  }
+
+  .sita-about-content {
+    display: contents;
+  }
+
+  .sita-about-image,
+  .sita-inner-content-intro {
+    width: 100%;
+    text-align: center;
+  }
+
+  .sita-about-content h2 {
+    order: 1;
+  }
+
+  .sita-about-content .motif {
+    order: 2;
+    margin-bottom: 10px !important;
+  }
+
+  .sita-about-image {
+    order: 3;
+    margin: 10px 0;
+  }
+
+  .sita-about-content .sita-inner-content-intro {
+    order: 4;
+    text-align: left;
+  }
+
+  .sita-side-img {
+    max-width: 50%;
+    height: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .sita-side-img {
+    max-width: 60%;
+    height: auto;
+  }
+}
+
+@media (max-width: 575px) {
+  .sita-side-img {
+    max-width: 50%;
+    height: auto;
+  }
+}
 
 /* ----------------- CERTIFICATIONS & TRAINING SECTION ----------------- */
 @media (max-width: 991px) {
