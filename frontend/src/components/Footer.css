@@ -1,32 +1,4 @@
-@font-face {
-  font-family: "PTSerif-Regular";
-  font-style: normal;
-  font-weight: 400;
-  src:
-    local("PTSerif-Regular"),
-    local("PTSerif-Regular"),
-    url("fonts/PTSerif-Regular.ttf") format("truetype");
-}
 
-@font-face {
-  font-family: "Montserrat-Regular";
-  font-style: normal;
-  font-weight: 400;
-  src:
-    local("Montserrat-Regular"),
-    local("Montserrat-Regular"),
-    url("fonts/Montserrat-Regular.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Montserrat-Light";
-  font-style: normal;
-  font-weight: 300;
-  src:
-    local("Montserrat-Light"),
-    local("Montserrat-Light"),
-    url("fonts/Montserrat-Light.ttf") format("truetype");
-}
 
 html,
 body {
@@ -35,7 +7,7 @@ body {
 }
 
 h2 {
-  font-family: "PTSerif-Regular";
+  font-family: "PT Serif", serif;
   color: #8b171b;
   font-size: 48px;
   text-transform: uppercase;
@@ -44,7 +16,8 @@ h2 {
 
 p,
 li {
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
   font-size: 18px;
   color: black;
 }
@@ -88,7 +61,8 @@ li {
 
 /* Titles */
 .footer-title {
-  font-family: "Montserrat-Regular";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
   font-size: 17px;
   margin-bottom: 10px;
   color: black;
@@ -102,7 +76,8 @@ li {
 }
 
 .footer-links a {
-  font-family: "Montserrat-Regular";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
   font-size: 16px;
   display: block;
   color: #212529;
@@ -125,7 +100,8 @@ li {
   font-size: 16px;
   line-height: 1.4;
   margin-bottom: 0px;
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
 }
 
 /* Publications Carousel */
@@ -214,12 +190,14 @@ li {
 }
 
 .blog-overlay span {
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
   font-size: 15px;
 }
 
 .blog-overlay p {
-  font-family: "Montserrat-Regular";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
   font-size: 18px;
   margin: 0;
   color: white;
@@ -244,7 +222,8 @@ li {
 }
 
 .footer-middle-center a {
-  font-family: "Montserrat-Regular";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
   font-size: 16px;
   text-decoration: none;
   color: black;
@@ -288,7 +267,8 @@ li {
 }
 
 .footer-bottom p {
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
   font-size: 17px;
   margin-bottom: 0px;
   color: white;

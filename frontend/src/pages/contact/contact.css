@@ -1,36 +1,20 @@
-@font-face {
-  font-family: "PlayfairDisplay-Regular";
-  src: url("../../assets/fonts/PlayfairDisplay-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-}
 
-@font-face {
-  font-family: "Figtree-Light";
-  src: url("../../assets/fonts/Figtree-Light.ttf") format("truetype");
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Figtree-Regular";
-  src: url("../../assets/fonts/Figtree-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-}
 
 h2 {
-  font-family: "PlayfairDisplay-Regular";
+  font-family: "PT Serif", serif;
+  font-weight: 400;
   color: black;
 }
 
 p {
-  font-family: "Figtree-Light";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
 }
 
 /* Breadcrumb */
 .breadcrumb {
-  font-family: "Figtree-Light";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
   font-size: 16px;
   margin-bottom: 20px;
   list-style: none;
@@ -92,14 +76,16 @@ p {
 }
 
 .contact-address .contact-address {
-  font-family: "Figtree-Light";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
   font-size: 20px;
   color: #983120;
   margin-bottom: 10px;
 }
 
 .contact-address p {
-  font-family: "Figtree-Light";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
   margin-bottom: 6px;
   color: #444;
   font-size: 18px;
@@ -113,7 +99,8 @@ p {
 .contact-form {
   background: #fff;
   padding: 10px 0px;
-  font-family: "Figtree-Light";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
 }
 
 .contact-form .form-group {
@@ -124,7 +111,8 @@ p {
   display: block;
   margin-bottom: 8px;
   color: #444;
-  font-family: "Figtree-Regular";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
   font-size: 18px;
 }
 
@@ -198,7 +186,8 @@ p {
 }
 
 .popup-message {
-  font-family: "Figtree-Regular";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
   font-size: 18px;
   color: #333;
 }

@@ -1,32 +1,4 @@
-@font-face {
-  font-family: "PTSerif-Regular";
-  font-style: normal;
-  font-weight: 400;
-  src:
-    local("PTSerif-Regular"),
-    local("PTSerif-Regular"),
-    url("fonts/PTSerif-Regular.ttf") format("truetype");
-}
 
-@font-face {
-  font-family: "Montserrat-Regular";
-  font-style: normal;
-  font-weight: 400;
-  src:
-    local("Montserrat-Regular"),
-    local("Montserrat-Regular"),
-    url("fonts/Montserrat-Regular.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Montserrat-Light";
-  font-style: normal;
-  font-weight: 300;
-  src:
-    local("Montserrat-Light"),
-    local("Montserrat-Light"),
-    url("fonts/Montserrat-Light.ttf") format("truetype");
-}
 
 html,
 body {
@@ -35,7 +7,7 @@ body {
 }
 
 h2 {
-  font-family: "PTSerif-Regular";
+  font-family: "PT Serif", serif;
   color: #8b171b;
   font-size: 48px;
   text-transform: uppercase;
@@ -44,7 +16,8 @@ h2 {
 
 p,
 li {
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
   font-size: 18px;
   color: black;
 }
@@ -80,7 +53,8 @@ li {
 .nav-contact,
 .nav-icon-link {
   color: #000000 !important;
-  font-family: "Montserrat-Regular";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
   text-decoration: none !important;
   display: flex;
   align-items: center;
@@ -93,7 +67,8 @@ li {
 }
 
 .sita-nav .nav-link {
-  font-family: "Montserrat-Regular";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
   font-size: 17px;
   color: #000000;
   padding: 6px 12px;
@@ -210,7 +185,8 @@ li {
 }
 
 .dropdown-item {
-  font-family: "Montserrat-Regular";
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
   font-size: 16px;
   text-transform: uppercase;
   color: #000000 !important;

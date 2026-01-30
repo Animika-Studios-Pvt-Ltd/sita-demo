@@ -13,8 +13,8 @@ module.exports = {
         Favorite: '#FF5841',
       },
       fontFamily: {
-        figtree: ['Figtree', 'sans-serif'],
-        playfair: ['Playfair Display', 'serif'],
+        figtree: ['Montserrat', 'sans-serif'],
+        playfair: ['"PT Serif"', 'serif'],
         bellmt: ['"Bell MT"', 'Georgia', 'serif'],
         'pt-serif': ['"PT Serif"', 'serif'],
         montserrat: ['Montserrat', 'sans-serif'],
