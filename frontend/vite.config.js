@@ -119,11 +119,7 @@ export default defineConfig(async () => {
     // ✅ Preview server configuration (same as dev)
     preview: {
       port: 4173,
-      allowedHosts: [
-        'frontend-production-3916b.up.railway.app',
-        'sita-demo.up.railway.app',
-        'localhost'
-      ],
+      allowedHosts: true,
       proxy: {
         '/api': {
           target: backendUrl,
