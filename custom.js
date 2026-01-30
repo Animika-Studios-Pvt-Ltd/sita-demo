@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const tbody = document.getElementById("workshopTableBody");
   if (!tbody) return;
 
-  const BOOKING_BASE_URL = "http://booking.localhost:5173";
+  const BOOKING_BASE_URL = "https://booking.sitashakti.com";
 
   const toMinutes = (time) => {
     if (!time) return 0;
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return endMinutes > nowMinutes;
   };
 
-  fetch("http://localhost:5000/api/events")
+  fetch("https://sita-demo-production.up.railway.app/api/events")
     .then((res) => res.json())
     .then((events) => {
       tbody.innerHTML = "";
