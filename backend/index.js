@@ -36,8 +36,9 @@ app.use(
       "http://store.localhost:5173",
       "http://booking.localhost:5173",
       "http://blog.localhost:5173",
-      "http://127.0.0.1:5500",   // ✅ ADD THIS
-      "http://localhost:5500",  // ✅ ADD THIS
+      "http://127.0.0.1:5500",
+      "http://localhost:5500",
+      "https://sita-demo-front.onrender.com"
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
@@ -147,8 +148,9 @@ const io = new Server(server, {
       "http://store.localhost:5173",
       "http://booking.localhost:5173",
       "http://blog.localhost:5173",
-      "http://127.0.0.1:5500",   // ✅ ADD THIS
-      "http://localhost:5500",  // ✅ ADD THIS
+      "http://127.0.0.1:5500",
+      "http://localhost:5500",
+      "https://sita-demo-front.onrender.com"
     ],
     methods: ["GET", "POST", "PATCH", "DELETE"],
   },

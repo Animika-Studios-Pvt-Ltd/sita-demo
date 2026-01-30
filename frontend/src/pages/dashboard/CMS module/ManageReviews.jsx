@@ -8,11 +8,9 @@ import PendingIcon from "@mui/icons-material/Pending";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import EventIcon from "@mui/icons-material/Event";
 import BookIcon from "@mui/icons-material/Book";
+import getBaseUrl from "../../../utils/baseURL";
 
-const BACKEND_BASE_URL =
-  window.location.hostname === "localhost"
-    ? "http://localhost:5000"
-    : "http://localhost:5000";
+const BACKEND_BASE_URL = getBaseUrl();
 
 axios.defaults.baseURL = BACKEND_BASE_URL;
 
