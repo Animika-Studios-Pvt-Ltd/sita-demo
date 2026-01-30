@@ -24,7 +24,7 @@ const AdminLogin = () => {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/admin-auth/admin`,
+        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin-auth/admin`,
         {
           username: formData.username,
           password: formData.password,
@@ -53,7 +53,7 @@ const AdminLogin = () => {
     setMessage('');
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/admin-auth/verify-mfa-login`,
+        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin-auth/verify-mfa-login`,
         {
           tempToken: tempToken,
           mfaCode: formData.mfaCode,
@@ -162,8 +162,8 @@ const AdminLogin = () => {
               </div>
               {message && (
                 <div className={`border px-4 py-3 rounded-lg text-sm ${message.includes('Invalid')
-                    ? 'bg-red-50 border-red-200 text-red-700'
-                    : 'bg-blue-50 border-blue-200 text-blue-700'
+                  ? 'bg-red-50 border-red-200 text-red-700'
+                  : 'bg-blue-50 border-blue-200 text-blue-700'
                   }`}>
                   {message}
                 </div>
