@@ -38,7 +38,8 @@ app.use(
       "http://blog.localhost:5173",
       "http://127.0.0.1:5500",
       "http://localhost:5500",
-      "https://sita-demo-front.onrender.com"
+      "https://sita-demo-front.onrender.com",
+      "https://frontend-production-3916b.up.railway.app"
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],

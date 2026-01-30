@@ -180,7 +180,7 @@ p {
   transform: translate(-50%, -50%);
   width: 100px;
   height: 100px;
-  background: url("/motif.webp") no-repeat center;
+  background: url("/sita-motif.webp") no-repeat center;
   background-size: contain;
   opacity: 0.15;
   pointer-events: none;
