@@ -77,37 +77,37 @@ const Footer = () => {
         <div className="footer-top-flex">
           <div className="footer-col footer-col-factor footer-links">
             <h6 className="footer-title">THE SITA FACTOR</h6>
-            <a href="https://sita-demo.netlify.app/yoga-therapy.html">
+            <a href="https://sitashakti.com/yoga-therapy.html">
               Yoga Therapy
             </a>
-            <a href="https://sita-demo.netlify.app/ayurveda-nutrition.html">
+            <a href="https://sitashakti.com/ayurveda-nutrition.html">
               Ayurveda – Nutrition & Integration
             </a>
-            <a href="https://sita-demo.netlify.app/kosha-counseling.html">
+            <a href="https://sitashakti.com/kosha-counseling.html">
               Kosha Counseling
             </a>
-            <a href="https://sita-demo.netlify.app/soul-curriculum.html">
+            <a href="https://sitashakti.com/soul-curriculum.html">
               Soul Curriculum
             </a>
-            <a href="https://sita-demo.netlify.app/release-karmic-patterns.html">
+            <a href="https://sitashakti.com/release-karmic-patterns.html">
               Release Karmic Patterns
             </a>
           </div>
           <div className="footer-col footer-col-workshops footer-links">
             <h6 className="footer-title">WORKSHOPS</h6>
-            <a href="https://sita-demo.netlify.app/teacher-training.html">
+            <a href="https://sitashakti.com/teacher-training.html">
               Teacher Training
             </a>
-            <a href="https://sita-demo.netlify.app/corporate-training.html">
+            <a href="https://sitashakti.com/corporate-training.html">
               Corporate Training
             </a>
-            <a href="https://sita-demo.netlify.app/shakthi-leadership.html">
+            <a href="https://sitashakti.com/shakthi-leadership.html">
               Shakthi Leadership
             </a>
-            <a href="https://sita-demo.netlify.app/group-sessions.html">
+            <a href="https://sitashakti.com/group-sessions.html">
               Group Sessions
             </a>
-            <a href="https://sita-demo.netlify.app/private-sessions.html">
+            <a href="https://sitashakti.com/private-sessions.html">
               Private Sessions
             </a>
           </div>
@@ -118,8 +118,8 @@ const Footer = () => {
             ) : (
               <a href={getAppUrl("blog", "/blogs")}>Blogs</a>
             )}
-            <a href="https://sita-demo.netlify.app/articles.html">Articles</a>
-            <a href="https://sita-demo.netlify.app/podcasts.html">Podcasts</a>
+            <a href="https://sitashakti.com/articles.html">Articles</a>
+            <a href="https://sitashakti.com/podcasts.html">Podcasts</a>
           </div>
           <div className="footer-col footer-col-publications footer-publication">
             <h6 className="footer-title">PUBLICATIONS</h6>
@@ -247,16 +247,18 @@ const Footer = () => {
         {/* FOOTER MIDDLE */}
         <div className="footer-middle-flex">
           <div className="footer-middle-left">
-            <img
-              src="/sita-logo.webp"
-              className="footer-logo"
-              alt="Sita Logo"
-            />
+            <a href="https://sitashakti.com">
+              <img
+                src="/sita-logo.webp"
+                className="footer-logo"
+                alt="Sita Logo"
+              />
+            </a>
           </div>
           <div className="footer-middle-center">
-            <Link to="/privacy-policy">Privacy Policy</Link>
+            <a href="https://sitashakti.com/privacy-policy.html">Privacy Policy</a>
             <span>|</span>
-            <Link to="/disclaimer">Disclaimer</Link>
+            <a href="https://sitashakti.com/disclaimer.html">Disclaimer</a>
           </div>
           <div className="footer-middle-right footer-socials">
             <a href="#">
