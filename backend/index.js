@@ -39,7 +39,13 @@ app.use(
       "http://127.0.0.1:5500",
       "http://localhost:5500",
       "https://sita-demo-front.onrender.com",
-      "https://frontend-production-3916b.up.railway.app"
+      "https://frontend-production-3916b.up.railway.app",
+      "https://sitashakti.com",
+      "https://www.sitashakti.com",
+      "https://admin.sitashakti.com",
+      "https://store.sitashakti.com",
+      "https://booking.sitashakti.com",
+      "https://blog.sitashakti.com"
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
@@ -151,7 +157,14 @@ const io = new Server(server, {
       "http://blog.localhost:5173",
       "http://127.0.0.1:5500",
       "http://localhost:5500",
-      "https://sita-demo-front.onrender.com"
+      "https://sita-demo-front.onrender.com",
+      "https://frontend-production-3916b.up.railway.app",
+      "https://sitashakti.com",
+      "https://www.sitashakti.com",
+      "https://admin.sitashakti.com",
+      "https://store.sitashakti.com",
+      "https://booking.sitashakti.com",
+      "https://blog.sitashakti.com"
     ],
     methods: ["GET", "POST", "PATCH", "DELETE"],
   },
