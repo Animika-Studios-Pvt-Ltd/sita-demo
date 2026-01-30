@@ -7,8 +7,9 @@ import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import BlockIcon from "@mui/icons-material/Block";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import getBaseUrl from "../../../utils/baseURL";
 
-const API = "http://localhost:5000/api";
+const API = `${getBaseUrl()}/api`;
 
 /* ================= SWEET ALERT HELPERS ================= */
 const successAlert = (title, text) =>
