@@ -107,9 +107,8 @@ const Publications = () => {
                       <img
                         src={book?.coverImage || "/placeholder-book.jpg"}
                         alt={book?.title}
-                        className={`object-cover w-full h-full z-0 ${
-                          isSuspended ? "opacity-60 grayscale" : ""
-                        }`}
+                        className={`object-cover w-full h-full z-0 ${isSuspended ? "opacity-60 grayscale" : ""
+                          }`}
                       />
 
                       {isSuspended && (
@@ -187,7 +186,7 @@ const Publications = () => {
                             {Math.round(
                               ((book.oldPrice - book.newPrice) /
                                 book.oldPrice) *
-                                100,
+                              100,
                             )}
                             % off
                           </span>

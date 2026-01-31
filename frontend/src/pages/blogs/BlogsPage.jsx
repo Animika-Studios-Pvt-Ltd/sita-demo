@@ -4,6 +4,7 @@ import { getAppUrl } from "../../utils/subdomain";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 
 const BACKEND_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -55,28 +56,16 @@ const BlogsPage = () => {
   const totalPages = Math.ceil(blogs.length / blogsPerPage);
 
   return (
+    <>
+      <SitaBreadcrumb
+        items={[
+          { label: "Home", path: "https://sitashakti.com" },
+          { label: "Blogs" },
+        ]}
+      />
     <div className="container" data-aos="fade-up">
+
       <div className="max-w-6xl mx-auto px-4 text-center">
-        {/* BREADCRUMB */}
-        <div
-          className="breadcrumb-container w-full text-left font-figtree font-light">
-          <nav aria-label="breadcrumb">
-            <ol className="breadcrumb mt-0 mb-2 p-0">
-              <li className="breadcrumb-item">
-                <a href="https://sitashakti.com" className="text-gray-500 text-[16px] hover:underline">
-                  Home
-                </a>
-              </li>
-              <li className="breadcrumb-item">
-                <a
-                  href="/"
-                  className="!text-gray-700 hover:underline breadcrumb-item text-[16px] truncate max-w-[120px] sm:max-w-[200px] md:max-w-full">
-                  Blogs
-                </a>
-              </li>
-            </ol>
-          </nav>
-        </div>
         {/* HEADER */}
         <h2
           className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
@@ -279,6 +268,7 @@ const BlogsPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
