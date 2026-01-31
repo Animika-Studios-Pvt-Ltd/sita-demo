@@ -19,7 +19,7 @@ const CMSModule = () => {
       route: "/dashboard/certificates/trust-certificate",
     },
     {
-      name: "Manage Pages",
+      name: "Manage Event Pages",
       icon: <DescriptionIcon fontSize="large" className="text-purple-600" />,
       route: "/dashboard/manage-pages",
     },
