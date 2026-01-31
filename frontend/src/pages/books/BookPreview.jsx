@@ -183,7 +183,7 @@ const BookPreview = () => {
             <div className="breadcrumb-container" data-aos="fade-right" data-aos-duration="1500">
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
-                        <li className="breadcrumb-item"><a href="/">Home</a></li>
+                        <li className="breadcrumb-item"><a href="https://sitashakti.com">Home</a></li>
                         <li className="breadcrumb-item"><a href="/">Publications</a></li>
                         <li className="breadcrumb-item active" aria-current="page">{book.title} Preview</li>
                     </ol>

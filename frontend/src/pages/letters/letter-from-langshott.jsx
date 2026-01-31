@@ -78,12 +78,12 @@ const LetterFromLangshott = () => {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb m-0 p-0 flex flex-wrap gap-2 text-sm sm:text-base">
               <li className="breadcrumb-item">
-                <a href="/" className="text-gray">
+                <a href="https://sitashakti.com" className="text-gray">
                   Home
                 </a>
               </li>
               <li className="breadcrumb-item">
-                <a href="/publications" className="!text-gray-600">
+                <a href="/" className="!text-gray-600">
                   Letters from Langshott
                 </a>
               </li>

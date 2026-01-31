@@ -135,15 +135,15 @@ const BlogDetailPage = () => {
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb m-0 p-0 flex gap-0 text-[14px]">
                   <li className="breadcrumb-item">
-                    <a href={getAppUrl(null, '/')} className="text-gray-300 hover:underline">
+                    <a href="https://sitashakti.com" className="text-gray-300 hover:underline">
                       Home
                     </a>
                   </li>
                   <li className="breadcrumb-item">
                     {getSubdomain() === 'blog' ? (
-                      <Link to="/blogs" className="text-gray-300 hover:underline">Blogs</Link>
+                      <Link to="/" className="text-gray-300 hover:underline">Blogs</Link>
                     ) : (
-                      <a href={getAppUrl('blog', '/blogs')} className="text-gray-300 hover:underline">Blogs</a>
+                      <a href={getAppUrl('blog', '/')} className="text-gray-300 hover:underline">Blogs</a>
                     )}
                   </li>
                   <li

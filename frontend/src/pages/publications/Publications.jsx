@@ -74,12 +74,12 @@ const Publications = () => {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb m-0 p-0">
               <li className="breadcrumb-item">
-                <a href={getAppUrl(null, '/')} className="text-gray">
+                <a href="https://sitashakti.com" className="text-gray">
                   Home
                 </a>
               </li>
               <li className="breadcrumb-item">
-                <a href="/publications" className="!text-gray-600">
+                <a href="/" className="!text-gray-600">
                   Publications
                 </a>
               </li>

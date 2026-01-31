@@ -63,7 +63,7 @@ const BlogsPage = () => {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb mt-0 mb-2 p-0">
               <li className="breadcrumb-item">
-                <a href={getAppUrl(null, '/')} className="text-gray-500 text-[16px] hover:underline">
+                <a href="https://sitashakti.com" className="text-gray-500 text-[16px] hover:underline">
                   Home
                 </a>
               </li>

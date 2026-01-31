@@ -311,7 +311,7 @@ const SingleBook = () => {
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <a href={getAppUrl(null, '/')}>Home</a>
+              <a href="https://sitashakti.com">Home</a>
             </li>
             <li className="breadcrumb-item">
               <a href="/">Publications</a>
