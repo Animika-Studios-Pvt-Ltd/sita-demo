@@ -1,0 +1,126 @@
+@font-face {
+  font-family: "PTSerif-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: local("PTSerif-Regular"), local("PTSerif-Regular"),
+    url("fonts/PTSerif-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Montserrat-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Montserrat-Regular"), local("Montserrat-Regular"),
+    url("fonts/Montserrat-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Montserrat-Light";
+  font-style: normal;
+  font-weight: 300;
+  src: local("Montserrat-Light"), local("Montserrat-Light"),
+    url("fonts/Montserrat-Light.ttf") format("truetype");
+}
+
+html,
+body {
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.sita-breadcrumb-section {
+  margin: 10px 0px;
+}
+
+nav[aria-label="breadcrumb"] {
+  padding: 0;
+}
+
+.breadcrumb {
+  margin: 0px;
+  font-family: "Montserrat-Light";
+  flex-wrap: wrap;
+}
+
+.breadcrumb-item {
+  font-size: 16px;
+  padding-left: 2px !important;
+  white-space: nowrap;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: ">";
+  color: #2e2e2e;
+  padding: 0 4px;
+}
+
+.breadcrumb-item a {
+  color: #aeaeae;
+  text-decoration: none !important;
+}
+
+.breadcrumb-item.active {
+  color: black !important;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 991px) {
+  .breadcrumb-item {
+    font-size: 14px;
+  }
+
+  .breadcrumb-item + .breadcrumb-item::before {
+    padding: 0 3px;
+  }
+
+  .sita-breadcrumb-section {
+    margin: 8px 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .breadcrumb,
+  .breadcrumb-item {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .breadcrumb-item + .breadcrumb-item::before {
+    padding: 0 2px;
+  }
+
+  .sita-breadcrumb-section {
+    margin: 6px 0;
+  }
+}
+
+@media (max-width: 575px) {
+  .breadcrumb {
+    font-size: 12px;
+    padding: 0px 10px;
+  }
+
+  .breadcrumb-item {
+    font-size: 12px;
+  }
+
+  .breadcrumb-item + .breadcrumb-item::before {
+    padding: 0 2px;
+  }
+
+  .sita-breadcrumb-section {
+    margin: 5px 0;
+  }
+}
+
+@media (max-width: 359px) {
+  .breadcrumb,
+  .breadcrumb-item {
+    font-size: 11px;
+  }
+
+  .breadcrumb-item + .breadcrumb-item::before {
+    padding: 0 1px;
+  }
+}
