@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const { cache } = require('../utils/cache');
+
 const { uploadLetter, getAllLetters, toggleSuspendLetter } = require('./letter.controller');
 const Letter = require('./letter.model');
 
@@ -35,7 +35,7 @@ const upload = multer({ storage, fileFilter });
 
 router.post('/upload', upload.single('pdf'), uploadLetter);
 
-router.get('/', cache(300), getAllLetters);
+router.get('/', getAllLetters);
 router.put('/:id', async (req, res) => {
   try {
     const { title } = req.body;

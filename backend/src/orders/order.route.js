@@ -1,5 +1,5 @@
 const express = require('express');
-const { cache, clearCache } = require('../utils/cache'); 
+
 const {
   createAOrder,
   getOrderByUserId,
@@ -12,13 +12,13 @@ const {
 } = require('./order.controller');
 
 const router = express.Router();
-router.get('/', cache(30), getAllOrders);
-router.get('/user/:userId', cache(60), getOrderByUserId);
-router.get('/return-requests', cache(30), getPendingReturnRequests);
+router.get('/', getAllOrders);
+router.get('/user/:userId', getOrderByUserId);
+router.get('/return-requests', getPendingReturnRequests);
 router.post('/', async (req, res, next) => {
   try {
     await createAOrder(req, res);
-    await clearCache('/api/orders*');
+
   } catch (error) {
     next(error);
   }
@@ -26,7 +26,7 @@ router.post('/', async (req, res, next) => {
 router.patch('/:id', async (req, res, next) => {
   try {
     await updateOrderById(req, res);
-    await clearCache('/api/orders*');
+
   } catch (error) {
     next(error);
   }
@@ -35,7 +35,7 @@ router.patch('/:id', async (req, res, next) => {
 router.post('/request-return/:orderId', async (req, res, next) => {
   try {
     await requestReturn(req, res);
-    await clearCache('/api/orders*');
+
   } catch (error) {
     next(error);
   }
@@ -43,7 +43,7 @@ router.post('/request-return/:orderId', async (req, res, next) => {
 router.post('/approve-return/:orderId', async (req, res, next) => {
   try {
     await approveReturn(req, res);
-    await clearCache('/api/orders*');
+
   } catch (error) {
     next(error);
   }
@@ -52,7 +52,7 @@ router.post('/approve-return/:orderId', async (req, res, next) => {
 router.post('/reject-return/:orderId', async (req, res, next) => {
   try {
     await rejectReturn(req, res);
-    await clearCache('/api/orders*');
+
   } catch (error) {
     next(error);
   }

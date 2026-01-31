@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const { cache } = require('../utils/cache');
+
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -14,7 +14,7 @@ const {
 } = require('./author.controller');
 
 // GET: Fetch author content (cache for 10 minutes)
-router.get('/', cache(60), getAuthorContent);
+router.get('/', getAuthorContent);
 
 // POST: Update author content (no cache, clear in controller)
 router.post('/',
