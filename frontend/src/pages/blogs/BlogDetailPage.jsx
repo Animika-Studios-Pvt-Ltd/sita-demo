@@ -262,74 +262,151 @@ const BlogDetailPage = () => {
           className="max-w-8xl mx-auto py-0"
           data-aos="fade-up"
           data-aos-duration="1200">
-          <div className="relative inline-block">
-            <h1
-              className="text-[32px] sm:text-[34px] md:text-[50px] font-playfair font-light text-black font-display leading-snug mb-4 mt-4"
-              data-aos="zoom-in"
-              data-aos-duration="1300">
+
+          {/* HEADER */}
+          <div className="" data-aos="fade-up"
+            data-aos-duration="1200">
+            <h2
+              className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
               Latest Blogs
-            </h1>
+            </h2>
+            <img
+              src="/sita-motif.webp"
+              alt="Sita Motif"
+              className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+            />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-10 gap-10">
-            {currentBlogs.map((blog, index) => (
-              <div
-                key={blog._id}
-                className="group bg-white rounded-[10px] border-[2px] hover:shadow-[0_2px_5px_rgba(0,0,0,0.12)] transition duration-500 overflow-hidden hover:-translate-y-2 flex flex-col"
-                data-aos="fade-up"
-                data-aos-delay={index * 150}
-                data-aos-duration="1000">
-                {blog.image && (
-                  <div className="relative h-52 overflow-hidden">
+          {/* BLOG GRID */}
+          <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {currentBlogs.map((blog, index) => {
+              const btnColors = [
+                "bg-[#d86c87]",
+                "bg-[#e29a7a]",
+                "bg-[#c36c6c]",
+              ];
+
+              return (
+                <div
+                  key={blog._id}
+                  data-aos="fade-up"
+                  data-aos-delay={(index + 1) * 100}
+                  className="
+                            flex flex-col
+                            text-center
+                            aspect-[2/1]
+                            border-b
+                            border-[#8b171b]
+                          "
+                >
+                  {/* IMAGE */}
+                  <div className="relative w-full aspect-[1.25/1] overflow-hidden mb-3">
                     <img
                       src={
-                        blog.image.startsWith("http")
+                        blog.image?.startsWith("http")
                           ? blog.image
                           : `${BACKEND_BASE_URL}${blog.image}`
                       }
                       alt={blog.title}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                      className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                    {/* DATE */}
+                    <p
+                      className="
+                                absolute
+                                -bottom-4
+                                left-1/2
+                                -translate-x-1/2
+                                bg-white
+                                px-3
+                                py-1
+                                text-[16px]
+                                rounded-t-md
+                                shadow
+                                font-montserratLight
+                              "
+                    >
+                      {new Date(blog.createdAt).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "2-digit",
+                        year: "numeric",
+                      })}
+                    </p>
                   </div>
-                )}
-                <div className="p-4 text-left flex flex-col flex-grow">
-                  <p className="text-[18px] sm:text-[20px] md:text-[20px] lg:text-[22px] xl:text-[22px] font-Figtree font-medium leading-snug">
-                    {blog.title}
-                  </p>
-                  <p className="flex items-center gap-2 text-gray-400 text-lg mt-3 mb-2">
-                    <CalendarDays className="w-5 h-5" />
-                    {new Date(blog.createdAt).toLocaleDateString(undefined, {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </p>
-                  <div
-                    className="text-[15px] sm:text-[17px] md:text-[17px] lg:text-[18px] xl:text-[18px] text-black-800 font-Figtree font-regular leading-snug mt-0 mb-2 px-1 sm:px-1"
-                    dangerouslySetInnerHTML={{
-                      __html: sanitizeDescription(
-                        blog.description.length > 160
-                          ? blog.description.slice(0, 160) + "..."
-                          : blog.description
-                      ),
-                    }}
-                  />
-                </div>
-                <div className="mt-auto">
+
+                  {/* CONTENT */}
+                  <div className="flex flex-col flex-grow px-1">
+                    <h4
+                      className="
+                                font-montserratLight
+                                text-[20px]
+                                mb-1
+                                text-black
+                                leading-snug
+                              "
+                    >
+                      {blog.title}
+                    </h4>
+
+                    <p
+                      className="
+                                font-montserratLight
+                                text-[16px]
+                                text-black
+                                leading-snug
+                                h-[70px]
+                                overflow-hidden
+                              "
+                    >
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: sanitizeDescription(
+                            blog.description.length > 200
+                              ? blog.description.slice(0, 200) + "..."
+                              : blog.description
+                          ),
+                        }}
+                      />
+                    </p>
+                  </div>
+
+                  {/* AUTHOR */}
+                  <span
+                    className="
+                              font-montserratLight
+                              text-[14px]
+                              italic
+                              mt-2
+                              mb-2
+                            "
+                  >
+                    – {blog.author || "Sita Severson"}
+                  </span>
+
+                  {/* CTA */}
                   <Link
                     to={`/blogs/${blog.slug || blog._id}`}
-                    className="flex items-center gap-2 mx-auto font-figtree text-[16px] sm:text-[18px] transition group no-underline">
-                    <span className="inline-flex text-[#993333] items-center gap-1 text-[16px] sm:text-[18px] font-regular no-underline">
-                      Read More
-                    </span>
-                    <span className="text-[#993333] transform transition-transform duration-200 group-hover:translate-x-[5px]">
-                      <ArrowRight size={20} strokeWidth={2} />
-                    </span>
+                    className={`
+                              font-montserratLight
+                              ${btnColors[index % btnColors.length]}
+                              text-white
+                              px-4
+                              py-2
+                              text-[16px]
+                              mx-auto
+                              [clip-path:polygon(10%_0%,90%_0%,100%_50%,90%_100%,10%_100%,0%_50%)]
+                              transition
+                              hover:opacity-90
+                              no-underline
+                              mb-3
+                            `}
+                  >
+                    {blog.readMoreText || "Get insights"}
                   </Link>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="flex justify-center items-center gap-2 sm:gap-3 mt-10 mb-20 flex-wrap"

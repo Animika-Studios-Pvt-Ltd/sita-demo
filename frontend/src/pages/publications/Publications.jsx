@@ -67,19 +67,19 @@ const Publications = () => {
   return (
     <div className="container" data-aos="fade-up" data-aos-duration="1000">
       <div className="max-w-8xl mx-auto py-0 text-center flex flex-col justify-center items-center px-4 mb-20">
-        <div
-          className="breadcrumb-container w-full text-left mb-0 font-figtree font-lite"
-          data-aos="fade-right"
-          data-aos-duration="900">
+         <div
+          className="breadcrumb-container w-full text-left font-figtree font-light">
           <nav aria-label="breadcrumb">
-            <ol className="breadcrumb m-0 p-0">
+            <ol className="breadcrumb mt-0 mb-2 p-0">
               <li className="breadcrumb-item">
-                <a href="https://sitashakti.com" className="text-gray">
+                <a href="https://sitashakti.com" className="text-gray-500 text-[16px] hover:underline">
                   Home
                 </a>
               </li>
               <li className="breadcrumb-item">
-                <a href="/" className="!text-gray-600">
+                <a
+                  href="/"
+                  className="!text-gray-700 hover:underline breadcrumb-item text-[16px] truncate max-w-[120px] sm:max-w-[200px] md:max-w-full">
                   Publications
                 </a>
               </li>
@@ -88,16 +88,22 @@ const Publications = () => {
         </div>
 
         <div
-          className="relative w-full flex justify-center"
+          className=""
           data-aos="zoom-in"
           data-aos-duration="1000">
-          <h1 className="text-[32px] sm:text-[34px] md:text-[50px] font-playfair font-light text-black leading-snug mb-4 mt-4 text-center">
+          <h2
+            className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
             Publications
-          </h1>
+          </h2>
+          <img
+            src="/sita-motif.webp"
+            alt="Sita Motif"
+            className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+          />
         </div>
 
         <div
-          className="grid w-full mt-10 gap-5 sm:gap-6 md:gap-8 lg:gap-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4"
+          className="grid w-full mt-0 gap-5 sm:gap-6 md:gap-8 lg:gap-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4"
           data-aos="fade-up"
           data-aos-duration="1000">
           {allBooks.map((book, index) => {
