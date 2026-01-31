@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { getAppUrl } from "../../utils/subdomain";
 import "./BookingHome.css";
 import { useRef } from "react";
+import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -103,6 +106,14 @@ const BookingHome = () => {
             .finally(() => setLoading(false));
     }, []);
 
+    useEffect(() => {
+        AOS.init({
+            duration: 1200,
+            once: true,
+            easing: "ease-in-out",
+        });
+    }, []);
+
     const decorRef = useRef(null);
 
     useEffect(() => {
@@ -188,28 +199,16 @@ const BookingHome = () => {
                 />
 
             </div>
+            <div className="relative z-10">
+                <SitaBreadcrumb
+                    items={[
+                        { label: "Home", path: "https://sitashakti.com" },
+                        { label: "Events" }, // Current page is Events/Workshops
+                    ]}
+                />
+            </div>
             <div className="container mx-auto relative z-10">
                 <div className="max-w-6xl mx-auto px-4 mb-5 relative">
-                    {/* BREADCRUMB */}
-                    <div
-                        className="breadcrumb-container w-full text-left font-figtree font-light">
-                        <nav aria-label="breadcrumb">
-                            <ol className="breadcrumb mt-0 mb-2 p-0">
-                                <li className="breadcrumb-item">
-                                    <a href="https://sitashakti.com" className="text-gray-500 text-[16px] hover:underline">
-                                        Home
-                                    </a>
-                                </li>
-                                <li className="breadcrumb-item">
-                                    <a
-                                        href="/"
-                                        className="!text-gray-700 hover:underline breadcrumb-item text-[16px] truncate max-w-[120px] sm:max-w-[200px] md:max-w-full">
-                                        Events
-                                    </a>
-                                </li>
-                            </ol>
-                        </nav>
-                    </div>
                     {/* HEADER */}
                     <h2
                         className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
