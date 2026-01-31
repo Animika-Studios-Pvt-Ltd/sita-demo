@@ -56,4 +56,11 @@ li {
 
 body {
   font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+a, button {
+  transition: all 0.3s ease-in-out;
 }

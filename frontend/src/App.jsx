@@ -1,4 +1,5 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
+import { AnimatePresence, motion } from 'framer-motion'
 import './App.css'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -10,6 +11,7 @@ import clarity from '@microsoft/clarity'
 import { DataProvider } from './context/DataContext'
 
 function App() {
+  const location = useLocation()
   const [backendReady, setBackendReady] = useState(false)
   const [dataPreloaded, setDataPreloaded] = useState(false)
   const [appReady, setAppReady] = useState(false)
@@ -21,8 +23,8 @@ function App() {
 
   useEffect(() => {
     const checkBackendHealth = async () => {
-      const maxRetries = 10
-      const retryDelay = 3000
+      const maxRetries = 15
+      const retryDelay = 800
 
       const backendUrl = (import.meta.env.VITE_BACKEND_URL || '').replace(/\/$/, '')
 
@@ -167,7 +169,17 @@ function App() {
           <ScrollToTop />
           <Navbar />
           <main className="min-h-screen max-w-screen-3xl mx-auto px-0 py-1 font-primary">
-            <Outlet />
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={location.pathname}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Outlet />
+              </motion.div>
+            </AnimatePresence>
           </main>
           <Footer />
         </div>
