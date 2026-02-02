@@ -1,6 +1,5 @@
 // Public pages
 import App from "../../App";
-import LetterFromLangshott from "../../pages/letters/letter-from-langshott";
 import DynamicPage from "../../pages/Add pages/DynamicPage";
 import Publications from "../../pages/publications/Publications";
 import EventList from "../../pages/events/EventList";
@@ -29,8 +28,6 @@ export const mainRoutes = [
 
             { path: "events", element: <EventList /> },
             { path: "events/:id", element: <EventDetail /> },
-
-            { path: "letters", element: <LetterFromLangshott /> },
 
             {
                 path: "my-profile",
