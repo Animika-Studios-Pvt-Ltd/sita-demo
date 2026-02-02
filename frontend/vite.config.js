@@ -68,7 +68,7 @@ export default defineConfig(async () => {
     plugins: [
       react(),
       sitemap({
-        hostname: 'https://www.langshott.in',
+        hostname: 'https://sitashakti.com',
         routes: allRoutes,
         exclude: [
           '/admin',
@@ -81,7 +81,6 @@ export default defineConfig(async () => {
           '/auth',
           '/ebook/*',
           '/books/preview/*',
-          '/Langshott-Foundation-Author-Anilkumar-Admin',
         ],
         changefreq: 'weekly',
         priority: 0.7,
