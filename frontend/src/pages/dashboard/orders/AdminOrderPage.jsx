@@ -356,7 +356,7 @@ const AdminOrderPage = () => {
     doc.setFont("helvetica", "italic");
     doc.setTextColor(0);
     doc.text("Thank you for shopping with us!", pageWidth / 2, 820, { align: "center" });
-    doc.text("www.langshott.in | enquiries@langshott.org", pageWidth / 2, 835, { align: "center" });
+    doc.text("https://sitashakti.com | enquiries@sitashakti.com", pageWidth / 2, 835, { align: "center" });
 
     if (download) {
       doc.save(`Invoice-${_id}.pdf`);
