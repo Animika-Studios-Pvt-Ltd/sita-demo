@@ -1,5 +1,5 @@
 {
-  "name": "langshott-leadership-foundation-backend",
+  "name": "sita-backend",
   "version": "2.0.0",
   "description": "Backend API for Sita Book Store - A MERN stack e-commerce platform",
   "main": "index.js",
@@ -15,7 +15,7 @@
   "keywords": [
     "bookstore",
     "ecommerce",
-    "langshott",
+    "sita",
     "foundation",
     "mern",
     "express",
