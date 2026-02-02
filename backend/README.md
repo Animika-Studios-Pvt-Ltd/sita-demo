@@ -39,7 +39,7 @@ Core Functionality
 Content Management
 📝 Blog management
 
-💌 Letters from Langshott
+💌 Letters from Sita
 
 🎨 Inspiration board
 
@@ -133,7 +133,6 @@ EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
 EMAIL_USER=your_email@gmail.com
 EMAIL_PASSWORD=your_app_specific_password
-EMAIL_FROM=Sita <noreply@langshott.com>
 
 # Google Drive API (Optional)
 GOOGLE_DRIVE_CLIENT_EMAIL=your_service_account@project.iam.gserviceaccount.com
@@ -144,9 +143,6 @@ GOOGLE_DRIVE_FOLDER_ID=your_drive_folder_id
 SHIPPING_API_KEY=your_shipping_api_key
 SHIPPING_API_URL=https://api.nimbuspost.com/v1
 
-# Admin Configuration
-ADMIN_EMAIL=admin@langshott.com
-ADMIN_PASSWORD=SecureAdminPassword123!
 
 # CORS
 ALLOWED_ORIGINS=http://localhost:5173,https://yourdomain.com
