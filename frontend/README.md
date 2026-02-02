@@ -38,7 +38,7 @@ User Features
 
 📰 Blog and inspiration board
 
-💌 Letters from Langshott
+💌 Letters from sita
 
 🎨 Sufi Corner content section
 
