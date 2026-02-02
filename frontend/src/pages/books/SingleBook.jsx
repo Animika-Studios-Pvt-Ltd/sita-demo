@@ -414,7 +414,7 @@ const SingleBook = () => {
                   </div>
                 )}
               </div>
-              <div
+              {/* <div
                 className="book-buttons"
                 data-aos="fade-up"
                 data-aos-duration="1500"
@@ -424,7 +424,7 @@ const SingleBook = () => {
                   onClick={() => navigate(`/books/preview/${book.slug}`)}>
                   <MenuBookOutlinedIcon fontSize="small" /> Preview Book
                 </button>
-              </div>
+              </div> */}
             </div>
 
             <div

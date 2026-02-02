@@ -10,6 +10,7 @@ import BookPreview from "../../pages/books/BookPreview";
 import PageNotFound from "../PageNotFound";
 import { Auth0Wrapper } from "../../components/Auth0Wrapper";
 import PrivateRoute from "../PrivateRoute";
+import UserDashboard from "../../pages/dashboard/users/UserDashboard";
 
 export const storeRoutes = [
     {
@@ -40,6 +41,14 @@ export const storeRoutes = [
                 element: (
                     <PrivateRoute>
                         <OrderPage />
+                    </PrivateRoute>
+                ),
+            },
+            {
+                path: "my-profile",
+                element: (
+                    <PrivateRoute>
+                        <UserDashboard />
                     </PrivateRoute>
                 ),
             },

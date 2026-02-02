@@ -358,10 +358,17 @@ const UserDashboard = () => {
   return (
     <div className="container">
       <div className="w-full max-w-[1200px] mx-auto px-4">
-        <div className="relative inline-block text-center mt-5 mb-6 w-full">
-          <h1 className="text-[32px] sm:text-[34px] md:text-[50px] font-playfair font-light text-black font-display leading-snug">Profile Overview</h1>
+        <div className="mt-10">
+          <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+            Profile Overview
+          </h2>
+          <img
+            src="/sita-motif.webp"
+            alt="Sita Motif"
+            className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+          />
         </div>
-        <div className="max-w-8xl mx-auto p-4 mt-8 border-[#C76F3B] rounded-xl border-1">
+        <div className="max-w-8xl mx-auto p-4 mt-8 border-[#C76F3B] rounded-xl border-1 mb-8">
           <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto">

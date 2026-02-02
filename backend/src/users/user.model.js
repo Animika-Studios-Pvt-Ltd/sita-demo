@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     },
     index: true,  // Add index for faster queries
   },
-  username: { type: String, required: true },
+  username: { type: String },
   password: {
     type: String,
     required: function () {

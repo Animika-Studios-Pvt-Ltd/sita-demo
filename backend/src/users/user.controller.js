@@ -3,15 +3,15 @@ const User = require('./user.model');
 exports.getUserProfile = async (req, res) => {
   try {
     const { uid } = req.params;
-    
+
     console.log('📥 Getting profile for UID:', uid);
-    
+
     if (!uid) {
       return res.status(400).json({ message: 'UID is required' });
     }
 
     const user = await User.findOne({ uid }).select('-password -mfaSecret');
-    
+
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -56,7 +56,7 @@ exports.updateUserProfile = async (req, res) => {
 
     // FIX: Check if name field is currently a string and needs conversion
     const nameIsString = typeof user.name === 'string';
-    
+
     if (nameIsString) {
       console.log('⚠️ Name field is a string, converting to object structure');
     }
@@ -145,8 +145,8 @@ exports.updateUserProfile = async (req, res) => {
     const updatedUser = await User.findOneAndUpdate(
       { uid },
       { $set: updateData },
-      { 
-        new: true, 
+      {
+        new: true,
         runValidators: true,
         strict: false // Allow flexible schema updates
       }
@@ -166,16 +166,16 @@ exports.updateUserProfile = async (req, res) => {
   } catch (err) {
     console.error('❌ Error updating profile:', err);
     console.error('Error stack:', err.stack);
-    
+
     // Provide helpful error messages
     let errorMessage = 'Server error';
-    
+
     if (err.code === 28 && err.codeName === 'PathNotViable') {
       errorMessage = 'Database schema conflict. Your profile data needs migration.';
     }
-    
-    res.status(500).json({ 
-      message: errorMessage, 
+
+    res.status(500).json({
+      message: errorMessage,
       error: err.message,
       code: err.code,
       details: process.env.NODE_ENV === 'development' ? err.stack : undefined
@@ -282,3 +282,71 @@ exports.deleteAddress = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
+
+
+
+exports.syncAuth0User = async (req, res) => {
+  try {
+    const { sub, email, name, nickname, picture, phone_number } = req.body;
+
+    if (!sub || !email) {
+      return res.status(400).json({ message: 'Invalid Auth0 user data' });
+    }
+
+    console.log('🔄 Syncing Auth0 user:', { sub, email, name });
+
+    let firstName = name || nickname || email.split('@')[0];
+    let lastName = 'User'; // ✅ IMPORTANT DEFAULT
+
+    if (name && name.includes(' ')) {
+      const parts = name.trim().split(' ');
+      firstName = parts[0];
+      lastName = parts.slice(1).join(' ') || 'User';
+    }
+
+    let user = await User.findOne({ uid: sub });
+
+    if (user) {
+      user.lastLoginAt = new Date();
+      await user.save();
+
+      console.log('✅ Existing user synced:', user.email);
+      return res.status(200).json({ user });
+    }
+
+    user = await User.create({
+      uid: sub,
+      role: 'user',
+      email,
+      username: nickname || firstName,
+      avatar: picture || '',
+      phone: phone_number ? { primary: phone_number } : undefined,
+      name: {
+        firstName,
+        lastName, // ✅ NEVER EMPTY
+      },
+      lastLoginAt: new Date(),
+    });
+
+    console.log('✅ New user created:', user.email);
+
+    res.status(201).json({ user });
+
+  } catch (err) {
+    console.error('❌ User sync failed:', err.message);
+    console.error(err.errors);
+
+    res.status(500).json({
+      message: 'User sync failed',
+      error: err.message,
+      details: err.errors
+        ? Object.keys(err.errors).map(key => ({
+          field: key,
+          message: err.errors[key].message,
+        }))
+        : null,
+    });
+  }
+};
+
+

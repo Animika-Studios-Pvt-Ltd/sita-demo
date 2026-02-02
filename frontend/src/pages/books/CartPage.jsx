@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getSubdomain, getAppUrl } from "../../utils/subdomain";
 import {
   removeFromCart,
   updateCartQty,
@@ -31,6 +32,8 @@ const CartPage = () => {
     Boolean(giftDetails?.to || giftDetails?.from || giftDetails?.message)
   );
   const { data: allBooks } = useFetchAllBooksQuery();
+  const currentSubdomain = getSubdomain();
+  const isStore = currentSubdomain === "store";
 
   useEffect(() => {
     AOS.init({
@@ -132,18 +135,20 @@ const CartPage = () => {
   return (
     <div className="container" data-aos="fade-up" data-aos-duration="1600">
       <div className="max-w-9xl mx-auto py-0 text-center flex flex-col justify-center items-center px-0 mb-20">
-        <div
-          className="relative inline-block"
-          data-aos="fade-down"
-          data-aos-duration="1800">
-          <h1 className="text-[32px] sm:text-[34px] md:text-[50px] font-playfair font-light text-black font-display leading-snug mb-4 mt-10">
+        <div className="mt-10" data-aos="zoom-in" data-aos-duration="1000">
+          <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
             Shopping Cart
-          </h1>
+          </h2>
+          <img
+            src="/sita-motif.webp"
+            alt="Sita Motif"
+            className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+          />
         </div>
 
         {cartItems.length > 0 ? (
           <div
-            className="max-w-8xl border-1 border-[#C76F3B] rounded-md p-4 mx-auto grid grid-cols-1 mt-4 lg:grid-cols-3 gap-4"
+            className="max-w-8xl border-1 border-[#C76F3B] rounded-md p-4 mx-auto grid grid-cols-1 mt-2 lg:grid-cols-3 gap-4"
             data-aos="fade-up"
             data-aos-delay="200"
             data-aos-duration="1800">
@@ -257,12 +262,24 @@ const CartPage = () => {
                   className="flex flex-col sm:flex-row justify-center sm:justify-between items-center mb-6 gap-2 sm:gap-0"
                   data-aos="fade-up"
                   data-aos-duration="1600">
-                  <Link
-                    to="/publications"
-                    className="mt-0 flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] text-white px-6 py-2 no-underline rounded-md font-medium transition-colors duration-300 text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px]">
-                    <ArrowBackOutlinedIcon fontSize="small" />
-                    CONTINUE SHOPPING
-                  </Link>
+                  {isStore ? (
+                    <Link
+                      to="/"
+                      className="mt-0 flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] text-white px-6 py-2 no-underline rounded-md font-medium transition-colors duration-300 text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px]"
+                    >
+                      <ArrowBackOutlinedIcon fontSize="small" />
+                      CONTINUE SHOPPING
+                    </Link>
+                  ) : (
+                    <a
+                      href={getAppUrl("store", "/")}
+                      className="mt-0 flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] text-white px-6 py-2 no-underline rounded-md font-medium transition-colors duration-300 text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px]"
+                    >
+                      <ArrowBackOutlinedIcon fontSize="small" />
+                      CONTINUE SHOPPING
+                    </a>
+                  )}
+
                   <p className="text-[14px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[18px] font-Figtree font-regular text-center sm:text-left">
                     Subtotal (
                     <span className="font-bold">
@@ -392,7 +409,7 @@ const CartPage = () => {
           </div>
         ) : (
           <div
-            className="bg-white p-6 mt-20 text-center w-full md:w-2/3 lg:w-1/2"
+            className="bg-white p-6 mt-10 text-center w-full md:w-2/3 lg:w-1/2"
             data-aos="fade-up"
             data-aos-duration="1800">
             <h2
@@ -408,13 +425,22 @@ const CartPage = () => {
               Looks like you have not added anything yet. Start exploring and
               add your favorite books to the cart!
             </p>
-            <Link
-              to="/publications"
-              className="inline-flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] no-underline text-white px-5 py-2 rounded-md text-center font-medium transition-colors duration-300 text-base sm:text-lg"
-              data-aos="zoom-in"
-              data-aos-duration="1800">
-              CONTINUE SHOPPING
-            </Link>
+            {isStore ? (
+              <Link
+                to="/"
+                className="inline-flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] no-underline text-white px-5 py-2 rounded-md text-center font-medium transition-colors duration-300 text-base sm:text-lg"
+              >
+                CONTINUE SHOPPING
+              </Link>
+            ) : (
+              <a
+                href={getAppUrl("store", "/")}
+                className="inline-flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] no-underline text-white px-5 py-2 rounded-md text-center font-medium transition-colors duration-300 text-base sm:text-lg"
+              >
+                CONTINUE SHOPPING
+              </a>
+            )}
+
           </div>
         )}
       </div>

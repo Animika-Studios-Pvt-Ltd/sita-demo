@@ -367,14 +367,26 @@ const CheckoutPage = () => {
         order_id: data.orderId,
         handler: async function (response) {
           try {
+            setLoading(true);
+
             await processPaymentSuccess(
               data.orderId,
               formData,
               response.razorpay_payment_id,
               response.razorpay_signature
             );
+
+            setLoading(false);
+
           } catch (error) {
-            Swal.fire("Error", "Payment Verification Failed", "error");
+            setLoading(false);
+
+            await Swal.fire({
+              title: "Payment Failed",
+              text: "Payment verification failed. Amount will be refunded if deducted.",
+              icon: "error",
+              confirmButtonColor: "#C76F3B",
+            });
           }
         },
         prefill: {
@@ -464,6 +476,7 @@ const CheckoutPage = () => {
 
       dispatch(clearCart());
       dispatch(clearGiftDetails());
+      setLoading(false);
       setShowConfetti(true);
 
       await Swal.fire({
@@ -480,7 +493,6 @@ const CheckoutPage = () => {
       });
 
       setShowConfetti(false);
-      setLoading(false);
       navigate("/orders");
     } catch (error) {
       console.error("❌ Order creation error:", error);
@@ -502,35 +514,33 @@ const CheckoutPage = () => {
     }
   };
 
-  const processPaymentSuccess = async (razorpayOrderId, formData, paymentId, signature) => {
+  const processPaymentSuccess = async (
+    razorpayOrderId,
+    formData,
+    paymentId,
+    signature
+  ) => {
     try {
-      setLoading(true);
-
       const verifyResponse = await axios.post(
         `${getBaseUrl()}/api/payment/verify-payment`,
         {
           razorpay_order_id: razorpayOrderId,
           razorpay_payment_id: paymentId,
-          razorpay_signature: signature
+          razorpay_signature: signature,
         }
       );
 
       if (!verifyResponse.data.success) {
-        throw new Error("Payment verification failed on server");
+        throw new Error("Payment verification failed");
       }
 
       await createOrderAfterPayment(formData, razorpayOrderId, paymentId);
+
     } catch (error) {
-      console.error("❌ Payment processing error:", error);
-      setLoading(false);
-      Swal.fire({
-        title: "Order Processing Failed",
-        text: "Payment verified but order creation failed. Please contact support.",
-        icon: "error",
-        confirmButtonColor: "#C76F3B",
-      });
+      throw error; // VERY IMPORTANT
     }
   };
+
 
 
   useEffect(() => {
@@ -662,14 +672,19 @@ const CheckoutPage = () => {
       {loading && renderLoadingOverlay()}
       <div className="container">
         <div className="max-w-9xl mx-auto py-0 flex flex-col justify-center items-center px-0 mb-20">
-          <div className="relative inline-block align-middle text-center w-full">
-            <h1 className="text-[32px] sm:text-[34px] md:text-[50px] font-playfair font-light text-black font-display leading-snug mb-4 mt-10">
+          <div className="mt-10" data-aos="zoom-in" data-aos-duration="1000">
+            <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
               Checkout
-            </h1>
+            </h2>
+            <img
+              src="/sita-motif.webp"
+              alt="Sita Motif"
+              className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+            />
           </div>
 
           <div
-            className="flex flex-col-reverse lg:grid lg:grid-cols-3 gap-6 mt-8 lg:gap-8 border-1 rounded-lg p-4 md:p-6 w-full"
+            className="flex flex-col-reverse lg:grid lg:grid-cols-3 gap-6 mt-2 lg:gap-8 border-1 rounded-lg p-4 md:p-6 w-full"
             style={{ borderColor: "#C76F3B" }}>
             <div className="lg:col-span-2 space-y-6">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">

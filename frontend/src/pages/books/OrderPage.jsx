@@ -16,7 +16,7 @@ import "aos/dist/aos.css";
 import { useUpdateOrderMutation } from "../../redux/features/orders/ordersApi";
 import Swal from "sweetalert2";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
-
+import { getSubdomain, getAppUrl } from "../../utils/subdomain";
 
 const OrderPage = () => {
   const { currentUser } = useAuth();
@@ -33,6 +33,8 @@ const OrderPage = () => {
   const [updateOrder] = useUpdateOrderMutation();
   const [cancellingOrders, setCancellingOrders] = useState({});
   const [preloadedBooks, setPreloadedBooks] = useState(new Set());
+  const currentSubdomain = getSubdomain();
+  const isStore = currentSubdomain === "store";
 
   const handlePreloadEbook = async (bookId) => {
     if (preloadedBooks.has(bookId)) return;
@@ -228,17 +230,19 @@ const OrderPage = () => {
     return (
       <div className="container" data-aos="fade-up" data-aos-duration="1500">
         <div className="max-w-8xl mx-auto flex flex-col items-center px-2">
-          <div
-            className="relative inline-block text-center mt-5 mb-6 w-full"
-            data-aos="fade-down"
-            data-aos-duration="1600">
-            <h1 className="text-[32px] sm:text-[34px] md:text-[50px] font-playfair font-light text-black font-display leading-snug">
+          <div className="mt-10" data-aos="zoom-in" data-aos-duration="1000">
+            <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
               Your Orders
-            </h1>
+            </h2>
+            <img
+              src="/sita-motif.webp"
+              alt="Sita Motif"
+              className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+            />
           </div>
 
           <div
-            className="bg-white p-6 mt-20 text-center w-full md:w-2/3 lg:w-1/2"
+            className="bg-white p-6 mt-2 text-center w-full md:w-2/3 lg:w-1/2"
             data-aos="fade-up"
             data-aos-delay="200"
             data-aos-duration="1800">
@@ -249,13 +253,22 @@ const OrderPage = () => {
               Once you place an order, it will appear here. Start exploring and
               shop your favorite books!
             </p>
-            <Link
-              to="/publications"
-              className="inline-flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] no-underline text-white px-5 py-2 rounded-md text-center font-medium transition-colors duration-300 text-base sm:text-lg"
-              data-aos="zoom-in"
-              data-aos-delay="400">
-              CONTINUE SHOPPING
-            </Link>
+            {isStore ? (
+              <Link
+                to="/"
+                className="inline-flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] no-underline text-white px-5 py-2 rounded-md text-center font-medium transition-colors duration-300 text-base sm:text-lg"
+              >
+                CONTINUE SHOPPING
+              </Link>
+            ) : (
+              <a
+                href={getAppUrl("store", "/")}
+                className="inline-flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] no-underline text-white px-5 py-2 rounded-md text-center font-medium transition-colors duration-300 text-base sm:text-lg"
+              >
+                CONTINUE SHOPPING
+              </a>
+            )}
+
           </div>
         </div>
       </div>
@@ -264,19 +277,21 @@ const OrderPage = () => {
   return (
     <div className="container" data-aos="fade-up" data-aos-duration="1500">
       <div className="max-w-8xl mx-auto flex flex-col items-center px-2">
-        <div
-          className="relative inline-block text-center mt-5 mb-6 w-full"
-          data-aos="fade-down"
-          data-aos-duration="1600">
-          <h1 className="text-[32px] sm:text-[34px] md:text-[50px] font-playfair font-light text-black font-display leading-snug">
+        <div className="mt-10" data-aos="zoom-in" data-aos-duration="1000">
+          <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
             Your Orders
-          </h1>
+          </h2>
+          <img
+            src="/sita-motif.webp"
+            alt="Sita Motif"
+            className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+          />
         </div>
 
         {ordersWithImages.map((order, index) => (
           <div
             key={order._id}
-            className="bg-white rounded-xl border-1 mt-4 border-[#C76F3B] transition-all duration-300 p-4 w-full flex flex-col lg:flex-row gap-4 mb-6"
+            className="bg-white rounded-xl border-1 mt- border-[#C76F3B] transition-all duration-300 p-4 w-full flex flex-col lg:flex-row gap-4 mb-6"
             data-aos="fade-up"
             data-aos-delay={`${index * 150}`}
             data-aos-duration="1800">
