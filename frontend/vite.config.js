@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import sitemap from 'vite-plugin-sitemap'
-import staticRoutes from './src/sitemap.config.js'
 
 // Environment detection
 const backendUrl = process.env.VITE_API_URL || 'http://localhost:5000';
