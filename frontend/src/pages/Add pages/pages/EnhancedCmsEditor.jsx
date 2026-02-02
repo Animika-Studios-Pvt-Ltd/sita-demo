@@ -496,7 +496,7 @@ function SectionCard({ section, dragHandleProps, onDelete, onUpdate, isExpanded,
       {isExpanded && (
         <div className="p-6 bg-white">
           {section.key === "hero" && (
-            <HeroForm content={section.content} onUpdate={onUpdate} />
+            <HeroForm content={section.content} onUpdate={onUpdate} pageSlug={pageSlug} />
           )}
           {section.key === "faq" && (
             <FaqForm content={section.content} onUpdate={onUpdate} />

@@ -1,13 +1,22 @@
 // frontend/src/components/Cms/SectionRenderer.jsx
 
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import BookingModal from '../../../components/BookingModal'; // Import BookingModal
+import BookingModal from '../../../components/BookingModal';
+import SitaBreadcrumb from '../../breadcrumbs/SitaBreadcrumb';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function SectionRenderer({ section }) {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
+
   if (!section || !section.key) return null;
 
   const { key, content } = section;
@@ -21,7 +30,7 @@ export default function SectionRenderer({ section }) {
       return <LinksSection content={content} />;
     case 'faq':
       return <FaqSection content={content} />;
-    case 'booking': // Added Booking Case
+    case 'booking':
       return <BookingSection content={content} />;
     case 'main':
       return <MainSection content={content} />;
@@ -59,180 +68,84 @@ function BookingSection({ content }) {
   );
 }
 
-// Hero Section Component
+// Hero Section Component (Updated)
 function HeroSection({ content }) {
-  const navigate = useNavigate();
-  const { loginWithRedirect, isLoading } = useAuth0();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEventId, setSelectedEventId] = useState(null);
 
   const {
-    title = 'Welcome',
+    title = '',
     subtitle = '',
-    description = '',
-
-    // Background options
-    backgroundType = 'color',
-    backgroundColor = '#ffffff',
-    gradientStart = '#3b82f6',
-    gradientEnd = '#8b5cf6',
-    backgroundImage = '',
-    overlayEnabled = false,
-    overlayOpacity = 50,
-    textColor = '#000000',
-
-    // CTAs
+    backgroundImage = '/images/about-banner.webp',
     primaryCta = {},
-    secondaryCta = {},
-
-    // Layout
-    textAlign = 'center',
-    height = 'medium',
   } = content;
 
-  // Build background style
-  const getBackgroundStyle = () => {
-    const base = {};
+  // Breadcrumb items
+  const breadcrumbItems = [
+    { label: "Home", path: "/" },
+    { label: "Workshops", path: "/" },
+    { label: title || "Page", path: null }
+  ];
 
-    if (backgroundType === 'color') {
-      base.backgroundColor = backgroundColor;
-    } else if (backgroundType === 'gradient') {
-      base.background = `linear-gradient(135deg, ${gradientStart}, ${gradientEnd})`;
-    } else if (backgroundType === 'image' && backgroundImage) {
-      base.backgroundImage = `url(${backgroundImage})`;
-      base.backgroundSize = 'cover';
-      base.backgroundPosition = 'center';
-      base.backgroundRepeat = 'no-repeat';
-    }
-
-    base.color = textColor;
-    return base;
-  };
-
-  // Get height class
-  const getHeightClass = () => {
-    switch (height) {
-      case 'small': return 'min-h-[400px]';
-      case 'medium': return 'min-h-[600px]';
-      case 'large': return 'min-h-[800px]';
-      case 'fullscreen': return 'min-h-screen';
-      default: return 'min-h-[600px]';
+  const handleCtaClick = () => {
+    if (primaryCta.eventId) {
+      setSelectedEventId(primaryCta.eventId);
+      setIsModalOpen(true);
+    } else if (primaryCta.href) {
+      window.location.href = primaryCta.href;
     }
   };
 
-  // Get text alignment classes
-  const getAlignmentClasses = () => {
-    switch (textAlign) {
-      case 'left':
-        return 'text-left items-start';
-      case 'right':
-        return 'text-right items-end';
-      case 'center':
-      default:
-        return 'text-center items-center';
-    }
-  };
-
-  // Handle button clicks
-  const handlePrimaryClick = () => {
-    if (primaryCta.href) {
-      if (primaryCta.href.startsWith('http')) {
-        window.location.href = primaryCta.href;
-      } else {
-        navigate(primaryCta.href);
-      }
-    }
-  };
-
-  const handleSecondaryClick = () => {
-    const href = secondaryCta.href || secondaryCta.action;
-
-    if (href === 'hospitalLogin') {
-      loginWithRedirect({
-        authorizationParams: {
-          redirect_uri: `${window.location.origin}/callback`,
-        },
-      });
-    } else if (href) {
-      if (href.startsWith('http')) {
-        window.location.href = href;
-      } else {
-        navigate(href);
-      }
-    }
+  const ctaStyle = {
+    backgroundColor: primaryCta.bgColor || "#3b82f6",
+    color: primaryCta.textColor || "#ffffff",
   };
 
   return (
-    <section
-      className={`relative ${getHeightClass()} flex flex-col justify-center px-4`}
-      style={getBackgroundStyle()}
-    >
-      {/* Overlay for background images */}
-      {backgroundType === 'image' && backgroundImage && overlayEnabled && (
-        <div
-          className="absolute inset-0 bg-black"
-          style={{ opacity: overlayOpacity / 100 }}
-        />
-      )}
+    <>
+      {/* 1. Hero Image - Always first */}
+      <section className="sita-inner-hero">
+        <div className="sita-hero-inner-bg"></div>
+        <div className="sita-inner-hero-image">
+          <img src={backgroundImage || "/images/about-banner.webp"} alt="Hero Banner" />
+        </div>
+      </section>
 
-      {/* Content */}
-      <div className={`container mx-auto relative z-10 flex flex-col ${getAlignmentClasses()} gap-6 px-4`}>
-        {/* Title */}
-        {title && (
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold max-w-4xl">
-            {title}
-          </h1>
-        )}
+      {/* 2. Breadcrumbs using SitaBreadcrumb - Now after image */}
+      <SitaBreadcrumb items={breadcrumbItems} />
 
-        {/* Subtitle */}
-        {subtitle && (
-          <p className="text-lg md:text-xl lg:text-2xl max-w-3xl opacity-90">
-            {subtitle}
-          </p>
-        )}
+      {/* 3. Hero Content (Workshop Section style) - Now after image */}
+      <section className="sita-workshop-section" style={{ padding: '40px 0' }}>
+        <div className="container">
+          {title && <h2 className="text-center">{title}</h2>}
+          <img src="/sita-motif.webp" alt="Sita Motif" className="motif mx-auto my-3 block" style={{ width: 'auto', height: 'auto' }} />
 
-        {/* Description */}
-        {description && (
-          <p className="text-base md:text-lg max-w-2xl opacity-80">
-            {description}
-          </p>
-        )}
+          <div className="row justify-content-center text-center">
+            <div className="col-lg-8">
+              {subtitle && <p className="mb-4">{subtitle}</p>}
 
-        {/* CTA Buttons */}
-        {(primaryCta.enabled !== false || secondaryCta.enabled !== false) && (
-          <div className="flex flex-col sm:flex-row gap-4 mt-4">
-            {/* Primary CTA */}
-            {primaryCta.enabled !== false && primaryCta.label && (
-              <button
-                onClick={handlePrimaryClick}
-                className="px-8 py-3 rounded-full font-semibold text-lg transition-all hover:opacity-90 hover:scale-105 shadow-lg"
-                style={{
-                  backgroundColor: primaryCta.bgColor || '#3b82f6',
-                  color: primaryCta.textColor || '#ffffff',
-                }}
-              >
-                {primaryCta.label}
-              </button>
-            )}
-
-            {/* Secondary CTA */}
-            {secondaryCta.enabled !== false && secondaryCta.label && (
-              <button
-                onClick={handleSecondaryClick}
-                disabled={isLoading && (secondaryCta.href === 'hospitalLogin' || secondaryCta.action === 'hospitalLogin')}
-                className="px-8 py-3 rounded-full font-semibold text-lg transition-all hover:opacity-90 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{
-                  backgroundColor: secondaryCta.bgColor || '#6b7280',
-                  color: secondaryCta.textColor || '#ffffff',
-                }}
-              >
-                {isLoading && (secondaryCta.href === 'hospitalLogin' || secondaryCta.action === 'hospitalLogin')
-                  ? 'Loading...'
-                  : secondaryCta.label}
-              </button>
-            )}
+              {primaryCta.label && (
+                <div className="mt-4">
+                  <button
+                    onClick={handleCtaClick}
+                    className="px-6 py-3 masterclass-card-btn font-bold shadow-md transition hover:-translate-y-1 inline-block"
+                    style={ctaStyle}
+                  >
+                    {primaryCta.label}
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
-        )}
-      </div>
-    </section>
+        </div>
+      </section>
+
+      <BookingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        eventId={selectedEventId}
+      />
+    </>
   );
 }
 

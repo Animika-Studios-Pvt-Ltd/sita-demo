@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import parse from "html-react-parser";
 import BookingModal from "../../components/BookingModal";
+import "../../assets/c.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -20,6 +24,13 @@ const DynamicPage = ({ page: propPage }) => {
     setSelectedEventId(eventId);
     setIsModalOpen(true);
   };
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
 
   useEffect(() => {
     if (propPage) return;
@@ -124,16 +135,63 @@ const DynamicPage = ({ page: propPage }) => {
 
       // 2. HERO SECTION
       if (key === 'hero' && sec.content) {
+        const bgImage = sec.content.backgroundImage || "/images/about-banner.webp";
+        const cta = sec.content.primaryCta || {};
+        const ctaStyle = {
+          backgroundColor: cta.bgColor || "#3b82f6",
+          color: cta.textColor || "#ffffff",
+        };
+
+        const breadcrumbItems = [
+          { label: "Home", path: "/" },
+          { label: page.title || "Page", path: null }
+        ];
+
         return (
-          <div key={idx} className="bg-blue-600 text-white py-20 px-6 text-center mb-10 rounded-xl mx-4">
-            <h1 className="text-4xl font-bold mb-4">{sec.content.title}</h1>
-            <p className="text-xl opacity-90 mb-8">{sec.content.subtitle}</p>
-            {sec.content.primaryCta && (
-              <a href={sec.content.primaryCta.href} className="bg-white text-blue-600 px-6 py-3 rounded-full font-bold inline-block hover:bg-gray-100 transition">
-                {sec.content.primaryCta.label}
-              </a>
-            )}
-          </div>
+          <React.Fragment key={idx}>
+            <section className="sita-inner-hero">
+              <div className="sita-hero-inner-bg"></div>
+              <div className="sita-inner-hero-image">
+                <img src={bgImage} alt="Hero Banner" />
+              </div>
+            </section>
+
+            <SitaBreadcrumb items={breadcrumbItems} />
+
+            <section className="sita-workshop-section" style={{ padding: '40px 0' }}>
+              <div className="container">
+                {sec.content.title && <h2 className="text-center">{sec.content.title}</h2>}
+                <img src="/images/sita-motif.webp" alt="Sita Motif" className="motif mx-auto my-3 block" style={{ width: 'auto', height: 'auto' }} />
+                <div className="row justify-content-center text-center">
+                  <div className="col-lg-8">
+                    {sec.content.subtitle && <p className="mb-4">{sec.content.subtitle}</p>}
+
+                    {cta.label && (
+                      <div className="mt-4">
+                        {cta.eventId ? (
+                          <button
+                            onClick={() => openBooking(cta.eventId)}
+                            className="px-6 py-3 rounded-full font-bold shadow-md transition hover:-translate-y-1 inline-block"
+                            style={ctaStyle}
+                          >
+                            {cta.label}
+                          </button>
+                        ) : (
+                          <a
+                            href={cta.href || "#"}
+                            className="px-6 py-3 rounded-full font-bold shadow-md transition hover:-translate-y-1 inline-block"
+                            style={ctaStyle}
+                          >
+                            {cta.label}
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </section>
+          </React.Fragment>
         );
       }
 
@@ -241,26 +299,32 @@ const DynamicPage = ({ page: propPage }) => {
   };
 
   return (
-    <div className="container mx-auto max-w-8xl px-2 xs:px-4 sm:px-6 md:px-8 py-4 mt-3 sm:py-5 md:py-5">
-      <div className="text-center mb-10 relative inline-block w-full">
-        <h1 className="text-[28px] xs:text-[26px] sm:text-[30px] md:text-[36px] lg:text-[50px] font-playfair font-light text-black leading-snug mb-2 break-words">
-          {page.title}
-        </h1>
+    <div className="font-primary">
+      <div className="container mx-auto max-w-8xl px-2 xs:px-4 sm:px-6 md:px-8 py-4 mt-3 sm:py-5 md:py-5">
+        <div className="text-center mb-10 relative inline-block w-full">
+          {/* Only show title if it's NOT already shown in breadcrumbs/hero effectively? 
+               K.html has breadcrumbs then H2 title. 
+               DynamicPage shows H1 title here. Matches K.html flow roughly.
+           */}
+          <h1 className="text-[28px] xs:text-[26px] sm:text-[30px] md:text-[36px] lg:text-[50px] font-playfair font-light text-black leading-snug mb-2 break-words">
+            {page.title}
+          </h1>
+        </div>
+
+        {["top", "top-left", "top-right"].includes(page.bannerPosition)
+          ? renderTopBannerWithContent()
+          : renderMainContent()}
+
+        {renderSections()}
+
+        {page.bannerPosition === "bottom" && renderBanner()}
+
+        <BookingModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          eventId={selectedEventId}
+        />
       </div>
-
-      {["top", "top-left", "top-right"].includes(page.bannerPosition)
-        ? renderTopBannerWithContent()
-        : renderMainContent()}
-
-      {renderSections()}
-
-      {page.bannerPosition === "bottom" && renderBanner()}
-
-      <BookingModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        eventId={selectedEventId}
-      />
     </div>
   );
 };

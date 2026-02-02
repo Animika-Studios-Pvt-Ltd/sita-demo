@@ -168,7 +168,7 @@ function App() {
         <div className="frontend-wrapper">
           <ScrollToTop />
           <Navbar />
-          <main className="min-h-screen max-w-screen-3xl mx-auto px-0 py-1 font-primary">
+          <main className="min-h-screen max-w-screen-3xl mx-auto px-0 py-0 font-primary">
             <AnimatePresence mode="wait">
               <motion.div
                 key={location.pathname}
