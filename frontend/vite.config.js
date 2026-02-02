@@ -43,6 +43,10 @@ async function getDynamicBlogRoutes() {
   }
 }
 
+const staticRoutes = [
+  '/',
+];
+
 // https://vitejs.dev/config/
 export default defineConfig(async () => {
   // Fetch all dynamic routes
