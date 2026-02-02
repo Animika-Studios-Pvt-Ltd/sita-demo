@@ -73,7 +73,7 @@ const DashboardLayout = () => {
     localStorage.removeItem("adminToken")
     localStorage.removeItem("lastActivity")
     setIsAuthenticated(false)
-    navigate("/Langshott-Foundation-Author-Anilkumar-Admin", { replace: true })
+    navigate("/", { replace: true })
   }
 
   const isActive = (path) => location.pathname === path
