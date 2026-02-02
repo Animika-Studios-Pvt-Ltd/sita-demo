@@ -1276,7 +1276,6 @@ async function sendContactFormEmail({ name, email, subject, message, contactId }
                               </html>
                               `;
 
-    // Send to enquiries@langshott.org
     await sendEmail({
       to: enquiriesEmail,
       subject: `[Contact Form] ${subject}`,
