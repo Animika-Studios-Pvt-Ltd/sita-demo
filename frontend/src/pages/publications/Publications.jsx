@@ -12,6 +12,7 @@ import BlockIcon from "@mui/icons-material/Block";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
+import "../../assets/herosection.css";
 
 const Publications = () => {
   const { data: books = [] } = useFetchAllBooksQuery();
@@ -67,6 +68,16 @@ const Publications = () => {
 
   return (
     <>
+      <section className="sita-inner-hero blogs-hero">
+        <div className="sita-hero-inner-bg"></div>
+        <div className="sita-inner-hero-image">
+          <img
+            src="/about-banner.webp"
+            alt="Blogs Banner"
+            className="sita-inner-hero-img"
+          />
+        </div>
+      </section>
       <SitaBreadcrumb
         items={[
           { label: "Home", path: "https://sitashakti.com" },

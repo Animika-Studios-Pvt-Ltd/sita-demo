@@ -5,6 +5,8 @@ import { CalendarDays, ArrowRight, ArrowLeft } from "lucide-react";
 import { useFetchAllBooksQuery } from "../../redux/features/books/booksApi";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
+import "../../assets/herosection.css";
 
 const BACKEND_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -114,9 +116,12 @@ const BlogDetailPage = () => {
   const currentBlogs = latestBlogs.slice(indexOfFirst, indexOfLast);
 
   return (
-    <div className="container" data-aos="fade-up" data-aos-duration="1000">
-      <div className="max-w-8xl mx-auto py-0 text-center flex flex-col justify-center items-center px-4">
-        <div className="relative w-full h-[350px] md:h-[400px] lg:h-[500px] overflow-hidden rounded-[10px] z-0">
+    <>
+
+
+      <section className="blog-details-inner-hero">
+        <div className="blog-details-inner-hero-bg"></div>
+        <div className="blog-details-inner-hero-image">
           <img
             src={
               blog.image?.startsWith("http")
@@ -124,152 +129,31 @@ const BlogDetailPage = () => {
                 : `${BACKEND_BASE_URL}${blog.image}`
             }
             alt={blog.title}
-            className="absolute inset-0 w-full h-full object-cover z-0"
+            className="blog-details-inner-hero-image"
           />
-          <div className="absolute inset-0 bg-black/40 z-0" />
-          <div className="relative z-10 flex flex-col justify-center items-center text-center text-white h-full px-2">
-            <div
-              className="absolute top-4 left-4 z-20"
-              data-aos="fade-right"
-              data-aos-duration="1200">
-              <nav aria-label="breadcrumb">
-                <ol className="breadcrumb m-0 p-0 flex gap-0 text-[14px]">
-                  <li className="breadcrumb-item">
-                    <a href="https://sitashakti.com" className="text-gray-300 hover:underline">
-                      Home
-                    </a>
-                  </li>
-                  <li className="breadcrumb-item">
-                    {getSubdomain() === 'blog' ? (
-                      <Link to="/" className="text-gray-300 hover:underline">Blogs</Link>
-                    ) : (
-                      <a href={getAppUrl('blog', '/')} className="text-gray-300 hover:underline">Blogs</a>
-                    )}
-                  </li>
-                  <li
-                    className="breadcrumb-item text-gray-200 truncate max-w-[120px]"
-                    title={blog.title}>
-                    {blog.title}
-                  </li>
-                </ol>
-              </nav>
-            </div>
+        </div>
+      </section>
 
-            <div
-              className="relative w-full max-w-[900px] mx-auto text-center px-3 sm:px-6 md:px-8 lg:px-0"
+      <SitaBreadcrumb
+        items={[
+          { label: "Home", path: "https://sitashakti.com" },
+          {
+            label: "Blogs",
+            path: getSubdomain() === "blog" ? "/" : getAppUrl("blog", "/"),
+          },
+          { label: blog.title },
+        ]}
+      />
+
+      <div className="container" data-aos="fade-up" data-aos-duration="1000">
+        <div className="max-w-8xl mx-auto py-0 text-center flex flex-col justify-center items-center px-4">
+          <div className="max-w-6xl mx-auto px-4 text-center">
+            <h1
+              className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center"
               data-aos="zoom-in"
               data-aos-duration="1300">
-              <h1 className="relative text-[30px] sm:text-[34px] md:text-[50px] font-playfair font-light leading-snug inline-block">
-                {blog.title}
-              </h1>
-            </div>
-          </div>
-        </div>
-
-        <div
-          className="max-w-8xl mx-auto px-0 py-6 grid gap-10 lg:grid-cols-1 xl:grid-cols-4"
-          data-aos="fade-up"
-          data-aos-duration="1200">
-          <div className="col-span-1 xl:col-span-3">
-            <p className="flex items-center gap-2 text-gray-400 text-md font-regular mt-0 mb-2">
-              <CalendarDays className="w-5 h-5" />
-              {new Date(blog.createdAt).toLocaleDateString(undefined, {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </p>
-            <div
-              className="text-left max-w-none text-gray-800 text-[15px] sm:text-[17px] md:text-[17px] lg:text-[18px] xl:text-[18px] font-Figtree leading-snug whitespace-pre-wrap"
-              dangerouslySetInnerHTML={{
-                __html: sanitizeDescription(blog.description),
-              }}
-            />
-          </div>
-
-          {window.innerWidth >= 1280 && (
-            <aside
-              className="col-span-1"
-              data-aos="fade-left"
-              data-aos-duration="1300">
-              <div className="bg-[#f3e7db] border-1 border-gray-500 rounded-[6px] p-4 max-h-[700px] min-h-[540px] flex flex-col">
-                <h3 className="text-[20px] sm:text-[24px] md:text-[28px] font-Figtree font-medium text-gray-900 font-[400] mb-4">
-                  Featured Books
-                </h3>
-                {activeBooks.length > 0 && (
-                  <div className="flex flex-col items-center text-center rounded-lg overflow-hidden relative flex-grow">
-                    <div className={`flex flex-col items-center absolute transition-all duration-700 ease-in-out transform will-change-transform ${fade ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
-                      {getSubdomain() === 'store' ? (
-                        <>
-                          <Link to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`} className="no-underline">
-                            <img
-                              src={activeBooks[currentIndex]?.coverImage || "/placeholder-book.jpg"}
-                              alt={activeBooks[currentIndex]?.title}
-                              className="w-40 h-58 object-cover mb-4 cursor-pointer hover:scale-105 transition-transform duration-500"
-                            />
-                          </Link>
-                          <Link to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`} className="no-underline">
-                            <h4 className="text-[16px] sm:text-[18px] md:text-[20px] text-black font-Figtree mb-3 hover:text-[#993333] transition-colors duration-300 cursor-pointer">
-                              {activeBooks[currentIndex]?.title}
-                            </h4>
-                          </Link>
-                        </>
-                      ) : (
-                        <>
-                          <a href={getAppUrl('store', `/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`)} className="no-underline">
-                            <img
-                              src={activeBooks[currentIndex]?.coverImage || "/placeholder-book.jpg"}
-                              alt={activeBooks[currentIndex]?.title}
-                              className="w-40 h-58 object-cover mb-4 cursor-pointer hover:scale-105 transition-transform duration-500"
-                            />
-                          </a>
-                          <a href={getAppUrl('store', `/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`)} className="no-underline">
-                            <h4 className="text-[16px] sm:text-[18px] md:text-[20px] text-black font-Figtree mb-3 hover:text-[#993333] transition-colors duration-300 cursor-pointer">
-                              {activeBooks[currentIndex]?.title}
-                            </h4>
-                          </a>
-                        </>
-                      )}
-                    </div>
-
-                    <div className="flex items-center justify-center gap-6 mt-auto relative z-10">
-                      <button
-                        onClick={handlePrev}
-                        className="w-8 h-8 flex items-center justify-center border border-black rounded-full group hover:bg-gray-100">
-                        <ArrowLeft
-                          size={20}
-                          strokeWidth={2}
-                          className="text-black transition-colors duration-300 group-hover:text-red-500"
-                        />
-                      </button>
-                      <button
-                        onClick={handleNext}
-                        className="w-8 h-8 flex items-center justify-center border border-black rounded-full group hover:bg-gray-100">
-                        <ArrowRight
-                          size={20}
-                          strokeWidth={2}
-                          className="text-black transition-colors duration-300 group-hover:text-red-500"
-                        />
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </aside>
-          )}
-        </div>
-        <div
-          className="max-w-8xl mx-auto py-0"
-          data-aos="fade-up"
-          data-aos-duration="1200">
-
-          {/* HEADER */}
-          <div className="" data-aos="fade-up"
-            data-aos-duration="1200">
-            <h2
-              className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
-              Latest Blogs
-            </h2>
+              {blog.title}
+            </h1>
             <img
               src="/sita-motif.webp"
               alt="Sita Motif"
@@ -277,43 +161,154 @@ const BlogDetailPage = () => {
             />
           </div>
 
-          {/* BLOG GRID */}
-          <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {currentBlogs.map((blog, index) => {
-              const btnColors = [
-                "bg-[#d86c87]",
-                "bg-[#e29a7a]",
-                "bg-[#c36c6c]",
-              ];
+          <div
+            className="max-w-8xl mx-auto px-0 py-6 grid gap-10 lg:grid-cols-1 xl:grid-cols-4"
+            data-aos="fade-up"
+            data-aos-duration="1200">
+            <div className="col-span-1 xl:col-span-3">
+              <p className="flex items-center gap-2 text-gray-400 text-md font-regular mt-0 mb-2">
+                <CalendarDays className="w-5 h-5" />
+                {new Date(blog.createdAt).toLocaleDateString(undefined, {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
+              <div
+                className="text-left max-w-none text-gray-800 text-[15px] sm:text-[17px] md:text-[17px] lg:text-[18px] xl:text-[18px] font-Figtree leading-snug whitespace-pre-wrap"
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeDescription(blog.description),
+                }}
+              />
+            </div>
 
-              return (
-                <div
-                  key={blog._id}
-                  data-aos="fade-up"
-                  data-aos-delay={(index + 1) * 100}
-                  className="
+            {window.innerWidth >= 1280 && (
+              <aside
+                className="col-span-1"
+                data-aos="fade-left"
+                data-aos-duration="1300">
+                <div className="bg-[#f3e7db] border-1 border-gray-500 rounded-[6px] p-4 max-h-[700px] min-h-[540px] flex flex-col">
+                  <h3 className="text-[20px] sm:text-[24px] md:text-[28px] font-Figtree font-medium text-gray-900 font-[400] mb-4">
+                    Featured Books
+                  </h3>
+                  {activeBooks.length > 0 && (
+                    <div className="flex flex-col items-center text-center rounded-lg overflow-hidden relative flex-grow">
+                      <div className={`flex flex-col items-center absolute transition-all duration-700 ease-in-out transform will-change-transform ${fade ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
+                        {getSubdomain() === 'store' ? (
+                          <>
+                            <Link to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`} className="no-underline">
+                              <img
+                                src={activeBooks[currentIndex]?.coverImage || "/placeholder-book.jpg"}
+                                alt={activeBooks[currentIndex]?.title}
+                                className="w-40 h-58 object-cover mb-4 cursor-pointer hover:scale-105 transition-transform duration-500"
+                              />
+                            </Link>
+                            <Link to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`} className="no-underline">
+                              <h4 className="text-[16px] sm:text-[18px] md:text-[20px] text-black font-Figtree mb-3 hover:text-[#993333] transition-colors duration-300 cursor-pointer">
+                                {activeBooks[currentIndex]?.title}
+                              </h4>
+                            </Link>
+                          </>
+                        ) : (
+                          <>
+                            <a href={getAppUrl('store', `/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`)} className="no-underline">
+                              <img
+                                src={activeBooks[currentIndex]?.coverImage || "/placeholder-book.jpg"}
+                                alt={activeBooks[currentIndex]?.title}
+                                className="w-40 h-58 object-cover mb-4 cursor-pointer hover:scale-105 transition-transform duration-500"
+                              />
+                            </a>
+                            <a href={getAppUrl('store', `/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`)} className="no-underline">
+                              <h4 className="text-[16px] sm:text-[18px] md:text-[20px] text-black font-Figtree mb-3 hover:text-[#993333] transition-colors duration-300 cursor-pointer">
+                                {activeBooks[currentIndex]?.title}
+                              </h4>
+                            </a>
+                          </>
+                        )}
+                      </div>
+
+                      <div className="flex items-center justify-center gap-6 mt-auto relative z-10">
+                        <button
+                          onClick={handlePrev}
+                          className="w-8 h-8 flex items-center justify-center border border-black rounded-full group hover:bg-gray-100">
+                          <ArrowLeft
+                            size={20}
+                            strokeWidth={2}
+                            className="text-black transition-colors duration-300 group-hover:text-red-500"
+                          />
+                        </button>
+                        <button
+                          onClick={handleNext}
+                          className="w-8 h-8 flex items-center justify-center border border-black rounded-full group hover:bg-gray-100">
+                          <ArrowRight
+                            size={20}
+                            strokeWidth={2}
+                            className="text-black transition-colors duration-300 group-hover:text-red-500"
+                          />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </aside>
+            )}
+          </div>
+          <div
+            className="max-w-8xl mx-auto py-0"
+            data-aos="fade-up"
+            data-aos-duration="1200">
+
+            {/* HEADER */}
+            <div className="" data-aos="fade-up"
+              data-aos-duration="1200">
+              <h2
+                className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+                Latest Blogs
+              </h2>
+              <img
+                src="/sita-motif.webp"
+                alt="Sita Motif"
+                className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+              />
+            </div>
+
+            {/* BLOG GRID */}
+            <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {currentBlogs.map((blog, index) => {
+                const btnColors = [
+                  "bg-[#d86c87]",
+                  "bg-[#e29a7a]",
+                  "bg-[#c36c6c]",
+                ];
+
+                return (
+                  <div
+                    key={blog._id}
+                    data-aos="fade-up"
+                    data-aos-delay={(index + 1) * 100}
+                    className="
                             flex flex-col
                             text-center
                             aspect-[2/1]
                             border-b
                             border-[#8b171b]
                           "
-                >
-                  {/* IMAGE */}
-                  <div className="relative w-full aspect-[1.25/1] overflow-hidden mb-3">
-                    <img
-                      src={
-                        blog.image?.startsWith("http")
-                          ? blog.image
-                          : `${BACKEND_BASE_URL}${blog.image}`
-                      }
-                      alt={blog.title}
-                      className="w-full h-full object-cover"
-                    />
+                  >
+                    {/* IMAGE */}
+                    <div className="relative w-full aspect-[1.25/1] overflow-hidden mb-3">
+                      <img
+                        src={
+                          blog.image?.startsWith("http")
+                            ? blog.image
+                            : `${BACKEND_BASE_URL}${blog.image}`
+                        }
+                        alt={blog.title}
+                        className="w-full h-full object-cover"
+                      />
 
-                    {/* DATE */}
-                    <p
-                      className="
+                      {/* DATE */}
+                      <p
+                        className="
                                 absolute
                                 -bottom-4
                                 left-1/2
@@ -326,31 +321,31 @@ const BlogDetailPage = () => {
                                 shadow
                                 font-montserratLight
                               "
-                    >
-                      {new Date(blog.createdAt).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "2-digit",
-                        year: "numeric",
-                      })}
-                    </p>
-                  </div>
+                      >
+                        {new Date(blog.createdAt).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "2-digit",
+                          year: "numeric",
+                        })}
+                      </p>
+                    </div>
 
-                  {/* CONTENT */}
-                  <div className="flex flex-col flex-grow px-1">
-                    <h4
-                      className="
+                    {/* CONTENT */}
+                    <div className="flex flex-col flex-grow px-1">
+                      <h4
+                        className="
                                 font-montserratLight
                                 text-[20px]
                                 mb-1
                                 text-black
                                 leading-snug
                               "
-                    >
-                      {blog.title}
-                    </h4>
+                      >
+                        {blog.title}
+                      </h4>
 
-                    <p
-                      className="
+                      <p
+                        className="
                                 font-montserratLight
                                 text-[16px]
                                 text-black
@@ -358,36 +353,36 @@ const BlogDetailPage = () => {
                                 h-[70px]
                                 overflow-hidden
                               "
-                    >
-                      <span
-                        dangerouslySetInnerHTML={{
-                          __html: sanitizeDescription(
-                            blog.description.length > 200
-                              ? blog.description.slice(0, 200) + "..."
-                              : blog.description
-                          ),
-                        }}
-                      />
-                    </p>
-                  </div>
+                      >
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: sanitizeDescription(
+                              blog.description.length > 200
+                                ? blog.description.slice(0, 200) + "..."
+                                : blog.description
+                            ),
+                          }}
+                        />
+                      </p>
+                    </div>
 
-                  {/* AUTHOR */}
-                  <span
-                    className="
+                    {/* AUTHOR */}
+                    <span
+                      className="
                               font-montserratLight
                               text-[14px]
                               italic
                               mt-2
                               mb-2
                             "
-                  >
-                    – {blog.author || "Sita Severson"}
-                  </span>
+                    >
+                      – {blog.author || "Sita Severson"}
+                    </span>
 
-                  {/* CTA */}
-                  <Link
-                    to={`/blogs/${blog.slug || blog._id}`}
-                    className={`
+                    {/* CTA */}
+                    <Link
+                      to={`/blogs/${blog.slug || blog._id}`}
+                      className={`
                               font-montserratLight
                               ${btnColors[index % btnColors.length]}
                               text-white
@@ -401,73 +396,74 @@ const BlogDetailPage = () => {
                               no-underline
                               mb-3
                             `}
-                  >
-                    {blog.readMoreText || "Get insights"}
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
+                    >
+                      {blog.readMoreText || "Get insights"}
+                    </Link>
+                  </div>
+                );
+              })}
+            </div>
 
-          <div className="flex justify-center items-center gap-2 sm:gap-3 mt-10 mb-20 flex-wrap"
-            data-aos="fade-up"
-            data-aos-duration="1200"
-          >
-            <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition"
+            <div className="flex justify-center items-center gap-2 sm:gap-3 mt-10 mb-20 flex-wrap"
+              data-aos="fade-up"
+              data-aos-duration="1200"
             >
-              <ArrowLeft size={20} strokeWidth={2} />
-            </button>
+              <button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition"
+              >
+                <ArrowLeft size={20} strokeWidth={2} />
+              </button>
 
-            {currentPage > 3 && (
-              <span className="text-gray-400 select-none">...</span>
-            )}
+              {currentPage > 3 && (
+                <span className="text-gray-400 select-none">...</span>
+              )}
 
-            {Array.from({ length: totalPages }, (_, i) => i + 1)
-              .filter((num) => {
-                if (currentPage <= 2) {
-                  return num <= 3;
-                } else if (currentPage >= totalPages - 1) {
-                  return num >= totalPages - 2;
-                } else {
-                  return (
-                    num === currentPage - 1 ||
-                    num === currentPage ||
-                    num === currentPage + 1
-                  );
-                }
-              })
-              .map((num) => (
-                <button
-                  key={num}
-                  onClick={() => setCurrentPage(num)}
-                  className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
+              {Array.from({ length: totalPages }, (_, i) => i + 1)
+                .filter((num) => {
+                  if (currentPage <= 2) {
+                    return num <= 3;
+                  } else if (currentPage >= totalPages - 1) {
+                    return num >= totalPages - 2;
+                  } else {
+                    return (
+                      num === currentPage - 1 ||
+                      num === currentPage ||
+                      num === currentPage + 1
+                    );
+                  }
+                })
+                .map((num) => (
+                  <button
+                    key={num}
+                    onClick={() => setCurrentPage(num)}
+                    className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
           ${currentPage === num
-                      ? "bg-[#993333] text-white"
-                      : "border border-transparent text-black hover:border-black hover:bg-gray-100"
-                    }`}
-                >
-                  {num}
-                </button>
-              ))}
+                        ? "bg-[#993333] text-white"
+                        : "border border-transparent text-black hover:border-black hover:bg-gray-100"
+                      }`}
+                  >
+                    {num}
+                  </button>
+                ))}
 
-            {currentPage < totalPages - 2 && (
-              <span className="text-gray-400 select-none">...</span>
-            )}
+              {currentPage < totalPages - 2 && (
+                <span className="text-gray-400 select-none">...</span>
+              )}
 
-            <button
-              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-              disabled={currentPage === totalPages}
-              className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition"
-            >
-              <ArrowRight size={20} strokeWidth={2} />
-            </button>
+              <button
+                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition"
+              >
+                <ArrowRight size={20} strokeWidth={2} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div >
+    </>
   );
 };
 

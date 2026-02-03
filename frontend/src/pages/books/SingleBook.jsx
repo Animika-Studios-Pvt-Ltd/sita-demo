@@ -26,6 +26,8 @@ import Swal from "sweetalert2";
 import nlp from "compromise";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
+import "../../assets/herosection.css";
 
 const SingleBook = () => {
   const { slug, id } = useParams();
@@ -303,118 +305,116 @@ const SingleBook = () => {
   const inCart = cartItems.find((item) => item._id === book._id);
 
   return (
-    <div className="container" data-aos="fade-up" data-aos-duration="1000">
-      <div
-        className="breadcrumb-container"
-        data-aos="fade-right"
-        data-aos-duration="1500">
-        <nav aria-label="breadcrumb">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <a href="https://sitashakti.com">Home</a>
-            </li>
-            <li className="breadcrumb-item">
-              <a href="/">Publications</a>
-            </li>
-            <li className="breadcrumb-item active" aria-current="page">
-              {book.title}
-            </li>
-          </ol>
-        </nav>
-      </div>
-
-      {isSuspended && (
-        <div
-          className="alert alert-warning d-flex align-items-center mb-4"
-          role="alert"
-          data-aos="fade-down"
-          data-aos-duration="1000"
-          style={{
-            backgroundColor: "#fff3cd",
-            borderLeft: "4px solid #dc3545",
-            padding: "1rem",
-            borderRadius: "8px",
-          }}>
-          <BlockIcon style={{ marginRight: "10px", color: "#dc3545" }} />
-          <div>
-            <strong>Currently Out of Stock</strong>
-            <p className="mb-0">
-              This book is temporarily out of stock for purchase. Please check
-              back later.
-            </p>
-          </div>
+    <>
+      <section className="sita-inner-hero blogs-hero">
+        <div className="sita-hero-inner-bg"></div>
+        <div className="sita-inner-hero-image">
+          <img
+            src="/about-banner.webp"
+            alt="Blogs Banner"
+            className="sita-inner-hero-img"
+          />
         </div>
-      )}
+      </section>
+      <SitaBreadcrumb
+        items={[
+          { label: "Home", path: "https://sitashakti.com" },
+          { label: "Publications" },
+        ]}
+      />
+      <div className="container" data-aos="fade-up" data-aos-duration="1000">
+        {isSuspended && (
+          <div
+            className="alert alert-warning d-flex align-items-center mb-4"
+            role="alert"
+            data-aos="fade-down"
+            data-aos-duration="1000"
+            style={{
+              backgroundColor: "#fff3cd",
+              borderLeft: "4px solid #dc3545",
+              padding: "1rem",
+              borderRadius: "8px",
+            }}>
+            <BlockIcon style={{ marginRight: "10px", color: "#dc3545" }} />
+            <div>
+              <strong>Currently Out of Stock</strong>
+              <p className="mb-0">
+                This book is temporarily out of stock for purchase. Please check
+                back later.
+              </p>
+            </div>
+          </div>
+        )}
 
-      <div
-        className="row book-section"
-        data-aos="fade-up"
-        data-aos-duration="1800">
         <div
-          className="col-lg-4 col-md-12 col-sm-12 col-12"
-          data-aos="flip-left"
-          data-aos-duration="3000">
-          <div className="col-lg-12 col-md-8 col-sm-8 col-10 book-images">
-            <div className="book-image">
-              <div className="book-preview-images">
-                {book.coverImage && (
-                  <div>
+          className="row book-section"
+          data-aos="fade-up"
+          data-aos-duration="1800">
+          <div
+            className="col-lg-4 col-md-12 col-sm-12 col-12"
+            data-aos="flip-left"
+            data-aos-duration="3000">
+            <div className="col-lg-12 col-md-8 col-sm-8 col-10 book-images">
+              <div className="book-image">
+                <div className="book-preview-images">
+                  {book.coverImage && (
+                    <div>
+                      <img
+                        src={book.coverImage || "/placeholder-book.jpg"}
+                        alt="Front View"
+                        className={`thumb-img ${isSuspended ? "opacity-60 grayscale" : ""
+                          }`}
+                        onClick={() => setSelectedImage(book.coverImage)}
+                      />
+                    </div>
+                  )}
+                  {book.backImage && (
+                    <div>
+                      <img
+                        src={book.backImage || "/placeholder-book.jpg"}
+                        alt="Back View"
+                        className={`thumb-img ${isSuspended ? "opacity-60 grayscale" : ""
+                          }`}
+                        onClick={() => setSelectedImage(book.backImage)}
+                      />
+                    </div>
+                  )}
+                </div>
+                <div
+                  className="book-main-image"
+                  data-aos="zoom-in-up"
+                  data-aos-duration="1500"
+                  style={{ position: "relative" }}>
+                  {selectedImage && (
                     <img
-                      src={book.coverImage || "/placeholder-book.jpg"}
-                      alt="Front View"
-                      className={`thumb-img ${isSuspended ? "opacity-60 grayscale" : ""
-                        }`}
-                      onClick={() => setSelectedImage(book.coverImage)}
+                      src={selectedImage}
+                      alt={book.title}
+                      className={isSuspended ? "opacity-60 grayscale" : ""}
                     />
-                  </div>
-                )}
-                {book.backImage && (
-                  <div>
-                    <img
-                      src={book.backImage || "/placeholder-book.jpg"}
-                      alt="Back View"
-                      className={`thumb-img ${isSuspended ? "opacity-60 grayscale" : ""
-                        }`}
-                      onClick={() => setSelectedImage(book.backImage)}
-                    />
-                  </div>
-                )}
-              </div>
-              <div
-                className="book-main-image"
-                data-aos="zoom-in-up"
-                data-aos-duration="1500"
-                style={{ position: "relative" }}>
-                {selectedImage && (
-                  <img
-                    src={selectedImage}
-                    alt={book.title}
-                    className={isSuspended ? "opacity-60 grayscale" : ""}
-                  />
-                )}
-                {isSuspended && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "20px",
-                      right: "20px",
-                      backgroundColor: "#993333",
-                      color: "white",
-                      padding: "8px 16px",
-                      borderRadius: "6px",
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "6px",
-                      zIndex: 10,
-                    }}>
-                    <BlockIcon fontSize="small" />
-                    Out of Stock
-                  </div>
-                )}
-              </div>
-              {/* <div
+                  )}
+                  {isSuspended && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: "20px",
+                        right: "20px",
+                        backgroundColor: "#993333",
+                        color: "white",
+                        padding: "8px 16px",
+                        borderRadius: "6px",
+                        fontWeight: "600",
+                        fontSize: "14px",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        zIndex: 10,
+                      }}>
+                      <BlockIcon fontSize="small" />
+                      Out of Stock
+                    </div>
+                  )}
+                </div>
+                {/* <div
                 className="book-buttons"
                 data-aos="fade-up"
                 data-aos-duration="1500"
@@ -425,441 +425,442 @@ const SingleBook = () => {
                   <MenuBookOutlinedIcon fontSize="small" /> Preview Book
                 </button>
               </div> */}
-            </div>
-
-            <div
-              className="book-buttons"
-              data-aos="fade-up"
-              data-aos-duration="1500"
-              data-aos-delay="300">
-              {isSuspended ? (
-                <button
-                  className="out-of-stock"
-                  style={{ backgroundColor: "#993333", cursor: "not-allowed" }}
-                  disabled>
-                  <BlockIcon fontSize="small" />
-                  Currently Out of Stock
-                </button>
-              ) : isOutOfStock ? (
-                <button className="out-of-stock" disabled>
-                  <RemoveShoppingCartOutlinedIcon fontSize="small" />
-                  Out of Stock
-                </button>
-              ) : inCart ? (
-                <>
-                  <button
-                    className="add-to-cart"
-                    onClick={() => navigate("/cart")}>
-                    <StorefrontOutlinedIcon fontSize="small" /> Go to Cart
-                  </button>
-                  <button
-                    className="buy-now"
-                    onClick={() => handleBuyNow(book)}>
-                    <ShoppingBagOutlinedIcon fontSize="small" /> Buy Now
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button
-                    className="add-to-cart"
-                    onClick={() => handleAddToCart(book)}>
-                    <ShoppingCartOutlinedIcon fontSize="small" /> Add to Cart
-                  </button>
-                  <button
-                    className="buy-now"
-                    onClick={() => handleBuyNow(book)}>
-                    <ShoppingBagOutlinedIcon fontSize="small" /> Buy Now
-                  </button>
-                </>
-              )}
-            </div>
-          </div>
-
-          {book.aboutBook && (
-            <div className="col-lg-12 col-md-12 col-sm-12 col-12">
-              <div
-                className="about-book"
-                data-aos="fade-right"
-                data-aos-duration="1500"
-                data-aos-delay="200">
-                <h4>About The Book</h4>
-                <p>{book.aboutBook}</p>
-                <p className="author-sign">
-                  Thank you for being,
-                  <br />
-                  {book.author}
-                </p>
               </div>
-            </div>
-          )}
-        </div>
 
-        <div
-          className="col-lg-8 col-md-12 col-sm-12 col-12 book-details"
-          data-aos="fade-left"
-          data-aos-duration="1800"
-          data-aos-delay="100">
-          <h2 data-aos="fade-up" data-aos-duration="1500">
-            {book.title}
-          </h2>
-
-          <div
-            className="rating-share-row"
-            data-aos="zoom-in"
-            data-aos-duration="1500"
-            data-aos-delay="200">
-            <div className="book-rating">
-              {Array.from({ length: 5 }, (_, i) => {
-                if (i < Math.floor(avgRating))
-                  return <StarIcon key={i} className="star filled" />;
-                else if (i < avgRating)
-                  return <StarHalfIcon key={i} className="star half" />;
-                else return <StarBorderIcon key={i} className="star empty" />;
-              })}
-              <span className="rating-text">
-                ({avgRating.toFixed(1)} / 5 from {book?.reviews?.length || 0}{" "}
-                reviews)
-              </span>
-            </div>
-            <div
-              className="share"
-              data-aos="fade-up"
-              data-aos-duration="1200"
-              data-aos-delay="250">
-              <button
-                className="share-btn"
-                onClick={() => {
-                  const currentPageUrl = window.location.href;
-                  if (navigator.share) {
-                    navigator
-                      .share({
-                        title: book.title,
-                        text: `Check out this book: ${book.title}`,
-                        url: currentPageUrl,
-                      })
-                      .catch((error) =>
-                        console.error("Error sharing content:", error)
-                      );
-                  } else {
-                    navigator.clipboard.writeText(currentPageUrl);
-                    Swal.fire({
-                      icon: "info",
-                      title: "Link copied!",
-                      text: "Share this link with your friends.",
-                      timer: 2000,
-                      showConfirmButton: false,
-                    });
-                  }
-                }}>
-                <ShareOutlinedIcon className="share-icon" />
-                Share
-              </button>
-            </div>
-          </div>
-
-          {/* ---------- PRICE DISPLAY (updated) ---------- */}
-          {!isSuspended && (
-            <div
-              className="price"
-              data-aos="fade-up"
-              data-aos-duration="1200"
-              data-aos-delay="300">
-              {hasDiscount && (
-                <span className="old-price">₹ {book.oldPrice}</span>
-              )}
-
-              <span className="current-price">₹ {book.newPrice}</span>
-
-              {hasDiscount && (
-                <span className="discount">
-                  {Math.round(
-                    ((book.oldPrice - book.newPrice) / book.oldPrice) * 100
-                  )}
-                  % off
-                </span>
-              )}
-            </div>
-          )}
-
-          {isSuspended && (
-            <div
-              className="price"
-              data-aos="fade-up"
-              data-aos-duration="1200"
-              data-aos-delay="300"
-              style={{
-                color: "#993333",
-                fontWeight: "600",
-                fontSize: "1.2rem",
-              }}>
-              Currently Out of Stock
-            </div>
-          )}
-          {/* ---------- END PRICE DISPLAY ---------- */}
-
-          <p
-            className="book-desc"
-            data-aos="fade-up"
-            data-aos-duration="1200"
-            data-aos-delay="350">
-            {shortText}
-            {showMore && <span className="extra-text"> {longText}</span>}
-            <br />
-            {words.length > WORD_LIMIT && (
-              <span
-                className="read-more"
-                onClick={() => setShowMore(!showMore)}>
-                {showMore ? (
+              <div
+                className="book-buttons"
+                data-aos="fade-up"
+                data-aos-duration="1500"
+                data-aos-delay="300">
+                {isSuspended ? (
+                  <button
+                    className="out-of-stock"
+                    style={{ backgroundColor: "#993333", cursor: "not-allowed" }}
+                    disabled>
+                    <BlockIcon fontSize="small" />
+                    Currently Out of Stock
+                  </button>
+                ) : isOutOfStock ? (
+                  <button className="out-of-stock" disabled>
+                    <RemoveShoppingCartOutlinedIcon fontSize="small" />
+                    Out of Stock
+                  </button>
+                ) : inCart ? (
                   <>
-                    <KeyboardArrowUpIcon /> Read less
+                    <button
+                      className="add-to-cart"
+                      onClick={() => navigate("/cart")}>
+                      <StorefrontOutlinedIcon fontSize="small" /> Go to Cart
+                    </button>
+                    <button
+                      className="buy-now"
+                      onClick={() => handleBuyNow(book)}>
+                      <ShoppingBagOutlinedIcon fontSize="small" /> Buy Now
+                    </button>
                   </>
                 ) : (
                   <>
-                    <KeyboardArrowDownIcon /> Read more
+                    <button
+                      className="add-to-cart"
+                      onClick={() => handleAddToCart(book)}>
+                      <ShoppingCartOutlinedIcon fontSize="small" /> Add to Cart
+                    </button>
+                    <button
+                      className="buy-now"
+                      onClick={() => handleBuyNow(book)}>
+                      <ShoppingBagOutlinedIcon fontSize="small" /> Buy Now
+                    </button>
                   </>
                 )}
-              </span>
-            )}
-          </p>
+              </div>
+            </div>
 
-          <div
-            className="book-meta"
-            data-aos="flip-up"
-            data-aos-duration="3000"
-            data-aos-delay="400">
-            <div className="row">
-              <div className="col-lg-3 col-md-4 col-sm-4 col-4 label">
-                Author
+            {book.aboutBook && (
+              <div className="col-lg-12 col-md-12 col-sm-12 col-12">
+                <div
+                  className="about-book"
+                  data-aos="fade-right"
+                  data-aos-duration="1500"
+                  data-aos-delay="200">
+                  <h4>About The Book</h4>
+                  <p>{book.aboutBook}</p>
+                  <p className="author-sign">
+                    Thank you for being,
+                    <br />
+                    {book.author}
+                  </p>
+                </div>
               </div>
-              <div className="col-lg-9 col-md-8 col-sm-8 col-8 value">
-                {book.author}
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-3 col-md-4 col-sm-4 col-4 label">
-                Specifications
-              </div>
-              <div className="col-lg-9 col-md-8 col-sm-8 col-8 value">
-                <p>Language: {book.language}</p>
-                <p>Binding: {book.binding}</p>
-                <p>Publisher: {book.publisher}</p>
-                <p>ISBN: {book.isbn}</p>
-                <p>
-                  Publishing Date:{" "}
-                  {new Date(book.publishingDate).toLocaleDateString("en-US", {
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </p>
-                <p>Pages: {book.pages}</p>
-              </div>
-            </div>
+            )}
           </div>
 
           <div
-            className="review-section"
-            data-aos="fade-up"
-            data-aos-duration="1500"
-            data-aos-delay="450">
-            <h3>Leave a Review</h3>
-
-            {currentUserReview && !isEditingReview && (
-              <div className="review user-review" data-aos="fade-up">
-                <div className="review-rating">
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <span
-                      key={i}
-                      className={
-                        i < currentUserReview.rating ? "star filled" : "star"
-                      }>
-                      ★
-                    </span>
-                  ))}
-                </div>
-                <p className="review-comment">{currentUserReview.comment}</p>
-                <button
-                  onClick={() => {
-                    setIsEditingReview(true);
-                    setRating(currentUserReview.rating);
-                    setComment(currentUserReview.comment);
-                  }}>
-                  Edit Review
-                </button>
-                <div style={{ marginTop: "8px" }}>
-                  {!currentUserReview.approved && (
-                    <small style={{ color: "orange" }}>
-                      (Your review is awaiting approval)
-                    </small>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {(isEditingReview || !currentUserReview) && currentUser && (
-              <form onSubmit={handleReviewSubmit} data-aos="fade-up">
-                <div className="rating-input">
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <span
-                      key={i}
-                      onClick={() => setRating(i + 1)}
-                      className={i < rating ? "star selected" : "star"}>
-                      ★
-                    </span>
-                  ))}
-                </div>
-                <textarea
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                  placeholder="Write your review..."></textarea>
-                <div className="review-buttons">
-                  <button type="submit" className="me-3">
-                    {currentUserReview ? "Update Review" : "Submit Review"}
-                  </button>
-                  {isEditingReview && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setIsEditingReview(false);
-                        if (currentUserReview) {
-                          setRating(currentUserReview.rating);
-                          setComment(currentUserReview.comment);
-                        } else {
-                          setRating(0);
-                          setComment("");
-                        }
-                      }}>
-                      Cancel
-                    </button>
-                  )}
-                </div>
-              </form>
-            )}
+            className="col-lg-8 col-md-12 col-sm-12 col-12 book-details"
+            data-aos="fade-left"
+            data-aos-duration="1800"
+            data-aos-delay="100">
+            <h2 data-aos="fade-up" data-aos-duration="1500">
+              {book.title}
+            </h2>
 
             <div
-              className="recent-reviews"
-              data-aos="zoom-in-up"
+              className="rating-share-row"
+              data-aos="zoom-in"
               data-aos-duration="1500"
-              data-aos-delay="500">
-              <h4>Recent Reviews</h4>
-              {otherReviews && otherReviews.length > 0 ? (
-                <>
-                  {otherReviews.slice(0, visibleReviews).map((rev, idx) => (
-                    <div
-                      key={idx}
-                      className="review"
-                      data-aos="fade-up"
-                      data-aos-duration="1000"
-                      data-aos-delay={idx * 150}>
-                      <div className="review-rating">
-                        {Array.from({ length: 5 }, (_, i) => (
-                          <span
-                            key={i}
-                            className={i < rev.rating ? "star filled" : "star"}>
-                            ★
-                          </span>
-                        ))}
-                      </div>
-                      <p className="review-comment">{rev.comment}</p>
-                      <small>- {rev.userName}</small>
-                    </div>
-                  ))}
-                  {visibleReviews < otherReviews.length && (
-                    <div style={{ textAlign: "left", marginTop: "8px" }}>
-                      <button
-                        className="read-more-btn"
-                        onClick={() => setVisibleReviews((prev) => prev + 5)}
-                        style={{
-                          background: "none",
-                          border: "none",
-                          color: "#993333",
-                          fontSize: "18px",
-                          fontFamily: "Figtree-Regular",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "4px",
-                          cursor: "pointer",
-                          padding: 0,
-                        }}>
-                        Show More Reviews{" "}
-                        <KeyboardArrowRightIcon
-                          fontSize="medium"
-                          style={{ verticalAlign: "middle" }}
-                        />
-                      </button>
-                    </div>
+              data-aos-delay="200">
+              <div className="book-rating">
+                {Array.from({ length: 5 }, (_, i) => {
+                  if (i < Math.floor(avgRating))
+                    return <StarIcon key={i} className="star filled" />;
+                  else if (i < avgRating)
+                    return <StarHalfIcon key={i} className="star half" />;
+                  else return <StarBorderIcon key={i} className="star empty" />;
+                })}
+                <span className="rating-text">
+                  ({avgRating.toFixed(1)} / 5 from {book?.reviews?.length || 0}{" "}
+                  reviews)
+                </span>
+              </div>
+              <div
+                className="share"
+                data-aos="fade-up"
+                data-aos-duration="1200"
+                data-aos-delay="250">
+                <button
+                  className="share-btn"
+                  onClick={() => {
+                    const currentPageUrl = window.location.href;
+                    if (navigator.share) {
+                      navigator
+                        .share({
+                          title: book.title,
+                          text: `Check out this book: ${book.title}`,
+                          url: currentPageUrl,
+                        })
+                        .catch((error) =>
+                          console.error("Error sharing content:", error)
+                        );
+                    } else {
+                      navigator.clipboard.writeText(currentPageUrl);
+                      Swal.fire({
+                        icon: "info",
+                        title: "Link copied!",
+                        text: "Share this link with your friends.",
+                        timer: 2000,
+                        showConfirmButton: false,
+                      });
+                    }
+                  }}>
+                  <ShareOutlinedIcon className="share-icon" />
+                  Share
+                </button>
+              </div>
+            </div>
+
+            {/* ---------- PRICE DISPLAY (updated) ---------- */}
+            {!isSuspended && (
+              <div
+                className="price"
+                data-aos="fade-up"
+                data-aos-duration="1200"
+                data-aos-delay="300">
+                {hasDiscount && (
+                  <span className="old-price">₹ {book.oldPrice}</span>
+                )}
+
+                <span className="current-price">₹ {book.newPrice}</span>
+
+                {hasDiscount && (
+                  <span className="discount">
+                    {Math.round(
+                      ((book.oldPrice - book.newPrice) / book.oldPrice) * 100
+                    )}
+                    % off
+                  </span>
+                )}
+              </div>
+            )}
+
+            {isSuspended && (
+              <div
+                className="price"
+                data-aos="fade-up"
+                data-aos-duration="1200"
+                data-aos-delay="300"
+                style={{
+                  color: "#993333",
+                  fontWeight: "600",
+                  fontSize: "1.2rem",
+                }}>
+                Currently Out of Stock
+              </div>
+            )}
+            {/* ---------- END PRICE DISPLAY ---------- */}
+
+            <p
+              className="book-desc"
+              data-aos="fade-up"
+              data-aos-duration="1200"
+              data-aos-delay="350">
+              {shortText}
+              {showMore && <span className="extra-text"> {longText}</span>}
+              <br />
+              {words.length > WORD_LIMIT && (
+                <span
+                  className="read-more"
+                  onClick={() => setShowMore(!showMore)}>
+                  {showMore ? (
+                    <>
+                      <KeyboardArrowUpIcon /> Read less
+                    </>
+                  ) : (
+                    <>
+                      <KeyboardArrowDownIcon /> Read more
+                    </>
                   )}
-                </>
-              ) : (
-                <p>No reviews yet.</p>
+                </span>
               )}
+            </p>
+
+            <div
+              className="book-meta"
+              data-aos="flip-up"
+              data-aos-duration="3000"
+              data-aos-delay="400">
+              <div className="row">
+                <div className="col-lg-3 col-md-4 col-sm-4 col-4 label">
+                  Author
+                </div>
+                <div className="col-lg-9 col-md-8 col-sm-8 col-8 value">
+                  {book.author}
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-3 col-md-4 col-sm-4 col-4 label">
+                  Specifications
+                </div>
+                <div className="col-lg-9 col-md-8 col-sm-8 col-8 value">
+                  <p>Language: {book.language}</p>
+                  <p>Binding: {book.binding}</p>
+                  <p>Publisher: {book.publisher}</p>
+                  <p>ISBN: {book.isbn}</p>
+                  <p>
+                    Publishing Date:{" "}
+                    {new Date(book.publishingDate).toLocaleDateString("en-US", {
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </p>
+                  <p>Pages: {book.pages}</p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              className="review-section"
+              data-aos="fade-up"
+              data-aos-duration="1500"
+              data-aos-delay="450">
+              <h3>Leave a Review</h3>
+
+              {currentUserReview && !isEditingReview && (
+                <div className="review user-review" data-aos="fade-up">
+                  <div className="review-rating">
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <span
+                        key={i}
+                        className={
+                          i < currentUserReview.rating ? "star filled" : "star"
+                        }>
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                  <p className="review-comment">{currentUserReview.comment}</p>
+                  <button
+                    onClick={() => {
+                      setIsEditingReview(true);
+                      setRating(currentUserReview.rating);
+                      setComment(currentUserReview.comment);
+                    }}>
+                    Edit Review
+                  </button>
+                  <div style={{ marginTop: "8px" }}>
+                    {!currentUserReview.approved && (
+                      <small style={{ color: "orange" }}>
+                        (Your review is awaiting approval)
+                      </small>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {(isEditingReview || !currentUserReview) && currentUser && (
+                <form onSubmit={handleReviewSubmit} data-aos="fade-up">
+                  <div className="rating-input">
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <span
+                        key={i}
+                        onClick={() => setRating(i + 1)}
+                        className={i < rating ? "star selected" : "star"}>
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                  <textarea
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    placeholder="Write your review..."></textarea>
+                  <div className="review-buttons">
+                    <button type="submit" className="me-3">
+                      {currentUserReview ? "Update Review" : "Submit Review"}
+                    </button>
+                    {isEditingReview && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsEditingReview(false);
+                          if (currentUserReview) {
+                            setRating(currentUserReview.rating);
+                            setComment(currentUserReview.comment);
+                          } else {
+                            setRating(0);
+                            setComment("");
+                          }
+                        }}>
+                        Cancel
+                      </button>
+                    )}
+                  </div>
+                </form>
+              )}
+
+              <div
+                className="recent-reviews"
+                data-aos="zoom-in-up"
+                data-aos-duration="1500"
+                data-aos-delay="500">
+                <h4>Recent Reviews</h4>
+                {otherReviews && otherReviews.length > 0 ? (
+                  <>
+                    {otherReviews.slice(0, visibleReviews).map((rev, idx) => (
+                      <div
+                        key={idx}
+                        className="review"
+                        data-aos="fade-up"
+                        data-aos-duration="1000"
+                        data-aos-delay={idx * 150}>
+                        <div className="review-rating">
+                          {Array.from({ length: 5 }, (_, i) => (
+                            <span
+                              key={i}
+                              className={i < rev.rating ? "star filled" : "star"}>
+                              ★
+                            </span>
+                          ))}
+                        </div>
+                        <p className="review-comment">{rev.comment}</p>
+                        <small>- {rev.userName}</small>
+                      </div>
+                    ))}
+                    {visibleReviews < otherReviews.length && (
+                      <div style={{ textAlign: "left", marginTop: "8px" }}>
+                        <button
+                          className="read-more-btn"
+                          onClick={() => setVisibleReviews((prev) => prev + 5)}
+                          style={{
+                            background: "none",
+                            border: "none",
+                            color: "#993333",
+                            fontSize: "18px",
+                            fontFamily: "Figtree-Regular",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "4px",
+                            cursor: "pointer",
+                            padding: 0,
+                          }}>
+                          Show More Reviews{" "}
+                          <KeyboardArrowRightIcon
+                            fontSize="medium"
+                            style={{ verticalAlign: "middle" }}
+                          />
+                        </button>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <p>No reviews yet.</p>
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div
-        className="recently-viewed"
-        data-aos="fade-up"
-        data-aos-duration="1500"
-        data-aos-delay="200">
-        <h3>Recently Viewed</h3>
-        <div className="row">
-          {recentlyViewed.length > 0 ? (
-            recentlyViewed.map((rv, idx) => {
-              const rvHasDiscount =
-                typeof rv?.oldPrice !== "undefined" &&
-                typeof rv?.newPrice !== "undefined" &&
-                Number(rv.oldPrice) > Number(rv.newPrice);
+        <div
+          className="recently-viewed"
+          data-aos="fade-up"
+          data-aos-duration="1500"
+          data-aos-delay="200">
+          <h3>Recently Viewed</h3>
+          <div className="row">
+            {recentlyViewed.length > 0 ? (
+              recentlyViewed.map((rv, idx) => {
+                const rvHasDiscount =
+                  typeof rv?.oldPrice !== "undefined" &&
+                  typeof rv?.newPrice !== "undefined" &&
+                  Number(rv.oldPrice) > Number(rv.newPrice);
 
-              return (
-                <div
-                  className="col-lg-3 col-md-6 col-sm-6 col-12"
-                  key={rv._id}
-                  data-aos="zoom-in"
-                  data-aos-duration="1200"
-                  data-aos-delay={idx * 150}>
-                  <div className="rv-card">
-                    <Link to={`/books/${rv.slug || rv._id}`}>
-                      <div style={{ position: "relative" }}>
-                        <img
-                          src={rv.coverImage || "/placeholder-book.jpg"}
-                          alt={rv.title}
-                          className={rv.suspended ? "" : ""}
-                        />
-                      </div>
-                      <h4>{rv.title}</h4>
-                      {!rv.suspended ? (
-                        <p>
-                          {rvHasDiscount && (
-                            <span className="old-price">₹ {rv.oldPrice}</span>
-                          )}{" "}
-                          <span className="current-price">₹ {rv.newPrice}</span>{" "}
-                          {rvHasDiscount && (
-                            <span className="discount">
-                              {Math.round(
-                                ((rv.oldPrice - rv.newPrice) / rv.oldPrice) *
-                                100
-                              )}
-                              % off
-                            </span>
-                          )}
-                        </p>
-                      ) : (
-                        <p style={{ color: "#993333", fontWeight: "600" }}>
-                          Currently Out of Stock
-                        </p>
-                      )}
-                    </Link>
+                return (
+                  <div
+                    className="col-lg-3 col-md-6 col-sm-6 col-12"
+                    key={rv._id}
+                    data-aos="zoom-in"
+                    data-aos-duration="1200"
+                    data-aos-delay={idx * 150}>
+                    <div className="rv-card">
+                      <Link to={`/books/${rv.slug || rv._id}`}>
+                        <div style={{ position: "relative" }}>
+                          <img
+                            src={rv.coverImage || "/placeholder-book.jpg"}
+                            alt={rv.title}
+                            className={rv.suspended ? "" : ""}
+                          />
+                        </div>
+                        <h4>{rv.title}</h4>
+                        {!rv.suspended ? (
+                          <p>
+                            {rvHasDiscount && (
+                              <span className="old-price">₹ {rv.oldPrice}</span>
+                            )}{" "}
+                            <span className="current-price">₹ {rv.newPrice}</span>{" "}
+                            {rvHasDiscount && (
+                              <span className="discount">
+                                {Math.round(
+                                  ((rv.oldPrice - rv.newPrice) / rv.oldPrice) *
+                                  100
+                                )}
+                                % off
+                              </span>
+                            )}
+                          </p>
+                        ) : (
+                          <p style={{ color: "#993333", fontWeight: "600" }}>
+                            Currently Out of Stock
+                          </p>
+                        )}
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              );
-            })
-          ) : (
-            <p>No recently viewed books yet.</p>
-          )}
+                );
+              })
+            ) : (
+              <p>No recently viewed books yet.</p>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
