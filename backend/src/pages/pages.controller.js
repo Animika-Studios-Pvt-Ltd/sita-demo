@@ -1,5 +1,46 @@
 const Page = require("./pages.model");
+const Event = require("../events/event.model"); // Import Event model
 const { uploadToCloudinary } = require("../config/cloudinary");
+
+// Helper to sync page image to event
+async function syncEventImage(page) {
+  if (!page || !page.slug) return;
+
+  // 1. Try to get image from Hero Section
+  const heroSection = page.sections && page.sections.find(s => s.key === 'hero');
+  let imageUrl = heroSection?.content?.backgroundImage;
+
+  // 2. Fallback to page.bannerImage if available (and if it's a string or has src)
+  if (!imageUrl && page.bannerImage) {
+    imageUrl = typeof page.bannerImage === 'string' ? page.bannerImage : page.bannerImage.src;
+  }
+
+  if (imageUrl) {
+    console.log(`[Sync] Found image for page ${page.slug}:`, imageUrl);
+
+    // Normalize slug to match bookingUrl variations
+    // bookingUrl could be "yoga-therapy" or "/yoga-therapy"
+    const slug = page.slug.replace(/^\//, ''); // Remove leading slash
+
+    // Find corresponding event and update imageUrl
+    // We try to match: strict slug, slug with slash, or whatever is in bookingUrl
+    const event = await Event.findOne({
+      $or: [
+        { bookingUrl: slug },
+        { bookingUrl: `/${slug}` },
+        { bookingUrl: page.slug } // original
+      ]
+    });
+
+    if (event) {
+      event.imageUrl = imageUrl;
+      await event.save();
+      console.log(`[Sync] Updated event ${event.code} (${event.title}) with new image.`);
+    } else {
+      console.log(`[Sync] No matching event found for bookingUrl: ${slug}`);
+    }
+  }
+}
 
 async function handleImageUpload(file, defaultAlt = "Uploaded Image") {
   if (!file || !file.buffer) return null;
@@ -55,6 +96,10 @@ async function createPage(req, res) {
     }
 
     const newPage = await Page.create(data);
+
+    // SYNC EVENT IMAGE
+    await syncEventImage(newPage);
+
     const populated = await newPage.populate("parentHeader", "title slug");
     return res.status(201).json(populated);
 
@@ -118,6 +163,9 @@ async function updatePage(req, res) {
     await page.validate();
 
     const updated = await page.save({ validateBeforeSave: true });
+
+    // SYNC EVENT IMAGE
+    await syncEventImage(updated);
 
     const populated = await updated.populate("parentHeader", "title slug");
     return res.status(200).json(populated);
