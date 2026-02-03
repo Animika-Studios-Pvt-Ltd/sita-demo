@@ -289,7 +289,7 @@ function FaqSection({ content }) {
   if (items.length === 0) return null;
 
   return (
-    <section className={`${padding}`} style={{ backgroundColor }}>
+    <section className={`${padding} sita-faq-section`} style={{ backgroundColor }}>
       <div className="container mx-auto px-4">
         {title && (
           <h2

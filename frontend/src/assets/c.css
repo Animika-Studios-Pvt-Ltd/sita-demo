@@ -529,17 +529,7 @@ nav[aria-label="breadcrumb"] {
   vertical-align: middle;
 }
 
-/* .sita-service-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(176, 120, 38, 0.6);
-  z-index: 2;
-}
 
-.sita-service-card.active::after {
-  background: rgba(123, 30, 30, 0.7);
-} */
 
 /* ----------------- MASTERCLASS SECTION ----------------- */
 .sita-masterclass {
@@ -4232,65 +4222,98 @@ nav[aria-label="breadcrumb"] {
   }
 }
 
-/* ------------------------------------------------- CONTACT US PAGE RESPONSIVE CODE ------------------------------------------------- */
-@media (max-width: 991px) {
-  .contact-us-section {
-    padding: 20px 0px;
+
+
+/* ------------------------------------------------- BOOKING / SITA FACTOR RESPONSIVE ------------------------------------------------- */
+@media (max-width: 1200px) {
+  .booking-section h2, .sita-factor-section h2 {
+    font-size: 42px;
   }
 
-  .contact-form button {
+  .booking-section p, .sita-factor-section p, .sita-faq-section p,
+  .booking-section li, .sita-factor-section li,
+  .sita-faq-section button {
+    font-size: 17px;
+  }
+
+  .booking-section .sita-btn, .sita-factor-section .sita-btn {
+    font-size: 17px;
+    padding: 9px 22px;
+  }
+}
+
+@media (max-width: 991px) {
+  .booking-section h2, .sita-factor-section h2 {
+    font-size: 40px;
+  }
+
+  .booking-section p, .sita-factor-section p, .sita-faq-section p,
+  .booking-section li, .sita-factor-section li,
+  .sita-faq-section button {
+    font-size: 16px;
+  }
+
+  .booking-section .sita-btn, .sita-factor-section .sita-btn {
     font-size: 16px;
     padding: 8px 20px;
+  }
+
+  .booking-section .motif, .sita-factor-section .motif {
+    width: 30%;
   }
 }
 
 @media (max-width: 767px) {
-  .contact-us-section {
-    padding: 20px 0px;
+  .booking-section h2, .sita-factor-section h2 {
+    font-size: 36px;
   }
 
-  .contact-us-section h2 {
-    margin-bottom: 20px;
+  .booking-section p, .sita-factor-section p, .sita-faq-section p,
+  .booking-section li, .sita-factor-section li,
+  .sita-faq-section button {
+    font-size: 15px;
   }
 
-  .contact-form {
-    margin-top: 20px;
+  .booking-section .sita-btn, .sita-factor-section .sita-btn {
+    font-size: 15px;
+    padding: 7px 18px;
   }
 
-  .contact-form .form-label {
-    font-size: 14px;
-  }
-
-  .contact-form button {
-    margin: 0 auto;
-  }
-
-  .contact-form button {
-    margin: 0 auto;
-    font-size: 16px;
-    padding: 10px 20px;
+  .booking-section .motif, .sita-factor-section .motif {
+    width: 40%;
   }
 }
 
 @media (max-width: 575px) {
-  .contact-us-section {
-    padding: 10px 0px;
-    margin-bottom: 20px;
+  .booking-section h2, .sita-factor-section h2 {
+    font-size: 28px;
   }
 
-  .contact-us-section h2 {
-    margin-bottom: 20px;
+  .booking-section p, .sita-factor-section p, .sita-faq-section p,
+  .booking-section li, .sita-factor-section li,
+  .sita-faq-section button {
+    font-size: 14px;
   }
 
-  .contact-form {
-    margin-top: 10px;
+  .booking-section .sita-btn, .sita-factor-section .sita-btn {
+    font-size: 14px;
+    padding: 6px 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .booking-section h2, .sita-factor-section h2 {
+    font-size: 24px;
   }
 
-  .contact-form button {
-    width: 100%;
-    max-width: 100%;
-    font-size: 15px;
-    padding: 10px 16px;
-    border-radius: 8px;
+  .booking-section p, .sita-factor-section p, .sita-faq-section p,
+  .booking-section li, .sita-factor-section li,
+  .sita-faq-section button {
+    font-size: 13px;
+  }
+
+  .booking-section .sita-btn, .sita-factor-section .sita-btn {
+    font-size: 13px;
+    padding: 5px 14px;
   }
 }

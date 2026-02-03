@@ -36,7 +36,54 @@ const generateEventCode = async (title, date) => {
 const getEvents = async (req, res) => {
   try {
     const events = await Event.find().sort({ date: 1 });
-    res.json(events);
+
+    // Dynamic Image Lookup from Pages (Fallback)
+    // This ensures that even if 'sync' hasn't happened in DB, we still serve the correct image
+    try {
+      const pages = await Page.find({ status: 'published' }).select('slug sections bannerImage');
+      const pageImageMap = {};
+
+      pages.forEach(p => {
+        if (!p.slug) return;
+
+        let img = null;
+        // 1. Hero
+        const hero = p.sections?.find(s => s.key === 'hero');
+        img = hero?.content?.backgroundImage;
+
+        // 2. Banner
+        if (!img && p.bannerImage) {
+          img = typeof p.bannerImage === 'string' ? p.bannerImage : p.bannerImage.src;
+        }
+
+        if (img) {
+          // Store both raw and normalized variations for easy lookup
+          const cleanSlug = p.slug.replace(/^\//, ''); // "yoga"
+          pageImageMap[cleanSlug] = img;
+          pageImageMap[`/${cleanSlug}`] = img;
+          pageImageMap[p.slug] = img;
+        }
+      });
+
+      // Merge images
+      const eventsWithImages = events.map(e => {
+        const eventObj = e.toObject();
+        if (!eventObj.imageUrl && eventObj.bookingUrl) {
+          const mappedImg = pageImageMap[eventObj.bookingUrl] || pageImageMap[eventObj.bookingUrl.replace(/^\//, '')];
+          if (mappedImg) {
+            eventObj.imageUrl = mappedImg;
+          }
+        }
+        return eventObj;
+      });
+
+      return res.json(eventsWithImages);
+
+    } catch (pageErr) {
+      console.error("⚠️ Page lookup warning:", pageErr.message);
+      // Fallback to basic events if page lookup fails
+      return res.json(events);
+    }
   } catch (err) {
     console.error("❌ Get events error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
@@ -69,7 +116,17 @@ const upsertEvent = async (req, res) => {
       ageGroup,
       description,
       bookingUrl,
+      // imageUrl might come from body if not file upload (rare for creation, possible for keeping existing)
     } = req.body;
+
+    let imageUrl = req.body.imageUrl;
+
+    // Handle Image Upload - similar to pages.controller.js pattern
+    if (req.files && req.files["image"] && req.files["image"][0]) {
+      const file = req.files["image"][0];
+      const uploaded = await uploadToCloudinary(file.buffer);
+      imageUrl = uploaded.secure_url;
+    }
 
     // Unified Price/Fees Logic:
     // If 'price' is provided, use it. If 'fees' is provided, try to parse it as price.
@@ -106,6 +163,7 @@ const upsertEvent = async (req, res) => {
         ageGroup,
         description,
         bookingUrl: bookingUrl || null,
+        imageUrl,
       });
 
       // ✅ AUTO-CREATE PAGE Logic
@@ -173,6 +231,7 @@ const upsertEvent = async (req, res) => {
         ageGroup,
         description,
         bookingUrl: bookingUrl || null,
+        ...(imageUrl && { imageUrl }), // Only update if new image provided
       },
       { new: true }
     );

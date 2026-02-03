@@ -235,7 +235,7 @@ const BookingHome = () => {
                                 const month = dateObj.toLocaleString("en-US", {
                                     month: "short",
                                 });
-                                const eventImage = getCategoryImage(event.category);
+                                const eventImage = event.imageUrl || getCategoryImage(event.category);
 
                                 return (
                                     <div
