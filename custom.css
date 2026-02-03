@@ -112,7 +112,7 @@ nav[aria-label="breadcrumb"] {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 20px;
+  gap: 15px;
 }
 
 .sita-nav {
@@ -126,6 +126,7 @@ nav[aria-label="breadcrumb"] {
 
 .nav-contact {
   color: #8b171b !important;
+  margin-bottom: 10px;
 }
 
 .contact-mobile {
@@ -173,7 +174,9 @@ nav[aria-label="breadcrumb"] {
     bottom right,
     bottom left;
 
-  transition: background-size 0.4s ease, color 0.3s ease;
+  transition:
+    background-size 0.4s ease,
+    color 0.3s ease;
   border: none !important;
   background-color: transparent !important;
 }
@@ -1186,7 +1189,6 @@ nav[aria-label="breadcrumb"] {
   color: #000;
 }
 
-
 /* Blogs */
 .footer-blogs {
   display: flex;
@@ -1212,7 +1214,7 @@ nav[aria-label="breadcrumb"] {
 .blog-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.50);
+  background: rgba(0, 0, 0, 0.5);
   color: #fff;
   padding: 10px;
   display: flex;
@@ -1727,7 +1729,8 @@ nav[aria-label="breadcrumb"] {
     font-size: 42px;
   }
 
-  p, li {
+  p,
+  li {
     font-size: 17px;
   }
 
@@ -1742,7 +1745,8 @@ nav[aria-label="breadcrumb"] {
     font-size: 40px;
   }
 
-  p, li {
+  p,
+  li {
     font-size: 16px;
   }
 
@@ -1761,7 +1765,8 @@ nav[aria-label="breadcrumb"] {
     font-size: 36px;
   }
 
-  p, li {
+  p,
+  li {
     font-size: 15px;
   }
 
@@ -1780,7 +1785,8 @@ nav[aria-label="breadcrumb"] {
     font-size: 28px;
   }
 
-  p, li {
+  p,
+  li {
     font-size: 14px;
   }
 
@@ -1795,7 +1801,8 @@ nav[aria-label="breadcrumb"] {
     font-size: 24px;
   }
 
-  p, li {
+  p,
+  li {
     font-size: 13px;
   }
 
@@ -3347,7 +3354,7 @@ nav[aria-label="breadcrumb"] {
   .sita-publications-decor {
     right: -110px;
     width: 280px;
-    height: auto
+    height: auto;
   }
 }
 
@@ -3827,7 +3834,6 @@ nav[aria-label="breadcrumb"] {
   }
 }
 
-
 @media (max-width: 1100px) {
   .sita-inner-hero {
     height: 170px;
@@ -3875,26 +3881,51 @@ nav[aria-label="breadcrumb"] {
     display: none;
   }
 
-   /* .sita-inner-side-img {
-    display: block;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) !important;
-    width: 65vw;
-    max-width: 420px;
-    opacity: 0.08; 
-    filter: grayscale(100%) brightness(1.4);
-    z-index: 0; 
-    pointer-events: none; 
+  .sita-inner-section {
+    position: relative;
   }
 
-  .sita-inner-section,
-  .sita-inner-hero,
-  .sita-inner-hero-image {
+  .sita-inner-section::before {
+    content: "";
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background-image: var(--service-watermark-img);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .ayurveda-nutrition-bg-image {
+    --service-watermark-img: url("images/ayurveda-nutrition-image.webp");
+  }
+
+  .kosha-counseling-bg-image {
+    --service-watermark-img: url("images/kosha-counseling-image.webp");
+  }
+
+  .release-karmic-patterns-bg-image {
+    --service-watermark-img: url("images/release-karmic-patterns-image.webp");
+  }
+
+  .soul-curriculum-bg-image {
+    --service-watermark-img: url("images/soul-curriculum-image.webp");
+  }
+
+  .yoga-therapy-bg-image {
+    --service-watermark-img: url("images/yoga-therapy-image.webp");
+  }
+
+  .sita-inner-section .container {
     position: relative;
-    z-index: 2;
-  } */
+    z-index: 1;
+  }
 
   .sita-inner-content {
     width: 100%;
@@ -3958,6 +3989,11 @@ nav[aria-label="breadcrumb"] {
   .sita-inner-full-content p {
     margin-bottom: 10px;
   }
+
+  .sita-inner-section::before {
+    width: 450px;
+    height: 450px;
+  }
 }
 
 @media (max-width: 700px) {
@@ -3998,6 +4034,12 @@ nav[aria-label="breadcrumb"] {
   .sita-inner-full-content p {
     margin-bottom: 5px;
   }
+
+  .sita-inner-section::before {
+    width: 400px;
+    height: 400px;
+    opacity: 0.2;
+  }
 }
 
 @media (max-width: 550px) {
@@ -4016,6 +4058,11 @@ nav[aria-label="breadcrumb"] {
   .sita-inner-hero {
     height: 95px;
   }
+
+  .sita-inner-section::before {
+    width: 350px;
+    height: 350px;
+  }
 }
 
 @media (max-width: 450px) {
@@ -4027,6 +4074,11 @@ nav[aria-label="breadcrumb"] {
 @media (max-width: 420px) {
   .sita-inner-hero {
     height: 80px;
+  }
+
+  .sita-inner-section::before {
+    width: 300px;
+    height: 300px;
   }
 }
 
