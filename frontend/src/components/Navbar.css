@@ -86,6 +86,10 @@ li {
   color: #8b171b !important;
 }
 
+.sita-nav .nav-link.dropdown-toggle::after {
+  margin-left: 4px !important;
+}
+
 .user-avatar-img {
   width: 24px;
   height: 24px;
