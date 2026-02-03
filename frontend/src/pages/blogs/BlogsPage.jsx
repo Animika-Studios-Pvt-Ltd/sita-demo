@@ -90,7 +90,7 @@ const BlogsPage = () => {
           />
 
           {/* BLOG GRID */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 blogs-grid">
+          <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {currentBlogs.map((blog, index) => {
               const btnColors = [
                 "bg-[#d86c87]",
@@ -104,15 +104,15 @@ const BlogsPage = () => {
                   data-aos="fade-up"
                   data-aos-delay={(index + 1) * 100}
                   className="
-                  flex flex-col
-                  text-center
-                  border-b
-                  border-[#8b171b]
-                  blogs-card
-                "
+                            flex flex-col
+                            text-center
+                            aspect-[2/1]
+                            border-b
+                            border-[#8b171b]
+                          "
                 >
                   {/* IMAGE */}
-                  <div className="relative w-full overflow-hidden mb-3 blogs-card-image">
+                  <div className="relative w-full aspect-[1.25/1] overflow-hidden mb-3">
                     <img
                       src={
                         blog.image?.startsWith("http")
@@ -126,18 +126,18 @@ const BlogsPage = () => {
                     {/* DATE */}
                     <p
                       className="
-                      absolute
-                      -bottom-4
-                      left-1/2
-                      -translate-x-1/2
-                      bg-white
-                      px-3
-                      py-1
-                      text-[16px]
-                      rounded-t-md
-                      shadow
-                      font-montserratLight
-                    "
+                                absolute
+                                -bottom-4
+                                left-1/2
+                                -translate-x-1/2
+                                bg-white
+                                px-3
+                                py-1
+                                text-[16px]
+                                rounded-t-md
+                                shadow
+                                font-montserratLight
+                              "
                     >
                       {new Date(blog.createdAt).toLocaleDateString("en-US", {
                         month: "short",
@@ -151,25 +151,25 @@ const BlogsPage = () => {
                   <div className="flex flex-col flex-grow px-1">
                     <h4
                       className="
-                      font-montserratLight
-                      text-[20px]
-                      mb-1
-                      text-black
-                      leading-snug
-                    "
+                                font-montserratLight
+                                text-[20px]
+                                mb-1
+                                text-black
+                                leading-snug
+                              "
                     >
                       {blog.title}
                     </h4>
 
                     <p
                       className="
-                      font-montserratLight
-                      text-[16px]
-                      text-black
-                      leading-snug
-                      h-[70px]
-                      overflow-hidden
-                    "
+                                font-montserratLight
+                                text-[16px]
+                                text-black
+                                leading-snug
+                                h-[70px]
+                                overflow-hidden
+                              "
                     >
                       <span
                         dangerouslySetInnerHTML={{
@@ -186,12 +186,12 @@ const BlogsPage = () => {
                   {/* AUTHOR */}
                   <span
                     className="
-                    font-montserratLight
-                    text-[14px]
-                    italic
-                    mt-2
-                    mb-2
-                  "
+                              font-montserratLight
+                              text-[14px]
+                              italic
+                              mt-2
+                              mb-2
+                            "
                   >
                     – {blog.author || "Sita Severson"}
                   </span>
@@ -200,19 +200,19 @@ const BlogsPage = () => {
                   <Link
                     to={`/blogs/${blog.slug || blog._id}`}
                     className={`
-                    font-montserratLight
-                    ${btnColors[index % btnColors.length]}
-                    text-white
-                    px-4
-                    py-2
-                    text-[16px]
-                    mx-auto
-                    [clip-path:polygon(10%_0%,90%_0%,100%_50%,90%_100%,10%_100%,0%_50%)]
-                    transition
-                    hover:opacity-90
-                    no-underline
-                    mb-3
-                  `}
+                              font-montserratLight
+                              ${btnColors[index % btnColors.length]}
+                              text-white
+                              px-4
+                              py-2
+                              text-[16px]
+                              mx-auto
+                              [clip-path:polygon(10%_0%,90%_0%,100%_50%,90%_100%,10%_100%,0%_50%)]
+                              transition
+                              hover:opacity-90
+                              no-underline
+                              mb-3
+                            `}
                   >
                     {blog.readMoreText || "Get insights"}
                   </Link>
