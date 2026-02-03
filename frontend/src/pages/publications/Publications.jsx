@@ -98,18 +98,37 @@ const Publications = () => {
               return (
                 <div
                   key={index}
-                  className="group relative bg-white mb-2 overflow-hidden transition-all duration-500"
+                  className="group relative bg-white mb-0 overflow-hidden transition-all duration-500"
                   data-aos="flip-left"
                   data-aos-duration="2000"
                   data-aos-delay={index * 150}>
                   <Link to={`/books/${book.slug || book._id}`}>
-                    <div className="relative w-full aspect-[2/3] max-w-[280px] mx-auto overflow-hidden group">
-                      <img
-                        src={book?.coverImage || "/placeholder-book.jpg"}
-                        alt={book?.title}
-                        className={`object-cover w-full h-full z-0 ${isSuspended ? "opacity-60 grayscale" : ""
-                          }`}
-                      />
+                    <div
+                      className="relative w-full aspect-[2/3] max-w-[280px] mx-auto overflow-hidden group book-flip"
+                      style={{ perspective: "1200px" }}>
+                      <div className="book-flip-inner">
+                        <div
+                          className={`book-flip-front ${isSuspended ? "opacity-60 grayscale" : ""
+                            }`}>
+                          <img
+                            src={book?.coverImage || "/placeholder-book.jpg"}
+                            alt={book?.title}
+                            className="w-full h-full"
+                          />
+                        </div>
+                        <div className="book-flip-back">
+                          <img
+                            src={
+                              book?.backImage ||
+                              book?.coverImage ||
+                              "/default-back.webp"
+                            }
+                            alt={`${book?.title || "Book"} back cover`}
+                            className="book-flip-back-image"
+                          />
+                          <span className="book-flip-label">VIEW BOOK</span>
+                        </div>
+                      </div>
 
                       {isSuspended && (
                         <div className="absolute top-3 right-3 bg-[#993333] text-white px-3 py-1 rounded-md text-xs font-semibold z-30 flex items-center gap-1">
@@ -117,43 +136,10 @@ const Publications = () => {
                           Out of Stock
                         </div>
                       )}
-
-                      <div
-                        className="absolute inset-0 flex items-center justify-center transition-all duration-500 z-10"
-                        style={{
-                          backgroundColor: "rgba(0,0,0,0)",
-                          transition: "background-color 0.5s ease",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.backgroundColor =
-                            "rgba(0,0,0,0.5)";
-                          e.currentTarget.firstChild.style.opacity = "1";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.backgroundColor =
-                            "rgba(0,0,0,0)";
-                          e.currentTarget.firstChild.style.opacity = "0";
-                        }}>
-                        <span
-                          className="!text-white !text-lg !font-semibold hover:!text-[#cc6633] !cursor-pointer"
-                          style={{
-                            opacity: 0,
-                            transition: "opacity 0.5s ease",
-                          }}>
-                          VIEW BOOK
-                        </span>
-                      </div>
-
-                      <div className="book-border absolute inset-5 z-20 pointer-events-none">
-                        <span className="top"></span>
-                        <span className="right"></span>
-                        <span className="bottom"></span>
-                        <span className="left"></span>
-                      </div>
                     </div>
                   </Link>
                   <div
-                    className="text-center mt-2 px-0"
+                    className="text-center mt-0 px-0"
                     data-aos="fade-up"
                     data-aos-duration="1000">
                     <h3

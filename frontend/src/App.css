@@ -68,81 +68,7 @@ html {
   scroll-behavior: smooth;
 }
 
-@keyframes draw-border {
-  0% {
-    border-color: transparent;
-    clip-path: inset(0 100% 100% 0);
-  }
 
-  25% {
-    border-color: white;
-    clip-path: inset(0 0 100% 0);
-  }
-
-  50% {
-    border-color: white;
-    clip-path: inset(0 0 0 0 round 0);
-  }
-
-  100% {
-    border-color: white;
-    clip-path: inset(0 0 0 0);
-  }
-}
-
-.book-border {
-  position: absolute;
-  inset: 8px;
-  pointer-events: none;
-}
-
-.book-border span {
-  position: absolute;
-  background: white;
-  transition: all 0.6s ease;
-}
-
-.book-border .top,
-.book-border .bottom {
-  height: 2px;
-  width: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.book-border .top {
-  top: 0;
-}
-
-.book-border .bottom {
-  bottom: 0;
-}
-
-.book-border .left,
-.book-border .right {
-  width: 2px;
-  height: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.book-border .left {
-  left: 0;
-}
-
-.book-border .right {
-  right: 0;
-}
-
-.group:hover .book-border .top,
-.group:hover .book-border .bottom {
-  width: 100%;
-}
-
-.group:hover .book-border .left,
-.group:hover .book-border .right {
-  height: 99%;
-}
 
 @keyframes fadeIn {
   from {
@@ -174,4 +100,92 @@ html {
 .fade-out {
   opacity: 0;
   transition: opacity 300ms ease-out;
+}
+
+.book-flip {
+  perspective: 1200px;
+}
+
+.book-flip-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 600ms ease;
+  transform-origin: center center;
+}
+
+.group:hover .book-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.book-flip-front,
+.book-flip-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.book-flip-front img,
+.book-flip-back-image {
+  height: 100%;
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+  transform: scale(1) !important;
+}
+
+.book-flip-back {
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.book-flip-back-image {
+  width: 100%;
+  height: 100%;
+}
+
+.book-flip-label {
+  position: absolute;
+  z-index: 1;
+  font-family: 'Nunito Sans', 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  color: #ffffff !important;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.group:hover .book-flip-label {
+  color: #ffffff !important;
+}
+
+.book-card::before {
+  content: "";
+  position: absolute;
+  top: 2%;
+  bottom: 2%;
+  left: 0;
+  width: 10px;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0));
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.book-card {
+  transition: transform 300ms ease, box-shadow 300ms ease;
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.18);
+  transform-style: preserve-3d;
+}
+
+.group:hover .book-card {
+  transform: translateY(-4px) rotateX(-3deg) rotateY(4deg);
+  box-shadow: 0 18px 28px rgba(0, 0, 0, 0.24);
 }
