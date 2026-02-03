@@ -29,7 +29,7 @@ body {
 }
 
 .sita-breadcrumb-section {
-  margin: 10px 0px;
+  margin: 6px 0px;
 }
 
 nav[aria-label="breadcrumb"] {
@@ -75,7 +75,7 @@ nav[aria-label="breadcrumb"] {
   }
 
   .sita-breadcrumb-section {
-    margin: 8px 0;
+    margin: 0px 0;
   }
 }
 
@@ -91,7 +91,7 @@ nav[aria-label="breadcrumb"] {
   }
 
   .sita-breadcrumb-section {
-    margin: 6px 0;
+    margin: 0px 0;
   }
 }
 
@@ -110,7 +110,7 @@ nav[aria-label="breadcrumb"] {
   }
 
   .sita-breadcrumb-section {
-    margin: 5px 0;
+    margin: 0px 0;
   }
 }
 
