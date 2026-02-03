@@ -4,7 +4,7 @@ import "./SitaBreadcrumb.css";
 const SitaBreadcrumb = ({ items = [] }) => {
   return (
     <section className="sita-breadcrumb-section">
-      <div className="container">
+      {/* <div className="container"> */}
         <div className="row">
           <nav aria-label="breadcrumb" data-aos="fade-up">
             <ol className="breadcrumb">
@@ -27,7 +27,7 @@ const SitaBreadcrumb = ({ items = [] }) => {
             </ol>
           </nav>
         </div>
-      </div>
+      {/* </div> */}
     </section>
   );
 };

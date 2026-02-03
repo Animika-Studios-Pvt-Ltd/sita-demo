@@ -191,6 +191,17 @@ const BookingHome = () => {
 
     return (
         <div className="relative w-full overflow-hidden">
+
+            <section className="sita-inner-hero blogs-hero">
+                <div className="sita-hero-inner-bg"></div>
+                <div className="sita-inner-hero-image">
+                    <img
+                        src="/about-banner.webp"
+                        alt="Blogs Banner"
+                        className="sita-inner-hero-img"
+                    />
+                </div>
+            </section>
             <div className="absolute inset-0 z-0 pointer-events-none h-full w-full flex flex-col items-end">
                 <img
                     ref={decorRef}
