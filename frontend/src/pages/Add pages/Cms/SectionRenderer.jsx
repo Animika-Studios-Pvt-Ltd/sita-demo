@@ -105,9 +105,9 @@ function HeroSection({ content }) {
   return (
     <>
       {/* 1. Hero Image - Always first */}
-      <section className="sita-inner-hero">
-        <div className="sita-hero-inner-bg"></div>
-        <div className="sita-inner-hero-image">
+      <section className="booking-inner-hero">
+        <div className="booking-inner-hero-bg"></div>
+        <div className="booking-inner-hero-image">
           <img src={backgroundImage || "/images/about-banner.webp"} alt="Hero Banner" />
         </div>
       </section>
