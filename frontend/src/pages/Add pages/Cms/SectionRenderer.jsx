@@ -284,7 +284,7 @@ function FaqSection({ content }) {
   const questionColor = style.questionColor || '#1f2937';
   const answerColor = style.answerColor || '#6b7280';
   const accentColor = style.accentColor || '#8b171b';
-  const padding = style.padding || 'py-16';
+  const padding = style.padding || 'py-2';
 
   if (items.length === 0) return null;
 
