@@ -341,14 +341,12 @@
     }
 }
 
-
-
 /* ---------------------------------- INNER PAGE HERO ---------------------------------- */
 .blog-details-inner-hero {
     position: relative;
     width: 100%;
     overflow: visible;
-    margin-bottom: calc((50vw / 2.15) + 10px);
+    margin-bottom: calc((46vw / 2.15) + 10px);
 }
 
 .blog-details-inner-hero-image {
@@ -652,7 +650,7 @@
 @media (max-width: 767px) {
     .blog-details-inner-hero {
         height: 150px;
-        margin-bottom: calc((60vw / 2.15) + 10px);
+        margin-bottom: calc((55vw / 2.15) + 10px);
     }
 
     .blog-details-inner-hero-bg {
