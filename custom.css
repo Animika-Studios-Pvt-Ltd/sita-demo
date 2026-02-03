@@ -1817,6 +1817,7 @@ nav[aria-label="breadcrumb"] {
 @media (max-width: 1440px) {
   .sita-breadcrumb-section {
     width: 78vw;
+    margin: 0 auto;
   }
 }
 
