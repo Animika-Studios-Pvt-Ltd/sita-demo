@@ -1333,7 +1333,7 @@ nav[aria-label="breadcrumb"] {
   position: relative;
   width: 100%;
   overflow: visible;
-  margin-bottom: calc((50vw / 2.15) + 10px);
+  margin-bottom: calc((46vw / 2.15) + 10px);
 }
 
 .booking-inner-hero-image {
@@ -3924,7 +3924,7 @@ nav[aria-label="breadcrumb"] {
 @media (max-width: 767px) {
   .booking-inner-hero {
     height: 150px;
-    margin-bottom: calc((60vw / 2.15) + 10px);
+    margin-bottom: calc((55vw / 2.15) + 10px);
   }
 
   .booking-inner-hero-bg {
