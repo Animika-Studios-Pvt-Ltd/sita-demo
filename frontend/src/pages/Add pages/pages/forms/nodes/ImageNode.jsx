@@ -62,18 +62,18 @@ export class ImageNode extends DecoratorNode {
     const img = document.createElement('img');
     img.setAttribute('src', this.__src);
     img.setAttribute('alt', this.__altText);
-    
+
     // ✅ Only set responsive styles, no fixed dimensions
     img.style.maxWidth = '100%';
     img.style.height = 'auto';
-    img.style.display = 'block';
+    img.style.display = 'inline-block'; // Changed from block to inline-block for alignment
     img.style.margin = '1rem 0';
     img.style.borderRadius = '8px';
-    
+
     img.className = 'lexical-image';
-    
+
     // ✅ Don't apply width/height - let CSS handle it
-    
+
     return { element: img };
   }
 
@@ -90,11 +90,11 @@ export class ImageNode extends DecoratorNode {
 
   static importJSON(serializedNode) {
     const { src, altText } = serializedNode;
-    return $createImageNode({ 
-      src, 
-      altText, 
-      width: 'auto', 
-      height: 'auto' 
+    return $createImageNode({
+      src,
+      altText,
+      width: 'auto',
+      height: 'auto'
     });
   }
 
@@ -104,14 +104,14 @@ export class ImageNode extends DecoratorNode {
         conversion: (element) => {
           const src = element.getAttribute('src');
           const alt = element.getAttribute('alt');
-          
+
           if (src) {
             return {
-              node: $createImageNode({ 
-                src, 
-                altText: alt, 
-                width: 'auto', 
-                height: 'auto' 
+              node: $createImageNode({
+                src,
+                altText: alt,
+                width: 'auto',
+                height: 'auto'
               }),
             };
           }

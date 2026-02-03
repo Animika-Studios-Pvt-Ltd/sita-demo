@@ -8,6 +8,7 @@ import BookingModal from '../../../components/BookingModal';
 import SitaBreadcrumb from '../../breadcrumbs/SitaBreadcrumb';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import parse from 'html-react-parser';
 
 export default function SectionRenderer({ section }) {
   useEffect(() => {
@@ -115,28 +116,24 @@ function HeroSection({ content }) {
       <SitaBreadcrumb items={breadcrumbItems} />
 
       {/* 3. Hero Content (Workshop Section style) - Now after image */}
-      <section className="sita-workshop-section" style={{ padding: '40px 0' }}>
-        <div className="container">
-          {title && <h2 className="text-center">{title}</h2>}
-          <img src="/sita-motif.webp" alt="Sita Motif" className="motif mx-auto my-3 block" style={{ width: 'auto', height: 'auto' }} />
+      <section className="booking-section" style={{ padding: '40px 0' }}>
+        <div className="container text-center sita-factor-content" data-aos="fade-up">
+          {title && <h2>{title}</h2>}
+          <img src="/sita-motif.webp" alt="Sita Motif" className="motif mx-auto justify-center my-3 block" style={{ width: 'auto', height: 'auto' }} />
 
-          <div className="row justify-content-center text-center">
-            <div className="col-lg-8">
-              {subtitle && <p className="mb-4">{subtitle}</p>}
+          {subtitle && <p className="sita-factor-text mb-4">{subtitle}</p>}
 
-              {primaryCta.label && (
-                <div className="mt-4">
-                  <button
-                    onClick={handleCtaClick}
-                    className="px-6 py-3 masterclass-card-btn font-bold shadow-md transition hover:-translate-y-1 inline-block"
-                    style={ctaStyle}
-                  >
-                    {primaryCta.label}
-                  </button>
-                </div>
-              )}
+          {primaryCta.label && (
+            <div className="mt-4">
+              <button
+                onClick={handleCtaClick}
+                className="px-6 py-3 masterclass-card-btn shadow-md transition hover:-translate-y-1 inline-block"
+                style={ctaStyle}
+              >
+                {primaryCta.label}
+              </button>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
@@ -153,7 +150,7 @@ function HeroSection({ content }) {
 function HtmlSection({ content }) {
   // Extract styling options
   const backgroundColor = content.style?.backgroundColor || '#ffffff';
-  const padding = content.style?.padding || 'py-12';
+  const padding = 'py-[20px]';
   const maxWidth = content.style?.maxWidth || 'max-w-7xl';
   const columnGap = content.columnGap || 'gap-6';
 
@@ -183,8 +180,27 @@ function HtmlSection({ content }) {
     return `col-span-12 ${sizeMap[size] || 'md:col-span-6'}`;
   };
 
+  // Parser options to inject classes
+  const parserOptions = {
+    replace: (domNode) => {
+      if (domNode.type === 'tag') {
+        if (domNode.name === 'h1') {
+          // Add sita-factor-heading class to h1 and increase size by 5px (30px + 5px = 35px)
+          const existingClass = domNode.attribs.class || '';
+          domNode.attribs.class = `${existingClass} sita-factor-heading`.trim();
+          domNode.attribs.style = `${domNode.attribs.style || ''}; font-size: 35px;`;
+        }
+        if (domNode.name === 'h2') {
+          // Add sita-factor-highlight class to h2
+          const existingClass = domNode.attribs.class || '';
+          domNode.attribs.class = `${existingClass} sita-factor-highlight`.trim();
+        }
+      }
+    }
+  };
+
   return (
-    <section className={`${padding} w-full`} style={{ backgroundColor }}>
+    <section className={`${padding} w-full container sita-factor-content`} style={{ backgroundColor }}>
       {/* Inject custom CSS if provided */}
       {content.css && (
         <style dangerouslySetInnerHTML={{ __html: content.css }} />
@@ -199,21 +215,17 @@ function HtmlSection({ content }) {
                 key={column.id || `col-${index}`}
                 className={getColClass(column.colSize)}
               >
-                <div
-                  className="html-content"
-                  dangerouslySetInnerHTML={{ __html: column.content || '' }}
-                />
+                <div className="html-content">
+                  {parse(column.content || '', parserOptions)}
+                </div>
               </div>
             ))}
           </div>
         ) : (
           // Single column layout (backward compatible)
-          <div
-            className="html-content"
-            dangerouslySetInnerHTML={{
-              __html: columns[0]?.content || content.content || ''
-            }}
-          />
+          <div className="html-content">
+            {parse(columns[0]?.content || content.content || '', parserOptions)}
+          </div>
         )}
       </div>
     </section>
@@ -243,7 +255,7 @@ function LinksSection({ content }) {
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">{title}</h2>
+        <h2 className="text-3xl font-bold text-center mb-12 sita-factor-highlight" style={{ fontFamily: 'Montserrat-Light' }}>{title}</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {items.map((item, i) => (
             <Link
@@ -251,7 +263,7 @@ function LinksSection({ content }) {
               to={item.href}
               className="flex items-center justify-between p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow"
             >
-              <span className="font-semibold">{item.label}</span>
+              <span style={{ fontFamily: 'Montserrat-Regular' }}>{item.label}</span>
               <ExternalLink className="w-5 h-5 text-blue-600" />
             </Link>
           ))}
@@ -263,7 +275,7 @@ function LinksSection({ content }) {
 
 // FAQ Section Component (with styling support)
 function FaqSection({ content }) {
-  const { title = 'FAQs', items = [], style = {} } = content;
+  const { title = 'FAQs', items = [], style = { fontFamily: 'Montserrat-Light' } } = content;
   const [openIndex, setOpenIndex] = useState(null);
 
   // Extract styles with defaults
@@ -271,7 +283,7 @@ function FaqSection({ content }) {
   const titleColor = style.titleColor || '#1f2937';
   const questionColor = style.questionColor || '#1f2937';
   const answerColor = style.answerColor || '#6b7280';
-  const accentColor = style.accentColor || '#3b82f6';
+  const accentColor = style.accentColor || '#8b171b';
   const padding = style.padding || 'py-16';
 
   if (items.length === 0) return null;
@@ -281,8 +293,8 @@ function FaqSection({ content }) {
       <div className="container mx-auto px-4">
         {title && (
           <h2
-            className="text-3xl font-bold text-center mb-12"
-            style={{ color: titleColor }}
+            className="text-3xl font-bold text-center mb-12 sita-factor-highlight"
+            style={{ color: '#8b171b', fontFamily: 'Montserrat-Light' }}
           >
             {title}
           </h2>
@@ -293,7 +305,7 @@ function FaqSection({ content }) {
             <div
               key={i}
               className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-              style={{ borderColor: accentColor + '30' }}
+              style={{ borderColor: accentColor + '30', fontFamily: 'Montserrat-Regular' }}
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
