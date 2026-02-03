@@ -1425,6 +1425,43 @@ nav[aria-label="breadcrumb"] {
   width: 90px;
 }
 
+@media (max-width: 991px) {
+  .yoga-therapy-section {
+    width: 80% !important;
+    margin: 20px auto 25px;
+  }
+
+  .yoga-therapy-section p {
+    margin-bottom: 10px;
+  }
+
+  .sita-inner-content-intro .sita {
+    width: 70px;
+  }
+}
+
+@media (max-width: 767px) {
+  .yoga-therapy-section {
+    width: 90% !important;
+    margin: 20px auto 20px;
+  }
+
+  .sita-inner-content-intro .sita {
+    width: 60px;
+  }
+}
+
+@media (max-width: 575px) {
+  .yoga-therapy-section {
+    width: 90% !important;
+    margin: 15px auto;
+  }
+
+  .sita-inner-content-intro .sita {
+    width: 50px;
+  }
+}
+
 /* ----------------- KOSHA COUNSELING PAGE ----------------- */
 .kosha-list {
   list-style: none;
@@ -3837,6 +3874,27 @@ nav[aria-label="breadcrumb"] {
   .sita-inner-side-img {
     display: none;
   }
+
+   /* .sita-inner-side-img {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
+    width: 65vw;
+    max-width: 420px;
+    opacity: 0.08; 
+    filter: grayscale(100%) brightness(1.4);
+    z-index: 0; 
+    pointer-events: none; 
+  }
+
+  .sita-inner-section,
+  .sita-inner-hero,
+  .sita-inner-hero-image {
+    position: relative;
+    z-index: 2;
+  } */
 
   .sita-inner-content {
     width: 100%;
