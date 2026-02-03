@@ -178,13 +178,13 @@ export default function CmsPage() {
             </h2>
 
             <p className="text-gray-600 text-lg mb-8 max-w-md mx-auto leading-relaxed">
-              The page <span className="font-mono text-[#8b171b] bg-[#f4ebce] px-2 py-0.5 rounded text-base">/{slug}</span> you're looking for doesn't exist or has been moved.
+              The page you're looking for doesn't exist or has been moved.
             </p>
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button
-                onClick={() => navigate('/')}
+                onClick={() => window.location.href = 'https://sitashakti.com'}
                 className="group relative px-8 py-3.5 bg-[#8b171b] text-white rounded-full font-medium transition-all hover:shadow-lg hover:shadow-[#8b171b]/20 hover:-translate-y-0.5 overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-[#8b171b] to-[#f6981e] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
