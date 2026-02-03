@@ -73,6 +73,7 @@ export default function EnhancedCmsEditor() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [pageSlug, setPageSlug] = useState(slug || "");
+  const [pageStatus, setPageStatus] = useState("draft");
   const [sections, setSections] = useState([]);
   const [loading, setLoading] = useState(!!slug);
   const [previewMode, setPreviewMode] = useState(false);
@@ -104,6 +105,7 @@ export default function EnhancedCmsEditor() {
           content: s.content,
         }));
         setSections(sectionsArray);
+        setPageStatus(page.status || "draft");
         setExpandedSections(new Set(sectionsArray.map((s) => s.id)));
         setLoading(false);
       })
@@ -302,9 +304,13 @@ export default function EnhancedCmsEditor() {
                 {previewMode ? "Edit Mode" : "Preview"}
               </button> */}
 
-              <button className={glassBtnWarning} onClick={() => save("draft")}>
-                Save Draft
-              </button>
+
+
+              {(!slug || pageStatus === "draft") && (
+                <button className={glassBtnWarning} onClick={() => save("draft")}>
+                  Save Draft
+                </button>
+              )}
 
               <button className={glassBtnPrimary} onClick={() => save("published")}>
                 <Save size={16} />
@@ -389,7 +395,7 @@ export default function EnhancedCmsEditor() {
           <PreviewPanel sections={sections} />
         )}
       </div>
-    </div>
+    </div >
   );
 }
 

@@ -54,8 +54,8 @@ import { ImageNode, $createImageNode } from "./nodes/ImageNode";
 const theme = {
   paragraph: "mb-2",
   heading: {
-    h1: "text-4xl font-bold mb-4 mt-6",
-    h2: "text-3xl font-bold mb-3 mt-5",
+    h1: "text-4xl font-bold mb-4 mt-6 font-pt-serif",
+    h2: "text-3xl font-bold mb-3 mt-5 font-montserrat",
     h3: "text-2xl font-bold mb-2 mt-4",
   },
   list: {
@@ -393,8 +393,8 @@ function GridTemplateSelector({ onSelect, currentCols }) {
             key={template.id}
             onClick={() => onSelect(template.cols)}
             className={`p-4 border-2 rounded-lg transition-all ${isActive
-                ? "border-purple-600 bg-purple-100 text-purple-800"
-                : "border-gray-300 hover:border-purple-400 hover:bg-purple-50"
+              ? "border-purple-600 bg-purple-100 text-purple-800"
+              : "border-gray-300 hover:border-purple-400 hover:bg-purple-50"
               }`}
             type="button"
           >
@@ -543,7 +543,7 @@ export default function HtmlForm({ content, onUpdate }) {
   return (
     <div className="space-y-6">
       {/* Section Title */}
-      <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-3 rounded-lg border border-purple-200">
+      {/* <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-3 rounded-lg border border-purple-200">
         <h4 className="font-semibold text-purple-800 flex items-center gap-2">
           <Layout size={20} />
           Bootstrap-Style Grid Section
@@ -551,7 +551,7 @@ export default function HtmlForm({ content, onUpdate }) {
             (12-column grid system)
           </span>
         </h4>
-      </div>
+      </div> */}
 
       {/* Grid Template Selector */}
       <div className="bg-white p-6 rounded-lg border-2 border-purple-200 shadow-sm">
