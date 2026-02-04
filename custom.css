@@ -3743,7 +3743,7 @@ nav[aria-label="breadcrumb"] {
 
 @media (max-width: 1440px) {
   .sita-inner-hero {
-    height: 215px;
+    height: 227px;
   }
 
   .sita-hero-inner-bg {
@@ -3764,7 +3764,7 @@ nav[aria-label="breadcrumb"] {
 
 @media (max-width: 1366px) {
   .sita-inner-hero {
-    height: 210px;
+    height: 220px;
   }
 
   .sita-hero-inner-bg {
@@ -3779,7 +3779,7 @@ nav[aria-label="breadcrumb"] {
 
 @media (max-width: 1320px) {
   .sita-inner-hero {
-    height: 200px;
+    height: 210px;
   }
 
   .sita-hero-inner-bg {
@@ -3794,7 +3794,7 @@ nav[aria-label="breadcrumb"] {
 
 @media (max-width: 1280px) {
   .sita-inner-hero {
-    height: 195px;
+    height: 200px;
   }
 
   .sita-hero-inner-bg {
@@ -3809,7 +3809,7 @@ nav[aria-label="breadcrumb"] {
 
 @media (max-width: 1240px) {
   .sita-inner-hero {
-    height: 190px;
+    height: 195px;
   }
 
   .sita-hero-inner-bg {
@@ -3824,7 +3824,7 @@ nav[aria-label="breadcrumb"] {
 
 @media (max-width: 1200px) {
   .sita-inner-hero {
-    height: 180px;
+    height: 190px;
   }
 
   .sita-hero-inner-bg {
@@ -3839,7 +3839,7 @@ nav[aria-label="breadcrumb"] {
 
 @media (max-width: 1150px) {
   .sita-inner-hero {
-    height: 175px;
+    height: 180px;
   }
 
   .sita-inner-side-img {
@@ -3850,7 +3850,7 @@ nav[aria-label="breadcrumb"] {
 
 @media (max-width: 1100px) {
   .sita-inner-hero {
-    height: 165px;
+    height: 170px;
   }
 
   .sita-hero-inner-bg {
@@ -3865,7 +3865,7 @@ nav[aria-label="breadcrumb"] {
 
 @media (max-width: 1024px) {
   .sita-inner-hero {
-    height: 155px;
+    height: 165px;
   }
 
   .sita-hero-inner-bg {
@@ -3953,7 +3953,7 @@ nav[aria-label="breadcrumb"] {
 
 @media (max-width: 950px) {
   .sita-inner-hero {
-    height: 145px;
+    height: 140px;
   }
 }
 
@@ -3965,7 +3965,7 @@ nav[aria-label="breadcrumb"] {
 
 @media (max-width: 850px) {
   .sita-inner-hero {
-    height: 130px;
+    height: 125px;
   }
 
   .sita-hero-inner-bg {
@@ -3985,7 +3985,7 @@ nav[aria-label="breadcrumb"] {
 
 @media (max-width: 767px) {
   .sita-inner-hero {
-    height: 150px;
+    height: 145px;
   }
 
   .sita-hero-inner-bg {
@@ -4010,27 +4010,33 @@ nav[aria-label="breadcrumb"] {
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 730px) {
   .sita-inner-hero {
     height: 140px;
   }
 }
 
+@media (max-width: 700px) {
+  .sita-inner-hero {
+    height: 135px;
+  }
+}
+
 @media (max-width: 650px) {
   .sita-inner-hero {
-    height: 130px;
+    height: 125px;
   }
 }
 
 @media (max-width: 600px) {
   .sita-inner-hero {
-    height: 120px;
+    height: 115px;
   }
 }
 
 @media (max-width: 575px) {
   .sita-inner-hero {
-    height: 115px;
+    height: 110px;
   }
 
   .sita-inner-hero-image {
@@ -4058,7 +4064,7 @@ nav[aria-label="breadcrumb"] {
 
 @media (max-width: 550px) {
   .sita-inner-hero {
-    height: 110px;
+    height: 105px;
   }
 }
 
