@@ -60,16 +60,6 @@ const Footer = () => {
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
 
-  const prevSlide = () => {
-    setActiveSlide(
-      (prev) => (prev - 1 + recentBooks.length) % recentBooks.length,
-    );
-  };
-
-  const nextSlide = () => {
-    setActiveSlide((prev) => (prev + 1) % recentBooks.length);
-  };
-
   return (
     <footer className="sita-site-footer">
       <div className="container">
@@ -77,9 +67,7 @@ const Footer = () => {
         <div className="footer-top-flex">
           <div className="footer-col footer-col-factor footer-links">
             <h6 className="footer-title">THE SITA FACTOR</h6>
-            <a href="https://sitashakti.com/yoga-therapy.html">
-              Yoga Therapy
-            </a>
+            <a href="https://sitashakti.com/yoga-therapy.html">Yoga Therapy</a>
             <a href="https://sitashakti.com/ayurveda-nutrition.html">
               Ayurveda – Nutrition & Integration
             </a>
@@ -256,7 +244,9 @@ const Footer = () => {
             </a>
           </div>
           <div className="footer-middle-center">
-            <a href="https://sitashakti.com/privacy-policy.html">Privacy Policy</a>
+            <a href="https://sitashakti.com/privacy-policy.html">
+              Privacy Policy
+            </a>
             <span>|</span>
             <a href="https://sitashakti.com/disclaimer.html">Disclaimer</a>
           </div>

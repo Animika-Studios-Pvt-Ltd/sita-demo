@@ -90,6 +90,18 @@ li {
   margin-left: 4px !important;
 }
 
+/* .nav-icon-link.dropdown-toggle {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 2px;
+}
+
+.nav-icon-link.dropdown-toggle::after {
+  margin-left: 2px;
+  margin-top: 0 !important;
+  vertical-align: middle;
+} */
+
 .user-avatar-img {
   width: 24px;
   height: 24px;
@@ -473,18 +485,3 @@ li {
     width: 110px;
   }
 }
-
-/* Fix profile dropdown arrow alignment by -- vinod start--*/
-.nav-icon-link.dropdown-toggle {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 2px;
-}
-
-.nav-icon-link.dropdown-toggle::after {
-  margin-left: 2px;
-  margin-top: 0 !important;
-  vertical-align: middle;
-}
-
-/* Fix profile dropdown arrow alignment by -- vinod end--*/

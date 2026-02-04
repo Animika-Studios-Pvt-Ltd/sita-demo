@@ -1,9 +1,9 @@
-import { NavLink, Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useAuth } from "../context/AuthContext";
 import { getSubdomain, getAppUrl } from "../utils/subdomain";
-import { HomeIcon, UserIcon, CartIcon } from "./Icons";
+import { UserIcon, CartIcon } from "./Icons";
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -24,6 +24,7 @@ const Navbar = () => {
   const location = useLocation();
 
   const { pathname } = useLocation();
+  const isHomePage = pathname === "/";
 
   const sitaFactorPaths = [
     "/yoga-therapy",
@@ -92,77 +93,73 @@ const Navbar = () => {
 
           <div className="d-flex d-lg-none align-items-center gap-3 ms-auto me-3 nav-icons-mobile-wrapper">
             {/* User Logic */}
-            {(isStore || currentSubdomain === "booking") && (
-              <div
-                className={`nav-item dropdown ${activeDropdown === "userMobile" ? "show" : ""}`}>
-                {isAuthenticated ? (
-                  <>
-                    <a
-                      className="nav-link dropdown-toggle nav-icon-link p-0"
-                      href="#"
-                      role="button"
-                      onClick={(e) => toggleDropdown("userMobile", e)}>
-                      {currentUser?.picture ? (
-                        <img
-                          src={currentUser.picture}
-                          alt="User"
-                          className="user-avatar-img"
-                        />
-                      ) : (
-                        <UserIcon size={20} />
-                      )}
-                    </a>
-                    <ul
-                      className={`dropdown-menu dropdown-menu-end ${activeDropdown === "userMobile" ? "show" : ""}`}
-                      style={{
-                        position: "absolute",
-                        right: 0,
-                        left: "auto",
-                        minWidth: "160px",
-                      }}>
-                      <li>
-                        <Link className="dropdown-item" to="/my-profile">
-                          Profile
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item" to="/orders">
-                          My Orders
-                        </Link>
-                      </li>
-                      <li>
-                        <button
-                          className="dropdown-item"
-                          onClick={() => logout()}>
-                          Logout
-                        </button>
-                      </li>
-                    </ul>
-                  </>
-                ) : (
-                  <button
-                    className="nav-link btn-link nav-icon-link p-0"
-                    onClick={() => loginWithRedirect()}
-                    style={{ background: "none", border: "none" }}>
-                    <UserIcon size={20} />
-                  </button>
-                )}
-              </div>
-            )}
+            <div
+              className={`nav-item dropdown ${activeDropdown === "userMobile" ? "show" : ""}`}>
+              {isAuthenticated ? (
+                <>
+                  <a
+                    className="nav-link dropdown-toggle nav-icon-link p-0"
+                    href="#"
+                    role="button"
+                    onClick={(e) => toggleDropdown("userMobile", e)}>
+                    {currentUser?.picture ? (
+                      <img
+                        src={currentUser.picture}
+                        alt="User"
+                        className="user-avatar-img"
+                      />
+                    ) : (
+                      <UserIcon size={20} />
+                    )}
+                  </a>
+                  <ul
+                    className={`dropdown-menu dropdown-menu-end ${activeDropdown === "userMobile" ? "show" : ""}`}
+                    style={{
+                      position: "absolute",
+                      right: 0,
+                      left: "auto",
+                      minWidth: "160px",
+                    }}>
+                    <li>
+                      <Link className="dropdown-item" to="/my-profile">
+                        Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/orders">
+                        My Orders
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                        className="dropdown-item"
+                        onClick={() => logout()}>
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
+                </>
+              ) : (
+                <button
+                  className="nav-link btn-link nav-icon-link p-0"
+                  onClick={() => loginWithRedirect()}
+                  style={{ background: "none", border: "none" }}>
+                  <UserIcon size={20} />
+                </button>
+              )}
+            </div>
 
             {/* Cart Logic */}
-            {isStore && (
-              <div className="nav-item">
-                <Link
-                  className="nav-link cart-link-container nav-icon-link p-0"
-                  to="/cart">
-                  <CartIcon size={20} />
-                  {cartItems.length > 0 && (
-                    <span className="cart-badge">{cartItems.length}</span>
-                  )}
-                </Link>
-              </div>
-            )}
+            <div className="nav-item">
+              <Link
+                className="nav-link cart-link-container nav-icon-link p-0"
+                to="/cart">
+                <CartIcon size={20} />
+                {cartItems.length > 0 && (
+                  <span className="cart-badge">{cartItems.length}</span>
+                )}
+              </Link>
+            </div>
           </div>
 
           {/* Toggler */}
@@ -186,75 +183,72 @@ const Navbar = () => {
               {/* DESKTOP TOP ROW: Contact + User + Cart - Visible on Desktop Only (d-none d-lg-flex) */}
               <ul className="navbar-nav sita-nav justify-content-end top-row-utils d-none d-lg-flex">
                 {/* User Logic */}
-                {(isStore || currentSubdomain === "booking") && (
-                  <li
-                    className={`nav-item dropdown ${activeDropdown === "userDesktop" ? "show" : ""}`}>
-                    {isAuthenticated ? (
-                      <>
-                        <a
-                          className="nav-link dropdown-toggle nav-icon-link"
-                          href="#"
-                          role="button"
-                          onClick={(e) => toggleDropdown("userDesktop", e)}>
-                          {currentUser?.picture ? (
-                            <img
-                              src={currentUser.picture}
-                              alt="User"
-                              className="user-avatar-img"
-                            />
-                          ) : (
-                            <UserIcon size={20} />
-                          )}
-                        </a>
-                        <ul
-                          className={`dropdown-menu ${activeDropdown === "userDesktop" ? "show" : ""}`}>
-                          <li>
-                            <Link className="dropdown-item" to="/my-profile">
-                              Profile
-                            </Link>
-                          </li>
-                          <li>
-                            <Link className="dropdown-item" to="/orders">
-                              My Orders
-                            </Link>
-                          </li>
-                          <li>
-                            <button
-                              className="dropdown-item"
-                              onClick={() => logout()}>
-                              Logout
-                            </button>
-                          </li>
-                        </ul>
-                      </>
-                    ) : (
-                      <button
-                        className="nav-link btn-link nav-icon-link"
-                        onClick={() => loginWithRedirect()}
-                        style={{
-                          background: "none",
-                          border: "none",
-                          padding: 0,
-                        }}>
-                        <UserIcon size={20} />
-                      </button>
-                    )}
-                  </li>
-                )}
+                <li
+                  className={`nav-item dropdown ${activeDropdown === "userDesktop" ? "show" : ""}`}>
+                  {isAuthenticated ? (
+                    <>
+                      <a
+                        className="nav-link dropdown-toggle nav-icon-link"
+                        href="#"
+                        role="button"
+                        onClick={(e) => toggleDropdown("userDesktop", e)}>
+                        {currentUser?.picture ? (
+                          <img
+                            src={currentUser.picture}
+                            alt="User"
+                            className="user-avatar-img"
+                          />
+                        ) : (
+                          <UserIcon size={20} />
+                        )}
+                      </a>
+                      <ul
+                        className={`dropdown-menu ${activeDropdown === "userDesktop" ? "show" : ""}`}>
+                        <li>
+                          <Link className="dropdown-item" to="/my-profile">
+                            Profile
+                          </Link>
+                        </li>
+                        <li>
+                          <Link className="dropdown-item" to="/orders">
+                            My Orders
+                          </Link>
+                        </li>
+                        <li>
+                          <button
+                            className="dropdown-item"
+                            onClick={() => logout()}>
+                            Logout
+                          </button>
+                        </li>
+                      </ul>
+                    </>
+                  ) : (
+                    <button
+                      className="nav-link btn-link nav-icon-link"
+                      onClick={() => loginWithRedirect()}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        padding: 0,
+                      }}>
+                      <UserIcon size={20} />
+                    </button>
+                  )}
+                </li>
 
                 {/* Cart Logic */}
-                {isStore && (
-                  <li className="nav-item">
-                    <Link
-                      className="nav-link cart-link-container nav-icon-link"
-                      to="/cart">
-                      <CartIcon size={20} />
-                      {cartItems.length > 0 && (
-                        <span className="cart-badge">{cartItems.length}</span>
-                      )}
-                    </Link>
-                  </li>
-                )}
+
+                <li className="nav-item">
+                  <Link
+                    className="nav-link cart-link-container nav-icon-link"
+                    to="/cart">
+                    <CartIcon size={20} />
+                    {cartItems.length > 0 && (
+                      <span className="cart-badge">{cartItems.length}</span>
+                    )}
+                  </Link>
+                </li>
 
                 {/* Contact Us - Desktop Position (Top Right) */}
                 <li className="nav-item">
@@ -268,13 +262,13 @@ const Navbar = () => {
 
               {/* BOTTOM ROW (Desktop) / MAIN MENU (Mobile) */}
               <ul className="navbar-nav sita-nav">
-                <li className="nav-item">
-                  <a
-                    className="nav-link home-icon"
-                    href="https://sitashakti.com">
-                    <i className="fa-solid fa-house"></i>
-                  </a>
-                </li>
+                {!isHomePage && (
+                  <li className="nav-item">
+                    <a className="nav-link home-icon" href="/">
+                      <i className="fa-solid fa-house"></i>
+                    </a>
+                  </li>
+                )}
 
                 <li className="nav-item">
                   <a

@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./assets/c.css";
 import { RouterProvider } from "react-router-dom";
 import router from "./routers/router.jsx";
@@ -20,11 +21,10 @@ createRoot(document.getElementById("root")).render(
       authorizationParams={{
         redirect_uri: window.location.origin,
         audience: import.meta.env.VITE_AUTH0_AUDIENCE,
-        scope: "openid profile email phone"
+        scope: "openid profile email phone",
       }}
       cacheLocation="localstorage"
-      useRefreshTokens={true}
-    >
+      useRefreshTokens={true}>
       <AuthProvider>
         <RouterProvider
           router={router}
@@ -35,5 +35,5 @@ createRoot(document.getElementById("root")).render(
         />
       </AuthProvider>
     </Auth0Provider>
-  </Provider>
+  </Provider>,
 );

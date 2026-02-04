@@ -12,37 +12,39 @@ import PrivateRoute from "../PrivateRoute";
 import UserDashboard from "../../pages/dashboard/users/UserDashboard";
 import PageNotFound from "../PageNotFound";
 import { Auth0Wrapper } from "../../components/Auth0Wrapper";
+import HomePage from "../../pages/homepage/homepage";
 
 export const mainRoutes = [
-    {
-        path: "/",
+  {
+    path: "/",
+    element: (
+      <Auth0Wrapper>
+        <App />
+      </Auth0Wrapper>
+    ),
+    children: [
+      { path: "/", element: <HomePage /> },
+
+      // If we want it on Main domain too as "Publications" page:
+      { path: "publications", element: <Publications /> },
+
+      { path: "events", element: <EventList /> },
+      { path: "events/:id", element: <EventDetail /> },
+
+      {
+        path: "my-profile",
         element: (
-            <Auth0Wrapper>
-                <App />
-            </Auth0Wrapper>
+          <PrivateRoute>
+            <UserDashboard />
+          </PrivateRoute>
         ),
-        children: [
+      },
 
-            // If we want it on Main domain too as "Publications" page:
-            { path: "publications", element: <Publications /> },
+      { path: "auth", element: <Auth /> },
 
-            { path: "events", element: <EventList /> },
-            { path: "events/:id", element: <EventDetail /> },
-
-            {
-                path: "my-profile",
-                element: (
-                    <PrivateRoute>
-                        <UserDashboard />
-                    </PrivateRoute>
-                ),
-            },
-
-            { path: "auth", element: <Auth /> },
-
-            // ⚠️ MUST BE LAST
-            { path: ":slug", element: <DynamicPage /> },
-        ],
-    },
-    { path: "*", element: <PageNotFound /> },
+      // ⚠️ MUST BE LAST
+      { path: ":slug", element: <DynamicPage /> },
+    ],
+  },
+  { path: "*", element: <PageNotFound /> },
 ];
