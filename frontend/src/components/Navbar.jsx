@@ -149,17 +149,19 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Cart Logic */}
-            <div className="nav-item">
-              <Link
-                className="nav-link cart-link-container nav-icon-link p-0"
-                to="/cart">
-                <CartIcon size={20} />
-                {cartItems.length > 0 && (
-                  <span className="cart-badge">{cartItems.length}</span>
-                )}
-              </Link>
-            </div>
+            {/* Cart Logic - Only on Store */}
+            {isStore && (
+              <div className="nav-item">
+                <Link
+                  className="nav-link cart-link-container nav-icon-link p-0"
+                  to="/cart">
+                  <CartIcon size={20} />
+                  {cartItems.length > 0 && (
+                    <span className="cart-badge">{cartItems.length}</span>
+                  )}
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Toggler */}
@@ -237,18 +239,19 @@ const Navbar = () => {
                   )}
                 </li>
 
-                {/* Cart Logic */}
-
-                <li className="nav-item">
-                  <Link
-                    className="nav-link cart-link-container nav-icon-link"
-                    to="/cart">
-                    <CartIcon size={20} />
-                    {cartItems.length > 0 && (
-                      <span className="cart-badge">{cartItems.length}</span>
-                    )}
-                  </Link>
-                </li>
+                {/* Cart Logic - Only on Store */}
+                {isStore && (
+                  <li className="nav-item">
+                    <Link
+                      className="nav-link cart-link-container nav-icon-link"
+                      to="/cart">
+                      <CartIcon size={20} />
+                      {cartItems.length > 0 && (
+                        <span className="cart-badge">{cartItems.length}</span>
+                      )}
+                    </Link>
+                  </li>
+                )}
 
                 {/* Contact Us - Desktop Position (Top Right) */}
                 <li className="nav-item">
