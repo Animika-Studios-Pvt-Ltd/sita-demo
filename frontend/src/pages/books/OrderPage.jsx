@@ -16,7 +16,7 @@ import "aos/dist/aos.css";
 import { useUpdateOrderMutation } from "../../redux/features/orders/ordersApi";
 import Swal from "sweetalert2";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
-import { getSubdomain, getAppUrl } from "../../utils/subdomain";
+
 
 const OrderPage = () => {
   const { currentUser } = useAuth();
@@ -33,8 +33,7 @@ const OrderPage = () => {
   const [updateOrder] = useUpdateOrderMutation();
   const [cancellingOrders, setCancellingOrders] = useState({});
   const [preloadedBooks, setPreloadedBooks] = useState(new Set());
-  const currentSubdomain = getSubdomain();
-  const isStore = currentSubdomain === "store";
+
 
   const handlePreloadEbook = async (bookId) => {
     if (preloadedBooks.has(bookId)) return;
@@ -253,21 +252,12 @@ const OrderPage = () => {
               Once you place an order, it will appear here. Start exploring and
               shop your favorite books!
             </p>
-            {isStore ? (
-              <Link
-                to="/"
-                className="inline-flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] no-underline text-white px-5 py-2 rounded-md text-center font-medium transition-colors duration-300 text-base sm:text-lg"
-              >
-                CONTINUE SHOPPING
-              </Link>
-            ) : (
-              <a
-                href={getAppUrl("store", "/")}
-                className="inline-flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] no-underline text-white px-5 py-2 rounded-md text-center font-medium transition-colors duration-300 text-base sm:text-lg"
-              >
-                CONTINUE SHOPPING
-              </a>
-            )}
+            <Link
+              to="/publications"
+              className="inline-flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] no-underline text-white px-5 py-2 rounded-md text-center font-medium transition-colors duration-300 text-base sm:text-lg"
+            >
+              CONTINUE SHOPPING
+            </Link>
 
           </div>
         </div>

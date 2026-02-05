@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getSubdomain, getAppUrl } from "../../utils/subdomain";
+
 import {
   removeFromCart,
   updateCartQty,
@@ -32,8 +32,7 @@ const CartPage = () => {
     Boolean(giftDetails?.to || giftDetails?.from || giftDetails?.message)
   );
   const { data: allBooks } = useFetchAllBooksQuery();
-  const currentSubdomain = getSubdomain();
-  const isStore = currentSubdomain === "store";
+
 
   useEffect(() => {
     AOS.init({
@@ -262,23 +261,13 @@ const CartPage = () => {
                   className="flex flex-col sm:flex-row justify-center sm:justify-between items-center mb-6 gap-2 sm:gap-0"
                   data-aos="fade-up"
                   data-aos-duration="1600">
-                  {isStore ? (
-                    <Link
-                      to="/"
-                      className="mt-0 flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] text-white px-6 py-2 no-underline rounded-md font-medium transition-colors duration-300 text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px]"
-                    >
-                      <ArrowBackOutlinedIcon fontSize="small" />
-                      CONTINUE SHOPPING
-                    </Link>
-                  ) : (
-                    <a
-                      href={getAppUrl("store", "/")}
-                      className="mt-0 flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] text-white px-6 py-2 no-underline rounded-md font-medium transition-colors duration-300 text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px]"
-                    >
-                      <ArrowBackOutlinedIcon fontSize="small" />
-                      CONTINUE SHOPPING
-                    </a>
-                  )}
+                  <Link
+                    to="/publications"
+                    className="mt-0 flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] text-white px-6 py-2 no-underline rounded-md font-medium transition-colors duration-300 text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px]"
+                  >
+                    <ArrowBackOutlinedIcon fontSize="small" />
+                    CONTINUE SHOPPING
+                  </Link>
 
                   <p className="text-[14px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[18px] font-Figtree font-regular text-center sm:text-left">
                     Subtotal (
@@ -425,21 +414,12 @@ const CartPage = () => {
               Looks like you have not added anything yet. Start exploring and
               add your favorite books to the cart!
             </p>
-            {isStore ? (
-              <Link
-                to="/"
-                className="inline-flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] no-underline text-white px-5 py-2 rounded-md text-center font-medium transition-colors duration-300 text-base sm:text-lg"
-              >
-                CONTINUE SHOPPING
-              </Link>
-            ) : (
-              <a
-                href={getAppUrl("store", "/")}
-                className="inline-flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] no-underline text-white px-5 py-2 rounded-md text-center font-medium transition-colors duration-300 text-base sm:text-lg"
-              >
-                CONTINUE SHOPPING
-              </a>
-            )}
+            <Link
+              to="/publications"
+              className="inline-flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] no-underline text-white px-5 py-2 rounded-md text-center font-medium transition-colors duration-300 text-base sm:text-lg"
+            >
+              CONTINUE SHOPPING
+            </Link>
 
           </div>
         )}

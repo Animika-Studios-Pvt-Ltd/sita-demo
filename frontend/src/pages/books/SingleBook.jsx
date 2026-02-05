@@ -1,12 +1,13 @@
 import "./SingleBook.css";
 import { useState, useEffect } from "react";
-import { getAppUrl } from "../../utils/subdomain";
+
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, clearCart } from "../../redux/features/cart/cartSlice";
 import {
   useFetchBookBySlugQuery,
   useFetchBookByIdQuery,
+  useFetchAllBooksQuery,
 } from "../../redux/features/books/booksApi";
 import { useAuth } from "../../context/AuthContext";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -48,6 +49,14 @@ const SingleBook = () => {
     isLoading: slugLoading,
     error: slugError,
   } = useFetchBookBySlugQuery(slug ?? "", { skip: !slug });
+
+  const { data: booksData } = useFetchAllBooksQuery();
+
+  const latestBooks = booksData?.books?.length > 0
+    ? [...booksData.books].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 4)
+    : booksData?.length > 0
+      ? [...booksData].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 4)
+      : [];
   const {
     data: bookById,
     isLoading: idLoading,
@@ -802,42 +811,42 @@ const SingleBook = () => {
           data-aos="fade-up"
           data-aos-duration="1500"
           data-aos-delay="200">
-          <h3>Recently Viewed</h3>
+          <h3>Latest Books</h3>
           <div className="row">
-            {recentlyViewed.length > 0 ? (
-              recentlyViewed.map((rv, idx) => {
-                const rvHasDiscount =
-                  typeof rv?.oldPrice !== "undefined" &&
-                  typeof rv?.newPrice !== "undefined" &&
-                  Number(rv.oldPrice) > Number(rv.newPrice);
+            {latestBooks.length > 0 ? (
+              latestBooks.map((book, idx) => {
+                const bookHasDiscount =
+                  typeof book?.oldPrice !== "undefined" &&
+                  typeof book?.newPrice !== "undefined" &&
+                  Number(book.oldPrice) > Number(book.newPrice);
 
                 return (
                   <div
                     className="col-lg-3 col-md-6 col-sm-6 col-12"
-                    key={rv._id}
+                    key={book._id}
                     data-aos="zoom-in"
                     data-aos-duration="1200"
                     data-aos-delay={idx * 150}>
                     <div className="rv-card">
-                      <Link to={`/books/${rv.slug || rv._id}`}>
+                      <Link to={`/books/${book.slug || book._id}`}>
                         <div style={{ position: "relative" }}>
                           <img
-                            src={rv.coverImage || "/placeholder-book.jpg"}
-                            alt={rv.title}
-                            className={rv.suspended ? "" : ""}
+                            src={book.coverImage || "/placeholder-book.jpg"}
+                            alt={book.title}
+                            className={book.suspended ? "" : ""}
                           />
                         </div>
-                        <h4>{rv.title}</h4>
-                        {!rv.suspended ? (
+                        <h4>{book.title}</h4>
+                        {!book.suspended ? (
                           <p>
-                            {rvHasDiscount && (
-                              <span className="old-price">₹ {rv.oldPrice}</span>
+                            {bookHasDiscount && (
+                              <span className="old-price">₹ {book.oldPrice}</span>
                             )}{" "}
-                            <span className="current-price">₹ {rv.newPrice}</span>{" "}
-                            {rvHasDiscount && (
+                            <span className="current-price">₹ {book.newPrice}</span>{" "}
+                            {bookHasDiscount && (
                               <span className="discount">
                                 {Math.round(
-                                  ((rv.oldPrice - rv.newPrice) / rv.oldPrice) *
+                                  ((book.oldPrice - book.newPrice) / book.oldPrice) *
                                   100
                                 )}
                                 % off
@@ -855,7 +864,7 @@ const SingleBook = () => {
                 );
               })
             ) : (
-              <p>No recently viewed books yet.</p>
+              <p>No latest books found.</p>
             )}
           </div>
         </div>
