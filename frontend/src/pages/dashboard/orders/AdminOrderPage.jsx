@@ -19,6 +19,11 @@ const AdminOrderPage = () => {
   const [totalOrders, setTotalOrders] = useState(0);
   const [deliveredOrders, setDeliveredOrders] = useState(0);
   const [cancelledOrders, setCancelledOrders] = useState(0);
+  const glassPanel = "bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-2xl shadow-sm";
+  const glassHeader = `${glassPanel} p-6 md:p-8 mb-5 shadow-[0_18px_40px_-30px_rgba(15,23,42,0.45)]`;
+  const glassTableHead = "bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 text-slate-500 uppercase text-xs font-semibold border border-white/70";
+  const glassInput = "bg-white/80 border border-white/70 ring-1 ring-black/5 rounded-lg px-2 py-1.5 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7A1F2B]/30 focus:border-[#7A1F2B]/40";
+  const iconBtnBase = "bg-white/70 border border-white/70 ring-1 ring-black/5 p-1.5 rounded-lg transition duration-200 hover:bg-white/90";
 
   const getTotalQuantity = (products) => {
     if (!products || !Array.isArray(products)) return 0;
@@ -372,26 +377,29 @@ const AdminOrderPage = () => {
 
 
   if (loading) return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center min-h-screen bg-slate-50 font-montserrat">
       <div className="text-center">
-        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        <p className="mt-4 text-gray-600">Loading orders...</p>
+        <div className="inline-block animate-spin rounded-full h-12 w-12 border-2 border-[#7A1F2B]/30 border-t-[#7A1F2B]"></div>
+        <p className="mt-4 text-slate-600">Loading orders...</p>
       </div>
     </div>
   );
 
   return (
-    <div className="container mt-10 px-4 md:px-8">
+    <div className="container mt-[40px] px-4 md:px-8 font-montserrat">
       <div className="max-w-8xl mx-auto">
-        <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg p-6 md:p-8 mb-5 shadow-lg">
+        <div className={glassHeader}>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h2 className="text-3xl font-bold text-white mb-3 flex items-center gap-2">
-                <FaClipboardList className="text-white text-2xl" /> Order Management
+              <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 mb-2 flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#7A1F2B]/10 text-[#7A1F2B]">
+                  <FaClipboardList className="text-xl" />
+                </span>
+                Order Management
               </h2>
-              <p className="text-blue-100 text-lg">
+              <p className="text-slate-600 text-sm md:text-base">
                 Total Sales:{" "}
-                <span className="font-semibold">
+                <span className="font-semibold text-[#7A1F2B]">
                   ₹
                   <CountUp
                     end={totalSales}
@@ -401,7 +409,7 @@ const AdminOrderPage = () => {
                   />
                 </span>{" "}
                 | Orders:{" "}
-                <span className="font-semibold">
+                <span className="font-semibold text-[#7A1F2B]">
                   <CountUp
                     end={orders.length}
                     duration={2.5}
@@ -410,13 +418,13 @@ const AdminOrderPage = () => {
                 </span>
                 <span>{" "}
                   | Cancelled:{" "}
-                  <span className="font-semibold ">
+                  <span className="font-semibold text-[#7A1F2B]">
                     <CountUp end={cancelledOrders} duration={2.5} separator="," />
                   </span>
                 </span>{" "}
                 <span>
                   | Delivered:{" "}
-                  <span className="font-semibold ">
+                  <span className="font-semibold text-[#7A1F2B]">
                     <CountUp end={deliveredOrders} duration={2.5} separator="," />
                   </span>
                 </span>
@@ -425,32 +433,32 @@ const AdminOrderPage = () => {
           </div>
         </div>
 
-        <div className="hidden lg:block bg-white rounded-b-lg overflow-hidden">
+        <div className={`hidden lg:block ${glassPanel} overflow-hidden`}>
           <div className="overflow-x-auto">
             <table className="min-w-full table-fixed">
-              <thead className="bg-gray-50 border-b-2 border-gray-200">
+              <thead className={glassTableHead}>
                 <tr>
-                  <th className="w-[25%] px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Order Details</th>
-                  <th className="w-[15%] px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Customer</th>
-                  <th className="w-[15%] px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
-                  <th className="w-[30%] px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Tracking ID</th>
-                  <th className="w-[15%] px-3 py-3 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Invoice</th>
+                  <th className="w-[25%] px-3 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Order Details</th>
+                  <th className="w-[15%] px-3 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Customer</th>
+                  <th className="w-[15%] px-3 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Status</th>
+                  <th className="w-[30%] px-3 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Tracking ID</th>
+                  <th className="w-[15%] px-3 py-3 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Invoice</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-white/60">
                 {orders.length === 0 ? (
-                  <tr><td colSpan="5" className="text-center py-12 text-gray-500"><svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg><p className="mt-2 font-medium">No orders found</p></td></tr>
+                  <tr><td colSpan="5" className="text-center py-12 text-slate-500"><svg className="mx-auto h-12 w-12 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg><p className="mt-2 font-medium">No orders found</p></td></tr>
                 ) : (
                   orders.map((order) => {
                     const totalQty = getTotalQuantity(order.products);
                     return (
                       <React.Fragment key={order._id}>
-                        <tr className="hover:bg-gray-50 transition duration-150">
+                        <tr className="hover:bg-white/60 transition duration-150">
                           <td className="px-3 py-3">
                             <div className="flex items-start gap-2">
                               <button
                                 onClick={() => toggleRowExpansion(order._id)}
-                                className="mt-1 text-gray-400 hover:text-gray-600 transition flex-shrink-0"
+                                className="mt-1 text-slate-400 hover:text-slate-600 transition flex-shrink-0"
                               >
                                 <svg
                                   className={`w-4 h-4 transform transition-transform ${expandedRows[order._id] ? "rotate-90" : ""}`}
@@ -462,7 +470,7 @@ const AdminOrderPage = () => {
                                 </svg>
                               </button>
                               <div className="min-w-0">
-                                <p className="text-xs font-medium text-gray-900 break-all">{order.orderCode}</p>
+                                <p className="text-xs font-medium text-slate-900 break-all">{order.orderCode}</p>
 
                                 {(order.giftTo || order.giftFrom || order.giftMessage) && (
                                   <p className="text-xs text-pink-600 font-semibold mt-1 flex items-center gap-1">
@@ -470,12 +478,12 @@ const AdminOrderPage = () => {
                                   </p>
                                 )}
 
-                                <p className="text-xs text-gray-500 mt-1">
+                                <p className="text-xs text-slate-500 mt-1">
                                   {totalQty} {totalQty === 1 ? "item" : "items"} ({order.products?.length || 0}{" "}
                                   {order.products?.length === 1 ? "book" : "books"})
                                 </p>
 
-                                <p className="text-xs font-semibold text-gray-900 mt-1">
+                                <p className="text-xs font-semibold text-slate-900 mt-1">
                                   ₹{order.totalPrice?.toFixed(2)}
                                 </p>
                               </div>
@@ -483,16 +491,16 @@ const AdminOrderPage = () => {
                           </td>
                           <td className="px-3 py-3">
                             <div className="min-w-0">
-                              <p className="text-xs font-medium text-gray-900 truncate">{order.name}</p>
-                              <p className="text-xs text-gray-500 truncate">{order.email}</p>
-                              {order.phone && <p className="text-xs text-gray-500 truncate">{order.phone}</p>}
+                              <p className="text-xs font-medium text-slate-900 truncate">{order.name}</p>
+                              <p className="text-xs text-slate-500 truncate">{order.email}</p>
+                              {order.phone && <p className="text-xs text-slate-500 truncate">{order.phone}</p>}
                             </div>
                           </td>
                           <td className="px-3 py-3">
                             <select
                               value={order.status}
                               onChange={(e) => handleStatusChange(order._id, e.target.value)}
-                              className={`text-xs font-medium px-2 py-1.5 rounded-lg border-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${getStatusColor(order.status)}`}
+                              className={`text-xs font-medium px-2 py-1.5 rounded-lg border w-full bg-white/80 backdrop-blur focus:outline-none focus:ring-2 focus:ring-[#7A1F2B]/30 ${getStatusColor(order.status)}`}
                             >
                               <option value="Pending">Pending</option>
                               <option value="Processing">Processing</option>
@@ -503,9 +511,9 @@ const AdminOrderPage = () => {
                               <option value="Return Approved">Return Approved</option>
                               <option value="Return Rejected">Return Rejected</option>
                             </select>
-                            <p className="text-[11px] text-gray-500 font-semibold mt-2 text-center">
+                            <p className="text-[11px] text-slate-500 font-semibold mt-2 text-center">
                               Ordered on - {" "}
-                              <span className="font-semibold text-gray-700">
+                              <span className="font-semibold text-slate-600">
                                 {new Date(order.createdAt).toLocaleDateString("en-IN", {
                                   day: "2-digit",
                                   month: "short",
@@ -520,12 +528,12 @@ const AdminOrderPage = () => {
                                 type="text"
                                 value={trackingInputs[order._id] || ""}
                                 onChange={(e) => handleTrackingChange(order._id, e.target.value)}
-                                className="text-xs border-2 border-gray-300 rounded-lg px-2 py-1.5 flex-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className={`${glassInput} flex-1`}
                                 placeholder="Enter Tracking ID"
                               />
                               <button
                                 onClick={() => handleUpdateSingleTracking(order._id)}
-                                className="bg-blue-600 hover:bg-blue-700 text-white p-1.5 rounded-lg transition duration-200 flex-shrink-0"
+                                className={`${iconBtnBase} text-[#7A1F2B] hover:text-[#8b171b] flex-shrink-0`}
                                 title="Update Tracking ID"
                               >
                                 <SendIcon style={{ fontSize: 18 }} />
@@ -536,14 +544,14 @@ const AdminOrderPage = () => {
                             <div className="flex justify-center gap-2">
                               <button
                                 onClick={() => previewInvoice(order)}
-                                className="bg-purple-600 hover:bg-purple-700 text-white p-1.5 rounded-lg transition duration-200"
+                                className={`${iconBtnBase} text-[#7A1F2B] hover:text-[#8b171b]`}
                                 title="Preview Invoice"
                               >
                                 <VisibilityIcon style={{ fontSize: 18 }} />
                               </button>
                               <button
                                 onClick={() => downloadInvoice(order)}
-                                className="bg-green-600 hover:bg-green-700 text-white p-1.5 rounded-lg transition duration-200"
+                                className={`${iconBtnBase} text-emerald-600 hover:text-emerald-700 border-emerald-200/60`}
                                 title="Download Invoice"
                               >
                                 <DownloadIcon style={{ fontSize: 18 }} />
@@ -553,10 +561,10 @@ const AdminOrderPage = () => {
                         </tr>
 
                         {expandedRows[order._id] && (
-                          <tr className="bg-blue-50">
+                          <tr className="bg-[#7A1F2B]/5">
                             <td colSpan="5" className="px-3 py-3">
-                              <div className="ml-6 bg-white rounded-lg p-3 border-l-4 border-blue-500">
-                                <h4 className="text-xs font-semibold text-gray-700 mb-2">Order Items</h4>
+                              <div className="ml-6 bg-white/80 backdrop-blur rounded-xl p-3 border border-white/70 ring-1 ring-black/5 border-l-4 border-[#7A1F2B]/40">
+                                <h4 className="text-xs font-semibold text-slate-600 mb-2">Order Items</h4>
                                 <div className="space-y-1">
                                   {order.products && order.products.length > 0 ? (
                                     order.products.map((product, index) => (
@@ -565,12 +573,12 @@ const AdminOrderPage = () => {
                                         className="flex justify-between items-center py-1.5 border-b last:border-b-0"
                                       >
                                         <div className="flex-1">
-                                          <p className="text-xs font-medium text-gray-900">
+                                          <p className="text-xs font-medium text-slate-900">
                                             {product.title || "Untitled Book"}
                                           </p>
-                                          <p className="text-xs text-gray-500">Qty: {product.quantity || 1}</p>
+                                          <p className="text-xs text-slate-500">Qty: {product.quantity || 1}</p>
                                         </div>
-                                        <div className="text-xs text-gray-600 ml-4">
+                                        <div className="text-xs text-slate-600 ml-4">
                                           <span className="font-semibold">
                                             ₹{((product.price || 0) * (product.quantity || 1)).toFixed(2)}
                                           </span>
@@ -578,7 +586,7 @@ const AdminOrderPage = () => {
                                       </div>
                                     ))
                                   ) : (
-                                    <p className="text-sm text-gray-500">No items in this order</p>
+                                    <p className="text-sm text-slate-500">No items in this order</p>
                                   )}
                                   {order.status === "Return Requested" && (
                                     <div className="mt-4 bg-red-50 border border-red-200 rounded-lg p-3">
@@ -586,7 +594,7 @@ const AdminOrderPage = () => {
                                         🔁 Return Request Details
                                       </h4>
 
-                                      <p className="text-sm text-gray-700 mb-2">
+                                      <p className="text-sm text-slate-600 mb-2">
                                         <span className="font-semibold">Reason:</span>{" "}
                                         {order.returnReason || "No reason provided"}
                                       </p>
@@ -596,7 +604,7 @@ const AdminOrderPage = () => {
                                           <img
                                             src={order.returnImage}
                                             alt="Return proof"
-                                            className="w-64 h-48 object-cover rounded-lg border border-gray-300"
+                                            className="w-64 h-48 object-cover rounded-lg border border-white/70"
                                           />
                                         </div>
                                       )}
@@ -635,50 +643,50 @@ const AdminOrderPage = () => {
           {orders && orders.length > 0 ? orders.map((order) => {
             const totalQty = getTotalQuantity(order.products);
             return (
-              <div key={order._id} className="bg-white rounded-lg overflow-hidden">
+              <div key={order._id} className={glassPanel}>
                 <div className="p-4 space-y-3">
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-semibold text-gray-500 uppercase">Order ID</p>
-                      <p className="text-sm font-mono text-gray-900 break-all mt-1">{order._id}</p>
+                      <p className="text-xs font-semibold text-slate-500 uppercase">Order ID</p>
+                      <p className="text-sm font-mono text-slate-900 break-all mt-1">{order._id}</p>
                     </div>
                     <span className={`text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap ${getStatusColor(order.status)}`}>{order.status}</span>
                   </div>
                   <div className="border-t pt-3">
-                    <p className="text-sm font-medium text-gray-900">{order.name}</p>
-                    <p className="text-sm text-gray-600 mt-1">{order.email}</p>
-                    {order.phone && <p className="text-sm text-gray-600">{order.phone}</p>}
+                    <p className="text-sm font-medium text-slate-900">{order.name}</p>
+                    <p className="text-sm text-slate-600 mt-1">{order.email}</p>
+                    {order.phone && <p className="text-sm text-slate-600">{order.phone}</p>}
                   </div>
                   <div className="border-t pt-3">
-                    <button onClick={() => toggleRowExpansion(order._id)} className="flex items-center justify-between w-full text-left text-sm font-medium text-blue-600 hover:text-blue-800">
+                    <button onClick={() => toggleRowExpansion(order._id)} className="flex items-center justify-between w-full text-left text-sm font-medium text-[#7A1F2B] hover:text-[#8b171b]">
                       <span>{expandedRows[order._id] ? "Hide" : "View"} Items ({totalQty} {totalQty === 1 ? "item" : "items"})</span>
                       <svg className={`w-5 h-5 transform transition-transform ${expandedRows[order._id] ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                     </button>
                     {expandedRows[order._id] && (
-                      <div className="mt-3 bg-blue-50 rounded-lg p-3 space-y-2">{order.products && order.products.length > 0 ? order.products.map((product, index) => (<div key={index} className="flex justify-between items-start py-2 border-b last:border-b-0 border-blue-100"><div className="flex-1 pr-2"><p className="text-sm text-gray-900">{product.title || "Untitled Book"}</p><p className="text-xs text-gray-500">Qty: {product.quantity || 1} × ₹{(product.price || 0).toFixed(2)}</p></div><p className="text-sm font-semibold text-gray-900">₹{((product.price || 0) * (product.quantity || 1)).toFixed(2)}</p></div>)) : <p className="text-sm text-gray-500">No items</p>}</div>
+                      <div className="mt-3 bg-[#7A1F2B]/5 rounded-lg p-3 space-y-2">{order.products && order.products.length > 0 ? order.products.map((product, index) => (<div key={index} className="flex justify-between items-start py-2 border-b last:border-b-0 border-[#7A1F2B]/15"><div className="flex-1 pr-2"><p className="text-sm text-slate-900">{product.title || "Untitled Book"}</p><p className="text-xs text-slate-500">Qty: {product.quantity || 1} × ₹{(product.price || 0).toFixed(2)}</p></div><p className="text-sm font-semibold text-slate-900">₹{((product.price || 0) * (product.quantity || 1)).toFixed(2)}</p></div>)) : <p className="text-sm text-slate-500">No items</p>}</div>
                     )}
                   </div>
                   <div className="flex flex-col space-y-2 pt-2">
-                    <div><label className="text-xs font-semibold text-gray-500 uppercase block mb-1">Status</label><select value={order.status} onChange={(e) => handleStatusChange(order._id, e.target.value)} className={`text-sm font-medium px-3 py-2 rounded-lg border-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${getStatusColor(order.status)}`}><option value="Pending">Pending</option><option value="Processing">Processing</option><option value="Shipped">Shipped</option><option value="Delivered">Delivered</option><option value="Cancelled">Cancelled</option></select></div>
-                    <div><label className="text-xs font-semibold text-gray-500 uppercase block mb-1">Tracking ID</label>
+                    <div><label className="text-xs font-semibold text-slate-500 uppercase block mb-1">Status</label><select value={order.status} onChange={(e) => handleStatusChange(order._id, e.target.value)} className={`text-sm font-medium px-3 py-2 rounded-lg border w-full bg-white/80 backdrop-blur focus:outline-none focus:ring-2 focus:ring-[#7A1F2B]/30 ${getStatusColor(order.status)}`}><option value="Pending">Pending</option><option value="Processing">Processing</option><option value="Shipped">Shipped</option><option value="Delivered">Delivered</option><option value="Cancelled">Cancelled</option></select></div>
+                    <div><label className="text-xs font-semibold text-slate-500 uppercase block mb-1">Tracking ID</label>
                       <div className="flex gap-2">
-                        <input type="text" value={trackingInputs[order._id] || ""} onChange={(e) => handleTrackingChange(order._id, e.target.value)} className="text-sm border-2 border-gray-300 rounded-lg px-3 py-2 flex-1 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter Tracking ID" />
-                        <button onClick={() => handleUpdateSingleTracking(order._id)} className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition duration-200"><SendIcon style={{ fontSize: 18 }} /></button>
+                        <input type="text" value={trackingInputs[order._id] || ""} onChange={(e) => handleTrackingChange(order._id, e.target.value)} className={`${glassInput} flex-1 text-sm`} placeholder="Enter Tracking ID" />
+                        <button onClick={() => handleUpdateSingleTracking(order._id)} className={`${iconBtnBase} text-[#7A1F2B] hover:text-[#8b171b]`}><SendIcon style={{ fontSize: 18 }} /></button>
                       </div>
                     </div>
                   </div>
                   <div className="flex items-center justify-between pt-2 border-t">
-                    <p className="text-lg font-bold text-gray-900">₹{order.totalPrice?.toFixed(2)}</p>
+                    <p className="text-lg font-bold text-slate-900">₹{order.totalPrice?.toFixed(2)}</p>
                     <div className="flex gap-2">
-                      <button onClick={() => previewInvoice(order)} className="bg-purple-600 hover:bg-purple-700 text-white p-2 rounded-lg transition duration-200" title="Preview"><VisibilityIcon style={{ fontSize: 18 }} /></button>
-                      <button onClick={() => downloadInvoice(order)} className="bg-green-600 hover:bg-green-700 text-white p-2 rounded-lg transition duration-200" title="Download"><DownloadIcon style={{ fontSize: 18 }} /></button>
+                      <button onClick={() => previewInvoice(order)} className={`${iconBtnBase} text-[#7A1F2B] hover:text-[#8b171b]`} title="Preview"><VisibilityIcon style={{ fontSize: 18 }} /></button>
+                      <button onClick={() => downloadInvoice(order)} className={`${iconBtnBase} text-emerald-600 hover:text-emerald-700 border-emerald-200/60`} title="Download"><DownloadIcon style={{ fontSize: 18 }} /></button>
                     </div>
                   </div>
                 </div>
               </div>
             );
           }) : (
-            <div className="bg-white rounded-lg p-8 text-center"><svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg><p className="mt-4 text-gray-600 font-medium">No orders available</p></div>
+            <div className={`${glassPanel} p-8 text-center`}><svg className="mx-auto h-12 w-12 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg><p className="mt-4 text-slate-600 font-medium">No orders available</p></div>
           )}
         </div>
       </div>
@@ -687,3 +695,6 @@ const AdminOrderPage = () => {
 };
 
 export default AdminOrderPage;
+
+
+

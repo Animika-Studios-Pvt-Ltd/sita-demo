@@ -235,18 +235,18 @@ const Dashboard = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div className="flex flex-col items-center justify-center gap-3 mb-2">
+        <div className="flex flex-col items-center justify-center gap-1 mb-1">
           <div className="shield-glow p-3 bg-white/70 backdrop-blur-md rounded-full border border-white/60 ring-1 ring-black/5">
             <MdSecurity className="text-slate-600 text-3xl sm:text-4xl" />
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight text-center font-montserrat">
-            Admin Dashboard
+            Dashboard
           </h2>
         </div>
         <p className="text-slate-500 text-sm sm:text-base max-w-xl mx-auto font-medium">
           Overview of your store's performance, inventory, and orders.
         </p>
-        <div className="mt-4 mx-auto w-24 h-1 bg-slate-300 rounded-full opacity-80"></div>
+        <div className="mt-1 mx-auto w-24 h-1 bg-slate-300 rounded-full opacity-80"></div>
       </motion.div>
 
       <div className="flex justify-end mb-6">

@@ -109,7 +109,7 @@ const DashboardLayout = () => {
         ></div>
       )}
       <aside
-        className={`fixed top-0 h-screen bg-white/70 backdrop-blur-xl text-slate-700 flex flex-col justify-between py-6 px-3 shadow-[0_20px_45px_-30px_rgba(15,23,42,0.45)] z-40 transition-all duration-300 ${isMobile
+        className={`fixed top-0 h-screen bg-white/70 backdrop-blur-xl text-slate-700 flex flex-col justify-between pt-4 pb-6 px-3 shadow-[0_20px_45px_-30px_rgba(15,23,42,0.45)] z-40 transition-all duration-300 ${isMobile
           ? mobileSidebar
             ? "w-64 left-0"
             : "w-0 -left-64"
@@ -120,31 +120,41 @@ const DashboardLayout = () => {
       >
         <div>
           <div
-            className={`flex items-center mb-10 ${isExpanded && !isMobile ? "justify-between px-2" : "flex-col space-y-3"
-              }`}
+            className={`relative mb-10 ${isExpanded || mobileSidebar ? "px-2" : "px-0"}`}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col items-center gap-2">
               <img
                 src="/flower.webp"
                 alt="Admin Profile"
-                className="w-12 h-12 rounded-full object-cover border border-white/70 ring-1 ring-black/5 shadow-sm"
+                className={`w-full ${isExpanded || mobileSidebar ? "max-w-[110px]" : "max-w-[52px]"} h-auto object-contain rounded-none`}
               />
-              {(isExpanded && !isMobile) || mobileSidebar ? (
-                <div className="flex flex-col">
-                  <span className="text-lg font-montserrat font-semibold text-slate-900 leading-tight">
-                    Sita Admin
-                  </span>
-                  <span className="text-xs text-slate-500 font-montserrat font-medium">
-                    Dashboard
-                  </span>
+              {(isExpanded || mobileSidebar) && (
+                <div className="relative w-full flex items-center justify-center">
+                  <div className="flex flex-col items-center text-center">
+                    <span className="text-base font-montserrat font-semibold text-slate-900 leading-tight">
+                      Sita Admin
+                    </span>
+                    <span className="text-xs text-slate-500 font-montserrat font-medium">
+                      Dashboard
+                    </span>
+                  </div>
+                  {!isMobile && (
+                    <button
+                      onClick={() => setIsExpanded(!isExpanded)}
+                      className="absolute right-0 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-800 transition-all duration-200 rounded-full p-1.5 bg-white/60 border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/80"
+                      aria-label="Toggle sidebar"
+                    >
+                      {isExpanded ? <ChevronLeftIcon fontSize="small" /> : <ChevronRightIcon fontSize="small" />}
+                    </button>
+                  )}
                 </div>
-              ) : null}
+              )}
             </div>
 
-            {!isMobile && (
+            {!isMobile && !(isExpanded || mobileSidebar) && (
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="text-slate-500 hover:text-slate-800 transition-all duration-200 rounded-full p-2 bg-white/60 border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/80"
+                className="mt-2 mx-auto block text-slate-500 hover:text-slate-800 transition-all duration-200 rounded-full p-1.5 bg-white/60 border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/80"
                 aria-label="Toggle sidebar"
               >
                 {isExpanded ? <ChevronLeftIcon fontSize="small" /> : <ChevronRightIcon fontSize="small" />}
@@ -156,10 +166,10 @@ const DashboardLayout = () => {
             <Link
               to="/dashboard"
               className={`no-underline flex items-center ${isExpanded || mobileSidebar ? "gap-4 px-4" : "justify-center px-2"
-                } py-2.5 rounded-xl transition-all duration-200 border border-transparent backdrop-blur-md ${isActive("/dashboard") ? "bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 text-[#7A1F2B] border-[#7A1F2B]/50 ring-1 ring-black/5 shadow-sm relative overflow-hidden" : "text-slate-600 hover:text-slate-900 hover:bg-white/70 hover:border-white/60 hover:ring-1 hover:ring-black/5"
+                } py-2.5 rounded-xl transition-all duration-200 border border-transparent backdrop-blur-md ${isActive("/dashboard") ? "bg-gradient-to-br from-[#7A1F2B]/25 via-white/90 to-white/80 text-[#7A1F2B] border-[#7A1F2B]/80 ring-1 ring-black/5 shadow-sm relative overflow-hidden" : "text-slate-600 hover:text-slate-900 hover:bg-white/70 hover:border-white/60 hover:ring-1 hover:ring-black/5"
                 }`}
             >
-              {isActive("/dashboard") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#7A1F2B]/35"></div>}
+              {isActive("/dashboard") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#7A1F2B]/60"></div>}
               <DashboardIcon className="w-5 h-5 flex-shrink-0" />
               {(isExpanded || mobileSidebar) && <span className="text-sm font-medium">Dashboard</span>}
             </Link>
@@ -168,11 +178,11 @@ const DashboardLayout = () => {
               to="/dashboard/manage-books"
               className={`no-underline flex items-center ${isExpanded || mobileSidebar ? "gap-4 px-4" : "justify-center px-2"
                 } py-2.5 rounded-xl transition-all duration-200 border border-transparent backdrop-blur-md ${isActive("/dashboard/manage-books")
-                  ? "bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 text-[#7A1F2B] border-[#7A1F2B]/50 ring-1 ring-black/5 shadow-sm relative overflow-hidden"
+                  ? "bg-gradient-to-br from-[#7A1F2B]/25 via-white/90 to-white/80 text-[#7A1F2B] border-[#7A1F2B]/80 ring-1 ring-black/5 shadow-sm relative overflow-hidden"
                   : "text-slate-600 hover:text-slate-900 hover:bg-white/70 hover:border-white/60 hover:ring-1 hover:ring-black/5"
                 }`}
             >
-              {isActive("/dashboard/manage-books") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#7A1F2B]/35"></div>}
+              {isActive("/dashboard/manage-books") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#7A1F2B]/60"></div>}
               <MenuBookIcon className="w-5 h-5 flex-shrink-0" />
               {(isExpanded || mobileSidebar) && <span className="text-sm font-medium">Manage Books</span>}
             </Link>
@@ -181,11 +191,11 @@ const DashboardLayout = () => {
               to="/dashboard/add-blogs"
               className={`no-underline flex items-center ${isExpanded || mobileSidebar ? "gap-4 px-4" : "justify-center px-2"
                 } py-2.5 rounded-xl transition-all duration-200 border border-transparent backdrop-blur-md ${isActive("/dashboard/add-blogs")
-                  ? "bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 text-[#7A1F2B] border-[#7A1F2B]/50 ring-1 ring-black/5 shadow-sm relative overflow-hidden"
+                  ? "bg-gradient-to-br from-[#7A1F2B]/25 via-white/90 to-white/80 text-[#7A1F2B] border-[#7A1F2B]/80 ring-1 ring-black/5 shadow-sm relative overflow-hidden"
                   : "text-slate-600 hover:text-slate-900 hover:bg-white/70 hover:border-white/60 hover:ring-1 hover:ring-black/5"
                 }`}
             >
-              {isActive("/dashboard/add-blogs") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#7A1F2B]/35"></div>}
+              {isActive("/dashboard/add-blogs") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#7A1F2B]/60"></div>}
               <LibraryBooksIcon className="w-5 h-5 flex-shrink-0" />
               {(isExpanded || mobileSidebar) && <span className="text-sm font-medium">Manage Blogs</span>}
             </Link>
@@ -194,11 +204,11 @@ const DashboardLayout = () => {
               to="/dashboard/cms"
               className={`no-underline flex items-center ${isExpanded || mobileSidebar ? "gap-4 px-4" : "justify-center px-2"
                 } py-2.5 rounded-xl transition-all duration-200 border border-transparent backdrop-blur-md ${isActive("/dashboard/cms")
-                  ? "bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 text-[#7A1F2B] border-[#7A1F2B]/50 ring-1 ring-black/5 shadow-sm relative overflow-hidden"
+                  ? "bg-gradient-to-br from-[#7A1F2B]/25 via-white/90 to-white/80 text-[#7A1F2B] border-[#7A1F2B]/80 ring-1 ring-black/5 shadow-sm relative overflow-hidden"
                   : "text-slate-600 hover:text-slate-900 hover:bg-white/70 hover:border-white/60 hover:ring-1 hover:ring-black/5"
                 }`}
             >
-              {isActive("/dashboard/cms") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#7A1F2B]/35"></div>}
+              {isActive("/dashboard/cms") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#7A1F2B]/60"></div>}
               <ImageIcon className="w-5 h-5 flex-shrink-0" />
               {(isExpanded || mobileSidebar) && <span className="text-sm font-medium">CMS Module</span>}
             </Link>
@@ -208,8 +218,8 @@ const DashboardLayout = () => {
         <div className={`${isExpanded || mobileSidebar ? "px-4 space-y-2" : "flex flex-col items-center space-y-2"} transition-all duration-300 border-t border-white/60 pt-6`}>
           <Link
             to="/dashboard/settings/mfa"
-            className={`no-underline flex items-center gap-3 px-4 py-3 rounded-xl w-full transition-all duration-300 border border-transparent backdrop-blur-md ${isActive("/dashboard/settings/mfa")
-              ? "bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 text-[#7A1F2B] border-[#7A1F2B]/50 ring-1 ring-black/5 shadow-sm"
+            className={`no-underline flex items-center gap-3 px-4 py-2.5 rounded-xl w-full transition-all duration-300 border border-transparent backdrop-blur-md ${isActive("/dashboard/settings/mfa")
+              ? "bg-gradient-to-br from-[#7A1F2B]/25 via-white/90 to-white/80 text-[#7A1F2B] border-[#7A1F2B]/80 ring-1 ring-black/5 shadow-sm"
               : "text-slate-600 hover:text-slate-900 hover:bg-white/70 hover:border-white/60 hover:ring-1 hover:ring-black/5"
               } ${isExpanded || mobileSidebar ? "justify-start" : "justify-center"}`}
           >
@@ -219,7 +229,7 @@ const DashboardLayout = () => {
 
           <button
             onClick={handleLogout}
-            className={`flex items-center gap-3 px-4 py-3 text-red-500 hover:text-red-600 hover:bg-red-50/70 rounded-xl w-full transition-all duration-300 border border-transparent backdrop-blur-md hover:border-red-200/60 hover:ring-1 hover:ring-red-200/60 ${isExpanded || mobileSidebar ? "justify-start" : "justify-center"
+            className={`flex items-center gap-3 px-4 py-2.5 text-[#8b171b] hover:text-[#8b171b] hover:bg-red-50/70 rounded-xl w-full transition-all duration-300 border border-transparent backdrop-blur-md hover:border-red-200/60 hover:ring-1 hover:ring-red-200/60 ${isExpanded || mobileSidebar ? "justify-start" : "justify-center"
               }`}
             aria-label="Logout"
           >
@@ -256,3 +266,6 @@ const DashboardLayout = () => {
 }
 
 export default DashboardLayout
+
+
+
