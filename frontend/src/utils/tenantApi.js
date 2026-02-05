@@ -1,7 +1,7 @@
 import { getSubdomain } from "./subdomain";
 
 export const getTenantSubdomain = () => {
-    return getSubdomain();
+    return getSubdomain() || 'main'; // Fallback to 'main' for root domain
 };
 
 export const fetchTenantInfo = async (subdomain) => {
