@@ -30,7 +30,7 @@ body {
 
 .sita-breadcrumb-section {
   margin: 10px auto;
-  width: 79vw;
+  /* width: 79vw; */
 }
 
 nav[aria-label="breadcrumb"] {
@@ -67,7 +67,7 @@ nav[aria-label="breadcrumb"] {
 /* ---------- Responsive ---------- */
 @media (max-width: 1440px) {
   .sita-breadcrumb-section {
-    width: 78vw;
+    /* width: 78vw; */
     margin: 10px auto;
   }
 }
@@ -89,7 +89,7 @@ nav[aria-label="breadcrumb"] {
 @media (max-width: 767px) {
   .sita-breadcrumb-section {
     margin: 6px auto;
-    width: 80vw;
+    /* width: 80vw; */
   }
 
   .breadcrumb {
@@ -109,7 +109,7 @@ nav[aria-label="breadcrumb"] {
 @media (max-width: 575px) {
   .sita-breadcrumb-section {
     margin: 5px auto;
-    width: 90vw;
+    /* width: 90vw; */
   }
 
   .breadcrumb {

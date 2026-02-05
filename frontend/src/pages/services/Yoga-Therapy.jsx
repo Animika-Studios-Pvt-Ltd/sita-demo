@@ -66,27 +66,26 @@ const YogaTherapy = () => {
                   data-aos="zoom-in"
                   data-aos-delay="200"
                 />
+              </div>
+              <div
+                className="sita-inner-content-intro"
+                data-aos="fade-up"
+                data-aos-delay="300">
+                <p
+                  className="sita-quote"
+                  data-aos="fade-right"
+                  data-aos-delay="400">
+                  “The true measure of Yoga is not how far the body moves but
+                  how quietly the mind sits.”
+                </p>
 
-                <div
-                  className="sita-inner-content-intro yoga-therapy-section"
-                  data-aos="fade-up"
-                  data-aos-delay="300">
-                  <p
-                    className="sita-quote"
-                    data-aos="fade-right"
-                    data-aos-delay="400">
-                    “The true measure of Yoga is not how far the body moves but
-                    how quietly the mind sits.”
-                  </p>
-
-                  <img
-                    src="/sita.webp"
-                    alt="Sita"
-                    className="sita"
-                    data-aos="fade-left"
-                    data-aos-delay="500"
-                  />
-                </div>
+                <img
+                  src="/sita.webp"
+                  alt="Sita"
+                  className="sita"
+                  data-aos="fade-left"
+                  data-aos-delay="500"
+                />
               </div>
 
               <div className="sita-inner-full-content">

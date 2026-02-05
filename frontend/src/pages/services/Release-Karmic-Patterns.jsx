@@ -4,6 +4,7 @@ import "aos/dist/aos.css";
 import Testimonials from "../testimonials/Testimonials";
 import WorkShopCalendar from "../workshop calendar/WorkShopCalendar";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
+import "../about/About.css";
 
 const ReleaseKarmicPatterns = () => {
   useEffect(() => {
@@ -68,20 +69,19 @@ const ReleaseKarmicPatterns = () => {
                   data-aos="zoom-in"
                   data-aos-delay="200"
                 />
-
-                <div
-                  className="sita-inner-content-intro"
-                  data-aos="fade-up"
-                  data-aos-delay="300">
-                  <p>
-                    Sita works and supports individuals in recognizing and
-                    releasing deep-seated karmic patterns that shape their
-                    experiences, choices, and emotional responses. These
-                    patterns often manifest as recurring challenges—whether in
-                    relationships, health, self-worth, or life direction—and can
-                    feel difficult to shift through conscious effort alone.
-                  </p>
-                </div>
+              </div>
+              <div
+                className="sita-inner-content-intro"
+                data-aos="fade-up"
+                data-aos-delay="300">
+                <p>
+                  Sita works and supports individuals in recognizing and
+                  releasing deep-seated karmic patterns that shape their
+                  experiences, choices, and emotional responses. These patterns
+                  often manifest as recurring challenges—whether in
+                  relationships, health, self-worth, or life direction—and can
+                  feel difficult to shift through conscious effort alone.
+                </p>
               </div>
 
               <div className="sita-inner-full-content">

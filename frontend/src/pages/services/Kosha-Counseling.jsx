@@ -4,6 +4,7 @@ import "aos/dist/aos.css";
 import Testimonials from "../testimonials/Testimonials";
 import WorkShopCalendar from "../workshop calendar/WorkShopCalendar";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
+import "../about/About.css";
 
 const KoshaCounseling = () => {
   useEffect(() => {
@@ -65,46 +66,45 @@ const KoshaCounseling = () => {
                   data-aos="zoom-in"
                   data-aos-delay="200"
                 />
+              </div>
+              <div
+                className="sita-inner-content-intro"
+                data-aos="fade-up"
+                data-aos-delay="300">
+                <p>
+                  The koshas, a concept from ancient Vedantic philosophy,
+                  represent the five layers or sheaths that envelop the true
+                  self, known as the Atman. These layers help us understand
+                  different aspects of our being, from the physical to the
+                  spiritual. Here’s a brief overview of each kosha:
+                </p>
 
-                <div
-                  className="sita-inner-content-intro"
-                  data-aos="fade-up"
-                  data-aos-delay="300">
-                  <p>
-                    The koshas, a concept from ancient Vedantic philosophy,
-                    represent the five layers or sheaths that envelop the true
-                    self, known as the Atman. These layers help us understand
-                    different aspects of our being, from the physical to the
-                    spiritual. Here’s a brief overview of each kosha:
-                  </p>
+                <ul className="kosha-list">
+                  <li data-aos="fade-up" data-aos-delay="400">
+                    <img src="/sita-points.webp" alt="bullet" />
+                    <span>The Physical sheath</span>
+                  </li>
 
-                  <ul className="kosha-list">
-                    <li data-aos="fade-up" data-aos-delay="400">
-                      <img src="/sita-points.webp" alt="bullet" />
-                      <span>The Physical sheath</span>
-                    </li>
+                  <li data-aos="fade-up" data-aos-delay="450">
+                    <img src="/sita-points.webp" alt="bullet" />
+                    <span>The Wisdom sheath</span>
+                  </li>
 
-                    <li data-aos="fade-up" data-aos-delay="450">
-                      <img src="/sita-points.webp" alt="bullet" />
-                      <span>The Wisdom sheath</span>
-                    </li>
+                  <li data-aos="fade-up" data-aos-delay="500">
+                    <img src="/sita-points.webp" alt="bullet" />
+                    <span>The Energy sheath</span>
+                  </li>
 
-                    <li data-aos="fade-up" data-aos-delay="500">
-                      <img src="/sita-points.webp" alt="bullet" />
-                      <span>The Energy sheath</span>
-                    </li>
+                  <li data-aos="fade-up" data-aos-delay="550">
+                    <img src="/sita-points.webp" alt="bullet" />
+                    <span>The Bliss sheath</span>
+                  </li>
 
-                    <li data-aos="fade-up" data-aos-delay="550">
-                      <img src="/sita-points.webp" alt="bullet" />
-                      <span>The Bliss sheath</span>
-                    </li>
-
-                    <li data-aos="fade-up" data-aos-delay="600">
-                      <img src="/sita-points.webp" alt="bullet" />
-                      <span>The Mental sheath</span>
-                    </li>
-                  </ul>
-                </div>
+                  <li data-aos="fade-up" data-aos-delay="600">
+                    <img src="/sita-points.webp" alt="bullet" />
+                    <span>The Mental sheath</span>
+                  </li>
+                </ul>
               </div>
 
               <div className="sita-inner-full-content">

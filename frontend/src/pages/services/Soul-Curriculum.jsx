@@ -4,6 +4,7 @@ import "aos/dist/aos.css";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 import WorkShopCalendar from "../workshop calendar/WorkShopCalendar";
 import Testimonials from "../testimonials/Testimonials";
+import "../about/About.css";
 
 const SoulCurriculum = () => {
   useEffect(() => {
@@ -65,19 +66,18 @@ const SoulCurriculum = () => {
                   data-aos="zoom-in"
                   data-aos-delay="200"
                 />
-
-                <div
-                  className="sita-inner-content-intro"
-                  data-aos="fade-up"
-                  data-aos-delay="300">
-                  <p>
-                    Sita offers a ‘Soul Curriculum,’ which is an enablement and
-                    empowerment into health and happiness. Sita makes people
-                    feel understood, dives deep to the root of the problem, and
-                    is solution-centric. She respects people’s realities and
-                    embarks together with them for a steady transformation.
-                  </p>
-                </div>
+              </div>
+              <div
+                className="sita-inner-content-intro"
+                data-aos="fade-up"
+                data-aos-delay="300">
+                <p>
+                  Sita offers a ‘Soul Curriculum,’ which is an enablement and
+                  empowerment into health and happiness. Sita makes people feel
+                  understood, dives deep to the root of the problem, and is
+                  solution-centric. She respects people’s realities and embarks
+                  together with them for a steady transformation.
+                </p>
               </div>
 
               <div className="sita-inner-full-content">

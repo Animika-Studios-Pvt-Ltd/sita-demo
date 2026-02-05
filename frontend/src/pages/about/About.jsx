@@ -28,6 +28,13 @@ const About = () => {
             <img src="/about-banner.webp" alt="About Banner" />
           </div>
         </div>
+        <img
+          src="/sita-image.webp"
+          className="sita-inner-side-img"
+          alt="Sita Image"
+          data-aos="fade-left"
+          data-aos-duration="2000"
+        />
       </section>
 
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
@@ -40,41 +47,31 @@ const About = () => {
         <div className="container position-relative">
           <div className="row">
             <div className="col-lg-12 col-md-12 col-sm-12 col-12">
-              <div className="sita-inner-content sita-about-section">
-                <div className="sita-about-content">
-                  <h2 data-aos="fade-up">About Sita</h2>
+              <div className="sita-inner-content" data-aos="fade-up">
+                <h2 data-aos="fade-up" data-aos-delay="100">
+                  About Sita
+                </h2>
 
-                  <img
-                    src="/sita-motif.webp"
-                    className="motif mb-4"
-                    alt="Decorative Motif"
-                    data-aos="zoom-in"
-                  />
-
-                  <div
-                    className="sita-inner-content-intro"
-                    data-aos="fade-up"
-                    data-aos-delay="150">
-                    <p>
-                      Sita Severson is a Spiritual Counselor and Mentor,
-                      offering Teacher Training programs, individual and group
-                      sessions to seekers. She supports and creates customized
-                      frameworks that enable spiritual evolution. She is known
-                      also as a Vedic Counselor, Ayurvedic Health Practitioner,
-                      Healer, Couch and Athor.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="sita-about-image">
-                  <img
-                    src="/sita-image.webp"
-                    className="sita-side-img"
-                    alt="Sita Image"
-                    data-aos="fade-left"
-                    data-aos-duration="2000"
-                  />
-                </div>
+                <img
+                  src="/sita-motif.webp"
+                  className="motif mb-4"
+                  alt="Decorative Motif"
+                  data-aos="zoom-in"
+                  data-aos-delay="200"
+                />
+              </div>
+              <div
+                className="sita-inner-content-intro about-intro-content"
+                data-aos="fade-up"
+                data-aos-delay="300">
+                <p>
+                  Sita Severson is a Spiritual Counselor and Mentor, offering
+                  Teacher Training programs, individual and group sessions to
+                  seekers. She supports and creates customized frameworks that
+                  enable spiritual evolution. She is known also as a Vedic
+                  Counselor, Ayurvedic Health Practitioner, Healer, Couch and
+                  Athor.
+                </p>
               </div>
 
               <div className="sita-inner-full-content about-content">

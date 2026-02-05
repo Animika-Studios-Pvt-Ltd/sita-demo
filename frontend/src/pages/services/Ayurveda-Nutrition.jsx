@@ -4,6 +4,7 @@ import "aos/dist/aos.css";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 import WorkShopCalendar from "../workshop calendar/WorkShopCalendar";
 import Testimonials from "../testimonials/Testimonials";
+import "../about/About.css";
 
 const AyurvedaNutrition = () => {
   useEffect(() => {
@@ -68,19 +69,18 @@ const AyurvedaNutrition = () => {
                   data-aos="zoom-in"
                   data-aos-delay="200"
                 />
-
-                <div
-                  className="sita-inner-content-intro"
-                  data-aos="fade-up"
-                  data-aos-delay="300">
-                  <p>
-                    Ayurveda integration brings the timeless wisdom of Ayurveda
-                    into modern life in a practical, personalized, and
-                    sustainable way. Ayurveda integration focuses on identifying
-                    the root causes of imbalance—whether physical, digestive,
-                    hormonal, emotional, or energetic.
-                  </p>
-                </div>
+              </div>
+              <div
+                className="sita-inner-content-intro"
+                data-aos="fade-up"
+                data-aos-delay="300">
+                <p>
+                  Ayurveda integration brings the timeless wisdom of Ayurveda
+                  into modern life in a practical, personalized, and sustainable
+                  way. Ayurveda integration focuses on identifying the root
+                  causes of imbalance—whether physical, digestive, hormonal,
+                  emotional, or energetic.
+                </p>
               </div>
 
               <div className="sita-inner-full-content">

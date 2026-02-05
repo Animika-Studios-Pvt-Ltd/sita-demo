@@ -1,3 +1,47 @@
+@font-face {
+  font-family: "PTSerif-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: local("PTSerif-Regular"), local("PTSerif-Regular"),
+    url("fonts/PTSerif-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Montserrat-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Montserrat-Regular"), local("Montserrat-Regular"),
+    url("fonts/Montserrat-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Montserrat-Light";
+  font-style: normal;
+  font-weight: 300;
+  src: local("Montserrat-Light"), local("Montserrat-Light"),
+    url("fonts/Montserrat-Light.ttf") format("truetype");
+}
+
+html,
+body {
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+h2 {
+  font-family: "PTSerif-Regular";
+  color: #8b171b;
+  font-size: 48px;
+  text-transform: uppercase;
+  margin-bottom: 0px;
+}
+
+p,
+li {
+  font-family: "Montserrat-Light";
+  font-size: 18px;
+  color: black;
+}
 
 /* ---------------------------------- INNER PAGE HERO ---------------------------------- */
 .sita-inner-hero {
@@ -52,59 +96,30 @@
 }
 
 /* ----------------- YOGA THERAPY PAGE ----------------- */
-.yoga-therapy-section {
-  position: relative;
-  text-align: center;
-  width: 70%;
-  margin: 20px auto;
-}
-
 .sita-quote {
   font-style: italic;
-  text-align: center;
   margin: 0 auto;
 }
 
 .sita-inner-content-intro .sita {
   display: block;
-  margin-left: auto;
-  margin-right: 0;
   margin-top: 10px;
   width: 70px;
 }
 
 @media (max-width: 991px) {
-  .yoga-therapy-section {
-    width: 80% !important;
-    margin: 20px auto 25px;
-  }
-
-  .yoga-therapy-section p {
-    margin-bottom: 10px;
-  }
-
   .sita-inner-content-intro .sita {
     width: 60px;
   }
 }
 
 @media (max-width: 767px) {
-  .yoga-therapy-section {
-    width: 90% !important;
-    margin: 20px auto 20px;
-  }
-
   .sita-inner-content-intro .sita {
     width: 60px;
   }
 }
 
 @media (max-width: 575px) {
-  .yoga-therapy-section {
-    width: 90% !important;
-    margin: 15px auto;
-  }
-
   .sita-inner-content-intro .sita {
     width: 50px;
   }
@@ -167,7 +182,7 @@
 }
 
 .sita-inner-content {
-  width: 60%;
+  width: 50%;
 }
 
 .sita-inner-content h2 {
@@ -215,27 +230,10 @@
   text-transform: capitalize;
 }
 
-.sita-about-section {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  width: 100%;
+.about-intro-content {
+  width: 70%;
 }
 
-.sita-about-content {
-  width: 50%;
-  text-align: center;
-}
-
-.sita-about-image {
-  width: 50%;
-  text-align: center;
-}
-
-.sita-side-img {
-  max-width: 70%;
-  height: auto;
-}
 
 /* ----------------- CERTIFICATIONS & TRAINING SECTION ----------------- */
 .sita-certifications {
@@ -345,33 +343,23 @@
 /* COMMON STYLES SECTION */
 @media (max-width: 1200px) {
   h2 {
-    font-size: 42px;
+    font-size: 42px !important;
   }
 
   p,
   li {
     font-size: 17px;
-  }
-
-  .sita-btn {
-    font-size: 17px;
-    padding: 9px 22px;
   }
 }
 
 @media (max-width: 991px) {
   h2 {
-    font-size: 40px;
+    font-size: 40px !important;
   }
 
   p,
   li {
     font-size: 16px;
-  }
-
-  .sita-btn {
-    font-size: 16px;
-    padding: 8px 20px;
   }
 
   .motif {
@@ -381,17 +369,12 @@
 
 @media (max-width: 767px) {
   h2 {
-    font-size: 36px;
+    font-size: 36px !important;
   }
 
   p,
   li {
     font-size: 15px;
-  }
-
-  .sita-btn {
-    font-size: 15px;
-    padding: 7px 18px;
   }
 
   .motif {
@@ -401,33 +384,23 @@
 
 @media (max-width: 575px) {
   h2 {
-    font-size: 28px;
+    font-size: 28px !important;
   }
 
   p,
   li {
     font-size: 14px;
-  }
-
-  .sita-btn {
-    font-size: 14px;
-    padding: 6px 16px;
   }
 }
 
 @media (max-width: 400px) {
   h2 {
-    font-size: 24px;
+    font-size: 24px !important;
   }
 
   p,
   li {
     font-size: 13px;
-  }
-
-  .sita-btn {
-    font-size: 13px;
-    padding: 5px 14px;
   }
 }
 
@@ -889,81 +862,8 @@
 
 
 /* ------------------------------------------------- ABOUT PAGE RESPONSIVE CODE ------------------------------------------------- */
-/* ----------------- ABOUT CONTENT SECTION ----------------- */
-@media (max-width: 1200px) {
-  .sita-about-content {
-    width: 60%;
-    text-align: center;
-  }
 
-  .sita-about-image {
-    width: 40%;
-    text-align: center;
-  }
 
-  .sita-side-img {
-    max-width: 95%;
-    height: auto;
-  }
-}
-
-@media (max-width: 991px) {
-  .sita-about-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0px;
-  }
-
-  .sita-about-content {
-    display: contents;
-  }
-
-  .sita-about-image,
-  .sita-inner-content-intro {
-    width: 100%;
-    text-align: center;
-  }
-
-  .sita-about-content h2 {
-    order: 1;
-  }
-
-  .sita-about-content .motif {
-    order: 2;
-    margin-bottom: 10px !important;
-  }
-
-  .sita-about-image {
-    order: 3;
-    margin: 10px 0;
-  }
-
-  .sita-about-content .sita-inner-content-intro {
-    order: 4;
-    text-align: left;
-  }
-
-  .sita-side-img {
-    max-width: 50%;
-    height: auto;
-	margin: 0 auto;
-  }
-}
-
-@media (max-width: 767px) {
-  .sita-side-img {
-    max-width: 60%;
-    height: auto;
-  }
-}
-
-@media (max-width: 575px) {
-  .sita-side-img {
-    max-width: 50%;
-    height: auto;
-  }
-}
 
 /* ----------------- CERTIFICATIONS & TRAINING SECTION ----------------- */
 @media (max-width: 991px) {
