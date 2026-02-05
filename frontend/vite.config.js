@@ -88,7 +88,6 @@ export default defineConfig(async () => {
         changefreq: 'weekly',
         priority: 0.7,
         lastmod: new Date().toISOString(),
-        lastmod: new Date().toISOString(),
         generateRobotsTxt: false, // Disable plugin generation, using manual public/robots.txt instead
       }),
     ],

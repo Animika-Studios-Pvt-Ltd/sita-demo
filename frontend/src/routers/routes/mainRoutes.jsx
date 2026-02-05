@@ -12,7 +12,7 @@ import PrivateRoute from "../PrivateRoute";
 import UserDashboard from "../../pages/dashboard/users/UserDashboard";
 import PageNotFound from "../PageNotFound";
 import { Auth0Wrapper } from "../../components/Auth0Wrapper";
-import HomePage from "../../pages/homepage/homepage";
+import HomePage from "../../pages/homepage/Homepage";
 import About from "../../pages/about/About";
 import AyurvedaNutrition from "../../pages/services/ayurveda-nutrition";
 import KoshaCounseling from "../../pages/services/Kosha-Counseling";
