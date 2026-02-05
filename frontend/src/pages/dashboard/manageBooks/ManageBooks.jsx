@@ -372,73 +372,72 @@ const ManageBooks = () => {
     };
 
     return (
-        <div className="container mt-[40px]">
-            <div className="max-w-8xl mx-auto rounded-lg">
-                <button
-                    onClick={() => navigate(-1)}
-                    className="flex items-center justify-center rounded-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400 transition-all duration-300 text-white font-medium rounded-[6px] px-2 py-1"
-                >
-                    <ArrowBackIcon className="w-2 h-2" />
-                    Back
-                </button>
-                <div className="relative flex justify-center mb-8 bg-gray-200 rounded-full p-1 max-w-md mx-auto shadow-inner">
-                    <div className={`absolute top-1 left-1 w-1/2 h-10 bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400 rounded-full shadow-md transform transition-transform duration-300 ${viewMode === "form" ? "translate-x-full" : ""}`}></div>
+        <div className="container mt-[40px] font-montserrat text-slate-700">
+            <div className="container mx-auto">
+                <div className="max-w-8xl mx-auto p-0 rounded-lg">
                     <button
-                        className={`relative flex-1 py-2 flex items-center justify-center gap-2 rounded-full font-semibold text-md transition-all duration-300 transform ${viewMode === "list" ? "text-white" : "text-gray-700 hover:text-gray-900 hover:scale-105"}`}
-                        onClick={() => {
-                            setViewMode("list");
-                            setEditingBookId(null);
-                            reset();
-                            setCoverImagePreview(null);
-                            setBackImagePreview(null);
-                        }}
+                        onClick={() => navigate("/dashboard")}
+                        className="flex items-center gap-2 justify-center rounded-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 text-slate-700 hover:bg-white/90 transition-colors duration-200 px-3 py-1.5 text-sm font-medium"
                     >
-                        <MenuBookIcon /> View Books
+                        <ArrowBackIcon className="w-4 h-4" />
+                        Back
                     </button>
-                    <button
-                        className={`relative flex-1 py-2 flex items-center justify-center gap-2 rounded-full font-semibold text-md transition-all duration-300 transform ${viewMode === "form" ? "text-white" : "text-gray-700 hover:text-gray-900 hover:scale-105"}`}
-                        onClick={() => {
-                            setViewMode("form");
-                            setEditingBookId(null);
-                            reset();
-                            setCoverImagePreview(null);
-                            setBackImagePreview(null);
-                        }}
-                    >
-                        <FiEdit /> Add Book
-                    </button>
-                </div>
+                    <div className="relative flex justify-center mb-8 bg-white/60 backdrop-blur-xl border border-[#7A1F2B] ring-1 ring-white/70 rounded-full p-1.5 max-w-md mx-auto shadow-sm overflow-hidden">
+                        <div className={`absolute top-1.5 left-1.5 w-[calc(50%-0.375rem)] h-10 bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 rounded-full border border-[#7A1F2B] ring-1 ring-black/5 shadow-[0_8px_18px_-12px_rgba(122,31,43,0.45)] transform transition-transform duration-300 ${viewMode === "form" ? "translate-x-full" : ""}`}></div>
+                        <button
+                            className={`relative flex-1 py-2 flex items-center justify-center gap-2 rounded-full font-semibold text-md transition-colors duration-200 ${viewMode === "list" ? "text-[#7A1F2B]" : "text-slate-500 hover:text-slate-800"}`}
+                            onClick={() => {
+                                setViewMode("list");
+                                setEditingBookId(null);
+                                reset();
+                                setCoverImagePreview(null);
+                                setBackImagePreview(null);
+                            }}
+                        >
+                            <MenuBookIcon /> View Books
+                        </button>
+                        <button
+                            className={`relative flex-1 py-2 flex items-center justify-center gap-2 rounded-full font-semibold text-md transition-colors duration-200 ${viewMode === "form" ? "text-[#7A1F2B]" : "text-slate-500 hover:text-slate-800"}`}
+                            onClick={() => {
+                                setViewMode("form");
+                                setEditingBookId(null);
+                                reset();
+                                setCoverImagePreview(null);
+                                setBackImagePreview(null);
+                            }}
+                        >
+                            <FiEdit /> Add Book
+                        </button>
+                    </div>
 
-                {viewMode === "form" && (
-                    <div className="container">
-                        <div className="mt-[50px]">
-                            <div className="max-w-8xl mx-auto bg-white p-6 md:p-8 rounded-lg shadow-md">
-                                <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">
-                                    {editingBookId ? "Edit Book" : "Add New Book"}
-                                </h2>
-                                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                                    <InputField label="Title" name="title" register={register} placeholder="Enter book title" required />
-                                    <InputField label="Sub Title" name="subtitle" register={register} placeholder="Enter book sub title" />
-                                    <InputField label="Author" name="author" register={register} placeholder="Enter author name" required />
-                                    <InputField label="Short Description" name="aboutBook" register={register} placeholder="Short description" type="textarea" />
-                                    <InputField label="Detailed Description" name="description" register={register} placeholder="Enter description" type="textarea" required />
-                                    <div className="mt-4 p-3 rounded-lg border-2 ">
-                                        <label className="block text-sm font-semibold text-gray-700 mb-1">
+                    {viewMode === "form" && (
+                        <div className="container">
+                            <div className="mt-[50px]">
+                                <div className="max-w-8xl mx-auto bg-white/70 backdrop-blur-xl p-6 md:p-8 rounded-2xl border border-white/70 ring-1 ring-black/5 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.45)]">
+                                    <h2 className="text-2xl md:text-3xl font-bold text-[#7A1F2B] mb-6 text-center font-montserrat">
+                                        {editingBookId ? "Edit Book" : "Add New Book"}
+                                    </h2>
+                                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                                        <InputField label="Title" name="title" register={register} placeholder="Enter book title" required />
+                                        <InputField label="Sub Title" name="subtitle" register={register} placeholder="Enter book sub title" />
+                                        <InputField label="Author" name="author" register={register} placeholder="Enter author name" required />
+                                        <InputField label="Short Description" name="aboutBook" register={register} placeholder="Short description" type="textarea" />
+                                        <InputField label="Detailed Description" name="description" register={register} placeholder="Enter description" type="textarea" required />
+                                        {/* <div className="mt-4 p-4 rounded-xl bg-white/60 backdrop-blur-xl border border-white/70 ring-1 ring-black/5">
+                                        <label className="block text-sm font-semibold text-slate-700 mb-2">
                                             Chapters
                                         </label>
 
                                         {chapters.map((chapter, index) => (
-                                            <div key={index} className="mb-2 p-2 border border-gray-200 rounded-md bg-white">
+                                            <div key={index} className="mb-3 p-3 border border-white/70 rounded-xl bg-white/70 backdrop-blur-md ring-1 ring-black/5">
                                                 <div className="flex justify-between items-center mb-2">
-
-
-                                                    <label className="block text-sm font-semibold text-gray-700 mb-1">
+                                                    <label className="block text-sm font-semibold text-slate-700 mb-1">
                                                         Chapters {index + 1}
                                                     </label>
                                                     {chapters.length > 1 && (
                                                         <button
                                                             onClick={() => handleRemoveChapter(index)}
-                                                            className="flex items-center gap-1 px-3 py-1 rounded-full text-white font-light bg-gradient-to-r from-red-500 to-red-700 hover:from-red-700 hover:to-red-500 transition-all duration-300"
+                                                            className="flex items-center gap-1 px-3 py-1 rounded-full text-red-600 text-sm font-medium bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-red-200/60 hover:bg-white/90 transition-colors duration-200"
                                                         >
                                                             <FiTrash2 /> Remove
                                                         </button>
@@ -449,7 +448,7 @@ const ManageBooks = () => {
                                                     value={chapter.title}
                                                     onChange={(e) => handleChapterChange(index, "title", e.target.value)}
                                                     placeholder="Chapter Title"
-                                                    className="w-full mb-2 px-3 py-2 border rounded-md"
+                                                    className="w-full mb-2 px-3 py-2 bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
                                                 />
 
                                                 <textarea
@@ -457,373 +456,366 @@ const ManageBooks = () => {
                                                     onChange={(e) => handleChapterChange(index, "description", e.target.value)}
                                                     placeholder="Chapter Description"
                                                     rows={3}
-                                                    className="w-full px-3 py-2 border rounded-md"
+                                                    className="w-full px-3 py-2 bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
                                                 />
                                             </div>
                                         ))}
                                         <button
                                             type="button"
                                             onClick={handleAddChapter}
-                                            className="mt-0 bg-gradient-to-r font-light from-purple-600 to-purple-800 hover:from-purple-800 hover:to-purple-600 text-white px-3 py-1 rounded-full"
+                                            className="mt-1 bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 text-slate-700 px-3 py-1 rounded-full text-sm font-medium hover:bg-white/90 transition-colors duration-200"
                                         >
                                             + Add Chapter
                                         </button>
-                                    </div>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <div>
-                                            <label className="block text-sm font-semibold text-gray-700 mb-1">
-                                                Book Front Cover Image
-                                            </label>
-                                            <input
-                                                type="file"
-                                                accept="image/*"
-                                                onChange={(e) => handleImageChange(e, "cover")}
-                                                className="w-full border rounded-md px-3 py-2 file:mr-4 file:py-2 file:px-4 file:rounded-md 
-                                                file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 
-                                                hover:file:bg-blue-100"
-                                            />
-                                            <p className="text-xs text-gray-500 mt-1">
-                                                Recommended size: <span className="font-semibold">290 × 435 px</span>
-                                            </p>
-                                            {coverImagePreview && (
-                                                <img
-                                                    src={coverImagePreview}
-                                                    alt="Cover preview"
-                                                    className="w-[150px] h-[200px] mt-2 object-contain border rounded"
+                                    </div> */}
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-sm font-semibold text-slate-700 mb-1">
+                                                    Book Front Cover Image
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    onChange={(e) => handleImageChange(e, "cover")}
+                                                    className="w-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg px-3 py-2 text-slate-700 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-white/80 file:text-slate-700 hover:file:bg-white"
                                                 />
-                                            )}
-                                        </div>
+                                                <p className="text-xs text-slate-500 mt-1">
+                                                    Recommended size: <span className="font-semibold">290 × 435 px</span>
+                                                </p>
+                                                {coverImagePreview && (
+                                                    <img
+                                                        src={coverImagePreview}
+                                                        alt="Cover preview"
+                                                        className="w-[150px] h-[200px] mt-2 object-contain border border-white/70 rounded-xl bg-white/70 backdrop-blur ring-1 ring-black/5"
+                                                    />
+                                                )}
+                                            </div>
 
-                                        <div>
-                                            <label className="block text-sm font-semibold text-gray-700 mb-1">
-                                                Book Back Cover Image
-                                            </label>
-                                            <input
-                                                type="file"
-                                                accept="image/*"
-                                                onChange={(e) => handleImageChange(e, "back")}
-                                                className="w-full border rounded-md px-3 py-2 file:mr-4 file:py-2 file:px-4 file:rounded-md 
-                                                file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                                            />
-                                            <p className="text-xs text-gray-500 mt-1">
-                                                Recommended size: <span className="font-semibold">290 × 435 px</span>
-                                            </p>
-                                            {backImagePreview && (
-                                                <img
-                                                    src={backImagePreview}
-                                                    alt="Back preview"
-                                                    className="w-[150px] h-[200px] mt-2 object-contain border rounded"
+                                            <div>
+                                                <label className="block text-sm font-semibold text-slate-700 mb-1">
+                                                    Book Back Cover Image
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    onChange={(e) => handleImageChange(e, "back")}
+                                                    className="w-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg px-3 py-2 text-slate-700 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-white/80 file:text-slate-700 hover:file:bg-white"
                                                 />
-                                            )}
-                                        </div>
-                                        <div className="mb-6 p-6 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border-2 border-green-200">
-                                            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                                                <p className="text-xs text-slate-500 mt-1">
+                                                    Recommended size: <span className="font-semibold">290 × 435 px</span>
+                                                </p>
+                                                {backImagePreview && (
+                                                    <img
+                                                        src={backImagePreview}
+                                                        alt="Back preview"
+                                                        className="w-[150px] h-[200px] mt-2 object-contain border border-white/70 rounded-xl bg-white/70 backdrop-blur ring-1 ring-black/5"
+                                                    />
+                                                )}
+                                            </div>
+                                            {/* <div className="mb-6 p-6 bg-white/70 backdrop-blur-xl rounded-2xl border border-white/70 ring-1 ring-black/5 shadow-sm">
+                                            <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-slate-900 font-montserrat">
                                                 <span>📚</span> eBook Settings (Optional)
                                             </h3>
 
                                             <div>
-                                                <label className="block text-sm font-semibold mb-2 text-gray-700">
+                                                <label className="block text-sm font-semibold mb-2 text-slate-700">
                                                     Upload eBook File (.epub)
                                                 </label>
                                                 <input
                                                     type="file"
                                                     accept=".epub"
                                                     onChange={(e) => setEbookFile(e.target.files[0])}
-                                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                                    className="w-full px-4 py-2 bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
                                                 />
                                                 {ebookFile && (
-                                                    <p className="text-sm text-green-600 mt-2 flex items-center gap-2">
+                                                    <p className="text-sm text-emerald-600 mt-2 flex items-center gap-2">
                                                         <span>✅</span> Selected: {ebookFile.name}
                                                     </p>
                                                 )}
-                                                <p className="text-xs text-gray-500 mt-2">
+                                                <p className="text-xs text-slate-500 mt-2">
                                                     💡 Upload an EPUB file to make this book available as an eBook
                                                 </p>
                                             </div>
+                                        </div> */}
                                         </div>
 
-
-                                    </div>
-
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <InputField label="Language" name="language" register={register} placeholder="Enter language" />
-                                        <InputField label="Binding" name="binding" register={register} placeholder="Enter binding" />
-                                    </div>
-
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <InputField label="Publisher" name="publisher" register={register} placeholder="Enter publisher" />
-                                        <InputField label="ISBN" name="isbn" register={register} placeholder="Enter ISBN" />
-                                    </div>
-
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <InputField label="Publishing Date" name="publishingDate" register={register} type="date" />
-                                        <InputField label="Pages" name="pages" register={register} type="number" placeholder="Enter pages" />
-                                    </div>
-
-                                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
-                                        <div>
-                                            <label className="block text-sm font-semibold text-gray-700 mb-1">Height (cm)</label>
-                                            <input
-                                                type="number"
-                                                step="0.1"
-                                                min="0"
-                                                placeholder="0.0"
-                                                className="w-full border rounded-md px-3 py-2"
-                                                {...register("height")}
-                                            />
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <InputField label="Language" name="language" register={register} placeholder="Enter language" />
+                                            <InputField label="Binding" name="binding" register={register} placeholder="Enter binding" />
                                         </div>
-                                        <div>
-                                            <label className="block text-sm font-semibold text-gray-700 mb-1">Width (cm)</label>
-                                            <input
-                                                type="number"
-                                                step="0.1"
-                                                min="0"
-                                                placeholder="0.0"
-                                                className="w-full border rounded-md px-3 py-2"
-                                                {...register("width")}
-                                            />
+
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <InputField label="Publisher" name="publisher" register={register} placeholder="Enter publisher" />
+                                            <InputField label="ISBN" name="isbn" register={register} placeholder="Enter ISBN" />
                                         </div>
-                                        <div>
-                                            <label className="block text-sm font-semibold text-gray-700 mb-1">Length (cm)</label>
-                                            <input
-                                                type="number"
-                                                step="0.1"
-                                                min="0"
-                                                placeholder="0.0"
-                                                className="w-full border rounded-md px-3 py-2"
-                                                {...register("length")}
-                                            />
+
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <InputField label="Publishing Date" name="publishingDate" register={register} type="date" />
+                                            <InputField label="Pages" name="pages" register={register} type="number" placeholder="Enter pages" />
                                         </div>
-                                        <div>
-                                            <label className="block text-sm font-semibold text-gray-700 mb-1">
-                                                Weight (grams)
-                                                {weightValue && (
-                                                    <span className="ml-2 text-blue-600 text-xs">
-                                                        → {roundWeightToNearest10(weightValue)}g
-                                                    </span>
+
+                                        <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+                                            <div>
+                                                <label className="block text-sm font-semibold text-slate-700 mb-1">Height (cm)</label>
+                                                <input
+                                                    type="number"
+                                                    step="0.1"
+                                                    min="0"
+                                                    placeholder="0.0"
+                                                    className="w-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg px-3 py-2 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
+                                                    {...register("height")}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-semibold text-slate-700 mb-1">Width (cm)</label>
+                                                <input
+                                                    type="number"
+                                                    step="0.1"
+                                                    min="0"
+                                                    placeholder="0.0"
+                                                    className="w-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg px-3 py-2 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
+                                                    {...register("width")}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-semibold text-slate-700 mb-1">Length (cm)</label>
+                                                <input
+                                                    type="number"
+                                                    step="0.1"
+                                                    min="0"
+                                                    placeholder="0.0"
+                                                    className="w-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg px-3 py-2 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
+                                                    {...register("length")}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-semibold text-slate-700 mb-1">
+                                                    Weight (grams)
+                                                    {weightValue && (
+                                                        <span className="ml-2 text-blue-600 text-xs">
+                                                            → {roundWeightToNearest10(weightValue)}g
+                                                        </span>
+                                                    )}
+                                                </label>
+                                                <input
+                                                    type="number"
+                                                    step="1"
+                                                    min="0"
+                                                    placeholder="0"
+                                                    className="w-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg px-3 py-2 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
+                                                    {...register("weight")}
+                                                    onBlur={handleWeightBlur}
+                                                />
+                                                <p className="text-xs text-slate-500 mt-1">
+
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                            <div>
+                                                <label className="block text-sm font-semibold text-slate-700 mb-1">Actual Price (₹)</label>
+                                                <input
+                                                    type="number"
+                                                    step="1"
+                                                    min="0"
+                                                    placeholder="0"
+                                                    inputMode="numeric"
+                                                    className="w-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg px-3 py-2 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
+                                                    {...register("oldPrice", { onChange: handleOldPriceChange })}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-semibold text-slate-700 mb-1">Offer Price (₹)</label>
+                                                <input
+                                                    type="number"
+                                                    step="1"
+                                                    min="0"
+                                                    placeholder="0"
+                                                    inputMode="numeric"
+                                                    className="w-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg px-3 py-2 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
+                                                    {...register("newPrice", { onChange: handleNewPriceChange })}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-semibold text-slate-700 mb-1">Discount (%)</label>
+                                                <input
+                                                    type="number"
+                                                    step="1"
+                                                    min="0"
+                                                    max="100"
+                                                    placeholder="0"
+                                                    inputMode="numeric"
+                                                    className="w-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg px-3 py-2 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
+                                                    {...register("discount", { onChange: handleDiscountChange })}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {oldPrice > 0 && (newPrice > 0 || discount > 0) && (
+                                            <p className="mt-3 text-md text-slate-700">
+                                                Final Price: <span className="font-semibold text-green-600">₹{newPrice || 0}</span>
+                                                {discount > 0 && (
+                                                    <span className="ml-2 text-red-500 font-semibold">({roundPct(discount)}% OFF)</span>
                                                 )}
-                                            </label>
-                                            <input
-                                                type="number"
-                                                step="1"
-                                                min="0"
-                                                placeholder="0"
-                                                className="w-full border rounded-md px-3 py-2"
-                                                {...register("weight")}
-                                                onBlur={handleWeightBlur}
-                                            />
-                                            <p className="text-xs text-gray-500 mt-1">
-
                                             </p>
-                                        </div>
-                                    </div>
-                                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                        <div>
-                                            <label className="block text-sm font-semibold text-gray-700 mb-1">Actual Price (₹)</label>
-                                            <input
-                                                type="number"
-                                                step="1"
-                                                min="0"
-                                                placeholder="0"
-                                                inputMode="numeric"
-                                                className="w-full border rounded-md px-3 py-2"
-                                                {...register("oldPrice", { onChange: handleOldPriceChange })}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-semibold text-gray-700 mb-1">Offer Price (₹)</label>
-                                            <input
-                                                type="number"
-                                                step="1"
-                                                min="0"
-                                                placeholder="0"
-                                                inputMode="numeric"
-                                                className="w-full border rounded-md px-3 py-2"
-                                                {...register("newPrice", { onChange: handleNewPriceChange })}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-semibold text-gray-700 mb-1">Discount (%)</label>
-                                            <input
-                                                type="number"
-                                                step="1"
-                                                min="0"
-                                                max="100"
-                                                placeholder="0"
-                                                inputMode="numeric"
-                                                className="w-full border rounded-md px-3 py-2"
-                                                {...register("discount", { onChange: handleDiscountChange })}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    {oldPrice > 0 && (newPrice > 0 || discount > 0) && (
-                                        <p className="mt-3 text-md text-gray-700">
-                                            Final Price: <span className="font-semibold text-green-600">₹{newPrice || 0}</span>
-                                            {discount > 0 && (
-                                                <span className="ml-2 text-red-500 font-semibold">({roundPct(discount)}% OFF)</span>
-                                            )}
-                                        </p>
-                                    )}
-
-                                    <button
-                                        type="submit"
-                                        disabled={isSubmitting}
-                                        className={`py-2 mt-4 bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400 transition-all duration-300 rounded-full transition text-white font-regular px-7 flex items-center justify-center gap-2 ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
-                                    >
-                                        {isSubmitting ? (
-                                            <>
-                                                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-                                                </svg>
-                                                {editingBookId ? "Updating..." : "Adding..."}
-                                            </>
-                                        ) : (
-                                            editingBookId ? "Update Book" : "Add Book"
                                         )}
-                                    </button>
-                                </form>
+
+                                        <button
+                                            type="submit"
+                                            disabled={isSubmitting}
+                                            className={`py-2 mt-4 bg-gradient-to-br from-white/95 to-slate-50/80 backdrop-blur-xl border-1 border-[#7A1F2B] ring-1 ring-black/5 text-[#7A1F2B] hover:from-white hover:to-slate-50/90 transition-colors duration-200 rounded-full px-7 flex items-center justify-center gap-2 font-semibold shadow-[0_12px_20px_-16px_rgba(15,23,42,0.45)] hover:shadow-[0_14px_22px_-16px_rgba(15,23,42,0.5)] ${isSubmitting ? "opacity-60 cursor-not-allowed" : ""}`}
+                                        >
+                                            {isSubmitting ? (
+                                                <>
+                                                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                                                    </svg>
+                                                    {editingBookId ? "Updating..." : "Adding..."}
+                                                </>
+                                            ) : (
+                                                editingBookId ? "Update Book" : "Add Book"
+                                            )}
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )}
 
-                {viewMode === "list" && (
-                    <div className="container mt-[50px]">
-                        <div className="max-w-8xl mx-auto bg-white p-6 md:p-8 rounded-lg shadow-md">
-                            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">Book List</h2>
-                            <div className="hidden md:block overflow-x-auto">
-                                <table className="w-full table-auto border-collapse">
-                                    <thead>
-                                        <tr className="bg-gray-100 text-gray-600 uppercase text-xs font-semibold">
-                                            <th className="px-6 py-3 text-left">#</th>
-                                            <th className="px-6 py-3 text-left">Book Title</th>
-                                            <th className="px-6 py-3 text-center align-middle">Price</th>
-                                            <th className="px-6 py-3 text-left">Stock</th>
-                                            <th className="px-6 py-3 text-center align-middle">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {books && books.length > 0 ? (
-                                            books.map((book, index) => (
-                                                <tr key={book._id} className="border-b hover:bg-gray-50">
-                                                    <td className="px-6 py-4 text-sm">{index + 1}</td>
-                                                    <td className="px-6 py-4 text-sm">{book.title}</td>
-                                                    <td className="px-6 py-4 text-sm">
-                                                        {book.oldPrice && book.discount > 0 ? (
-                                                            <div>
-                                                                <span className="text-gray-400 line-through mr-2">₹{book.oldPrice}</span>
-                                                                <span className="text-green-600 font-semibold">₹{book.newPrice}</span>
-                                                                <span className="ml-2 text-red-500 font-semibold">({book.discount}% OFF)</span>
-                                                            </div>
-                                                        ) : (
-                                                            <span className="text-green-600 font-semibold">₹{book.newPrice}</span>
-                                                        )}
-                                                    </td>
-                                                    <td className="px-6 py-4 text-sm">
-                                                        <span className={`${book.stock < 10 ? 'text-red-600 font-semibold' : 'text-gray-700'}`}>
-                                                            {book.stock || 0}
-                                                        </span>
-                                                    </td>
-                                                    <td className="px-6 py-4 text-sm space-x-4 flex items-center">
-                                                        <button
-                                                            onClick={() => handleEditBook(book._id)}
-                                                            className="flex items-center gap-1 px-3 py-1 rounded-full text-white font-medium bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-800 hover:to-blue-600 transition-all duration-300"
-                                                        >
-                                                            <FiEdit /> Edit
-                                                        </button>
-                                                        <button
-                                                            onClick={() => handleSuspendBook(book)}
-                                                            className={`flex items-center gap-1 px-3 py-1 rounded-full text-white font-medium bg-gradient-to-r ${book.suspended
-                                                                ? "from-teal-500 to-teal-700 hover:from-teal-700 hover:to-teal-500"
-                                                                : "from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400"
-                                                                } transition-all duration-300`}
-                                                        >
-                                                            {book.suspended ? "Unsuspend" : "Suspend"}
-                                                        </button>
-                                                        <button
-                                                            onClick={() => handleDeleteBook(book._id)}
-                                                            className="flex items-center gap-1 px-3 py-1 rounded-full text-white font-medium bg-gradient-to-r from-red-500 to-red-700 hover:from-red-700 hover:to-red-500 transition-all duration-300"
-                                                        >
-                                                            <FiTrash2 /> Delete
-                                                        </button>
-                                                    </td>
-
-                                                </tr>
-                                            ))
-                                        ) : (
-                                            <tr>
-                                                <td colSpan="5" className="text-center py-6 text-gray-500">No books available</td>
+                    {viewMode === "list" && (
+                        <div className="container mt-[50px]">
+                            <div className="max-w-8xl mx-auto bg-white/70 backdrop-blur-xl p-6 md:p-8 rounded-2xl border border-white/70 ring-1 ring-black/5 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.45)]">
+                                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6 text-center font-montserrat">Book List</h2>
+                                <div className="hidden md:block overflow-x-auto">
+                                    <table className="w-full table-auto border-collapse">
+                                        <thead>
+                                            <tr className="bg-white/70 text-slate-500 uppercase text-xs font-semibold border border-white/70">
+                                                <th className="px-6 py-3 text-left">#</th>
+                                                <th className="px-6 py-3 text-left">Book Title</th>
+                                                <th className="px-6 py-3 text-center align-middle">Price</th>
+                                                <th className="px-6 py-3 text-left">Stock</th>
+                                                <th className="px-6 py-3 text-center align-middle">Actions</th>
                                             </tr>
-                                        )}
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </thead>
+                                        <tbody>
+                                            {books && books.length > 0 ? (
+                                                books.map((book, index) => (
+                                                    <tr key={book._id} className="border-b hover:bg-white/70">
+                                                        <td className="px-6 py-4 text-sm">{index + 1}</td>
+                                                        <td className="px-6 py-4 text-sm">{book.title}</td>
+                                                        <td className="px-6 py-4 text-sm">
+                                                            {book.oldPrice && book.discount > 0 ? (
+                                                                <div>
+                                                                    <span className="text-slate-400 line-through mr-2">₹{book.oldPrice}</span>
+                                                                    <span className="text-green-600 font-semibold">₹{book.newPrice}</span>
+                                                                    <span className="ml-2 text-red-500 font-semibold">({book.discount}% OFF)</span>
+                                                                </div>
+                                                            ) : (
+                                                                <span className="text-green-600 font-semibold">₹{book.newPrice}</span>
+                                                            )}
+                                                        </td>
+                                                        <td className="px-6 py-4 text-sm">
+                                                            <span className={`${book.stock < 10 ? 'text-red-600 font-semibold' : 'text-slate-700'}`}>
+                                                                {book.stock || 0}
+                                                            </span>
+                                                        </td>
+                                                        <td className="px-6 py-4 text-sm space-x-4 flex items-center">
+                                                            <button
+                                                                onClick={() => handleEditBook(book._id)}
+                                                                className="flex items-center gap-1 px-3 py-1 rounded-full text-blue-600 text-sm font-medium bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/90 transition-colors duration-200"
+                                                            >
+                                                                <FiEdit /> Edit
+                                                            </button>
+                                                            <button
+                                                                onClick={() => handleSuspendBook(book)}
+                                                                className={`flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/90 transition-colors duration-200 ${book.suspended ? "text-teal-600" : "text-amber-600"}`}
+                                                            >
+                                                                {book.suspended ? "Unsuspend" : "Suspend"}
+                                                            </button>
+                                                            <button
+                                                                onClick={() => handleDeleteBook(book._id)}
+                                                                className="flex items-center gap-1 px-3 py-1 rounded-full text-red-600 text-sm font-medium bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/90 transition-colors duration-200"
+                                                            >
+                                                                <FiTrash2 /> Delete
+                                                            </button>
+                                                        </td>
 
-                            <div className="md:hidden space-y-4">
-                                {books && books.length > 0 ? (
-                                    books.map((book, index) => (
-                                        <div
-                                            key={book._id}
-                                            className="bg-gray-50 p-4 rounded-lg shadow flex flex-col space-y-2"
-                                        >
-                                            <div className="font-semibold text-sm">
-                                                {index + 1}. {book.title}
-                                            </div>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan="5" className="text-center py-6 text-slate-500">No books available</td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
 
-                                            <div className="text-sm text-gray-600">
-                                                {book.oldPrice && book.discount > 0 ? (
-                                                    <>
-                                                        <span className="line-through text-gray-400 mr-1">
-                                                            ₹{book.oldPrice}
-                                                        </span>
+                                <div className="md:hidden space-y-4">
+                                    {books && books.length > 0 ? (
+                                        books.map((book, index) => (
+                                            <div
+                                                key={book._id}
+                                                className="bg-white/70 backdrop-blur-xl p-4 rounded-2xl border border-white/70 ring-1 ring-black/5 shadow-sm flex flex-col space-y-2"
+                                            >
+                                                <div className="font-semibold text-sm">
+                                                    {index + 1}. {book.title}
+                                                </div>
+
+                                                <div className="text-sm text-slate-600">
+                                                    {book.oldPrice && book.discount > 0 ? (
+                                                        <>
+                                                            <span className="line-through text-slate-400 mr-1">
+                                                                ₹{book.oldPrice}
+                                                            </span>
+                                                            <span className="text-green-600 font-semibold">
+                                                                ₹{book.newPrice}
+                                                            </span>
+                                                            <span className="ml-1 text-red-500 font-semibold">
+                                                                ({book.discount}% OFF)
+                                                            </span>
+                                                        </>
+                                                    ) : (
                                                         <span className="text-green-600 font-semibold">
                                                             ₹{book.newPrice}
                                                         </span>
-                                                        <span className="ml-1 text-red-500 font-semibold">
-                                                            ({book.discount}% OFF)
-                                                        </span>
-                                                    </>
-                                                ) : (
-                                                    <span className="text-green-600 font-semibold">
-                                                        ₹{book.newPrice}
+                                                    )}
+                                                </div>
+
+                                                <div className="text-sm">
+                                                    Stock:{" "}
+                                                    <span
+                                                        className={`${book.stock < 10 ? "text-red-600 font-semibold" : ""}`}
+                                                    >
+                                                        {book.stock || 0}
                                                     </span>
-                                                )}
-                                            </div>
+                                                </div>
 
-                                            <div className="text-sm">
-                                                Stock:{" "}
-                                                <span
-                                                    className={`${book.stock < 10 ? "text-red-600 font-semibold" : ""}`}
-                                                >
-                                                    {book.stock || 0}
-                                                </span>
+                                                <div className="flex space-x-2">
+                                                    <button
+                                                        onClick={() => handleEditBook(book._id)}
+                                                        className="flex-1 flex items-center justify-center gap-1 px-3 py-1 rounded-full text-blue-600 text-sm font-medium bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/90 transition-colors duration-200"
+                                                    >
+                                                        <FiEdit /> Edit
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleDeleteBook(book._id)}
+                                                        className="flex-1 flex items-center justify-center gap-1 px-3 py-1 rounded-full text-red-600 text-sm font-medium bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/90 transition-colors duration-200"
+                                                    >
+                                                        <FiTrash2 /> Delete
+                                                    </button>
+                                                </div>
                                             </div>
-
-                                            <div className="flex space-x-2">
-                                                <button
-                                                    onClick={() => handleEditBook(book._id)}
-                                                    className="flex-1 flex items-center justify-center gap-1 px-3 py-1 rounded-full text-white font-medium bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-800 hover:to-blue-600 transition-all duration-300"
-                                                >
-                                                    <FiEdit /> Edit
-                                                </button>
-                                                <button
-                                                    onClick={() => handleDeleteBook(book._id)}
-                                                    className="flex-1 flex items-center justify-center gap-1 px-3 py-1 rounded-full text-white font-medium bg-gradient-to-r from-rose-500 to-rose-700 hover:from-rose-700 hover:to-rose-500 transition-all duration-300"
-                                                >
-                                                    <FiTrash2 /> Delete
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className="text-center py-6 text-gray-500">No books available</div>
-                                )}
+                                        ))
+                                    ) : (
+                                        <div className="text-center py-6 text-slate-500">No books available</div>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
         </div>
     );

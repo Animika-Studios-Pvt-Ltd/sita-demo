@@ -271,11 +271,11 @@ const AddBlogs = () => {
     const isLong = words.length > 40;
 
     return (
-      <div className="flex flex-col bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transition duration-500">
+      <div className="flex flex-col bg-white/70 backdrop-blur-xl rounded-2xl shadow-[0_20px_45px_-30px_rgba(15,23,42,0.35)] overflow-hidden border border-white/70 ring-1 ring-black/5 transition-colors duration-300">
         <div className="flex flex-col lg:flex-row">
-          <div className="lg:w-1/3 bg-gray-100 flex flex-col items-center p-4">
+          <div className="lg:w-1/3 bg-white/60 flex flex-col items-center p-4">
             {blog.image && (
-              <div className="w-full h-48 lg:h-64 overflow-hidden rounded-lg">
+              <div className="w-full h-48 lg:h-64 overflow-hidden rounded-xl border border-white/70 ring-1 ring-black/5 bg-white/80">
                 <img
                   src={blog.image.startsWith("http") ? blog.image : `${BACKEND_BASE_URL}${blog.image}`}
                   alt={blog.title}
@@ -286,57 +286,57 @@ const AddBlogs = () => {
           </div>
 
           <div className="lg:w-2/3 p-6 flex flex-col justify-between">
-            <h3 className="text-2xl font-semibold mb-2">{blog.title}</h3>
-            <p className="flex items-center gap-2 text-gray-500 text-sm mb-3">
+            <h3 className="text-2xl font-semibold text-slate-800 mb-2">{blog.title}</h3>
+            <p className="flex items-center gap-2 text-slate-500 text-sm mb-3">
               <CalendarTodayIcon fontSize="small" />
               {new Date(blog.createdAt).toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
               })}
-              <span className="w-1 h-1 bg-gray-500 rounded-full"></span>
+              <span className="w-1 h-1 bg-slate-400 rounded-full"></span>
               <span>By {blog.author}</span>
             </p>
 
             {isLong ? (
               <>
                 <div
-                  className="text-gray-700 text-sm leading-relaxed mb-2"
+                  className="text-slate-600 text-sm leading-relaxed mb-2"
                   dangerouslySetInnerHTML={{ __html: truncateHTML(blog.description, 40) }}
                 />
                 <button
                   type="button"
                   onClick={toggleExpand}
-                  className="text-blue-700 hover:text-blue-900 font-medium mt-2 flex items-center gap-1"
+                  className="text-[#7A1F2B] hover:text-[#5d1620] font-medium mt-2 flex items-center gap-1 transition-colors duration-200"
                 >
                   {expanded ? "Hide Description" : (blog.readMoreText || "Read More")} {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                 </button>
               </>
             ) : (
               <div
-                className="text-gray-700 text-sm leading-relaxed"
+                className="text-slate-600 text-sm leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: blog.description }}
               />
             )}
             <div className="mt-4 flex gap-3 flex-wrap justify-center">
               <button
                 onClick={() => handleEdit(blog)}
-                className="flex items-center justify-center gap-1 px-3 py-1 rounded-full text-white font-medium bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-800 hover:to-blue-600 transition-all duration-300"
+                className="flex items-center justify-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 text-blue-700 shadow-sm hover:bg-white/90 transition-colors duration-200"
               >
                 <FiEdit fontSize="small" /> Edit
               </button>
               <button
                 onClick={() => handleSuspend(blog)}
-                className={`flex items-center justify-center gap-1 px-3 py-1 rounded-full text-white font-medium bg-gradient-to-r transition-all duration-300 ${blog.suspended
-                  ? "from-teal-500 to-teal-700 hover:from-teal-700 hover:to-teal-500"
-                  : "from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400"
+                className={`flex items-center justify-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/90 transition-colors duration-200 ${blog.suspended
+                  ? "text-teal-700"
+                  : "text-amber-700"
                   }`}
               >
                 {blog.suspended ? "Unsuspend" : "Suspend"}
               </button>
               <button
                 onClick={() => handleDelete(blog._id)}
-                className="flex items-center justify-center gap-1 px-3 py-1 rounded-full text-white font-medium bg-gradient-to-r from-red-500 to-red-700 hover:from-red-700 hover:to-red-500 transition-all duration-300"
+                className="flex items-center justify-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 text-red-600 shadow-sm hover:bg-white/90 transition-colors duration-200"
               >
                 <FiTrash2 fontSize="small" /> Delete
               </button>
@@ -354,7 +354,7 @@ const AddBlogs = () => {
         >
           <div
             ref={contentRef}
-            className="p-6 bg-gray-50 border-t border-gray-200 text-gray-700 text-sm leading-relaxed"
+            className="p-6 bg-white/70 backdrop-blur-xl border-t border-white/70 text-slate-600 text-sm leading-relaxed"
             dangerouslySetInnerHTML={{ __html: blog.description }}
           />
         </div>
@@ -363,30 +363,30 @@ const AddBlogs = () => {
   };
 
   return (
-    <div className="container mt-[40px]">
+    <div className="container mt-[40px] font-montserrat text-slate-700">
       <div className="container mx-auto">
         <div className="max-w-8xl mx-auto p-0 rounded-lg">
           <button
-            onClick={() => navigate(-1)}
-            className="flex items-center justify-center rounded-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400 transition-all duration-300 text-white font-medium rounded-[6px] px-2 py-1"
+            onClick={() => navigate("/dashboard")}
+            className="flex items-center gap-2 justify-center rounded-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 text-slate-700 hover:bg-white/90 transition-colors duration-200 px-3 py-1.5 text-sm font-medium"
           >
-            <ArrowBackIcon className="w-2 h-2" />
+            <ArrowBackIcon className="w-4 h-4" />
             Back
           </button>
-          <div className="relative flex justify-center mb-8 bg-gray-200 rounded-full p-1 max-w-md mx-auto shadow-inner">
+          <div className="relative flex justify-center mb-8 bg-white/60 backdrop-blur-xl border border-[#7A1F2B] ring-1 ring-white/70 rounded-full p-1.5 max-w-md mx-auto shadow-sm overflow-hidden">
             <div
-              className={`absolute top-1 left-1 w-1/2 h-10 bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400 rounded-full transform transition-transform duration-300 ${viewMode === "form" ? "translate-x-full" : ""}`}
+              className={`absolute top-1.5 left-1.5 w-[calc(50%-0.375rem)] h-10 bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 rounded-full border border-[#7A1F2B] ring-1 ring-black/5 shadow-[0_8px_18px_-12px_rgba(122,31,43,0.45)] transform transition-transform duration-300 ${viewMode === "form" ? "translate-x-full" : ""}`}
             ></div>
 
             <button
-              className={`relative flex-1 py-2 flex items-center justify-center gap-2 rounded-full font-semibold text-md transition-all duration-300 transform ${viewMode === "list" ? "text-white" : "text-gray-700 hover:text-gray-900 hover:scale-105"}`}
+              className={`relative flex-1 py-2 flex items-center justify-center gap-2 rounded-full font-semibold text-md transition-colors duration-200 ${viewMode === "list" ? "text-[#7A1F2B]" : "text-slate-500 hover:text-slate-800"}`}
               onClick={() => setViewMode("list")}
             >
               <LibraryBooksIcon fontSize="medium" /> View Blogs
             </button>
 
             <button
-              className={`relative flex-1 py-2 flex items-center justify-center gap-2 rounded-full font-semibold text-md transition-all duration-300 transform ${viewMode === "form" ? "text-white" : "text-gray-700 hover:text-gray-900 hover:scale-105"}`}
+              className={`relative flex-1 py-2 flex items-center justify-center gap-2 rounded-full font-semibold text-md transition-colors duration-200 ${viewMode === "form" ? "text-[#7A1F2B]" : "text-slate-500 hover:text-slate-800"}`}
               onClick={() => {
                 setViewMode("form");
                 reset();
@@ -400,78 +400,77 @@ const AddBlogs = () => {
 
           {viewMode === "form" && (
             <div className="mt-[50px]">
-              <div className="bg-white shadow-xl rounded-2xl p-8 mb-10 border border-gray-500 transition-all duration-500">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">
+              <div className="bg-white/70 backdrop-blur-xl rounded-2xl p-8 mb-10 border border-white/70 ring-1 ring-black/5 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.45)]">
+                <h2 className="text-2xl md:text-3xl font-bold text-[#7A1F2B] mb-6 text-center font-montserrat">
                   {editingId ? "Edit Blog" : "Add New Blog"}
                 </h2>
                 <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" className="space-y-5">
                   <div>
-                    <label className="block font-semibold mb-1 text-gray-800">Title</label>
+                    <label className="block font-semibold mb-1 text-slate-700">Title</label>
                     <input
                       type="text"
                       placeholder="Enter blog title"
                       {...register("title", { required: "Title is required" })}
-                      className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+                      className="w-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg px-4 py-2 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
                     />
                     {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>}
                   </div>
 
                   <div>
-                    <label className="block font-semibold mb-1 text-gray-800">Author</label>
+                    <label className="block font-semibold mb-1 text-slate-700">Author</label>
                     <input
                       type="text"
                       placeholder="Enter author name"
                       {...register("author", { required: "Author is required" })}
-                      className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+                      className="w-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg px-4 py-2 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
                     />
                     {errors.author && <p className="text-red-500 text-sm mt-1">{errors.author.message}</p>}
                   </div>
 
                   <div>
-                    <label className="block font-semibold mb-1 text-gray-800">Read More Button Text (Optional)</label>
+                    <label className="block font-semibold mb-1 text-slate-700">Read More Button Text (Optional)</label>
                     <input
                       type="text"
                       placeholder="e.g. Continue Reading"
                       {...register("readMoreText")}
-                      className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+                      className="w-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg px-4 py-2 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-semibold mb-1 text-gray-800">Description</label>
+                    <label className="block font-semibold mb-1 text-slate-700">Description</label>
                     <ReactQuill
                       theme="snow"
                       value={description}
                       onChange={setDescription}
                       placeholder="Write your blog content here..."
-                      className="bg-white rounded"
+                      className="bg-white/70 backdrop-blur-xl rounded-xl border border-white/70 ring-1 ring-black/5 overflow-hidden"
                     />
                     {!description && <p className="text-red-500 text-sm mt-1">Description is required</p>}
                   </div>
 
                   <div>
-                    <label className="block font-semibold mb-1 text-gray-800">
+                    <label className="block font-semibold mb-1 text-slate-700">
                       Blog Cover Image (optional)
                     </label>
                     <input
                       type="file"
                       accept="image/*"
                       onChange={handleImageChange}
-                      className="w-full border rounded-lg px-4 py-2 file:mr-4 file:py-2 file:px-4 file:rounded-md 
-               file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 
-               hover:file:bg-blue-100"
+                      className="w-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg px-4 py-2 text-slate-700 file:mr-4 file:py-2 file:px-4 file:rounded-md 
+               file:border-0 file:text-sm file:font-semibold file:bg-white/80 file:text-slate-700 hover:file:bg-white"
                     />
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-slate-500 mt-1">
                       Recommended size: <span className="font-semibold">1000 × 500 px</span>
                     </p>
                     {imagePreview ? (
                       <img
                         src={imagePreview}
                         alt="Blog preview"
-                        className="w-[300px] h-[200px] mt-2 object-contain border rounded"
+                        className="w-[300px] h-[200px] mt-2 object-contain border border-white/70 ring-1 ring-black/5 rounded-xl bg-white/80"
                       />
                     ) : (
-                      <p className="mt-2 text-gray-500 italic text-center w-[165px]">
+                      <p className="mt-2 text-slate-500 italic text-center w-[165px]">
                         No image selected
                       </p>
                     )}
@@ -481,11 +480,11 @@ const AddBlogs = () => {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className={`py-2 mt-4 bg-blue-700 bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400 transition text-white font-bold px-6 rounded-full flex items-center justify-center gap-2 ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
+                    className={`py-2 mt-4 bg-gradient-to-br from-white/95 to-slate-50/80 backdrop-blur-xl border-1 border-[#7A1F2B] ring-1 ring-black/5 text-[#7A1F2B] hover:from-white hover:to-slate-50/90 transition-colors duration-200 font-semibold px-6 rounded-full flex items-center justify-center gap-2 shadow-[0_12px_20px_-16px_rgba(15,23,42,0.45)] hover:shadow-[0_14px_22px_-16px_rgba(15,23,42,0.5)] ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
                     {isLoading ? (
                       <>
-                        <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <svg className="animate-spin h-5 w-5 text-[#7A1F2B]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
                         </svg>
@@ -504,7 +503,7 @@ const AddBlogs = () => {
             <div className="mt-[50px]">
               <div className="flex flex-col gap-8">
                 {blogs.length > 0 ? blogs.map((blog) => <BlogCard key={blog._id} blog={blog} />)
-                  : <p className="text-gray-500 text-center py-6">No blogs found.</p>}
+                  : <p className="text-slate-500 text-center py-6">No blogs found.</p>}
               </div>
             </div>
           )}

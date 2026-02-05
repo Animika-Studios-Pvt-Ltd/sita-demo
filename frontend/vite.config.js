@@ -88,21 +88,7 @@ export default defineConfig(async () => {
         changefreq: 'weekly',
         priority: 0.7,
         lastmod: new Date().toISOString(),
-        robots: [
-          {
-            userAgent: '*',
-            allow: '/',
-            disallow: [
-              '/admin',
-              '/dashboard',
-              '/cart',
-              '/checkout',
-              '/orders',
-              '/my-profile',
-              '/auth',
-            ],
-          },
-        ],
+        generateRobotsTxt: false, // Disable plugin generation, using manual public/robots.txt instead
       }),
     ],
 
