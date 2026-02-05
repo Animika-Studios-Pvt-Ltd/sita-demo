@@ -83,7 +83,7 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg navbar-light" ref={navRef}>
         <div className="container">
           {/* Center Logo */}
-          <a className="navbar-brand me-auto" href="https://sitashakti.com">
+          <a className="navbar-brand me-auto" href="/">
             <img
               src="/sita-logo.webp"
               alt="Sita Logo"
@@ -266,14 +266,14 @@ const Navbar = () => {
                   <li className="nav-item">
                     <a
                       className="nav-link home-icon"
-                      href="https://sitashakti.com">
+                      href={getAppUrl(null, "/")}>
                       <i className="fa-solid fa-house"></i>
                     </a>
                   </li>
                 )}
 
                 <li className="nav-item">
-                  <a href="https://sitashakti.com/about" className="nav-link">
+                  <a href={getAppUrl(null, "/about")} className="nav-link">
                     ABOUT SITA
                   </a>
                 </li>
@@ -298,35 +298,35 @@ const Navbar = () => {
                     <li>
                       <a
                         className="dropdown-item"
-                        href="https://sitashakti.com/yoga-therapy">
+                        href={getAppUrl(null, "/yoga-therapy")}>
                         Yoga Therapy
                       </a>
                     </li>
                     <li>
                       <a
                         className="dropdown-item"
-                        href="https://sitashakti.com/ayurveda-nutrition">
+                        href={getAppUrl(null, "/ayurveda-nutrition")}>
                         Ayurveda – Nutrition & Integration
                       </a>
                     </li>
                     <li>
                       <a
                         className="dropdown-item"
-                        href="https://sitashakti.com/kosha-counseling">
+                        href={getAppUrl(null, "/kosha-counseling")}>
                         Kosha Counseling
                       </a>
                     </li>
                     <li>
                       <a
                         className="dropdown-item"
-                        href="https://sitashakti.com/soul-curriculum">
+                        href={getAppUrl(null, "/soul-curriculum")}>
                         Soul Curriculum
                       </a>
                     </li>
                     <li>
                       <a
                         className="dropdown-item"
-                        href="/release-karmic-patterns">
+                        href={getAppUrl(null, "/release-karmic-patterns")}>
                         Release Karmic Patterns
                       </a>
                     </li>
@@ -353,42 +353,42 @@ const Navbar = () => {
                     <li>
                       <a
                         className="dropdown-item"
-                        href="https://sitashakti.com/group-sessions">
+                        href={getAppUrl(null, "/group-sessions")}>
                         Group Sessions
                       </a>
                     </li>
                     <li>
                       <a
                         className="dropdown-item"
-                        href="https://sitashakti.com/private-sessions">
+                        href={getAppUrl(null, "/private-sessions")}>
                         Private Sessions
                       </a>
                     </li>
                     <li>
                       <a
                         className="dropdown-item"
-                        href="https://sitashakti.com/teacher-training">
+                        href={getAppUrl(null, "/teacher-training")}>
                         Teacher Training
                       </a>
                     </li>
                     <li>
                       <a
                         className="dropdown-item"
-                        href="https://sitashakti.com/corporate-training">
+                        href={getAppUrl(null, "/corporate-training")}>
                         Corporate Training
                       </a>
                     </li>
                     <li>
                       <a
                         className="dropdown-item"
-                        href="https://sitashakti.com/shakthi-leadership">
+                        href={getAppUrl(null, "/shakthi-leadership")}>
                         Shakthi Leadership
                       </a>
                     </li>
                     <li>
                       <a
                         className="dropdown-item"
-                        href="https://booking.sitashakti.com/">
+                        href={getAppUrl("booking", "/")}>
                         Calendar
                       </a>
                     </li>
@@ -416,7 +416,7 @@ const Navbar = () => {
                 <li className="nav-item d-lg-none">
                   <a
                     className="nav-link nav-contact"
-                    href="https://sitashakti.com/contact.html">
+                    href={getAppUrl(null, "/contact")}>
                     CONTACT US
                   </a>
                 </li>

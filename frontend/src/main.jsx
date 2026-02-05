@@ -23,8 +23,9 @@ createRoot(document.getElementById("root")).render(
         audience: import.meta.env.VITE_AUTH0_AUDIENCE,
         scope: "openid profile email phone",
       }}
-      cacheLocation="localstorage"
-      useRefreshTokens={true}>
+
+      useRefreshTokens={true}
+      cacheLocation="memory">
       <AuthProvider>
         <RouterProvider
           router={router}
@@ -35,5 +36,5 @@ createRoot(document.getElementById("root")).render(
         />
       </AuthProvider>
     </Auth0Provider>
-  </Provider>,
+  </Provider >,
 );
