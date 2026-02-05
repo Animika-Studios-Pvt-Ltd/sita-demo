@@ -14,13 +14,13 @@ import PageNotFound from "../PageNotFound";
 import { Auth0Wrapper } from "../../components/Auth0Wrapper";
 import HomePage from "../../pages/homepage/Homepage";
 import About from "../../pages/about/About";
-import AyurvedaNutrition from "../../pages/services/ayurveda-nutrition";
+import AyurvedaNutrition from "../../pages/services/Ayurveda-Nutrition";
 import KoshaCounseling from "../../pages/services/Kosha-Counseling";
-import ReleaseKarmicPatterns from "../../pages/services/release-karmic-patterns";
+import ReleaseKarmicPatterns from "../../pages/services/Release-Karmic-Patterns";
 import SoulCurriculum from "../../pages/services/Soul-Curriculum";
 import YogaTherapy from "../../pages/services/Yoga-Therapy";
 import CorporateTraining from "../../pages/workshops/Corporate-Training";
-import GropuSessions from "../../pages/workshops/Group-Sessions";
+import GroupSessions from "../../pages/workshops/Group-Sessions";
 import PrivateSessions from "../../pages/workshops/Private-Sessions";
 import ShakthiLeadership from "../../pages/workshops/Shakthi-Leadership";
 import TeacherTraining from "../../pages/workshops/Teacher-Training";
@@ -50,14 +50,14 @@ export const mainRoutes = [
       { path: "/soul-curriculum", element: <SoulCurriculum /> },
       { path: "/yoga-therapy", element: <YogaTherapy /> },
       { path: "/corporate-training", element: <CorporateTraining /> },
-      { path: "/group-sessions", element: <GropuSessions /> },
+      { path: "/group-sessions", element: <GroupSessions /> },
       { path: "/private-sessions", element: <PrivateSessions /> },
       { path: "/shakthi-leadership", element: <ShakthiLeadership /> },
       { path: "/teacher-training", element: <TeacherTraining /> },
       { path: "/articles", element: <Articles /> },
       { path: "/podcasts", element: <Podcasts /> },
       { path: "/privacy-policy", element: <PrivacyPolicy /> },
-      { path: "/disclamier", element: <Disclaimer /> },
+      { path: "/disclaimer", element: <Disclaimer /> },
       { path: "/contact", element: <Contact /> },
       { path: "/consult-sita", element: <ConsultSita /> },
       { path: "/engage-sita", element: <EngageSita /> },
