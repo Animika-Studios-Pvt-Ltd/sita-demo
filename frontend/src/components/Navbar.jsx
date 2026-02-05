@@ -2,14 +2,11 @@ import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useAuth } from "../context/AuthContext";
-import { getSubdomain, getAppUrl } from "../utils/subdomain";
 import { UserIcon, CartIcon } from "./Icons";
 import "./Navbar.css";
 
 const Navbar = () => {
-  const currentSubdomain = getSubdomain();
-  const isStore = currentSubdomain === "store";
-  const isBlog = currentSubdomain === "blog";
+
 
   // Auth & Cart
   const { currentUser, isAuthenticated, logout, loginWithRedirect } = useAuth();
@@ -50,7 +47,17 @@ const Navbar = () => {
     pathname.startsWith(path),
   );
 
-  const isPublicationsActive = isStore || pathname.startsWith("/publications");
+  const isPublicationsActive = pathname.startsWith("/publications");
+
+  const showCartIcon =
+    !isHomePage &&
+    (pathname.startsWith("/publications") ||
+      pathname.startsWith("/store") ||
+      pathname.startsWith("/books") ||
+      pathname.startsWith("/cart") ||
+      pathname.startsWith("/checkout") ||
+      pathname.startsWith("/orders") ||
+      pathname.startsWith("/ebook"));
 
   useEffect(() => {
     setIsNavCollapsed(true);
@@ -149,8 +156,8 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Cart Logic - Only on Store */}
-            {isStore && (
+            {/* Cart Logic - Conditionally visible */}
+            {showCartIcon && (
               <div className="nav-item">
                 <Link
                   className="nav-link cart-link-container nav-icon-link p-0"
@@ -239,8 +246,8 @@ const Navbar = () => {
                   )}
                 </li>
 
-                {/* Cart Logic - Only on Store */}
-                {isStore && (
+                {/* Cart Logic - Conditionally visible */}
+                {showCartIcon && (
                   <li className="nav-item">
                     <Link
                       className="nav-link cart-link-container nav-icon-link"
@@ -267,18 +274,18 @@ const Navbar = () => {
               <ul className="navbar-nav sita-nav">
                 {!isHomePage && (
                   <li className="nav-item">
-                    <a
+                    <Link
                       className="nav-link home-icon"
-                      href={getAppUrl(null, "/")}>
+                      to="/">
                       <i className="fa-solid fa-house"></i>
-                    </a>
+                    </Link>
                   </li>
                 )}
 
                 <li className="nav-item">
-                  <a href={getAppUrl(null, "/about")} className="nav-link">
+                  <Link to="/about" className="nav-link">
                     ABOUT SITA
-                  </a>
+                  </Link>
                 </li>
 
                 {/* THE SITA FACTOR Dropdown */}
@@ -299,39 +306,39 @@ const Navbar = () => {
                   <ul
                     className={`dropdown-menu ${activeDropdown === "sitaFactor" ? "show" : ""}`}>
                     <li>
-                      <a
+                      <Link
                         className="dropdown-item"
-                        href={getAppUrl(null, "/yoga-therapy")}>
+                        to="/yoga-therapy">
                         Yoga Therapy
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="dropdown-item"
-                        href={getAppUrl(null, "/ayurveda-nutrition")}>
+                        to="/ayurveda-nutrition">
                         Ayurveda – Nutrition & Integration
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="dropdown-item"
-                        href={getAppUrl(null, "/kosha-counseling")}>
+                        to="/kosha-counseling">
                         Kosha Counseling
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="dropdown-item"
-                        href={getAppUrl(null, "/soul-curriculum")}>
+                        to="/soul-curriculum">
                         Soul Curriculum
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="dropdown-item"
-                        href={getAppUrl(null, "/release-karmic-patterns")}>
+                        to="/release-karmic-patterns">
                         Release Karmic Patterns
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </li>
@@ -354,74 +361,66 @@ const Navbar = () => {
                   <ul
                     className={`dropdown-menu ${activeDropdown === "workshops" ? "show" : ""}`}>
                     <li>
-                      <a
+                      <Link
                         className="dropdown-item"
-                        href={getAppUrl(null, "/group-sessions")}>
+                        to="/group-sessions">
                         Group Sessions
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="dropdown-item"
-                        href={getAppUrl(null, "/private-sessions")}>
+                        to="/private-sessions">
                         Private Sessions
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="dropdown-item"
-                        href={getAppUrl(null, "/teacher-training")}>
+                        to="/teacher-training">
                         Teacher Training
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="dropdown-item"
-                        href={getAppUrl(null, "/corporate-training")}>
+                        to="/corporate-training">
                         Corporate Training
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="dropdown-item"
-                        href={getAppUrl(null, "/shakthi-leadership")}>
+                        to="/shakthi-leadership">
                         Shakthi Leadership
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="dropdown-item"
-                        href={getAppUrl("booking", "/")}>
+                        to="/booking">
                         Calendar
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </li>
 
                 {/* PUBLICATIONS */}
                 <li className="nav-item">
-                  {isStore ? (
-                    <Link
-                      to="/"
-                      className={`nav-link ${isPublicationsActive ? "active" : ""}`}>
-                      PUBLICATIONS
-                    </Link>
-                  ) : (
-                    <a
-                      href={getAppUrl("store", "/")}
-                      className={`nav-link ${isPublicationsActive ? "active" : ""}`}>
-                      PUBLICATIONS
-                    </a>
-                  )}
+                  <Link
+                    to="/publications"
+                    className={`nav-link ${isPublicationsActive ? "active" : ""}`}>
+                    PUBLICATIONS
+                  </Link>
                 </li>
 
                 {/* Contact Us - MOBILE ONLY (d-lg-none) - At Bottom */}
                 <li className="nav-item d-lg-none">
-                  <a
+                  <Link
                     className="nav-link nav-contact"
-                    href={getAppUrl(null, "/contact")}>
+                    to="/contact">
                     CONTACT US
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
