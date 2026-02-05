@@ -48,7 +48,9 @@ app.use(
       "https://admin.sitashakti.com",
       "https://store.sitashakti.com",
       "https://booking.sitashakti.com",
-      "https://blog.sitashakti.com"
+      "https://blog.sitashakti.com",
+      "https://sita-demo.vercel.app",
+      /\.vercel\.app$/
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
@@ -167,7 +169,9 @@ const io = new Server(server, {
       "https://admin.sitashakti.com",
       "https://store.sitashakti.com",
       "https://booking.sitashakti.com",
-      "https://blog.sitashakti.com"
+      "https://blog.sitashakti.com",
+      "https://sita-demo.vercel.app",
+      /\.vercel\.app$/
     ],
     methods: ["GET", "POST", "PATCH", "DELETE"],
   },

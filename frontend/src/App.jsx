@@ -1,4 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom'
+import { Analytics } from "@vercel/analytics/react"
 import { AnimatePresence, motion } from 'framer-motion'
 import './App.css'
 import Navbar from './components/Navbar'
@@ -234,6 +235,7 @@ function App() {
             </AnimatePresence>
           </main>
           <Footer />
+          <Analytics />
         </div>
       </DataProvider>
     </AuthProvider>
