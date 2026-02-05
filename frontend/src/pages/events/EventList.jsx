@@ -83,7 +83,7 @@ const EventList = () => {
                                     </div>
 
                                     <Link
-                                        to={`/events/${event._id}`}
+                                        to={`/booking/${event.bookingUrl || event._id}`}
                                         className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg text-sm font-semibold transition"
                                     >
                                         View Details

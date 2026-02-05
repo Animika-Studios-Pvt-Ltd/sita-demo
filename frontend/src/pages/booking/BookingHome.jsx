@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAppUrl } from "../../utils/subdomain";
+
 import "./BookingHome.css";
 import { useRef } from "react";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
@@ -309,7 +309,7 @@ const BookingHome = () => {
                                                     </span>
                                                 ) : event.bookingUrl ? (
                                                     <Link
-                                                        to={`/${event.bookingUrl}`}
+                                                        to={`/booking/${event.bookingUrl || event._id}`}
                                                         className="block w-full text-center no-underline py-2 bg-[#8b171b] text-white font-semibold rounded-lg
            transition-all duration-300 hover:bg-[#a62024] hover:scale-[1.02]"
                                                     >

@@ -8,8 +8,9 @@ import Header from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 import SectionRenderer from "../Cms/SectionRenderer";
 
-export default function CmsPage() {
-  const { slug } = useParams();
+export default function CmsPage({ slug: propSlug }) {
+  const params = useParams();
+  const slug = propSlug || params.slug;
   const navigate = useNavigate();
   const location = useLocation();
   const [cms, setCms] = useState(null);
@@ -227,7 +228,7 @@ export default function CmsPage() {
       <main>
         {cms.sections.map((section, i) => {
           console.log(`🎨 Rendering section ${i}:`, section.key, section.content);
-          return <SectionRenderer key={section._id || i} section={section} />;
+          return <SectionRenderer key={section._id || i} section={section} pageSlug={slug} />;
         })}
       </main>
     </div>

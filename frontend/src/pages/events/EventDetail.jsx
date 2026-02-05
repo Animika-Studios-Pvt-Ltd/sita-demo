@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import RazorpayPayment from "../../components/RazorpayPayment";
 import Swal from "sweetalert2";
+import CmsPage from "../Add pages/pages/CmsPage";
 
 const API = "http://localhost:5000/api";
 
@@ -29,7 +30,7 @@ const EventDetail = () => {
                 const res = await axios.get(`${API}/events`);
                 // Since getEvents returns all, we find the one we need. 
                 // Ideally backend should have getEventById
-                const found = res.data.find(e => e._id === id);
+                const found = res.data.find(e => e._id === id || e.bookingUrl === id || e.slug === id);
                 setEvent(found);
                 setLoading(false);
             } catch (err) {
@@ -86,7 +87,11 @@ const EventDetail = () => {
     };
 
     if (loading) return <div className="text-center py-20">Loading...</div>;
-    if (!event) return <div className="text-center py-20">Event not found</div>;
+
+    // Fallback to CMS Page if no standard event found
+    if (!event) {
+        return <CmsPage slug={id} />;
+    }
 
     return (
         <div className="max-w-4xl mx-auto px-6 py-12">
