@@ -1,0 +1,132 @@
+/* ------------------------------------------------- CONTACT US PAGE SECTION ------------------------------------------------- */
+.contact-us-section {
+  padding: 30px 0px;
+}
+
+.contact-us-section h2 {
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.contact-form {
+  padding: 0px 20px;
+  text-align: left;
+}
+
+.contact-form .form-label {
+  font-family: "Montserrat-Light";
+  font-size: 16px;
+  color: #8b171b;
+  margin-bottom: 0px;
+}
+
+.contact-form .form-label span {
+  color: inherit;
+}
+
+.contact-form .form-control {
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-shadow: none;
+}
+
+.contact-form .form-control:focus {
+  border-color: #8b171b;
+}
+
+.contact-form .form-control::placeholder {
+  color: transparent;
+}
+
+.contact-form .form-control:focus::placeholder {
+  color: #cfcfcf;
+}
+
+.contact-form textarea::placeholder {
+  color: transparent;
+}
+
+.contact-form textarea:focus::placeholder {
+  color: #cfcfcf;
+}
+
+.contact-form button {
+  background-color: #f17721;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-family: "Montserrat-Regular";
+  font-size: 18px;
+  display: block;
+  margin-left: auto;
+  transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
+  background-color: #8b171b;
+  color: #ffffff;
+}
+
+/* ------------------------------------------------- CONTACT US PAGE RESPONSIVE CODE ------------------------------------------------- */
+@media (max-width: 991px) {
+  .contact-us-section {
+    padding: 20px 0px;
+  }
+
+  .contact-form button {
+    font-size: 16px;
+    padding: 8px 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .contact-us-section {
+    padding: 20px 0px;
+  }
+
+  .contact-us-section h2 {
+    margin-bottom: 20px;
+  }
+
+  .contact-form {
+    margin-top: 20px;
+  }
+
+  .contact-form .form-label {
+    font-size: 14px;
+  }
+
+  .contact-form button {
+    margin: 0 auto;
+  }
+
+  .contact-form button {
+    margin: 0 auto;
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 575px) {
+  .contact-us-section {
+    padding: 10px 0px;
+    margin-bottom: 20px;
+  }
+
+  .contact-us-section h2 {
+    margin-bottom: 20px;
+  }
+
+  .contact-form {
+    margin-top: 10px;
+  }
+
+  .contact-form button {
+    width: 100%;
+    max-width: 100%;
+    font-size: 15px;
+    padding: 10px 16px;
+    border-radius: 8px;
+  }
+}

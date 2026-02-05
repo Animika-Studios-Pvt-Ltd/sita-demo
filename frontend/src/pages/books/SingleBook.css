@@ -1,45 +1,5 @@
 
 
-h2 {
-  font-family: "PT Serif", serif;
-  font-weight: 400;
-  color: black;
-}
-
-p {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 300;
-}
-
-.breadcrumb {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 300;
-  font-size: 16px;
-  margin-bottom: 20px;
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.breadcrumb-item+.breadcrumb-item::before {
-  content: ">";
-  color: #c6c6c6;
-}
-
-.breadcrumb a {
-  text-decoration: none;
-  color: #aaaaaa;
-}
-
-.breadcrumb a:hover {
-  text-decoration: underline;
-}
-
-.breadcrumb-item.active {
-  color: #757575;
-  cursor: default;
-}
-
 .book-section {
   margin-bottom: 20px;
 }

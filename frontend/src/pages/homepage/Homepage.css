@@ -357,24 +357,13 @@ li {
   display: inline-block;
   color: #ffffff;
   font-family: "Montserrat-Regular";
-  font-size: 14px;
+  font-size: 16px;
   padding: 10px 20px;
   text-decoration: none;
   line-height: 1;
   clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
   transition: background-color 0.3s ease;
-}
-
-.masterclass-card-btn.pink {
-  background: #d86c87;
-}
-
-.masterclass-card-btn.peach {
-  background: #e29a7a;
-}
-
-.masterclass-card-btn.rose {
-  background: #c36c6c;
+  background: #f6981e;
 }
 
 /* ----------------- WORKSHOP CALENDAR SECTION ----------------- */
@@ -444,7 +433,7 @@ li {
 
 /* ----------------- SITA VERSES SECTION ----------------- */
 .sita-verses {
-  background-image: url("public/sita-verses.webp");
+  background-image: url("/sita-verses.webp");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -648,7 +637,7 @@ li {
 
 /* ----------------- TESTIMONIALS SECTION ----------------- */
 .sita-testimonials {
-  background-image: url("public/testimonial-bg.webp");
+  background-image: url("testimonial-bg.webp");
   background-size: cover;
   background-position: center;
   padding: 40px 0 150px;

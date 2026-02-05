@@ -1,0 +1,1080 @@
+
+/* ---------------------------------- INNER PAGE HERO ---------------------------------- */
+.sita-inner-hero {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+}
+
+.sita-inner-hero-image {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw;
+  z-index: 2;
+}
+
+.sita-inner-hero-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.sita-hero-inner-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 190px;
+  background-color: #e5c4b5;
+  z-index: 1;
+}
+
+/* ---------------------------------- INNER SIDE IMAGE ---------------------------------- */
+.sita-inner-side-img {
+  position: absolute;
+  right: 12%;
+  bottom: -212px;
+  width: 420px;
+  z-index: 5;
+  /* animation: rotateWheel 20s linear infinite; */
+}
+
+@keyframes rotateWheel {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ----------------- YOGA THERAPY PAGE ----------------- */
+.yoga-therapy-section {
+  position: relative;
+  text-align: center;
+  width: 70%;
+  margin: 20px auto;
+}
+
+.sita-quote {
+  font-style: italic;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.sita-inner-content-intro .sita {
+  display: block;
+  margin-left: auto;
+  margin-right: 0;
+  margin-top: 10px;
+  width: 70px;
+}
+
+@media (max-width: 991px) {
+  .yoga-therapy-section {
+    width: 80% !important;
+    margin: 20px auto 25px;
+  }
+
+  .yoga-therapy-section p {
+    margin-bottom: 10px;
+  }
+
+  .sita-inner-content-intro .sita {
+    width: 60px;
+  }
+}
+
+@media (max-width: 767px) {
+  .yoga-therapy-section {
+    width: 90% !important;
+    margin: 20px auto 20px;
+  }
+
+  .sita-inner-content-intro .sita {
+    width: 60px;
+  }
+}
+
+@media (max-width: 575px) {
+  .yoga-therapy-section {
+    width: 90% !important;
+    margin: 15px auto;
+  }
+
+  .sita-inner-content-intro .sita {
+    width: 50px;
+  }
+}
+
+/* ----------------- KOSHA COUNSELING PAGE ----------------- */
+.kosha-list {
+  list-style: none;
+  padding: 0;
+  max-width: 600px;
+  column-count: 2;
+  column-gap: 80px;
+  margin-bottom: 30px;
+}
+
+.kosha-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  break-inside: avoid;
+  color: black;
+}
+
+.kosha-list li img {
+  width: 22px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.kosha-benefits {
+  text-transform: capitalize;
+}
+
+/* ----------------- SOUL CURRICULUM PAGE ----------------- */
+.soul-curriculum-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.soul-curriculum-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  break-inside: avoid;
+  color: black;
+}
+
+.soul-curriculum-list li img {
+  width: 22px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------- INNER PAGE CONTENT ---------------------------------- */
+.sita-inner-section {
+  padding: 40px 0 10px;
+}
+
+.sita-inner-content {
+  width: 60%;
+}
+
+.sita-inner-content h2 {
+  text-align: center;
+  margin-top: 0;
+}
+
+.sita-inner-content p {
+  margin-bottom: 20px;
+}
+
+.sita-inner-content .motif {
+  display: block;
+  margin: 0 auto 30px;
+}
+
+.sita-inner-content-intro {
+  width: 100%;
+}
+
+.sita-inner-content-intro p {
+  max-width: 100%;
+  line-height: 1.8;
+}
+
+.sita-inner-full-content {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.sita-inner-full-content p {
+  max-width: 100%;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+/* ------------------------------------------------- ABOUT PAGE SECTION ------------------------------------------------- */
+
+/* ----------------- ABOUT CONTENT ----------------- */
+.sita-about-page {
+  padding: 20px 0px 40px;
+}
+
+.about-content h2 {
+  text-transform: capitalize;
+}
+
+.sita-about-section {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+}
+
+.sita-about-content {
+  width: 50%;
+  text-align: center;
+}
+
+.sita-about-image {
+  width: 50%;
+  text-align: center;
+}
+
+.sita-side-img {
+  max-width: 70%;
+  height: auto;
+}
+
+/* ----------------- CERTIFICATIONS & TRAINING SECTION ----------------- */
+.sita-certifications {
+  padding: 40px 0;
+  background-color: #f4ebce;
+}
+
+.sita-certifications h2 {
+  margin-bottom: 35px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.sita-certifications p {
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.sita-certifications img {
+  width: 90%;
+}
+
+/* ----------------- VISION & PHILOSOPHY SECTION ----------------- */
+.sita-vision-philosophy {
+  padding: 60px 0 40px;
+  background-image: url("/vision-philosophy-bg.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.sita-vision-philosophy .container {
+  position: relative;
+  z-index: 2;
+}
+
+.sita-vision-philosophy h2 {
+  margin-bottom: 20px;
+  color: #ffffff !important;
+  text-transform: capitalize;
+}
+
+.sita-vision-philosophy p {
+  line-height: 1.8;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+/* ----------------- VALUE PROPOSITION SECTION ----------------- */
+.sita-value-proposition {
+  padding: 40px 0;
+}
+
+.sita-value-proposition h2 {
+  text-transform: capitalize;
+  margin-bottom: 20px;
+}
+
+.sita-value-proposition p {
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+/* ------------------------------------------------- WORKSHOP SECTION ------------------------------------------------- */
+
+.sita-workshop-section {
+  padding: 20px 0px;
+}
+
+.sita-workshop-section h2 {
+  text-align: center;
+}
+
+.sita-workshop-section .motif {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+.sita-workshop-section h4 {
+  font-family: "Montserrat-Regular";
+  color: #8b171b;
+  font-size: 24px;
+  margin: 10px 0px;
+}
+
+@media (max-width: 991px) {
+  .sita-workshop-section h4 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .sita-workshop-section h4 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 575px) {
+  .sita-workshop-section h4 {
+    font-size: 16px;
+  }
+}
+
+/* ------------------------------------------------- RESPONSIVE CODE ------------------------------------------------- */
+/* COMMON STYLES SECTION */
+@media (max-width: 1200px) {
+  h2 {
+    font-size: 42px;
+  }
+
+  p,
+  li {
+    font-size: 17px;
+  }
+
+  .sita-btn {
+    font-size: 17px;
+    padding: 9px 22px;
+  }
+}
+
+@media (max-width: 991px) {
+  h2 {
+    font-size: 40px;
+  }
+
+  p,
+  li {
+    font-size: 16px;
+  }
+
+  .sita-btn {
+    font-size: 16px;
+    padding: 8px 20px;
+  }
+
+  .motif {
+    width: 30%;
+  }
+}
+
+@media (max-width: 767px) {
+  h2 {
+    font-size: 36px;
+  }
+
+  p,
+  li {
+    font-size: 15px;
+  }
+
+  .sita-btn {
+    font-size: 15px;
+    padding: 7px 18px;
+  }
+
+  .motif {
+    width: 40%;
+  }
+}
+
+@media (max-width: 575px) {
+  h2 {
+    font-size: 28px;
+  }
+
+  p,
+  li {
+    font-size: 14px;
+  }
+
+  .sita-btn {
+    font-size: 14px;
+    padding: 6px 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  h2 {
+    font-size: 24px;
+  }
+
+  p,
+  li {
+    font-size: 13px;
+  }
+
+  .sita-btn {
+    font-size: 13px;
+    padding: 5px 14px;
+  }
+}
+
+/* ------------------------------------------------- INNER PAGES RESPONSIVE CODE ------------------------------------------------- */
+@media (min-width: 1919px) {
+  .sita-inner-hero {
+    height: 300px;
+  }
+}
+
+@media (max-width: 1919px) {
+  .sita-inner-hero {
+    height: 290px;
+  }
+
+  .sita-inner-side-img {
+    bottom: -200px;
+    width: 410px;
+  }
+}
+
+@media (max-width: 1800px) {
+  .sita-inner-hero {
+    height: 270px;
+  }
+
+  .sita-inner-side-img {
+    bottom: -205px;
+  }
+}
+
+@media (max-width: 1750px) {
+  .sita-inner-hero {
+    height: 270px;
+  }
+}
+
+@media (max-width: 1700px) {
+  .sita-inner-hero {
+    height: 260px;
+  }
+}
+
+@media (max-width: 1650px) {
+  .sita-inner-hero {
+    height: 255px;
+  }
+}
+
+@media (max-width: 1600px) {
+  .sita-inner-hero {
+    height: 245px;
+  }
+}
+
+@media (max-width: 1550px) {
+  .sita-inner-hero {
+    height: 240px;
+  }
+
+  .sita-inner-side-img {
+    bottom: -207px;
+  }
+}
+
+@media (max-width: 1500px) {
+  .sita-inner-hero {
+    height: 225px;
+  }
+
+  .sita-hero-inner-bg {
+    height: 150px;
+  }
+
+  .sita-inner-side-img {
+    width: 400px;
+    bottom: -200px;
+  }
+}
+
+@media (max-width: 1440px) {
+  .sita-inner-hero {
+    height: 227px;
+  }
+
+  .sita-hero-inner-bg {
+    height: 160px;
+  }
+
+  .sita-inner-side-img {
+    width: 390px;
+    bottom: -195px;
+  }
+}
+
+@media (max-width: 1400px) {
+  .sita-inner-side-img {
+    bottom: -190px;
+  }
+}
+
+@media (max-width: 1366px) {
+  .sita-inner-hero {
+    height: 220px;
+  }
+
+  .sita-hero-inner-bg {
+    height: 140px;
+  }
+
+  .sita-inner-side-img {
+    width: 350px;
+    bottom: -180px;
+  }
+}
+
+@media (max-width: 1320px) {
+  .sita-inner-hero {
+    height: 210px;
+  }
+
+  .sita-hero-inner-bg {
+    height: 130px;
+  }
+
+  .sita-inner-side-img {
+    width: 340px;
+    bottom: -172px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .sita-inner-hero {
+    height: 200px;
+  }
+
+  .sita-hero-inner-bg {
+    height: 125px;
+  }
+
+  .sita-inner-side-img {
+    width: 330px;
+    bottom: -166px;
+  }
+}
+
+@media (max-width: 1240px) {
+  .sita-inner-hero {
+    height: 195px;
+  }
+
+  .sita-hero-inner-bg {
+    height: 120px;
+  }
+
+  .sita-inner-side-img {
+    width: 325px;
+    bottom: -160px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .sita-inner-hero {
+    height: 190px;
+  }
+
+  .sita-hero-inner-bg {
+    height: 115px;
+  }
+
+  .sita-inner-side-img {
+    width: 315px;
+    bottom: -160px;
+  }
+}
+
+@media (max-width: 1150px) {
+  .sita-inner-hero {
+    height: 180px;
+  }
+
+  .sita-inner-side-img {
+    width: 315px;
+    bottom: -150px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .sita-inner-hero {
+    height: 170px;
+  }
+
+  .sita-hero-inner-bg {
+    height: 110px;
+  }
+
+  .sita-inner-side-img {
+    width: 300px;
+    bottom: -145px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .sita-inner-hero {
+    height: 165px;
+  }
+
+  .sita-hero-inner-bg {
+    height: 105px;
+  }
+
+  .sita-inner-side-img {
+    width: 280px;
+    bottom: -135px;
+  }
+}
+
+@media (max-width: 991px) {
+  .sita-inner-section {
+    padding: 10px 0;
+  }
+
+  .sita-inner-hero {
+    height: 150px;
+  }
+
+  .sita-hero-inner-bg {
+    height: 100px;
+  }
+
+  .sita-inner-side-img {
+    display: none;
+  }
+
+  .sita-inner-section {
+    position: relative;
+  }
+
+  .sita-inner-section::before {
+    content: "";
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background-image: var(--service-watermark-img);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .ayurveda-nutrition-bg-image {
+    --service-watermark-img: url("/ayurveda-nutrition-image.webp");
+  }
+
+  .kosha-counseling-bg-image {
+    --service-watermark-img: url("/kosha-counseling-image.webp");
+  }
+
+  .release-karmic-patterns-bg-image {
+    --service-watermark-img: url("/release-karmic-patterns-image.webp");
+  }
+
+  .soul-curriculum-bg-image {
+    --service-watermark-img: url("/soul-curriculum-image.webp");
+  }
+
+  .yoga-therapy-bg-image {
+    --service-watermark-img: url("/yoga-therapy-image.webp");
+  }
+
+  .sita-inner-section .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .sita-inner-content {
+    width: 100%;
+  }
+
+  .sita-inner-content,
+  .sita-inner-full-content {
+    text-align: justify;
+  }
+}
+
+@media (max-width: 950px) {
+  .sita-inner-hero {
+    height: 140px;
+  }
+}
+
+@media (max-width: 900px) {
+  .sita-inner-hero {
+    height: 135px;
+  }
+}
+
+@media (max-width: 850px) {
+  .sita-inner-hero {
+    height: 125px;
+  }
+
+  .sita-hero-inner-bg {
+    height: 80px;
+  }
+}
+
+@media (max-width: 800px) {
+  .sita-inner-hero {
+    height: 120px;
+  }
+
+  .sita-hero-inner-bg {
+    height: 85px;
+  }
+}
+
+@media (max-width: 767px) {
+  .sita-inner-hero {
+    height: 145px;
+  }
+
+  .sita-hero-inner-bg {
+    height: 0px;
+  }
+
+  .sita-inner-hero-image {
+    width: 100vw;
+  }
+
+  .sita-inner-content p {
+    margin-bottom: 10px;
+  }
+
+  .sita-inner-full-content p {
+    margin-bottom: 10px;
+  }
+
+  .sita-inner-section::before {
+    width: 450px;
+    height: 450px;
+  }
+}
+
+@media (max-width: 730px) {
+  .sita-inner-hero {
+    height: 140px;
+  }
+}
+
+@media (max-width: 700px) {
+  .sita-inner-hero {
+    height: 135px;
+  }
+}
+
+@media (max-width: 650px) {
+  .sita-inner-hero {
+    height: 125px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sita-inner-hero {
+    height: 115px;
+  }
+}
+
+@media (max-width: 575px) {
+  .sita-inner-hero {
+    height: 110px;
+  }
+
+  .sita-inner-hero-image {
+    width: 100vw;
+  }
+
+  .sita-inner-content .motif {
+    margin-bottom: 10px !important;
+  }
+
+  .sita-inner-content p {
+    margin-bottom: 5px;
+  }
+
+  .sita-inner-full-content p {
+    margin-bottom: 5px;
+  }
+
+  .sita-inner-section::before {
+    width: 400px;
+    height: 400px;
+    opacity: 0.2;
+  }
+}
+
+@media (max-width: 550px) {
+  .sita-inner-hero {
+    height: 105px;
+  }
+}
+
+@media (max-width: 520px) {
+  .sita-inner-hero {
+    height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sita-inner-hero {
+    height: 95px;
+  }
+
+  .sita-inner-section::before {
+    width: 350px;
+    height: 350px;
+  }
+}
+
+@media (max-width: 450px) {
+  .sita-inner-hero {
+    height: 90px;
+  }
+}
+
+@media (max-width: 420px) {
+  .sita-inner-hero {
+    height: 80px;
+  }
+
+  .sita-inner-section::before {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 400px) {
+  .sita-inner-hero {
+    height: 75px;
+  }
+}
+
+@media (max-width: 360px) {
+  .sita-inner-hero {
+    height: 70px;
+  }
+}
+
+@media (max-width: 320px) {
+  .sita-inner-hero {
+    height: 60px;
+  }
+}
+
+
+/* ------------------------------------------------- ABOUT PAGE RESPONSIVE CODE ------------------------------------------------- */
+/* ----------------- ABOUT CONTENT SECTION ----------------- */
+@media (max-width: 1200px) {
+  .sita-about-content {
+    width: 60%;
+    text-align: center;
+  }
+
+  .sita-about-image {
+    width: 40%;
+    text-align: center;
+  }
+
+  .sita-side-img {
+    max-width: 95%;
+    height: auto;
+  }
+}
+
+@media (max-width: 991px) {
+  .sita-about-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+  }
+
+  .sita-about-content {
+    display: contents;
+  }
+
+  .sita-about-image,
+  .sita-inner-content-intro {
+    width: 100%;
+    text-align: center;
+  }
+
+  .sita-about-content h2 {
+    order: 1;
+  }
+
+  .sita-about-content .motif {
+    order: 2;
+    margin-bottom: 10px !important;
+  }
+
+  .sita-about-image {
+    order: 3;
+    margin: 10px 0;
+  }
+
+  .sita-about-content .sita-inner-content-intro {
+    order: 4;
+    text-align: left;
+  }
+
+  .sita-side-img {
+    max-width: 50%;
+    height: auto;
+	margin: 0 auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .sita-side-img {
+    max-width: 60%;
+    height: auto;
+  }
+}
+
+@media (max-width: 575px) {
+  .sita-side-img {
+    max-width: 50%;
+    height: auto;
+  }
+}
+
+/* ----------------- CERTIFICATIONS & TRAINING SECTION ----------------- */
+@media (max-width: 991px) {
+  .sita-certifications {
+    padding: 30px 0;
+  }
+
+  .sita-certifications h2 {
+    margin-bottom: 25px;
+  }
+
+  .sita-certifications p {
+    margin-bottom: 10px;
+  }
+
+  .sita-certifications img {
+    width: 50%;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .sita-certifications {
+    padding: 20px 0;
+  }
+
+  .sita-certifications p {
+    margin-bottom: 5px;
+  }
+
+  .sita-certifications img {
+    width: 60%;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 575px) {
+  .sita-certifications {
+    padding: 15px 0;
+  }
+}
+
+/* ----------------- VISION & PHILOSOPHY SECTION ----------------- */
+@media (max-width: 991px) {
+  .sita-vision-philosophy {
+    padding: 30px 0;
+  }
+
+  .sita-vision-philosophy h2 {
+    margin-bottom: 15px;
+  }
+
+  .sita-vision-philosophy p {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  .sita-vision-philosophy {
+    padding: 20px 0;
+  }
+
+  .sita-vision-philosophy h2 {
+    margin-bottom: 10px;
+  }
+
+  .sita-vision-philosophy p {
+    margin-bottom: 5px;
+  }
+}
+
+@media (max-width: 575px) {
+  .sita-vision-philosophy {
+    padding: 15px 0;
+  }
+
+  .sita-vision-philosophy h2 {
+    margin-bottom: 10px;
+  }
+}
+
+/* ----------------- VALUE PROPOSITION SECTION ----------------- */
+@media (max-width: 991px) {
+  .sita-value-proposition {
+    padding: 30px 0;
+  }
+
+  .sita-value-proposition h2 {
+    margin-bottom: 20px;
+  }
+
+  .sita-value-proposition img {
+    width: 70%;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .sita-value-proposition p {
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .sita-value-proposition {
+    padding: 20px 0;
+  }
+}
+
+@media (max-width: 575px) {
+  .sita-value-proposition {
+    padding: 15px 0;
+  }
+}

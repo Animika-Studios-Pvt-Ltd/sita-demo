@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useFetchAllBooksQuery } from "../redux/features/books/booksApi";
 
 import "./Footer.css";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { getSubdomain, getAppUrl } from "../utils/subdomain";
 
 const BACKEND_BASE_URL =
@@ -67,37 +67,19 @@ const Footer = () => {
         <div className="footer-top-flex">
           <div className="footer-col footer-col-factor footer-links">
             <h6 className="footer-title">THE SITA FACTOR</h6>
-            <a href="https://sitashakti.com/yoga-therapy.html">Yoga Therapy</a>
-            <a href="https://sitashakti.com/ayurveda-nutrition.html">
-              Ayurveda – Nutrition & Integration
-            </a>
-            <a href="https://sitashakti.com/kosha-counseling.html">
-              Kosha Counseling
-            </a>
-            <a href="https://sitashakti.com/soul-curriculum.html">
-              Soul Curriculum
-            </a>
-            <a href="https://sitashakti.com/release-karmic-patterns.html">
-              Release Karmic Patterns
-            </a>
+            <a href="/yoga-therapy">Yoga Therapy</a>
+            <a href="/ayurveda-nutrition">Ayurveda – Nutrition & Integration</a>
+            <a href="/kosha-counseling">Kosha Counseling</a>
+            <a href="/soul-curriculum">Soul Curriculum</a>
+            <a href="release-karmic-patterns">Release Karmic Patterns</a>
           </div>
           <div className="footer-col footer-col-workshops footer-links">
             <h6 className="footer-title">WORKSHOPS</h6>
-            <a href="https://sitashakti.com/teacher-training.html">
-              Teacher Training
-            </a>
-            <a href="https://sitashakti.com/corporate-training.html">
-              Corporate Training
-            </a>
-            <a href="https://sitashakti.com/shakthi-leadership.html">
-              Shakthi Leadership
-            </a>
-            <a href="https://sitashakti.com/group-sessions.html">
-              Group Sessions
-            </a>
-            <a href="https://sitashakti.com/private-sessions.html">
-              Private Sessions
-            </a>
+            <a href="/teacher-training">Teacher Training</a>
+            <a href="/corporate-training">Corporate Training</a>
+            <a href="/shakthi-leadership">Shakthi Leadership</a>
+            <a href="/group-sessions">Group Sessions</a>
+            <a href="/private-sessions">Private Sessions</a>
           </div>
           <div className="footer-col footer-col-resources footer-links">
             <h6 className="footer-title">RESOURCES</h6>
@@ -106,8 +88,8 @@ const Footer = () => {
             ) : (
               <a href={getAppUrl("blog", "/blogs")}>Blogs</a>
             )}
-            <a href="https://sitashakti.com/articles.html">Articles</a>
-            <a href="https://sitashakti.com/podcasts.html">Podcasts</a>
+            <a href="/podcasts">Articles</a>
+            <a href="/articles">Podcasts</a>
           </div>
           <div className="footer-col footer-col-publications footer-publication">
             <h6 className="footer-title">PUBLICATIONS</h6>
@@ -235,7 +217,7 @@ const Footer = () => {
         {/* FOOTER MIDDLE */}
         <div className="footer-middle-flex">
           <div className="footer-middle-left">
-            <a href="https://sitashakti.com">
+            <a href="/">
               <img
                 src="/sita-logo.webp"
                 className="footer-logo"
@@ -244,11 +226,9 @@ const Footer = () => {
             </a>
           </div>
           <div className="footer-middle-center">
-            <a href="https://sitashakti.com/privacy-policy.html">
-              Privacy Policy
-            </a>
+            <a href="/privacy-policy">Privacy Policy</a>
             <span>|</span>
-            <a href="https://sitashakti.com/disclaimer.html">Disclaimer</a>
+            <a href="/disclaimer">Disclaimer</a>
           </div>
           <div className="footer-middle-right footer-socials">
             <a href="#">
