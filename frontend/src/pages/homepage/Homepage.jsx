@@ -278,7 +278,7 @@ const HomePage = () => {
                 />
                 <div className="masterclass-content">
                   <h4>Yoga Therapy</h4>
-                  <a href="/yoga-therapy" className="masterclass-card-btn">
+                  <a href="/yoga-therapy" className="masterclass-card-btn pink">
                     Start Your Practice
                   </a>
                 </div>
@@ -297,7 +297,9 @@ const HomePage = () => {
                 />
                 <div className="masterclass-content">
                   <h4>Soul Curriculum</h4>
-                  <a href="/soul-curriculum" className="masterclass-card-btn">
+                  <a
+                    href="/soul-curriculum"
+                    className="masterclass-card-btn peach">
                     Step Into Awareness
                   </a>
                 </div>
@@ -316,7 +318,9 @@ const HomePage = () => {
                 />
                 <div className="masterclass-content">
                   <h4>Kosha Counselling</h4>
-                  <a href="/kosha-counseling" className="masterclass-card-btn">
+                  <a
+                    href="/kosha-counseling"
+                    className="masterclass-card-btn rose">
                     Explore Inner Layers
                   </a>
                 </div>
