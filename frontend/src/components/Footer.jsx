@@ -3,15 +3,13 @@ import { useFetchAllBooksQuery } from "../redux/features/books/booksApi";
 
 import "./Footer.css";
 import { useEffect, useState } from "react";
-import { getSubdomain, getAppUrl } from "../utils/subdomain";
+
 
 const BACKEND_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const Footer = () => {
-  const currentSubdomain = getSubdomain();
-  const isStore = currentSubdomain === "store";
-  const isBlog = currentSubdomain === "blog";
+
 
   const { data: books = [] } = useFetchAllBooksQuery();
   const activeBooks = books.filter((book) => !book.suspended);
@@ -97,11 +95,7 @@ const Footer = () => {
           </div>
           <div className="footer-col footer-col-resources footer-links">
             <h6 className="footer-title">RESOURCES</h6>
-            {isBlog ? (
-              <Link to="/blogs">Blogs</Link>
-            ) : (
-              <a href={getAppUrl("blog", "/blogs")}>Blogs</a>
-            )}
+            <Link to="/blogs">Blogs</Link>
             <a href="https://sitashakti.com/podcasts">Articles</a>
             <a href="https://sitashakti.com/articles">Podcasts</a>
           </div>
@@ -115,29 +109,16 @@ const Footer = () => {
                 {recentBooks.length > 0 ? (
                   recentBooks.map((book, index) => {
                     const linkPath = `/books/${book.slug || book._id}`;
-                    const destination = isStore
-                      ? linkPath
-                      : getAppUrl("store", linkPath);
-
                     return (
                       <div
                         key={book._id || index}
                         className={`publication-slide ${index === activeSlide ? "active" : ""}`}>
-                        {isStore ? (
-                          <Link to={linkPath}>
-                            <img
-                              src={book.coverImage || "/images/anaya-book.webp"}
-                              alt={book.title}
-                            />
-                          </Link>
-                        ) : (
-                          <a href={destination}>
-                            <img
-                              src={book.coverImage || "/images/anaya-book.webp"}
-                              alt={book.title}
-                            />
-                          </a>
-                        )}
+                        <Link to={linkPath}>
+                          <img
+                            src={book.coverImage || "/images/anaya-book.webp"}
+                            alt={book.title}
+                          />
+                        </Link>
 
                         <p>
                           <strong>{book.title}</strong>
@@ -161,11 +142,8 @@ const Footer = () => {
             {blogs.length > 0 ? (
               blogs.map((blog, index) => {
                 const linkPath = `/blogs/${blog.slug || blog._id}`;
-                const destination = isBlog
-                  ? linkPath
-                  : getAppUrl("blog", linkPath);
 
-                return isBlog ? (
+                return (
                   <Link
                     to={linkPath}
                     key={blog._id || index}
@@ -193,34 +171,6 @@ const Footer = () => {
                       <p>{blog.title.substring(0, 15)}...</p>
                     </div>
                   </Link>
-                ) : (
-                  <a
-                    href={destination}
-                    key={blog._id || index}
-                    className="blog-item"
-                    style={{ textDecoration: "none" }}>
-                    <img
-                      src={
-                        blog.image?.startsWith("http")
-                          ? blog.image
-                          : `${BACKEND_BASE_URL}${blog.image}`
-                      }
-                      alt={blog.title}
-                    />
-                    <div className="blog-overlay">
-                      <span>
-                        {new Date(blog.createdAt).toLocaleDateString(
-                          undefined,
-                          {
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
-                          },
-                        )}
-                      </span>
-                      <p>{blog.title.substring(0, 15)}...</p>
-                    </div>
-                  </a>
                 );
               })
             ) : (
