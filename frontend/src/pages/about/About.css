@@ -2,7 +2,9 @@
   font-family: "PTSerif-Regular";
   font-style: normal;
   font-weight: 400;
-  src: local("PTSerif-Regular"), local("PTSerif-Regular"),
+  src:
+    local("PTSerif-Regular"),
+    local("PTSerif-Regular"),
     url("fonts/PTSerif-Regular.ttf") format("truetype");
 }
 
@@ -10,7 +12,9 @@
   font-family: "Montserrat-Regular";
   font-style: normal;
   font-weight: 400;
-  src: local("Montserrat-Regular"), local("Montserrat-Regular"),
+  src:
+    local("Montserrat-Regular"),
+    local("Montserrat-Regular"),
     url("fonts/Montserrat-Regular.ttf") format("truetype");
 }
 
@@ -18,7 +22,9 @@
   font-family: "Montserrat-Light";
   font-style: normal;
   font-weight: 300;
-  src: local("Montserrat-Light"), local("Montserrat-Light"),
+  src:
+    local("Montserrat-Light"),
+    local("Montserrat-Light"),
     url("fonts/Montserrat-Light.ttf") format("truetype");
 }
 
@@ -94,6 +100,51 @@ li {
     transform: rotate(360deg);
   }
 }
+
+/* ---------------------------------- INNER PAGE CONTENT ---------------------------------- */
+.sita-inner-section {
+  padding: 40px 0 10px;
+}
+
+.sita-inner-content {
+  width: 50%;
+}
+
+.sita-inner-content h2 {
+  text-align: center;
+  margin-top: 0;
+}
+
+.sita-inner-content p {
+  margin-bottom: 20px;
+}
+
+.sita-inner-content .motif {
+  display: block;
+  margin: 0 auto 30px;
+}
+
+.sita-inner-content-intro {
+  width: 100%;
+}
+
+.sita-inner-content-intro p {
+  max-width: 100%;
+  line-height: 1.8;
+}
+
+.sita-inner-full-content {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.sita-inner-full-content p {
+  max-width: 100%;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+/* ------------------------------------------------- SERVICES PAGES SECTION ------------------------------------------------- */
 
 /* ----------------- YOGA THERAPY PAGE ----------------- */
 .sita-quote {
@@ -176,64 +227,30 @@ li {
   flex-shrink: 0;
 }
 
-/* ---------------------------------- INNER PAGE CONTENT ---------------------------------- */
-.sita-inner-section {
-  padding: 40px 0 10px;
-}
-
-.sita-inner-content {
-  width: 50%;
-}
-
-.sita-inner-content h2 {
-  text-align: center;
-  margin-top: 0;
-}
-
-.sita-inner-content p {
-  margin-bottom: 20px;
-}
-
-.sita-inner-content .motif {
-  display: block;
-  margin: 0 auto 30px;
-}
-
-.sita-inner-content-intro {
-  width: 100%;
-}
-
-.sita-inner-content-intro p {
-  max-width: 100%;
-  line-height: 1.8;
-}
-
-.sita-inner-full-content {
-  width: 100%;
-  margin-top: 20px;
-}
-
-.sita-inner-full-content p {
-  max-width: 100%;
-  line-height: 1.8;
-  margin-bottom: 20px;
-}
-
 /* ------------------------------------------------- ABOUT PAGE SECTION ------------------------------------------------- */
 
 /* ----------------- ABOUT CONTENT ----------------- */
 .sita-about-page {
-  padding: 20px 0px 40px;
+  padding: 40px 0px;
 }
 
 .about-content h2 {
   text-transform: capitalize;
+  margin-bottom: 20px;
 }
 
 .about-intro-content {
-  width: 70%;
+  width: 50%;
 }
 
+.sita-about-side-img {
+  position: absolute;
+  right: 18%;
+  bottom: -375px;
+  width: 600px;
+  z-index: 5;
+  /* animation: rotateWheel 20s linear infinite; */
+}
 
 /* ----------------- CERTIFICATIONS & TRAINING SECTION ----------------- */
 .sita-certifications {
@@ -299,7 +316,6 @@ li {
 }
 
 /* ------------------------------------------------- WORKSHOP SECTION ------------------------------------------------- */
-
 .sita-workshop-section {
   padding: 20px 0px;
 }
@@ -348,7 +364,7 @@ li {
 
   p,
   li {
-    font-size: 17px;
+    font-size: 17px !important;
   }
 }
 
@@ -359,7 +375,7 @@ li {
 
   p,
   li {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 
   .motif {
@@ -374,7 +390,7 @@ li {
 
   p,
   li {
-    font-size: 15px;
+    font-size: 15px !important;
   }
 
   .motif {
@@ -389,7 +405,7 @@ li {
 
   p,
   li {
-    font-size: 14px;
+    font-size: 14px !important;
   }
 }
 
@@ -400,7 +416,7 @@ li {
 
   p,
   li {
-    font-size: 13px;
+    font-size: 13px !important;
   }
 }
 
@@ -860,10 +876,161 @@ li {
   }
 }
 
-
 /* ------------------------------------------------- ABOUT PAGE RESPONSIVE CODE ------------------------------------------------- */
 
+/* ----------------- ABOUT CONTENT SECTION ----------------- */
+@media (max-width: 1800px) {
+  .sita-about-side-img {
+    right: 17%;
+    bottom: -375px;
+    width: 580px;
+  }
+}
 
+@media (max-width: 1700px) {
+  .sita-about-side-img {
+    right: 16%;
+    bottom: -360px;
+    width: 570px;
+  }
+}
+
+@media (max-width: 1600px) {
+  .sita-about-side-img {
+    right: 15%;
+    bottom: -360px;
+    width: 560px;
+  }
+}
+
+@media (max-width: 1550px) {
+  .sita-about-side-img {
+    right: 14%;
+    bottom: -355px;
+    width: 550px;
+  }
+}
+
+@media (max-width: 1500px) {
+  .sita-about-side-img {
+    right: 13%;
+    bottom: -350px;
+    width: 540px;
+  }
+}
+
+@media (max-width: 1440px) {
+  .sita-about-side-img {
+    right: 12%;
+    bottom: -360px;
+    width: 530px;
+  }
+}
+
+@media (max-width: 1366px) {
+  .sita-about-page {
+    padding: 20px 0px 40px;
+  }
+
+  .sita-about-side-img {
+    right: 10%;
+    bottom: -350px;
+    width: 520px;
+  }
+}
+
+@media (max-width: 1300px) {
+  .sita-about-side-img {
+    right: 8%;
+    width: 510px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .sita-about-side-img {
+    right: 7%;
+    width: 500px;
+  }
+}
+
+@media (max-width: 1150px) {
+  .sita-about-side-img {
+    right: 6%;
+    width: 490px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .sita-about-side-img {
+    right: 5%;
+    width: 480px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .sita-about-side-img {
+    right: 4%;
+    width: 470px;
+  }
+}
+
+@media (min-width: 991px) {
+  .sita-side-img {
+    display: none;
+  }
+}
+
+@media (max-width: 991px) {
+  .sita-about-page {
+    padding: 20px 0px;
+  }
+
+  .sita-about-side-img {
+    display: none;
+  }
+
+  .sita-side-img {
+    display: block;
+    margin: 0 auto 20px;
+    width: 70%;
+  }
+
+  .about-intro-content {
+    width: 100%;
+  }
+
+  .about-content h2 {
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 767px) {
+  .sita-about-page {
+    padding: 15px 0px;
+  }
+
+  .sita-side-img {
+    margin: 0 auto 15px;
+  }
+
+  .about-content h2 {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 575px) {
+  .sita-about-page {
+    padding: 10px 0px;
+  }
+
+  .sita-side-img {
+    margin: 0 auto 10px;
+  }
+
+  .about-content h2 {
+    margin-bottom: 5px;
+  }
+}
 
 /* ----------------- CERTIFICATIONS & TRAINING SECTION ----------------- */
 @media (max-width: 991px) {
@@ -872,7 +1039,7 @@ li {
   }
 
   .sita-certifications h2 {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
 
   .sita-certifications p {
@@ -881,7 +1048,7 @@ li {
 
   .sita-certifications img {
     width: 50%;
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
   }
 }
 

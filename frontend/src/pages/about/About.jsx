@@ -30,7 +30,7 @@ const About = () => {
         </div>
         <img
           src="/sita-image.webp"
-          className="sita-inner-side-img"
+          className="sita-about-side-img"
           alt="Sita Image"
           data-aos="fade-left"
           data-aos-duration="2000"
@@ -60,18 +60,29 @@ const About = () => {
                   data-aos-delay="200"
                 />
               </div>
-              <div
-                className="sita-inner-content-intro about-intro-content"
-                data-aos="fade-up"
-                data-aos-delay="300">
-                <p>
-                  Sita Severson is a Spiritual Counselor and Mentor, offering
-                  Teacher Training programs, individual and group sessions to
-                  seekers. She supports and creates customized frameworks that
-                  enable spiritual evolution. She is known also as a Vedic
-                  Counselor, Ayurvedic Health Practitioner, Healer, Couch and
-                  Athor.
-                </p>
+              <div className="sita-about-content">
+                <div className="sita-about-image">
+                  <img
+                    src="/sita-image.webp"
+                    className="sita-side-img"
+                    alt="Sita Image"
+                    data-aos="fade-left"
+                    data-aos-duration="2000"
+                  />
+                </div>
+                <div
+                  className="sita-inner-content-intro about-intro-content"
+                  data-aos="fade-up"
+                  data-aos-delay="300">
+                  <p>
+                    Sita Severson is a Spiritual Counselor and Mentor, offering
+                    Teacher Training programs, individual and group sessions to
+                    seekers. She supports and creates customized frameworks that
+                    enable spiritual evolution. She is known also as a Vedic
+                    Counselor, Ayurvedic Health Practitioner, Healer, Couch and
+                    Athor.
+                  </p>
+                </div>
               </div>
 
               <div className="sita-inner-full-content about-content">
