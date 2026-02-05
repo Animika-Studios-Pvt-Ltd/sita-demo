@@ -51,12 +51,12 @@ export default function HeroForm({ content, onUpdate, pageSlug }) {
   };
 
   return (
-    <div className="border rounded-lg bg-white shadow-sm p-6 space-y-6">
-      <h3 className="text-lg font-semibold text-gray-800 border-b pb-2">Hero / Banner Details</h3>
+    <div className="bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-2xl p-6 space-y-6">
+      <h3 className="text-lg font-semibold text-[#7A1F2B] border-b border-white/70 pb-2">Hero / Banner Details</h3>
 
       {/* 1. Image Upload */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-slate-700 mb-2">
           Banner Image
         </label>
         {content.backgroundImage ? (
@@ -64,21 +64,21 @@ export default function HeroForm({ content, onUpdate, pageSlug }) {
             <img
               src={content.backgroundImage}
               alt="Background"
-              className="w-full h-48 object-cover rounded-lg border"
+              className="w-full h-48 object-cover rounded-xl border border-white/70 ring-1 ring-black/5"
             />
             <button
               type="button"
               onClick={() => onUpdate("backgroundImage", "")}
-              className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition shadow-sm"
+              className="absolute top-2 right-2 bg-[#7A1F2B] text-white p-2 rounded-full hover:bg-[#5d1620] transition shadow-sm"
               title="Remove Image"
             >
               <Trash2 size={16} />
             </button>
           </div>
         ) : (
-          <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-colors bg-gray-50">
-            <Upload className="w-8 h-8 text-gray-400 mb-2" />
-            <span className="text-sm font-medium text-gray-600">
+          <label className="flex flex-col items-center justify-center w-full h-48 border border-dashed border-white/70 ring-1 ring-black/5 rounded-xl cursor-pointer hover:bg-white/90 transition-colors bg-white/70 backdrop-blur-xl">
+            <Upload className="w-8 h-8 text-slate-400 mb-2" />
+            <span className="text-sm font-medium text-slate-600">
               {uploadingBg ? "Uploading..." : "Click to Upload Banner Image"}
             </span>
             <input
@@ -113,8 +113,8 @@ export default function HeroForm({ content, onUpdate, pageSlug }) {
       />
 
       {/* 4. CTA Button (Book Now) */}
-      <div className="pt-4 border-t">
-        <h4 className="text-md font-medium text-gray-800 mb-3">CTA Button (Book Now)</h4>
+      <div className="pt-4 border-t border-white/70">
+        <h4 className="text-md font-medium text-slate-700 mb-3">CTA Button (Book Now)</h4>
 
         <div className="space-y-4">
           {/* Label */}
@@ -170,7 +170,7 @@ export default function HeroForm({ content, onUpdate, pageSlug }) {
 function FormField({ label, value, onChange, placeholder, multiline = false, rows = 3, helpText }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">
+      <label className="block text-sm font-medium text-slate-700 mb-1">
         {label}
       </label>
       {multiline ? (
@@ -179,7 +179,7 @@ function FormField({ label, value, onChange, placeholder, multiline = false, row
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           rows={rows}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y text-sm"
+          className="w-full px-4 py-2 bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80 resize-y text-sm"
         />
       ) : (
         <input
@@ -187,11 +187,11 @@ function FormField({ label, value, onChange, placeholder, multiline = false, row
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+          className="w-full px-4 py-2 bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80 text-sm"
         />
       )}
       {helpText && (
-        <p className="mt-1 text-xs text-gray-500">{helpText}</p>
+        <p className="mt-1 text-xs text-slate-500">{helpText}</p>
       )}
     </div>
   );
@@ -201,7 +201,7 @@ function FormField({ label, value, onChange, placeholder, multiline = false, row
 function ColorPicker({ label, value, onChange }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">
+      <label className="block text-sm font-medium text-slate-700 mb-1">
         {label}
       </label>
       <div className="flex gap-2">
@@ -209,14 +209,14 @@ function ColorPicker({ label, value, onChange }) {
           type="color"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="h-10 w-16 rounded cursor-pointer border border-gray-300 p-1"
+          className="h-10 w-16 rounded cursor-pointer border border-white/70 ring-1 ring-black/5 p-1 bg-white/70"
         />
         <input
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="#000000"
-          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
+          className="flex-1 px-3 py-2 bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80 font-mono text-sm text-slate-700"
         />
       </div>
     </div>

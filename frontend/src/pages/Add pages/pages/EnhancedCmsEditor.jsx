@@ -27,47 +27,46 @@ import BookingForm from "./forms/BookingForm";
 /* ================= GLASS BUTTON STYLES ================= */
 const glassBtn =
   "inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium " +
-  "bg-white/20 backdrop-blur-md " +
-  "border border-slate-500/60 " +
-  "ring-1 ring-inset ring-white/40 " +
+  "bg-white/70 backdrop-blur-xl " +
+  "border-1 border-[#7A1F2B] " +
+  "ring-1 ring-black/5 " +
   "text-slate-700 " +
-  "hover:bg-blue-50/70 hover:border-blue-300 hover:text-blue-700 " +
-  "transition ";
+  "hover:bg-white/90 transition-colors duration-200 ";
 
 const glassBtnPrimary =
-  "inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium " +
-  "bg-white/20 backdrop-blur-md " +
-  "border border-blue-700/70 " +
-  "ring-1 ring-inset ring-blue-200/70 " +
-  "text-blue-700 " +
-  "hover:bg-blue-100/80 hover:text-blue-800 " +
-  "transition ";
+  "inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold " +
+  "bg-gradient-to-br from-white/95 to-slate-50/80 backdrop-blur-xl " +
+  "border-1 border-[#7A1F2B] " +
+  "ring-1 ring-black/5 " +
+  "text-[#7A1F2B] " +
+  "shadow-[0_12px_20px_-16px_rgba(15,23,42,0.45)] " +
+  "hover:shadow-[0_14px_22px_-16px_rgba(15,23,42,0.5)] " +
+  "transition-colors duration-200 ";
 
 const glassBtnWarning =
   "inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium " +
-  "bg-white/20 backdrop-blur-md " +
-  "border border-amber-700/70 " +
-  "ring-1 ring-inset ring-amber-200/60 " +
+  "bg-white/70 backdrop-blur-xl " +
+  "border-1 border-[#7A1F2B] " +
+  "ring-1 ring-black/5 " +
   "text-amber-700 " +
-  "hover:bg-amber-100/80 hover:text-amber-800 " +
-  "transition ";
+  "hover:bg-white/90 transition-colors duration-200 ";
 
 const glassIconBtn =
   "p-2 rounded-full " +
-  "bg-white/20 backdrop-blur-md " +
-  "border border-slate-500/60 " +
-  "ring-1 ring-inset ring-white/40 " +
+  "bg-white/70 backdrop-blur-xl " +
+  "border border-white/70 " +
+  "ring-1 ring-black/5 " +
   "text-slate-600 " +
-  "hover:bg-blue-50/70 hover:text-blue-700 " +
-  "transition";
+  "hover:bg-white/90 hover:text-[#7A1F2B] " +
+  "transition-colors duration-200";
 
 const glassDeleteBtn =
   "p-2 rounded-full " +
-  "bg-rose-50/80 backdrop-blur-sm " +
-  "border border-[1.5px] border-rose-300 " +
-  "ring-1 ring-inset ring-rose-200 " +
-  "text-rose-700 " +
-  "hover:bg-rose-100 transition";
+  "bg-white/70 backdrop-blur-xl " +
+  "border border-white/70 " +
+  "ring-1 ring-black/5 " +
+  "text-red-600 " +
+  "hover:bg-white/90 transition-colors duration-200";
 
 export default function EnhancedCmsEditor() {
   const { slug } = useParams();
@@ -255,25 +254,25 @@ export default function EnhancedCmsEditor() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-[60vh] font-montserrat text-slate-700">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <div className="text-lg text-gray-600">Loading page...</div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#7A1F2B] mx-auto mb-4"></div>
+          <div className="text-lg text-slate-600">Loading page...</div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="font-montserrat text-slate-700">
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-white/60 backdrop-blur-xl border border-slate-400/70 rounded-2xl">
+      <div className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-2xl">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between gap-4 flex-wrap">
 
             {/* LEFT */}
             <div className="flex-1 max-w-md">
-              <label className="block text-md font-medium text-black-600 mb-1">
+              <label className="block text-md font-medium text-slate-700 mb-1">
                 Event Page Link
               </label>
               <input
@@ -283,7 +282,7 @@ export default function EnhancedCmsEditor() {
                   setPageSlug(e.target.value.toLowerCase().replace(/\s+/g, "-"))
                 }
                 disabled={!!slug}
-                className="w-full px-4 py-2 rounded-lg bg-white/80 backdrop-blur border border-slate-300/60 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="w-full px-4 py-2 rounded-lg bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
                 placeholder="example-about-us"
               />
               {/* {slug && (
@@ -303,8 +302,6 @@ export default function EnhancedCmsEditor() {
                 <Eye size={16} />
                 {previewMode ? "Edit Mode" : "Preview"}
               </button> */}
-
-
 
               {(!slug || pageStatus === "draft") && (
                 <button className={glassBtnWarning} onClick={() => save("draft")}>
@@ -327,13 +324,12 @@ export default function EnhancedCmsEditor() {
         {!previewMode ? (
           <>
             {/* Add Section Toolbar */}
-            <div className="mb-6 p-4 rounded-2xl bg-white/70 backdrop-blur border border-slate-300/70">
-              <h3 className="text-md font-semibold text-black-700">
+            <div className="mb-6 p-4 rounded-2xl bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5">
+              <h3 className="text-md font-semibold text-[#7A1F2B]">
                 Add Section
               </h3>
 
-              <p className="mt-1 mb-4 text-sm text-slate-600 leading-relaxed
-">
+              <p className="mt-1 mb-4 text-sm text-slate-600 leading-relaxed">
                 Click a section type below to add it to your page.
                 You can add multiple sections and customize each one after adding.
               </p>
@@ -358,9 +354,9 @@ export default function EnhancedCmsEditor() {
                           <div
                             ref={provided.innerRef}
                             {...provided.draggableProps}
-                            className={`bg-white rounded-lg border-2 transition-all ${snapshot.isDragging
-                              ? "border-blue-500 shadow-2xl scale-105"
-                              : "border-gray-200 shadow"
+                            className={`bg-white/70 backdrop-blur-xl rounded-2xl border border-white/70 ring-1 ring-black/5 transition-all ${snapshot.isDragging
+                              ? "shadow-[0_18px_45px_-30px_rgba(15,23,42,0.45)] scale-[1.02]"
+                              : "shadow-sm"
                               }`}
                           >
                             <SectionCard
@@ -384,10 +380,10 @@ export default function EnhancedCmsEditor() {
 
             {/* Empty State */}
             {sections.length === 0 && (
-              <div className="text-center py-16 bg-white rounded-lg border-2 border-dashed border-gray-300">
-                <Code size={48} className="mx-auto text-gray-400 mb-4" />
-                <p className="text-gray-500 text-lg font-medium mb-2">No sections yet</p>
-                <p className="text-gray-400">Click "Add Section" above to get started building your page</p>
+              <div className="text-center py-16 bg-white/70 backdrop-blur-xl rounded-2xl border border-white/70 ring-1 ring-black/5">
+                <Code size={48} className="mx-auto text-slate-400 mb-4" />
+                <p className="text-slate-600 text-lg font-medium mb-2">No sections yet</p>
+                <p className="text-slate-500">Click "Add Section" above to get started building your page</p>
               </div>
             )}
           </>
@@ -403,24 +399,7 @@ function AddSectionButton({ icon: Icon, label, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="
-        flex items-center gap-2
-        px-4 py-2
-        rounded-full
-        text-sm font-medium
-
-        bg-white/20 backdrop-blur-md
-        border border-[1.5px] border-slate-300
-        ring-1 ring-inset ring-white/30
-
-        text-slate-700
-
-        hover:bg-blue-50/70
-        hover:border-blue-300
-        hover:text-blue-700
-
-        transition
-      "
+      className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 text-slate-700 hover:bg-white/90 hover:text-[#7A1F2B] transition-colors duration-200"
     >
       <Icon size={16} />
       {label}
@@ -442,24 +421,17 @@ function SectionCard({ section, dragHandleProps, onDelete, onUpdate, isExpanded,
     return <Icon size={20} />;
   };
 
-  const getSectionColor = (key) => {
-    const colors = {
-      hero: "text-purple-600 bg-purple-50",
-      faq: "text-green-600 bg-green-50",
-      html: "text-blue-600 bg-blue-50",
-      links: "text-orange-600 bg-orange-50",
-      booking: "text-indigo-600 bg-indigo-50",
-    };
-    return colors[key] || "text-gray-600 bg-gray-50";
+  const getSectionColor = () => {
+    return "text-[#7A1F2B] bg-white/70 border border-white/70 ring-1 ring-black/5";
   };
 
   return (
     <div>
       {/* Section Header */}
-      <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-t-lg border-b">
+      <div className="flex items-center gap-3 p-4 bg-white/70 backdrop-blur-xl rounded-t-2xl border-b border-white/70">
         <div
           {...dragHandleProps}
-          className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 transition"
+          className="cursor-grab active:cursor-grabbing text-slate-400 hover:text-slate-600 transition-colors duration-200"
         >
           <GripVertical size={20} />
         </div>
@@ -468,7 +440,7 @@ function SectionCard({ section, dragHandleProps, onDelete, onUpdate, isExpanded,
           {getSectionIcon(section.key)}
         </div>
 
-        <span className="font-semibold text-gray-800 capitalize flex-1">
+        <span className="font-semibold text-slate-800 capitalize flex-1">
           {section.key} Section
         </span>
 
@@ -491,7 +463,7 @@ function SectionCard({ section, dragHandleProps, onDelete, onUpdate, isExpanded,
 
       {/* Section Content */}
       {isExpanded && (
-        <div className="p-6 bg-white">
+        <div className="p-6 bg-white/70 backdrop-blur-xl">
           {section.key === "hero" && (
             <HeroForm content={section.content} onUpdate={onUpdate} pageSlug={pageSlug} />
           )}
@@ -565,29 +537,29 @@ function getDefaultContent(type) {
 // Preview Panel Component
 function PreviewPanel({ sections }) {
   return (
-    <div className="bg-white rounded-lg border overflow-hidden">
-      <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 text-center">
-        <Eye size={24} className="inline-block mr-2" />
-        <span className="font-semibold">Preview Mode</span>
-        <p className="text-sm text-blue-100 mt-1">This is how your data is structured</p>
+    <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/70 ring-1 ring-black/5 overflow-hidden">
+      <div className="bg-white/70 backdrop-blur-xl border-b border-white/70 p-4 text-center">
+        <Eye size={24} className="inline-block mr-2 text-[#7A1F2B]" />
+        <span className="font-semibold text-[#7A1F2B]">Preview Mode</span>
+        <p className="text-sm text-slate-500 mt-1">This is how your data is structured</p>
       </div>
 
       <div className="p-6">
         {sections.map((section, idx) => (
           <div key={idx} className="mb-6 pb-6 border-b last:border-b-0">
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs uppercase font-semibold text-gray-500 bg-gray-100 px-2 py-1 rounded">
+              <span className="text-xs uppercase font-semibold text-slate-500 bg-white/70 border border-white/70 ring-1 ring-black/5 px-2 py-1 rounded">
                 {section.key}
               </span>
             </div>
-            <pre className="bg-gray-50 p-4 rounded-lg text-sm overflow-auto border border-gray-200">
+            <pre className="bg-white/80 p-4 rounded-lg text-sm overflow-auto border border-white/70 ring-1 ring-black/5 text-slate-700">
               {JSON.stringify(section.content, null, 2)}
             </pre>
           </div>
         ))}
 
         {sections.length === 0 && (
-          <div className="text-center text-gray-400 py-12">
+          <div className="text-center text-slate-400 py-12">
             <Code size={48} className="mx-auto mb-4 opacity-50" />
             <p>No sections to preview</p>
           </div>

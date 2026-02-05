@@ -52,26 +52,26 @@ import { ImageNode, $createImageNode } from "./nodes/ImageNode";
 
 // Lexical theme configuration
 const theme = {
-  paragraph: "mb-2",
+  paragraph: "mb-2 text-slate-700",
   heading: {
-    h1: "text-4xl font-bold mb-4 mt-6 font-pt-serif",
-    h2: "text-3xl font-bold mb-3 mt-5 font-montserrat",
-    h3: "text-2xl font-bold mb-2 mt-4",
+    h1: "text-3xl md:text-4xl font-semibold mb-4 mt-6 font-montserrat text-slate-800",
+    h2: "text-2xl md:text-3xl font-semibold mb-3 mt-5 font-montserrat text-slate-800",
+    h3: "text-xl md:text-2xl font-semibold mb-2 mt-4 font-montserrat text-slate-800",
   },
   list: {
     ul: "list-disc ml-6 mb-2",
     ol: "list-decimal ml-6 mb-2",
     listitem: "mb-1",
   },
-  link: "text-blue-600 underline hover:text-blue-800 cursor-pointer",
+  link: "text-[#7A1F2B] underline hover:text-[#5d1620] cursor-pointer",
   text: {
     bold: "font-bold",
     italic: "italic",
     underline: "underline",
     strikethrough: "line-through",
   },
-  quote: "border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4",
-  code: "bg-gray-100 rounded px-1 py-0.5 font-mono text-sm text-red-600",
+  quote: "border-l-4 border-[#7A1F2B]/30 pl-4 italic text-slate-700 my-4",
+  code: "bg-white/80 border border-white/70 rounded px-1 py-0.5 font-mono text-sm text-[#7A1F2B]",
 };
 
 // Bootstrap-style grid templates
@@ -196,10 +196,10 @@ function ToolbarPlugin() {
   };
 
   return (
-    <div className="border-b border-gray-300 p-2 flex flex-wrap gap-1 bg-gray-50 sticky top-0 z-10">
+    <div className="border-b border-white/70 bg-white/70 backdrop-blur-xl p-2 flex flex-wrap gap-1 sticky top-0 z-10 rounded-t-lg">
       <button
         onClick={() => formatText("bold")}
-        className="p-2 hover:bg-gray-200 rounded transition"
+        className="p-2 rounded-lg text-slate-600 hover:text-[#7A1F2B] hover:bg-white/90 transition"
         title="Bold (Ctrl+B)"
         type="button"
       >
@@ -208,7 +208,7 @@ function ToolbarPlugin() {
 
       <button
         onClick={() => formatText("italic")}
-        className="p-2 hover:bg-gray-200 rounded transition"
+        className="p-2 rounded-lg text-slate-600 hover:text-[#7A1F2B] hover:bg-white/90 transition"
         title="Italic (Ctrl+I)"
         type="button"
       >
@@ -217,22 +217,22 @@ function ToolbarPlugin() {
 
       <button
         onClick={() => formatText("underline")}
-        className="p-2 hover:bg-gray-200 rounded transition"
+        className="p-2 rounded-lg text-slate-600 hover:text-[#7A1F2B] hover:bg-white/90 transition"
         title="Underline (Ctrl+U)"
         type="button"
       >
         <Underline size={18} />
       </button>
 
-      <div className="w-px bg-gray-300 mx-1" />
+      <div className="w-px bg-slate-200/70 mx-1" />
 
       {/* ✅ Font Size Selector */}
       <div className="flex items-center gap-1">
-        <Type size={18} className="text-gray-600" />
+        <Type size={18} className="text-slate-500" />
         <select
           value={fontSize}
           onChange={(e) => applyFontSize(e.target.value)}
-          className="text-xs px-2 py-1 border border-gray-300 rounded hover:bg-gray-100 focus:ring-2 focus:ring-blue-500"
+          className="text-xs px-2 py-1 border border-white/70 bg-white/70 rounded hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-slate-200 text-slate-700"
           title="Font Size"
         >
           {FONT_SIZES.map((size) => (
@@ -243,11 +243,11 @@ function ToolbarPlugin() {
         </select>
       </div>
 
-      <div className="w-px bg-gray-300 mx-1" />
+      <div className="w-px bg-slate-200/70 mx-1" />
 
       <button
         onClick={() => insertHeading(1)}
-        className="p-2 hover:bg-gray-200 rounded transition"
+        className="p-2 rounded-lg text-slate-600 hover:text-[#7A1F2B] hover:bg-white/90 transition"
         title="Heading 1"
         type="button"
       >
@@ -256,18 +256,18 @@ function ToolbarPlugin() {
 
       <button
         onClick={() => insertHeading(2)}
-        className="p-2 hover:bg-gray-200 rounded transition"
+        className="p-2 rounded-lg text-slate-600 hover:text-[#7A1F2B] hover:bg-white/90 transition"
         title="Heading 2"
         type="button"
       >
         <Heading2 size={18} />
       </button>
 
-      <div className="w-px bg-gray-300 mx-1" />
+      <div className="w-px bg-slate-200/70 mx-1" />
 
       <button
         onClick={() => formatAlignment("left")}
-        className="p-2 hover:bg-gray-200 rounded transition"
+        className="p-2 rounded-lg text-slate-600 hover:text-[#7A1F2B] hover:bg-white/90 transition"
         title="Align Left"
         type="button"
       >
@@ -276,7 +276,7 @@ function ToolbarPlugin() {
 
       <button
         onClick={() => formatAlignment("center")}
-        className="p-2 hover:bg-gray-200 rounded transition"
+        className="p-2 rounded-lg text-slate-600 hover:text-[#7A1F2B] hover:bg-white/90 transition"
         title="Align Center"
         type="button"
       >
@@ -285,18 +285,18 @@ function ToolbarPlugin() {
 
       <button
         onClick={() => formatAlignment("right")}
-        className="p-2 hover:bg-gray-200 rounded transition"
+        className="p-2 rounded-lg text-slate-600 hover:text-[#7A1F2B] hover:bg-white/90 transition"
         title="Align Right"
         type="button"
       >
         <AlignRight size={18} />
       </button>
 
-      <div className="w-px bg-gray-300 mx-1" />
+      <div className="w-px bg-slate-200/70 mx-1" />
 
       <button
         onClick={insertLink}
-        className="p-2 hover:bg-gray-200 rounded transition"
+        className="p-2 rounded-lg text-slate-600 hover:text-[#7A1F2B] hover:bg-white/90 transition"
         title="Insert Link"
         type="button"
       >
@@ -304,7 +304,7 @@ function ToolbarPlugin() {
       </button>
 
       <label
-        className="p-2 hover:bg-gray-200 rounded cursor-pointer transition"
+        className="p-2 rounded-lg text-slate-600 hover:text-[#7A1F2B] hover:bg-white/90 cursor-pointer transition"
         title="Upload Image"
       >
         <Upload size={18} className={uploading ? "animate-pulse" : ""} />
@@ -318,7 +318,7 @@ function ToolbarPlugin() {
       </label>
 
       {uploading && (
-        <span className="p-2 text-sm text-blue-600 font-medium">
+        <span className="p-2 text-sm text-[#7A1F2B] font-medium">
           📤 Uploading...
         </span>
       )}
@@ -392,15 +392,15 @@ function GridTemplateSelector({ onSelect, currentCols }) {
           <button
             key={template.id}
             onClick={() => onSelect(template.cols)}
-            className={`p-4 border-2 rounded-lg transition-all ${isActive
-              ? "border-purple-600 bg-purple-100 text-purple-800"
-              : "border-gray-300 hover:border-purple-400 hover:bg-purple-50"
+            className={`p-4 border rounded-lg transition-all ring-1 ring-black/5 ${isActive
+              ? "border-[#7A1F2B] bg-[#7A1F2B]/10 text-[#7A1F2B]"
+              : "border-white/70 bg-white/70 text-slate-700 hover:border-[#7A1F2B]/40 hover:bg-white/90"
               }`}
             type="button"
           >
             <div className="text-2xl mb-2">{template.icon}</div>
             <div className="text-xs font-medium">{template.label}</div>
-            <div className="text-xs text-gray-500 mt-1">
+            <div className="text-xs text-slate-500 mt-1">
               {template.cols.join("-")}
             </div>
           </button>
@@ -410,15 +410,15 @@ function GridTemplateSelector({ onSelect, currentCols }) {
       {!showCustom ? (
         <button
           onClick={() => setShowCustom(true)}
-          className="p-4 border-2 border-dashed border-gray-400 rounded-lg hover:border-purple-500 hover:bg-purple-50 transition"
+          className="p-4 border border-dashed border-white/70 rounded-lg bg-white/70 hover:bg-white/90 hover:border-[#7A1F2B]/40 transition ring-1 ring-black/5 text-slate-700"
           type="button"
         >
-          <Grid3x3 size={32} className="mx-auto mb-2 text-gray-500" />
+          <Grid3x3 size={32} className="mx-auto mb-2 text-slate-500" />
           <div className="text-xs font-medium">Custom Grid</div>
         </button>
       ) : (
-        <div className="col-span-2 md:col-span-4 p-4 border-2 border-purple-400 rounded-lg bg-purple-50">
-          <label className="block text-sm font-medium mb-2">
+        <div className="col-span-2 md:col-span-4 p-4 border border-white/70 rounded-lg bg-white/70 ring-1 ring-black/5">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Enter column sizes (comma-separated, max 12 total):
           </label>
           <div className="flex gap-2">
@@ -427,11 +427,11 @@ function GridTemplateSelector({ onSelect, currentCols }) {
               value={customInput}
               onChange={(e) => setCustomInput(e.target.value)}
               placeholder="e.g., 3,6,3 or 2,5,5"
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm"
+              className="flex-1 px-3 py-2 bg-white/70 border border-white/70 ring-1 ring-black/5 rounded-lg text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
             />
             <button
               onClick={handleCustomSubmit}
-              className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 text-sm"
+              className="px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-br from-white/95 to-slate-50/80 backdrop-blur-xl border border-[#7A1F2B] text-[#7A1F2B] ring-1 ring-black/5 hover:bg-white/90"
               type="button"
             >
               Apply
@@ -441,13 +441,13 @@ function GridTemplateSelector({ onSelect, currentCols }) {
                 setShowCustom(false);
                 setCustomInput("");
               }}
-              className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 text-sm"
+              className="px-4 py-2 rounded-full text-sm bg-white/70 border border-white/70 text-slate-700 ring-1 ring-black/5 hover:bg-white/90"
               type="button"
             >
               Cancel
             </button>
           </div>
-          <p className="text-xs text-gray-600 mt-2">
+          <p className="text-xs text-slate-500 mt-2">
             💡 Example: "3,6,3" creates 1/4 + 1/2 + 1/4 layout
           </p>
         </div>
@@ -554,17 +554,17 @@ export default function HtmlForm({ content, onUpdate }) {
       </div> */}
 
       {/* Grid Template Selector */}
-      <div className="bg-white p-6 rounded-lg border-2 border-purple-200 shadow-sm">
+      <div className="bg-white/70 backdrop-blur-xl p-6 rounded-2xl border border-white/70 ring-1 ring-black/5">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h4 className="font-semibold text-lg text-gray-800 flex items-center gap-2">
-              <Grid3x3 size={20} />
+            <h4 className="font-semibold text-lg text-slate-800 flex items-center gap-2">
+              <Grid3x3 size={20} className="text-[#7A1F2B]" />
               Choose Grid Layout
             </h4>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-sm text-slate-600 mt-1">
               Current: {totalCols}/12 columns used
               {totalCols > 12 && (
-                <span className="text-red-600 font-semibold ml-2">
+                <span className="text-rose-600 font-semibold ml-2">
                   ⚠️ Exceeds 12!
                 </span>
               )}
@@ -572,7 +572,7 @@ export default function HtmlForm({ content, onUpdate }) {
           </div>
           <button
             onClick={addColumn}
-            className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-br from-white/95 to-slate-50/80 backdrop-blur-xl border border-[#7A1F2B] text-[#7A1F2B] ring-1 ring-black/5 hover:bg-white/90 disabled:opacity-60 disabled:cursor-not-allowed"
             type="button"
             disabled={totalCols >= 12}
           >
@@ -588,14 +588,14 @@ export default function HtmlForm({ content, onUpdate }) {
       </div>
 
       {/* Style Settings */}
-      <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-        <h4 className="font-semibold text-sm text-gray-700 mb-4">
+      <div className="bg-white/70 backdrop-blur-xl p-4 rounded-2xl border border-white/70 ring-1 ring-black/5">
+        <h4 className="font-semibold text-sm text-[#7A1F2B] mb-4">
           📐 Section Style
         </h4>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-1">
               Background Color
             </label>
             <div className="flex items-center gap-2">
@@ -605,7 +605,7 @@ export default function HtmlForm({ content, onUpdate }) {
                 onChange={(e) =>
                   onUpdate("style.backgroundColor", e.target.value)
                 }
-                className="h-10 w-16 border border-gray-300 rounded cursor-pointer"
+                className="h-10 w-16 border border-white/70 ring-1 ring-black/5 rounded cursor-pointer bg-white/70"
               />
               <input
                 type="text"
@@ -613,20 +613,20 @@ export default function HtmlForm({ content, onUpdate }) {
                 onChange={(e) =>
                   onUpdate("style.backgroundColor", e.target.value)
                 }
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm font-mono"
+                className="flex-1 px-3 py-2 bg-white/70 border border-white/70 ring-1 ring-black/5 rounded-lg text-sm font-mono text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
                 placeholder="#ffffff"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-1">
               Padding (Top/Bottom)
             </label>
             <select
               value={content.style?.padding || "py-12"}
               onChange={(e) => onUpdate("style.padding", e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+              className="w-full px-3 py-2 bg-white/70 border border-white/70 ring-1 ring-black/5 rounded-lg text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-200"
             >
               <option value="py-4">Extra Small (16px)</option>
               <option value="py-6">Small (24px)</option>
@@ -638,13 +638,13 @@ export default function HtmlForm({ content, onUpdate }) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-1">
               Column Gap
             </label>
             <select
               value={content.columnGap || "gap-6"}
               onChange={(e) => onUpdate("columnGap", e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+              className="w-full px-3 py-2 bg-white/70 border border-white/70 ring-1 ring-black/5 rounded-lg text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-200"
             >
               <option value="gap-2">Small (8px)</option>
               <option value="gap-4">Medium (16px)</option>
@@ -657,7 +657,7 @@ export default function HtmlForm({ content, onUpdate }) {
 
       {/* Column Editors */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-3">
+        <label className="block text-sm font-medium text-slate-700 mb-3">
           📝 Column Content Editors
         </label>
 
@@ -683,13 +683,13 @@ export default function HtmlForm({ content, onUpdate }) {
             return (
               <div
                 key={column.id}
-                className={`${getColClass(column.colSize)} border-2 ${totalCols > 12 ? "border-red-400" : "border-gray-300"
-                  } border-dashed rounded-lg p-3 bg-white`}
+                className={`${getColClass(column.colSize)} border-2 ${totalCols > 12 ? "border-rose-300" : "border-white/70"
+                  } border-dashed rounded-2xl p-4 bg-white/70 backdrop-blur-xl ring-1 ring-black/5`}
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <Move size={16} className="text-gray-400 cursor-move" />
-                    <h5 className="text-sm font-semibold text-gray-700">
+                    <Move size={16} className="text-slate-400 cursor-move" />
+                    <h5 className="text-sm font-semibold text-slate-700">
                       Column {index + 1}
                     </h5>
                   </div>
@@ -697,7 +697,7 @@ export default function HtmlForm({ content, onUpdate }) {
                     <select
                       value={column.colSize || 12}
                       onChange={(e) => updateColumnSize(index, e.target.value)}
-                      className="text-xs px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500"
+                      className="text-xs px-2 py-1 border border-white/70 bg-white/70 rounded focus:outline-none focus:ring-2 focus:ring-slate-200 text-slate-700"
                       title="Column size (out of 12)"
                     >
                       {[...Array(12)].map((_, i) => (
@@ -709,7 +709,7 @@ export default function HtmlForm({ content, onUpdate }) {
                     {columns.length > 1 && (
                       <button
                         onClick={() => removeColumn(index)}
-                        className="p-1 text-red-600 hover:bg-red-50 rounded transition"
+                        className="p-2 rounded-full bg-white/70 border border-white/70 text-red-600 hover:bg-white/90 transition"
                         title="Remove column"
                         type="button"
                       >
@@ -719,16 +719,16 @@ export default function HtmlForm({ content, onUpdate }) {
                   </div>
                 </div>
 
-                <div className="border border-gray-300 rounded-lg overflow-hidden bg-white shadow-sm">
+                <div className="border border-white/70 ring-1 ring-black/5 rounded-xl overflow-hidden bg-white/70">
                   <LexicalComposer initialConfig={editorConfig}>
                     <ToolbarPlugin />
                     <div className="relative">
                       <RichTextPlugin
                         contentEditable={
-                          <ContentEditable className="min-h-[200px] max-h-[400px] overflow-y-auto p-3 outline-none focus:ring-2 focus:ring-purple-500 focus:ring-inset text-sm" />
+                          <ContentEditable className="min-h-[200px] max-h-[400px] overflow-y-auto p-3 outline-none focus:ring-2 focus:ring-slate-200 focus:ring-inset text-sm text-slate-700" />
                         }
                         placeholder={
-                          <div className="absolute top-3 left-3 text-gray-400 pointer-events-none text-sm">
+                          <div className="absolute top-3 left-3 text-slate-400 pointer-events-none text-sm">
                             Column {index + 1} content...
                           </div>
                         }

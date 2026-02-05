@@ -6,26 +6,15 @@ import { Plus } from "lucide-react";
 
 const SYSTEM_PAGES = ["home", "header", "footer"];
 
-/* ================= STATUS PILL (NO SHADOW) ================= */
-function statusPill(status) {
-    const base =
-        "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold " +
-        "border backdrop-blur-sm tracking-wide";
-
-    if (status === "published") {
-        return `${base} bg-emerald-50/70 text-emerald-800 border-emerald-300`;
-    }
-
-    return `${base} bg-amber-50/70 text-amber-800 border-amber-300`;
-}
-
-/* ================= ACTION BUTTON BASE (FLAT) ================= */
+/* ================= ACTION BUTTON BASE (GLASS) ================= */
 const actionBtnBase =
     "px-3 py-1 rounded-full text-xs font-medium " +
-    "border backdrop-blur-sm transition";
+    "bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 shadow-sm " +
+    "hover:bg-white/90 transition-colors duration-200 ";
 
 export default function CmsList() {
     const [pages, setPages] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -128,128 +117,234 @@ export default function CmsList() {
     if (!sortedPages.length) {
         return (
             <div className="flex flex-col items-center justify-center py-12 text-slate-500">
-                <p className="mb-4 text-lg">No CMS pages yet.</p>
+                <p className="mb-4 text-lg font-medium">No CMS pages yet.</p>
                 <button
                     onClick={() => navigate("/dashboard/cms/new")}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition"
+                    className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-br from-white/95 to-slate-50/80 backdrop-blur-xl border border-[#7A1F2B] ring-1 ring-black/5 text-[#7A1F2B] font-semibold shadow-[0_12px_20px_-16px_rgba(15,23,42,0.45)] hover:shadow-[0_14px_22px_-16px_rgba(15,23,42,0.5)] transition-colors duration-200"
                 >
                     <Plus className="w-4 h-4" />
-                    Create one ✨
+                    Create one
                 </button>
             </div>
         );
     }
 
+    const query = searchTerm.trim().toLowerCase();
+    const filteredPages = sortedPages.filter((p) => {
+        if (!query) return true;
+        return [p.slug, p.title, p.name]
+            .filter(Boolean)
+            .some((value) => value.toLowerCase().includes(query));
+    });
+
     return (
         <div className="overflow-hidden backdrop-blur">
-            <div className="mb-4 flex justify-end">
-                <button
-                    onClick={() => navigate("/dashboard/cms/new")}
-                    className="flex items-center gap-2 px-4 py-2 text-white rounded-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400 transition shadow-sm text-sm font-medium"
-                >
-                    <Plus className="w-4 h-4" />
-                    New Event Page
-                </button>
+            <div className="mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                <div className="w-full md:w-auto">
+                    <input
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        placeholder="Search events..."
+                        className="w-full sm:w-64 bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-full px-4 py-2 text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
+                    />
+                </div>
+                <div className="w-full md:w-auto flex md:justify-end">
+                    <button
+                        onClick={() => navigate("/dashboard/cms/new")}
+                        className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-br from-white/95 to-slate-50/80 backdrop-blur-xl border-1 border-[#7A1F2B] ring-1 ring-black/5 text-[#7A1F2B] font-semibold shadow-[0_12px_20px_-16px_rgba(15,23,42,0.45)] hover:shadow-[0_14px_22px_-16px_rgba(15,23,42,0.5)] transition-colors duration-200 text-sm"
+                    >
+                        <Plus className="w-4 h-4" />
+                        New Event Page
+                    </button>
+                </div>
             </div>
 
-            <table className="w-full text-sm">
-                <thead className="bg-white/70 border-b border-slate-200/70">
-                    <tr>
-                        <th className="p-3 text-left">Links</th>
-                        <th className="p-3 text-center">Status</th>
-                        <th className="p-3 text-center">Updated</th>
-                        <th className="p-3 text-center">Actions</th>
-                    </tr>
-                </thead>
+            <div className="hidden md:block overflow-x-auto">
+                <table className="w-full table-auto border-collapse text-sm">
+                    <thead>
+                        <tr className="bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 text-slate-500 uppercase text-xs font-semibold border border-white/70">
+                            <th className="px-6 py-3 text-left">#</th>
+                            <th className="px-6 py-3 text-left">Links</th>
+                            <th className="px-6 py-3 text-center">Status</th>
+                            <th className="px-6 py-3 text-center">Updated</th>
+                            <th className="px-6 py-3 text-center">Actions</th>
+                        </tr>
+                    </thead>
 
-                <tbody>
-                    {sortedPages.map((p) => {
+                    <tbody>
+                        {filteredPages.length > 0 ? filteredPages.map((p, index) => {
+                            const isSystem = SYSTEM_PAGES.includes(p.slug);
+                            const isPublished = !p.suspended;
+
+                            return (
+                                <tr
+                                    key={p._id}
+                                    className="border-b hover:bg-white/70 transition-colors duration-200"
+                                >
+                                    {/* SLUG */}
+                                    <td className="px-6 py-4 text-sm">{index + 1}</td>
+                                    <td className="px-6 py-4 font-mono text-slate-700">
+                                        {p.slug}
+                                        {isSystem && (
+                                            <span className="ml-2 text-[10px] text-[#7A1F2B] font-semibold">
+                                                (system)
+                                            </span>
+                                        )}
+                                    </td>
+
+                                    {/* STATUS */}
+                                    <td className="px-6 py-4 text-center">
+                                        <span
+                                            className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm border border-[1.5px]
+                                            ${isPublished
+                                                    ? "bg-emerald-50/80 text-emerald-800 border-emerald-300"
+                                                    : "bg-amber-50/80 text-amber-800 border-amber-300"
+                                                }`}>
+
+                                            <span
+                                                className={`h-2 w-2 rounded-full ${isPublished
+                                                    ? "bg-emerald-600"
+                                                    : "bg-amber-600"
+                                                    }`}
+                                            />
+
+                                            {/* LABEL */}
+                                            {isPublished ? "Published" : "Unpublished"}
+                                        </span>
+                                    </td>
+
+
+
+                                    {/* UPDATED */}
+                                    <td className="px-6 py-4 text-center text-slate-600">
+                                        {new Date(p.updatedAt).toLocaleDateString()}
+                                    </td>
+
+                                    {/* ACTIONS */}
+                                    <td className="px-6 py-4 flex gap-2 justify-center flex-wrap">
+                                        {/* EDIT */}
+                                        <button
+                                            onClick={() => navigate(`/dashboard/cms/edit/${p.slug}`)}
+                                            className={`${actionBtnBase} text-blue-700`}
+                                        >
+                                            Edit
+                                        </button>
+
+                                        {/* PUBLISH / UNPUBLISH */}
+                                        <button
+                                            onClick={() => toggleStatus(p)}
+                                            disabled={isSystem}
+                                            className={`${actionBtnBase} ${isSystem
+                                                ? "opacity-40 cursor-not-allowed bg-white/60 border-white/60"
+                                                : isPublished
+                                                    ? "text-amber-700"
+                                                    : "text-emerald-700"
+                                                }`}
+                                        >
+                                            {isPublished ? "Unpublish" : "Publish"}
+                                        </button>
+
+                                        {/* DELETE */}
+                                        <button
+                                            onClick={() => deletePage(p)}
+                                            disabled={isSystem}
+                                            className={`${actionBtnBase} ${isSystem
+                                                ? "opacity-40 cursor-not-allowed bg-white/60 border-white/60"
+                                                : "text-red-600"
+                                                }`}
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            );
+                        }) : (
+                            <tr>
+                                <td colSpan="5" className="text-center py-6 text-slate-500">
+                                    No matching pages found.
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+
+            <div className="md:hidden space-y-4">
+                {filteredPages.length > 0 ? (
+                    filteredPages.map((p, index) => {
                         const isSystem = SYSTEM_PAGES.includes(p.slug);
                         const isPublished = !p.suspended;
 
                         return (
-                            <tr
+                            <div
                                 key={p._id}
-                                className="border-t border-slate-200/60 hover:bg-white/50 transition"
+                                className="bg-white/70 backdrop-blur-xl p-4 rounded-2xl border border-white/70 ring-1 ring-black/5 shadow-sm flex flex-col space-y-3"
                             >
-                                {/* SLUG */}
-                                <td className="p-3 font-mono text-slate-700">
-                                    {p.slug}
+                                <div className="font-semibold text-sm text-slate-800">
+                                    {index + 1}. {p.slug}
                                     {isSystem && (
-                                        <span className="ml-2 text-[10px] text-indigo-600 font-semibold">
+                                        <span className="ml-2 text-[10px] text-[#7A1F2B] font-semibold">
                                             (system)
                                         </span>
                                     )}
-                                </td>
-
-                                {/* STATUS */}
-                                <td className="p-3 text-center">
+                                </div>
+                                <div className="text-sm text-slate-600">
+                                    Updated: {new Date(p.updatedAt).toLocaleDateString()}
+                                </div>
+                                <div>
                                     <span
-                                        className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm border border-[1.5px]
+                                        className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm border
                                             ${isPublished
-                                                ? "bg-emerald-50/80 text-emerald-800 border-emerald-300"
-                                                : "bg-amber-50/80 text-amber-800 border-amber-300"
-                                            }`}>
-
+                                                ? "bg-emerald-50/70 text-emerald-800 border-emerald-300"
+                                                : "bg-amber-50/70 text-amber-800 border-amber-300"
+                                            }`}
+                                    >
                                         <span
                                             className={`h-2 w-2 rounded-full ${isPublished
                                                 ? "bg-emerald-600"
                                                 : "bg-amber-600"
                                                 }`}
                                         />
-
-                                        {/* LABEL */}
                                         {isPublished ? "Published" : "Unpublished"}
                                     </span>
-                                </td>
-
-
-
-                                {/* UPDATED */}
-                                <td className="p-3 text-center text-slate-600">
-                                    {new Date(p.updatedAt).toLocaleDateString()}
-                                </td>
-
-                                {/* ACTIONS */}
-                                <td className="p-3 flex gap-2 justify-center flex-wrap">
-                                    {/* EDIT */}
+                                </div>
+                                <div className="flex flex-wrap gap-2">
                                     <button
                                         onClick={() => navigate(`/dashboard/cms/edit/${p.slug}`)}
-                                        className={`${actionBtnBase}bg-blue-50/70 text-blue-700 border-blue-300 hover:bg-blue-100`}>
+                                        className={`${actionBtnBase} text-blue-700`}
+                                    >
                                         Edit
                                     </button>
-
-                                    {/* PUBLISH / UNPUBLISH */}
                                     <button
                                         onClick={() => toggleStatus(p)}
                                         disabled={isSystem}
                                         className={`${actionBtnBase} ${isSystem
-                                            ? "opacity-40 cursor-not-allowed bg-slate-200 border-slate-300"
+                                            ? "opacity-40 cursor-not-allowed bg-white/60 border-white/60"
                                             : isPublished
-                                                ? "bg-amber-50/70 text-amber-800 border-amber-300 hover:bg-amber-100"
-                                                : "bg-emerald-50/70 text-emerald-800 border-emerald-300 hover:bg-emerald-100"
+                                                ? "text-amber-700"
+                                                : "text-emerald-700"
                                             }`}
                                     >
                                         {isPublished ? "Unpublish" : "Publish"}
                                     </button>
-
-                                    {/* DELETE */}
                                     <button
                                         onClick={() => deletePage(p)}
                                         disabled={isSystem}
                                         className={`${actionBtnBase} ${isSystem
-                                            ? "opacity-40 cursor-not-allowed bg-slate-200 border-slate-300"
-                                            : "bg-rose-50/70 text-rose-800 border-rose-300 hover:bg-rose-100"
+                                            ? "opacity-40 cursor-not-allowed bg-white/60 border-white/60"
+                                            : "text-red-600"
                                             }`}
                                     >
                                         Delete
                                     </button>
-                                </td>
-                            </tr>
+                                </div>
+                            </div>
                         );
-                    })}
-                </tbody>
-            </table>
+                    })
+                ) : (
+                    <div className="text-center py-6 text-slate-500">No matching pages found.</div>
+                )}
+            </div>
         </div>
     );
 }

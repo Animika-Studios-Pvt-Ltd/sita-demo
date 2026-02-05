@@ -690,7 +690,7 @@ const ManageBooks = () => {
                                 <div className="hidden md:block overflow-x-auto">
                                     <table className="w-full table-auto border-collapse">
                                         <thead>
-                                            <tr className="bg-white/70 text-slate-500 uppercase text-xs font-semibold border border-white/70">
+                                            <tr className="bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 text-slate-500 uppercase text-xs font-semibold border border-white/70">
                                                 <th className="px-6 py-3 text-left">#</th>
                                                 <th className="px-6 py-3 text-left">Book Title</th>
                                                 <th className="px-6 py-3 text-center align-middle">Price</th>

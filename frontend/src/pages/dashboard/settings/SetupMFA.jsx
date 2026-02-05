@@ -2,11 +2,32 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+/* ================= UI THEME ================= */
+const glassPanel =
+  'bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-2xl';
+const glassCard = `${glassPanel} p-6 md:p-8`;
+const glassInput =
+  'w-full px-4 py-3 rounded-lg bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 ' +
+  'text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80';
+const glassBtnPrimary =
+  'inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full text-sm font-semibold ' +
+  'bg-[#7A1F2B] text-white hover:bg-[#651823] transition-colors';
+const glassBtnMuted =
+  'inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full text-sm font-semibold ' +
+  'bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 text-slate-600 ' +
+  'hover:bg-white/90 transition-colors';
+const glassBtnDanger =
+  'inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full text-sm font-semibold ' +
+  'bg-rose-600 text-white hover:bg-rose-700 transition-colors';
+const alertBase =
+  'rounded-xl p-4 border ring-1 ring-black/5 bg-white/70 backdrop-blur-xl';
+
 const SetupMFA = () => {
   const [qrCode, setQrCode] = useState('');
   const [secret, setSecret] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
   const [message, setMessage] = useState('');
+  const [messageTone, setMessageTone] = useState('');
   const [step, setStep] = useState(1);
   const [mfaEnabled, setMfaEnabled] = useState(false);
   const [userId, setUserId] = useState('');
@@ -50,7 +71,12 @@ const SetupMFA = () => {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/admin-auth/setup-mfa`,
         { userId },
-        { headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}`, 'Content-Type': 'application/json' } }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
+            'Content-Type': 'application/json',
+          },
+        }
       );
 
       setQrCode(response.data.qrCode);
@@ -59,89 +85,124 @@ const SetupMFA = () => {
 
       if (response.data.alreadySetup) {
         if (response.data.mfaEnabled) {
-          setMessage('⚠️ MFA is already enabled. Scan this QR code if you need to set it up on a new device.');
+          setMessage('MFA is already enabled. Scan this QR code if you need to set it up on a new device.');
+          setMessageTone('warning');
           setMfaEnabled(true);
         } else {
-          setMessage('⚠️ MFA setup in progress. Complete verification to enable MFA.');
+          setMessage('MFA setup is in progress. Complete verification to enable MFA.');
+          setMessageTone('warning');
         }
       } else {
         setMessage('');
+        setMessageTone('');
       }
     } catch (error) {
-      console.error('❌ Full error object:', error);
-      console.error('❌ Error response:', error.response?.data);
+      console.error('Error setting up MFA:', error);
+      console.error('Error response:', error.response?.data);
       setMessage('Failed to setup MFA. Please try again.');
+      setMessageTone('error');
     }
   };
-
   const handleVerifyMFA = async () => {
     try {
-      const response = await axios.post(
+      await axios.post(
         `${import.meta.env.VITE_API_URL}/api/admin-auth/verify-mfa-setup`,
         { userId, token: verificationCode },
-        { headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}`, 'Content-Type': 'application/json' } }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
+            'Content-Type': 'application/json',
+          },
+        }
       );
 
-      setMessage('✅ MFA enabled successfully! Your account is now more secure. This QR code is permanent - save it securely.');
+      setMessage('MFA enabled successfully! Your account is now more secure. This QR code is permanent - save it securely.');
+      setMessageTone('success');
       setMfaEnabled(true);
       setStep(1);
       setQrCode('');
       setSecret('');
       setVerificationCode('');
     } catch (error) {
-      setMessage('❌ Invalid verification code. Please try again.');
+      setMessage('Invalid verification code. Please try again.');
+      setMessageTone('error');
       console.error('MFA verification error:', error);
     }
   };
-
   const handleDisableMFA = async () => {
-    if (!window.confirm('Are you sure you want to disable MFA? This will make your account less secure and DELETE your MFA secret.')) return;
+    if (!window.confirm('Are you sure you want to disable MFA? This will make your account less secure and delete your MFA secret.')) return;
 
     try {
       await axios.post(
         `${import.meta.env.VITE_API_URL}/api/admin-auth/disable-mfa`,
         { userId },
-        { headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}`, 'Content-Type': 'application/json' } }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
+            'Content-Type': 'application/json',
+          },
+        }
       );
 
-      setMessage('MFA disabled successfully. You will need to set up a NEW QR code if you enable it again.');
+      setMessage('MFA disabled successfully. You will need to set up a new QR code if you enable it again.');
+      setMessageTone('warning');
       setMfaEnabled(false);
     } catch (error) {
       setMessage('Failed to disable MFA.');
+      setMessageTone('error');
       console.error('MFA disable error:', error);
     }
   };
+  const messageToneClass =
+    messageTone === 'success'
+      ? 'border-emerald-200/70 text-emerald-700 bg-emerald-50/40'
+      : messageTone === 'warning'
+        ? 'border-amber-200/70 text-amber-800 bg-amber-50/40'
+        : messageTone === 'info'
+          ? 'border-sky-200/70 text-sky-700 bg-sky-50/40'
+          : 'border-rose-200/70 text-rose-700 bg-rose-50/40';
 
   if (loading) {
     return (
-      <div className="container mt-[100px] text-center">
-        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-        <p className="text-gray-600 text-lg">Loading MFA settings...</p>
+      <div className="max-w-7xl mx-auto p-4 pt-0 mt-10 font-montserrat text-slate-700">
+        <div className={`${glassPanel} p-8 text-center`}>
+          <div className="inline-flex h-12 w-12 rounded-full border-2 border-slate-200 border-t-[#7A1F2B] animate-spin mb-4"></div>
+          <p className="text-slate-600 text-sm">Loading MFA settings...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="container mt-[100px]">
-      <div className="max-w-8xl mx-auto bg-white p-6 md:p-8 rounded-lg shadow-md">
+    <div className="max-w-7xl mx-auto p-4 pt-0 mt-10 font-montserrat text-slate-700">
+      <div className={glassCard}>
         <div className="mb-6 text-center">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
+          <h1 className="text-2xl md:text-3xl font-semibold text-[#7A1F2B] mb-2">
             Two-Factor Authentication
           </h1>
-          <p className="text-gray-600 text-sm md:text-base">
+          <p className="text-slate-500 text-sm md:text-base">
             Add an extra layer of security to your admin account with MFA.
           </p>
         </div>
 
-        <div className={`mb-6 p-4 rounded-lg ${mfaEnabled ? 'bg-green-50 border border-green-200' : 'bg-yellow-50 border border-yellow-200'}`}>
-          <div className="flex items-center">
-            <span className="text-2xl mr-3">{mfaEnabled ? '🔒' : '⚠️'}</span>
+        <div
+          className={`${alertBase} mb-6 ${mfaEnabled
+            ? 'border-emerald-200/70 bg-emerald-50/40 text-emerald-800'
+            : 'border-amber-200/70 bg-amber-50/40 text-amber-800'
+            }`}
+        >
+          <div className="flex items-start gap-3">
+            <span
+              className={`mt-1 inline-flex h-2.5 w-2.5 rounded-full ${mfaEnabled ? 'bg-emerald-500' : 'bg-amber-500'}`}
+            ></span>
             <div>
               <p className="font-semibold">
                 {mfaEnabled ? 'MFA is Enabled' : 'MFA is Disabled'}
               </p>
-              <p className="text-sm text-gray-600">
-                {mfaEnabled ? 'Your account is protected with two-factor authentication' : 'Your account is not using two-factor authentication'}
+              <p className="text-sm text-slate-600">
+                {mfaEnabled
+                  ? 'Your account is protected with two-factor authentication.'
+                  : 'Your account is not using two-factor authentication.'}
               </p>
             </div>
           </div>
@@ -150,18 +211,15 @@ const SetupMFA = () => {
         {/* Step 1 */}
         {step === 1 && !mfaEnabled && (
           <div>
-            <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <h3 className="font-semibold text-blue-900 mb-2">What is MFA?</h3>
-              <p className="text-sm text-blue-800">
-                Multi-Factor Authentication adds an extra security step when logging in.
+            <div className={`${alertBase} mb-6 border-[#7A1F2B]/20 bg-[#7A1F2B]/5`}>
+              <h3 className="font-semibold text-[#7A1F2B] mb-2">What is MFA?</h3>
+              <p className="text-sm text-slate-600">
+                Multi-factor authentication adds an extra security step when logging in.
                 You'll need both your password and a code from your phone.
               </p>
             </div>
             <div className="flex justify-center">
-              <button
-                onClick={handleSetupMFA}
-                className="w-auto text-white py-3 px-4 rounded-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-800 hover:to-blue-600 transition-colors font-regular"
-              >
+              <button onClick={handleSetupMFA} className={glassBtnPrimary}>
                 Enable Two-Factor Authentication
               </button>
             </div>
@@ -172,35 +230,36 @@ const SetupMFA = () => {
         {step === 2 && (
           <div>
             <div className="mb-6">
-              <h3 className="font-semibold text-lg mb-4">Step 1: Scan QR Code</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="font-semibold text-lg mb-4 text-slate-700">Step 1: Scan QR Code</h3>
+              <p className="text-slate-600 mb-4">
                 Open Google Authenticator, Microsoft Authenticator, or any TOTP app and scan this QR code:
               </p>
               {qrCode && (
                 <div className="flex justify-center mb-4">
-                  <div className="border-2 border-gray-300 p-4 rounded-lg">
+                  <div className={`${glassPanel} p-4`}>
                     <img src={qrCode} alt="QR Code" className="w-64 h-64" />
                   </div>
                 </div>
               )}
 
-              <div className="bg-gray-50 border border-gray-300 rounded-lg p-4">
-                <p className="text-sm text-gray-600 mb-2">Can't scan? Enter this code manually:</p>
-                <code className="bg-white px-3 py-2 rounded border border-gray-300 text-sm font-mono block break-all">
+              <div className={`${alertBase} border-white/70`}>
+                <p className="text-sm text-slate-600 mb-2">Can't scan? Enter this code manually:</p>
+                <code className="bg-white/80 px-3 py-2 rounded border border-white/70 ring-1 ring-black/5 text-sm block break-all text-slate-700">
                   {secret}
                 </code>
               </div>
 
-              <div className="mt-4 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                <p className="text-sm text-yellow-800">
-                  ⚠️ <strong>Important:</strong> This QR code is permanent. Save a screenshot or the secret key securely. You'll use the same code even if you set up MFA on multiple devices.
+              <div className={`${alertBase} mt-4 border-amber-200/70 bg-amber-50/40 text-amber-800`}>
+                <p className="text-sm">
+                  <strong>Important:</strong> This QR code is permanent. Save a screenshot or the secret key securely.
+                  You'll use the same code even if you set up MFA on multiple devices.
                 </p>
               </div>
             </div>
 
             <div className="mb-6">
-              <h3 className="font-semibold text-lg mb-4">Step 2: Enter Verification Code</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="font-semibold text-lg mb-4 text-slate-700">Step 2: Enter Verification Code</h3>
+              <p className="text-slate-600 mb-4">
                 Enter the 6-digit code from your authenticator app:
               </p>
               <input
@@ -209,11 +268,11 @@ const SetupMFA = () => {
                 placeholder="000000"
                 value={verificationCode}
                 onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-center text-2xl tracking-widest focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`${glassInput} text-center text-sm tracking-[0.2em]`}
               />
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={() => {
                   setStep(1);
@@ -221,15 +280,16 @@ const SetupMFA = () => {
                   setSecret('');
                   setVerificationCode('');
                   setMessage('');
+                  setMessageTone('');
                 }}
-                className="flex-1 bg-gray-200 text-gray-700 py-3 px-4 rounded-full hover:bg-gray-300 transition-colors font-semibold"
+                className={`${glassBtnMuted} flex-1`}
               >
                 Cancel
               </button>
               <button
                 onClick={handleVerifyMFA}
                 disabled={verificationCode.length !== 6}
-                className="flex-1 bg-green-600 text-white py-3 px-4 rounded-full hover:bg-green-700 transition-colors font-semibold disabled:bg-gray-300 disabled:cursor-not-allowed"
+                className={`${glassBtnPrimary} flex-1 ${verificationCode.length !== 6 ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 Verify & Enable
               </button>
@@ -240,20 +300,17 @@ const SetupMFA = () => {
         {/* Enabled MFA */}
         {mfaEnabled && (
           <div>
-            <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4">
-              <p className="text-green-800 mb-2">
-                ✅ Your account is protected with two-factor authentication.
-                You'll need to enter a code from your authenticator app each time you log in.
+            <div className={`${alertBase} mb-6 border-emerald-200/70 bg-emerald-50/40 text-emerald-800`}>
+              <p className="mb-2">
+                Your account is protected with two-factor authentication. You'll need to enter a code from your
+                authenticator app each time you log in.
               </p>
-              <p className="text-green-700 text-sm">
+              <p className="text-sm text-emerald-700">
                 Your MFA secret is permanent. You can use the same QR code on multiple devices.
               </p>
             </div>
 
-            <button
-              onClick={handleDisableMFA}
-              className="w-full bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors font-semibold"
-            >
+            <button onClick={handleDisableMFA} className={`${glassBtnDanger} w-full`}>
               Disable Two-Factor Authentication
             </button>
           </div>
@@ -261,24 +318,19 @@ const SetupMFA = () => {
 
         {/* Message */}
         {message && (
-          <div className={`mt-6 p-4 rounded-lg ${message.includes('success') || message.includes('✅')
-              ? 'bg-green-50 border border-green-200 text-green-800'
-              : message.includes('⚠️')
-                ? 'bg-yellow-50 border border-yellow-200 text-yellow-800'
-                : 'bg-red-50 border border-red-200 text-red-800'
-            }`}>
+          <div className={`${alertBase} mt-6 ${messageToneClass}`}>
             {message}
           </div>
         )}
 
-        <div className="mt-6 bg-white rounded-lg shadow-md p-6">
-          <h3 className="font-semibold text-lg mb-3">Need Help?</h3>
-          <ul className="space-y-2 text-sm text-gray-600">
-            <li>• Download Google Authenticator (iOS/Android) or Microsoft Authenticator</li>
-            <li>• Make sure your phone's time is set to automatic</li>
-            <li>• Your MFA secret never changes - it's permanent for your account</li>
-            <li>• You can use the same QR code on multiple devices</li>
-            <li>• Contact support if you lose access to your authenticator app</li>
+        <div className={`${glassPanel} mt-6 p-6`}>
+          <h3 className="font-semibold text-lg mb-3 text-[#7A1F2B]">Need Help?</h3>
+          <ul className="list-disc pl-5 space-y-2 text-sm text-slate-600">
+            <li>Download Google Authenticator (iOS/Android) or Microsoft Authenticator.</li>
+            <li>Make sure your phone's time is set to automatic.</li>
+            <li>Your MFA secret never changes - it's permanent for your account.</li>
+            <li>You can use the same QR code on multiple devices.</li>
+            <li>Contact support if you lose access to your authenticator app.</li>
           </ul>
         </div>
       </div>

@@ -34,20 +34,24 @@ const BookingForm = ({ content, onUpdate, pageSlug }) => {
     const matchingEvent = events.find(e => e.bookingUrl === pageSlug);
     const displayedEvents = matchingEvent ? [matchingEvent] : events;
 
-    if (loading) return <div className="text-sm text-gray-500">Loading events...</div>;
+    if (loading) {
+        return <div className="text-sm text-slate-500">Loading events...</div>;
+    }
 
     return (
-        <div className="space-y-4">
-            <h3 className="font-medium text-gray-900 border-b pb-2">Booking Button Configuration</h3>
+        <div className="bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-2xl p-6 space-y-5">
+            <h3 className="text-lg font-semibold text-[#7A1F2B] border-b border-white/70 pb-2">
+                Booking Button Configuration
+            </h3>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-slate-700 mb-1">
                     {matchingEvent ? "Linked Event" : "Select Event"}
                 </label>
                 <select
                     value={content.eventId || ""}
                     onChange={(e) => onUpdate("eventId", e.target.value)}
-                    className="w-full border p-2 rounded focus:ring-2 focus:ring-indigo-400 outline-none bg-white"
+                    className="w-full px-4 py-2 rounded-lg bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80 text-sm disabled:opacity-70"
                     disabled={!!matchingEvent} // Disable if auto-matched to prevent changing
                 >
                     <option value="">-- Choose an Event --</option>
@@ -58,32 +62,33 @@ const BookingForm = ({ content, onUpdate, pageSlug }) => {
                     ))}
                 </select>
                 {matchingEvent && (
-                    <p className="text-xs text-green-600 mt-1">
+                    <p className="text-xs text-emerald-700 mt-1">
                         ✓ Automatically linked to this page's event.
                     </p>
                 )}
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Button Text</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Button Text</label>
                 <input
                     type="text"
                     value={content.buttonText || "Book Now"}
                     onChange={(e) => onUpdate("buttonText", e.target.value)}
-                    className="w-full border p-2 rounded focus:ring-2 focus:ring-indigo-400 outline-none"
+                    className="w-full px-4 py-2 rounded-lg bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80 text-sm"
                 />
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Alignment</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Alignment</label>
                 <div className="flex gap-4">
                     {["left", "center", "right"].map((align) => (
-                        <label key={align} className="flex items-center gap-2 cursor-pointer">
+                        <label key={align} className="flex items-center gap-2 cursor-pointer text-sm text-slate-600">
                             <input
                                 type="radio"
                                 name="align"
                                 checked={content.alignment === align}
                                 onChange={() => onUpdate("alignment", align)}
+                                className="accent-[#7A1F2B]"
                             />
                             <span className="capitalize">{align}</span>
                         </label>
