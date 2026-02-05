@@ -4,7 +4,7 @@ import DynamicPage from "../../pages/Add pages/DynamicPage";
 import Publications from "../../pages/publications/Publications";
 import EventList from "../../pages/events/EventList";
 import EventDetail from "../../pages/events/EventDetail";
-import CartPage from "../../pages/books/CartPage"; // Kept for main domain fallback/access if desired, or remove if strict separation
+import CartPage from "../../pages/books/CartPage";
 
 // Auth & guards
 import Auth from "../../components/Auth";
@@ -32,6 +32,24 @@ import Contact from "../../pages/contact/Contact";
 import ConsultSita from "../../pages/sita factor/ConsultSita";
 import EngageSita from "../../pages/sita factor/EngageSita";
 import StudyWithSita from "../../pages/sita factor/StudyWithSita";
+
+// Blog Imports
+import BlogsPage from "../../pages/blogs/BlogsPage";
+import BlogDetailPage from "../../pages/blogs/BlogDetailPage";
+
+// Store Imports
+import SingleBook from "../../pages/books/SingleBook";
+import CheckoutPage from "../../pages/books/CheckoutPage";
+import OrderPage from "../../pages/books/OrderPage";
+import EbookReader from "../../pages/books/EbookReader";
+import BookPreview from "../../pages/books/BookPreview";
+
+// Booking Imports
+import BookingHome from "../../pages/booking/BookingHome";
+import BookingEvent from "../../pages/booking/BookingEvent";
+import RateEvent from "../../pages/RateEvent";
+import CmsPage from "../../pages/Add pages/pages/CmsPage";
+
 
 export const mainRoutes = [
   {
@@ -63,12 +81,47 @@ export const mainRoutes = [
       { path: "/engage-sita", element: <EngageSita /> },
       { path: "/styudy-with-sita", element: <StudyWithSita /> },
 
-      // If we want it on Main domain too as "Publications" page:
+      // Publications / Store (Consolidated)
       { path: "publications", element: <Publications /> },
+      { path: "store", element: <Publications /> }, // Alias
+      { path: "books/:slug", element: <SingleBook /> },
+      { path: "cart", element: <CartPage /> },
+      { path: "checkout", element: <CheckoutPage /> },
+      { path: "books/preview/:id", element: <BookPreview /> },
 
-      { path: "events", element: <EventList /> },
-      { path: "events/:id", element: <EventDetail /> },
+      // Protected Store Routes
+      {
+        path: "ebook/:id",
+        element: (
+          <PrivateRoute>
+            <EbookReader />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "orders",
+        element: (
+          <PrivateRoute>
+            <OrderPage />
+          </PrivateRoute>
+        ),
+      },
 
+      // Blog Routes
+      { path: "blogs", element: <BlogsPage /> },
+      { path: "blogs/:id", element: <BlogDetailPage /> },
+
+      // Booking / Calendar Routes
+
+      { path: "booking", element: <BookingHome /> }, // Alias
+      { path: "booking/:slug", element: <CmsPage /> },
+      { path: "rate-event/:bookingId", element: <RateEvent /> },
+
+      // Events (General)
+      { path: "events", element: <EventList /> }, // Keep list if needed, or redirect
+      { path: "booking/:id", element: <EventDetail /> },
+
+      // User Dashboard
       {
         path: "my-profile",
         element: (
@@ -80,8 +133,8 @@ export const mainRoutes = [
 
       { path: "auth", element: <Auth /> },
 
-      // ⚠️ MUST BE LAST
-      { path: ":slug", element: <DynamicPage /> },
+      // ⚠️ MUST BE LAST - CMS Pages
+      { path: ":slug", element: <CmsPage /> },
     ],
   },
   { path: "*", element: <PageNotFound /> },
