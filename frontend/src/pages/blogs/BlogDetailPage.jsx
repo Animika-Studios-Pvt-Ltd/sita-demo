@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getSubdomain, getAppUrl } from "../../utils/subdomain";
+
 import { CalendarDays, ArrowRight, ArrowLeft } from "lucide-react";
 import { useFetchAllBooksQuery } from "../../redux/features/books/booksApi";
 import AOS from "aos";
@@ -139,7 +139,7 @@ const BlogDetailPage = () => {
           { label: "Home", path: "https://sitashakti.com" },
           {
             label: "Blogs",
-            path: getSubdomain() === "blog" ? "/" : getAppUrl("blog", "/"),
+            path: "/blogs",
           },
           { label: blog.title },
         ]}
@@ -194,37 +194,20 @@ const BlogDetailPage = () => {
                   {activeBooks.length > 0 && (
                     <div className="flex flex-col items-center text-center rounded-lg overflow-hidden relative flex-grow">
                       <div className={`flex flex-col items-center absolute transition-all duration-700 ease-in-out transform will-change-transform ${fade ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
-                        {getSubdomain() === 'store' ? (
-                          <>
-                            <Link to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`} className="no-underline">
-                              <img
-                                src={activeBooks[currentIndex]?.coverImage || "/placeholder-book.jpg"}
-                                alt={activeBooks[currentIndex]?.title}
-                                className="w-40 h-58 object-cover mb-4 cursor-pointer hover:scale-105 transition-transform duration-500"
-                              />
-                            </Link>
-                            <Link to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`} className="no-underline">
-                              <h4 className="text-[16px] sm:text-[18px] md:text-[20px] text-black font-Figtree mb-3 hover:text-[#993333] transition-colors duration-300 cursor-pointer">
-                                {activeBooks[currentIndex]?.title}
-                              </h4>
-                            </Link>
-                          </>
-                        ) : (
-                          <>
-                            <a href={getAppUrl('store', `/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`)} className="no-underline">
-                              <img
-                                src={activeBooks[currentIndex]?.coverImage || "/placeholder-book.jpg"}
-                                alt={activeBooks[currentIndex]?.title}
-                                className="w-40 h-58 object-cover mb-4 cursor-pointer hover:scale-105 transition-transform duration-500"
-                              />
-                            </a>
-                            <a href={getAppUrl('store', `/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`)} className="no-underline">
-                              <h4 className="text-[16px] sm:text-[18px] md:text-[20px] text-black font-Figtree mb-3 hover:text-[#993333] transition-colors duration-300 cursor-pointer">
-                                {activeBooks[currentIndex]?.title}
-                              </h4>
-                            </a>
-                          </>
-                        )}
+                        <>
+                          <Link to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`} className="no-underline">
+                            <img
+                              src={activeBooks[currentIndex]?.coverImage || "/placeholder-book.jpg"}
+                              alt={activeBooks[currentIndex]?.title}
+                              className="w-40 h-58 object-cover mb-4 cursor-pointer hover:scale-105 transition-transform duration-500"
+                            />
+                          </Link>
+                          <Link to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`} className="no-underline">
+                            <h4 className="text-[16px] sm:text-[18px] md:text-[20px] text-black font-Figtree mb-3 hover:text-[#993333] transition-colors duration-300 cursor-pointer">
+                              {activeBooks[currentIndex]?.title}
+                            </h4>
+                          </Link>
+                        </>
                       </div>
 
                       <div className="flex items-center justify-center gap-6 mt-auto relative z-10">

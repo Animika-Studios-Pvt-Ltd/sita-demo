@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getAppUrl } from "../../utils/subdomain";
+
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
