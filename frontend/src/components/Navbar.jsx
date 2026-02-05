@@ -83,7 +83,7 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg navbar-light" ref={navRef}>
         <div className="container">
           {/* Center Logo */}
-          <a className="navbar-brand me-auto" href="/">
+          <a className="navbar-brand me-auto" href="https://sitashakti.com">
             <img
               src="/sita-logo.webp"
               alt="Sita Logo"
@@ -264,14 +264,16 @@ const Navbar = () => {
               <ul className="navbar-nav sita-nav">
                 {!isHomePage && (
                   <li className="nav-item">
-                    <a className="nav-link home-icon" href="/">
+                    <a
+                      className="nav-link home-icon"
+                      href="https://sitashakti.com">
                       <i className="fa-solid fa-house"></i>
                     </a>
                   </li>
                 )}
 
                 <li className="nav-item">
-                  <a href="/about" className="nav-link">
+                  <a href="https://sitashakti.com/about" className="nav-link">
                     ABOUT SITA
                   </a>
                 </li>
@@ -294,22 +296,30 @@ const Navbar = () => {
                   <ul
                     className={`dropdown-menu ${activeDropdown === "sitaFactor" ? "show" : ""}`}>
                     <li>
-                      <a className="dropdown-item" href="/yoga-therapy">
+                      <a
+                        className="dropdown-item"
+                        href="https://sitashakti.com/yoga-therapy">
                         Yoga Therapy
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="/ayurveda-nutrition">
+                      <a
+                        className="dropdown-item"
+                        href="https://sitashakti.com/ayurveda-nutrition">
                         Ayurveda – Nutrition & Integration
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="/kosha-counseling">
+                      <a
+                        className="dropdown-item"
+                        href="https://sitashakti.com/kosha-counseling">
                         Kosha Counseling
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="/soul-curriculum">
+                      <a
+                        className="dropdown-item"
+                        href="https://sitashakti.com/soul-curriculum">
                         Soul Curriculum
                       </a>
                     </li>
@@ -341,28 +351,45 @@ const Navbar = () => {
                   <ul
                     className={`dropdown-menu ${activeDropdown === "workshops" ? "show" : ""}`}>
                     <li>
-                      <a className="dropdown-item" href="/group-sessions">
+                      <a
+                        className="dropdown-item"
+                        href="https://sitashakti.com/group-sessions">
                         Group Sessions
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="/private-sessions">
+                      <a
+                        className="dropdown-item"
+                        href="https://sitashakti.com/private-sessions">
                         Private Sessions
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="/teacher-training">
+                      <a
+                        className="dropdown-item"
+                        href="https://sitashakti.com/teacher-training">
                         Teacher Training
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="/corporate-training">
+                      <a
+                        className="dropdown-item"
+                        href="https://sitashakti.com/corporate-training">
                         Corporate Training
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="/shakthi-leadership">
+                      <a
+                        className="dropdown-item"
+                        href="https://sitashakti.com/shakthi-leadership">
                         Shakthi Leadership
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="dropdown-item"
+                        href="https://booking.sitashakti.com/">
+                        Calendar
                       </a>
                     </li>
                   </ul>

@@ -89,32 +89,6 @@ const HomePage = () => {
     };
   }, []);
 
-  /* Testimonials */
-  // useEffect(() => {
-  //   const carousel = document.getElementById("testimonialCarousel");
-  //   const nameEl = document.querySelector(".sita-testimonial-name");
-  //   const quoteImg = document.querySelector(".sita-testimonial-quote");
-
-  //   if (!carousel || !nameEl || !quoteImg) return;
-
-  //   const updateMeta = () => {
-  //     const active = carousel.querySelector(".carousel-item.active");
-  //     if (!active) return;
-
-  //     nameEl.textContent = active.dataset.name || "";
-  //     quoteImg.src = active.dataset.quote || "";
-  //   };
-
-  //   // Initial sync
-  //   setTimeout(updateMeta, 100);
-
-  //   carousel.addEventListener("slid.bs.carousel", updateMeta);
-
-  //   return () => {
-  //     carousel.removeEventListener("slid.bs.carousel", updateMeta);
-  //   };
-  // }, []);
-
   return (
     <>
       {/* ---------------- HERO SECTION ---------------- */}
@@ -186,12 +160,12 @@ const HomePage = () => {
           aria-hidden="true"
         />
 
-        <img
+        {/* <img
           src="s.webp"
           alt=""
           className="sita-decor decor-s"
           aria-hidden="true"
-        />
+        /> */}
 
         <div
           className="container text-center sita-factor-content"

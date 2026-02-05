@@ -5,7 +5,7 @@ body {
 }
 
 h2 {
-  font-family: "PT Serif", serif;
+  font-family: "PTSerif-Regular";
   color: #8b171b;
   font-size: 48px;
   text-transform: uppercase;
@@ -14,8 +14,7 @@ h2 {
 
 p,
 li {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 300;
+  font-family: "Montserrat-Light";
   font-size: 18px;
   color: black;
 }
@@ -51,8 +50,7 @@ li {
 .nav-contact,
 .nav-icon-link {
   color: #000000 !important;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 400;
+ font-family: "Montserrat-Regular";
   text-decoration: none !important;
   display: flex;
   align-items: center;
@@ -65,8 +63,7 @@ li {
 }
 
 .sita-nav .nav-link {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 400;
+  font-family: "Montserrat-Regular";
   font-size: 17px;
   color: #000000;
   padding: 6px 12px;
@@ -199,10 +196,9 @@ li {
 }
 
 .dropdown-item {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 400;
+  font-family: "Montserrat-Regular";
   font-size: 16px;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   color: #000000 !important;
   padding: 5px 10px !important;
   transition: all 0.3s ease;
