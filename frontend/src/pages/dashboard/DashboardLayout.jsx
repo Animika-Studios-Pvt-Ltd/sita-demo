@@ -32,36 +32,21 @@ const DashboardLayout = () => {
 
   useEffect(() => {
     const verifyToken = async () => {
-      const adminToken = localStorage.getItem("adminToken")
-
-      if (!adminToken) {
-        navigate("/", { replace: true })
-        return
-      }
-
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/admin-auth/verify`,
-          {
-            headers: {
-              'Authorization': `Bearer ${adminToken}`,
-              'Content-Type': 'application/json'
-            }
-          }
+          `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin-auth/verify`,
+          { withCredentials: true }
         )
 
         if (response.data.valid) {
           setIsAuthenticated(true)
           setIsLoading(false)
         } else {
-          localStorage.removeItem("adminToken")
-          localStorage.removeItem("lastActivity")
-          navigate("/", { replace: true })
+          throw new Error("Invalid token")
         }
       } catch (error) {
         console.error('Token verification failed:', error)
-        localStorage.removeItem("adminToken")
-        localStorage.removeItem("lastActivity")
+        setIsAuthenticated(false)
         navigate("/", { replace: true })
       }
     }
@@ -69,11 +54,21 @@ const DashboardLayout = () => {
     verifyToken()
   }, [navigate])
 
-  const handleLogout = () => {
-    localStorage.removeItem("adminToken")
-    localStorage.removeItem("lastActivity")
-    setIsAuthenticated(false)
-    navigate("/", { replace: true })
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin-auth/logout`,
+        {},
+        { withCredentials: true }
+      )
+    } catch (error) {
+      console.error('Logout failed:', error)
+    } finally {
+      localStorage.removeItem("adminToken")
+      localStorage.removeItem("lastActivity")
+      setIsAuthenticated(false)
+      navigate("/", { replace: true })
+    }
   }
 
   const isActive = (path) => location.pathname === path

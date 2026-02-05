@@ -12,10 +12,19 @@ const AdminLogin = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('adminToken');
-    if (token) {
-      navigate('/dashboard', { replace: true });
-    }
+    // Check if user is already verified via cookie
+    const checkAuth = async () => {
+      try {
+        await axios.get(
+          `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin-auth/verify`,
+          { withCredentials: true }
+        );
+        navigate('/dashboard', { replace: true });
+      } catch (error) {
+        // Not authenticated, stay on login
+      }
+    };
+    checkAuth();
   }, [navigate]);
 
   const onSubmit = async (formData) => {
@@ -29,7 +38,10 @@ const AdminLogin = () => {
           username: formData.username,
           password: formData.password,
         },
-        { headers: { 'Content-Type': 'application/json' } }
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true
+        }
       );
 
       if (response.data.mfaRequired) {
@@ -37,8 +49,10 @@ const AdminLogin = () => {
         setTempToken(response.data.tempToken);
         setMessage('Please enter your 6-digit MFA code');
         reset();
-      } else if (response.data.token) {
-        localStorage.setItem('adminToken', response.data.token);
+        setMessage('Please enter your 6-digit MFA code');
+        reset();
+      } else {
+        // Successful login (cookie set by backend)
         navigate('/dashboard', { replace: true });
       }
     } catch (error) {
@@ -58,12 +72,13 @@ const AdminLogin = () => {
           tempToken: tempToken,
           mfaCode: formData.mfaCode,
         },
-        { headers: { 'Content-Type': 'application/json' } }
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true
+        }
       );
-      if (response.data.token) {
-        localStorage.setItem('adminToken', response.data.token);
-        navigate('/dashboard', { replace: true });
-      }
+      // Successful login (cookie set by backend)
+      navigate('/dashboard', { replace: true });
     } catch (error) {
       setMessage(error.response?.data?.message || 'Invalid MFA code');
     } finally {

@@ -7,11 +7,13 @@ const {
   verifyMFALogin,
   disableMFA,
   getMFAStatus,
-  verifyToken  // ✅ ADD THIS - This is the missing import!
+  verifyToken,
+  logout
 } = require('./auth.controller');
 
 // Admin login route
 router.post('/admin', login);
+router.post('/logout', logout);
 
 // ✅ ADD THIS ROUTE - This is what's missing!
 router.get('/verify', verifyToken);

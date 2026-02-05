@@ -41,8 +41,18 @@ exports.login = async (req, res) => {
       process.env.JWT_SECRET_KEY,
       { expiresIn: '1h' }
     );
-    
+
     console.log('✅ Admin login successful:', adminUser.username);
+
+    // Set cookie
+    res.cookie('adminToken', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+      domain: process.env.COOKIE_DOMAIN || undefined,
+      maxAge: 3600000 // 1 hour
+    });
+
     res.status(200).json({
       message: 'Authentication successful',
       token,
@@ -58,36 +68,40 @@ exports.login = async (req, res) => {
 // ==================== VERIFY TOKEN ====================
 exports.verifyToken = async (req, res) => {
   try {
-    const authHeader = req.headers.authorization;
-    
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ 
-        valid: false, 
-        message: 'No token provided' 
-      });
+    let token;
+
+    if (req.cookies && req.cookies.adminToken) {
+      token = req.cookies.adminToken;
+    } else if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      token = req.headers.authorization.split(' ')[1];
     }
 
-    const token = authHeader.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({
+        valid: false,
+        message: 'No token provided'
+      });
+    }
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const user = await User.findById(decoded.id);
-    
+
     if (!user) {
-      return res.status(401).json({ 
-        valid: false, 
-        message: 'User not found' 
+      return res.status(401).json({
+        valid: false,
+        message: 'User not found'
       });
     }
 
     if (user.role !== 'admin') {
-      return res.status(403).json({ 
-        valid: false, 
-        message: 'Not authorized' 
+      return res.status(403).json({
+        valid: false,
+        message: 'Not authorized'
       });
     }
 
     console.log('✅ Token verified for user:', user.username);
-    res.status(200).json({ 
-      valid: true, 
+    res.status(200).json({
+      valid: true,
       userId: decoded.id,
       username: user.username,
       role: user.role
@@ -95,24 +109,24 @@ exports.verifyToken = async (req, res) => {
 
   } catch (error) {
     console.error('❌ Token verification error:', error.message);
-    
+
     if (error.name === 'TokenExpiredError') {
-      return res.status(401).json({ 
-        valid: false, 
-        message: 'Token expired' 
+      return res.status(401).json({
+        valid: false,
+        message: 'Token expired'
       });
     }
-    
+
     if (error.name === 'JsonWebTokenError') {
-      return res.status(401).json({ 
-        valid: false, 
-        message: 'Invalid token' 
+      return res.status(401).json({
+        valid: false,
+        message: 'Invalid token'
       });
     }
-    
-    res.status(500).json({ 
-      valid: false, 
-      message: 'Server error during token verification' 
+
+    res.status(500).json({
+      valid: false,
+      message: 'Server error during token verification'
     });
   }
 };
@@ -140,7 +154,7 @@ exports.setupMFA = async (req, res) => {
     }
 
     console.log('✅ Admin user found:', adminUser.username);
-    
+
     // If secret already exists, reuse it
     if (adminUser.mfaSecret) {
       console.log('⚠️ MFA secret already exists, reusing existing secret');
@@ -200,7 +214,7 @@ exports.verifyAndEnableMFA = async (req, res) => {
   try {
     const { userId, token } = req.body;
     console.log('🔍 Verify MFA attempt:', { userId, token, tokenLength: token?.length });
-    
+
     if (!userId || !token) {
       return res.status(400).json({ message: 'User ID and token are required' });
     }
@@ -237,8 +251,8 @@ exports.verifyAndEnableMFA = async (req, res) => {
       });
       console.log('❌ Verification failed. Server expects:', currentToken);
       console.log('❌ User provided:', token);
-      
-      return res.status(400).json({ 
+
+      return res.status(400).json({
         message: 'Invalid verification code. Please make sure your phone time is set to automatic and try again.',
         debug: process.env.NODE_ENV === 'development' ? {
           serverToken: currentToken,
@@ -270,7 +284,7 @@ exports.verifyMFALogin = async (req, res) => {
   try {
     const { tempToken, mfaCode } = req.body;
     console.log('🔍 MFA Login verification attempt');
-    
+
     if (!tempToken || !mfaCode) {
       return res.status(400).json({ message: 'Token and MFA code are required' });
     }
@@ -311,8 +325,18 @@ exports.verifyMFALogin = async (req, res) => {
       process.env.JWT_SECRET_KEY,
       { expiresIn: '1h' }
     );
-    
+
     console.log('✅ MFA login successful for:', adminUser.username);
+
+    // Set cookie
+    res.cookie('adminToken', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+      domain: process.env.COOKIE_DOMAIN || undefined,
+      maxAge: 3600000 // 1 hour
+    });
+
     res.status(200).json({
       message: 'Authentication successful',
       token,
@@ -355,9 +379,9 @@ exports.disableMFA = async (req, res) => {
     // ✅ FIX: Use findByIdAndUpdate to skip validation on other fields
     const result = await User.findByIdAndUpdate(
       userId,
-      { 
+      {
         mfaEnabled: false,
-        mfaSecret: null 
+        mfaSecret: null
       },
       { runValidators: false, new: true }
     );
@@ -370,6 +394,23 @@ exports.disableMFA = async (req, res) => {
     res.status(200).json({ message: 'MFA disabled successfully' });
   } catch (error) {
     console.error('❌ MFA disable error:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+// ==================== LOGOUT ====================
+exports.logout = async (req, res) => {
+  try {
+    res.clearCookie('adminToken', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+      domain: process.env.COOKIE_DOMAIN || undefined
+    });
+
+    res.status(200).json({ message: 'Logged out successfully' });
+  } catch (error) {
+    console.error('❌ Logout error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };

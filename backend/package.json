@@ -36,6 +36,7 @@
     "cashfree-pg": "^4.3.10",
     "cloudinary": "^1.41.3",
     "compression": "^1.8.1",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^16.6.1",

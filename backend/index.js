@@ -4,6 +4,7 @@ const mongoose = require("mongoose")
 const compression = require("compression")
 const http = require("http")
 const { Server } = require("socket.io")
+const cookieParser = require("cookie-parser");
 require("dotenv").config()
 
 const User = require('./src/users/user.model')
@@ -26,6 +27,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 
 // 3. Parse JSON with size limits
 app.use(express.json({ limit: '10mb' }))
+app.use(cookieParser());
 
 // 4. CORS optimization
 app.use(

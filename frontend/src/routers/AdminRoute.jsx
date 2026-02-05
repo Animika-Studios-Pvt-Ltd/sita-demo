@@ -8,16 +8,18 @@ const AdminRoute = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
-    const checkAuth = () => {
-      const token = localStorage.getItem('adminToken');
-
-      if (token) {
+    const checkAuth = async () => {
+      try {
+        await axios.get(
+          `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin-auth/verify`,
+          { withCredentials: true }
+        );
         setIsAuthenticated(true);
-      } else {
+      } catch (error) {
         setIsAuthenticated(false);
+      } finally {
+        setIsChecking(false);
       }
-
-      setIsChecking(false);
     };
 
     checkAuth();
