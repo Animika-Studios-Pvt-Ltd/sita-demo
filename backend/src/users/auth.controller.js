@@ -45,11 +45,12 @@ exports.login = async (req, res) => {
     console.log('✅ Admin login successful:', adminUser.username);
 
     // Set cookie
+    const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('adminToken', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
-      domain: process.env.COOKIE_DOMAIN || undefined,
+      secure: isProduction,
+      sameSite: isProduction ? 'None' : 'Lax',
+      domain: process.env.COOKIE_DOMAIN && isProduction ? process.env.COOKIE_DOMAIN : undefined,
       maxAge: 3600000 // 1 hour
     });
 
@@ -104,7 +105,8 @@ exports.verifyToken = async (req, res) => {
       valid: true,
       userId: decoded.id,
       username: user.username,
-      role: user.role
+      role: user.role,
+      token: token // ✅ Return token so frontend can hydrate localStorage
     });
 
   } catch (error) {
@@ -329,11 +331,12 @@ exports.verifyMFALogin = async (req, res) => {
     console.log('✅ MFA login successful for:', adminUser.username);
 
     // Set cookie
+    const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('adminToken', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
-      domain: process.env.COOKIE_DOMAIN || undefined,
+      secure: isProduction,
+      sameSite: isProduction ? 'None' : 'Lax',
+      domain: process.env.COOKIE_DOMAIN && isProduction ? process.env.COOKIE_DOMAIN : undefined,
       maxAge: 3600000 // 1 hour
     });
 

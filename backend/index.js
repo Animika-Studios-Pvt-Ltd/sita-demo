@@ -22,8 +22,9 @@ const port = process.env.PORT || 5000
 // 1. Enable GZIP compression (reduces response size by 70%)
 app.use(compression())
 
-// 2. Set NODE_ENV to production
-process.env.NODE_ENV = process.env.NODE_ENV || 'production'
+// 2. Set NODE_ENV to production ONLY if not already set (defaults to development for safety)
+// process.env.NODE_ENV = process.env.NODE_ENV || 'production' <--- REMOVED THIS LINE
+console.log(`🌍 Environment: ${process.env.NODE_ENV}`);
 
 // 3. Parse JSON with size limits
 app.use(express.json({ limit: '10mb' }))

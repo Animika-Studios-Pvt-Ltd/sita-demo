@@ -32,20 +32,34 @@ const DashboardLayout = () => {
 
   useEffect(() => {
     const verifyToken = async () => {
+      // 1. Check LocalStorage
+      const adminToken = localStorage.getItem("adminToken")
+
+      // If we have a token, we can validate it (optional, but good practice to verify headers)
+      // OR if we don't have a token, we try the cookie method
+
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin-auth/verify`,
-          { withCredentials: true }
+          {
+            headers: adminToken ? { 'Authorization': `Bearer ${adminToken}` } : {},
+            withCredentials: true
+          }
         )
 
         if (response.data.valid) {
           setIsAuthenticated(true)
           setIsLoading(false)
+          // Ensure LS is synced if we recovered via cookie
+          if (response.data.token && !adminToken) {
+            localStorage.setItem("adminToken", response.data.token)
+          }
         } else {
           throw new Error("Invalid token")
         }
       } catch (error) {
         console.error('Token verification failed:', error)
+        localStorage.removeItem("adminToken")
         setIsAuthenticated(false)
         navigate("/", { replace: true })
       }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import PageNotFound from './PageNotFound';
+import axios from 'axios';
 
 const AdminRoute = ({ children }) => {
   const [isChecking, setIsChecking] = useState(true);
@@ -9,11 +10,25 @@ const AdminRoute = ({ children }) => {
 
   useEffect(() => {
     const checkAuth = async () => {
+      // 1. Check LocalStorage first (Fast path, works for Localhost)
+      const token = localStorage.getItem('adminToken');
+      if (token) {
+        setIsAuthenticated(true);
+        setIsChecking(false);
+        return;
+      }
+
+      // 2. If no LS, check Cookie (Cross-domain path)
       try {
-        await axios.get(
+        const response = await axios.get(
           `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin-auth/verify`,
           { withCredentials: true }
         );
+
+        // If verify success, hydrate LS for future requests
+        if (response.data.token) {
+          localStorage.setItem('adminToken', response.data.token);
+        }
         setIsAuthenticated(true);
       } catch (error) {
         setIsAuthenticated(false);

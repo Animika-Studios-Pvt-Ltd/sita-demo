@@ -49,10 +49,11 @@ const AdminLogin = () => {
         setTempToken(response.data.tempToken);
         setMessage('Please enter your 6-digit MFA code');
         reset();
-        setMessage('Please enter your 6-digit MFA code');
-        reset();
       } else {
-        // Successful login (cookie set by backend)
+        // Successful login
+        if (response.data.token) {
+          localStorage.setItem('adminToken', response.data.token);
+        }
         navigate('/dashboard', { replace: true });
       }
     } catch (error) {
@@ -78,6 +79,9 @@ const AdminLogin = () => {
         }
       );
       // Successful login (cookie set by backend)
+      if (response.data.token) {
+        localStorage.setItem('adminToken', response.data.token);
+      }
       navigate('/dashboard', { replace: true });
     } catch (error) {
       setMessage(error.response?.data?.message || 'Invalid MFA code');
