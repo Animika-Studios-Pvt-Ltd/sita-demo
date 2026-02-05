@@ -15,13 +15,14 @@ import {
   BarChart, Bar
 } from "recharts";
 
-const COLORS = ["#6D28D9", "#10B981", "#3B82F6", "#F59E0B", "#EF4444", "#8B5CF6", "#F472B6"];
-
-const colorMap = {
-  purple: "border-l-4 border-purple-500",
-  green: "border-l-4 border-green-500",
-  blue: "border-l-4 border-blue-500",
-};
+const MUTED_PALETTE = [
+  "#64748B",
+  "#94A3B8",
+  "#CBD5E1",
+  "#7C8AA5",
+  "#A3AED0",
+  "#E2E8F0"
+];
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -220,40 +221,39 @@ const Dashboard = () => {
     return <Loading />;
   }
 
-  // Sita-inspired palette
-  const BRONZE = "#c86836";
-  const GOLD = "#FFCE1A";
-  const DARK_BLUE = "#0D0842";
-  const LIGHT_CREAM = "#F9F5F0";
-  const PIE_COLORS = [BRONZE, DARK_BLUE, GOLD, "#10B981", "#EF4444", "#8B5CF6"];
+  // Minimal glass palette
+  const SLATE = "#64748B";
+  const SLATE_DARK = "#334155";
+  const SLATE_LIGHT = "#94A3B8";
+  const PIE_COLORS = MUTED_PALETTE;
 
   return (
-    <div className="container mx-auto mt-10 px-4 sm:px-6 lg:px-8 font-montserrat">
+    <div className="container mx-auto mt-10 px-4 sm:px-6 lg:px-8 font-montserrat text-slate-700">
       <motion.div
-        className="text-center mb-12 px-2 sm:px-0"
+        className="text-center mb-2 px-2 sm:px-0"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-2">
-          <div className="p-3 bg-white rounded-full shadow-md border border-gray-200">
-            <MdSecurity className="text-[#c86836] text-3xl sm:text-4xl" />
+        <div className="flex flex-col items-center justify-center gap-3 mb-2">
+          <div className="shield-glow p-3 bg-white/70 backdrop-blur-md rounded-full border border-white/60 ring-1 ring-black/5">
+            <MdSecurity className="text-slate-600 text-3xl sm:text-4xl" />
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#0D0842] tracking-tight text-center sm:text-left font-pt-serif">
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight text-center font-montserrat">
             Admin Dashboard
           </h2>
         </div>
-        <p className="text-gray-600 text-sm sm:text-base max-w-xl mx-auto font-medium">
+        <p className="text-slate-500 text-sm sm:text-base max-w-xl mx-auto font-medium">
           Overview of your store's performance, inventory, and orders.
         </p>
-        <div className="mt-4 mx-auto w-24 h-1 bg-[#c86836] rounded-full opacity-80"></div>
+        <div className="mt-4 mx-auto w-24 h-1 bg-slate-300 rounded-full opacity-80"></div>
       </motion.div>
 
       <div className="flex justify-end mb-6">
         <select
           value={timeFilter}
           onChange={(e) => setTimeFilter(e.target.value)}
-          className="px-4 py-2 bg-white border border-[#c86836] rounded-full text-[#0D0842] text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-[#FFCE1A] focus:border-transparent font-medium shadow-sm cursor-pointer"
+          className="px-4 py-2 bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-full text-slate-700 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80 font-medium shadow-sm hover:bg-white/90 transition-all duration-200 cursor-pointer"
         >
           <option value="overall">Overall</option>
           <option value="day">Today</option>
@@ -268,9 +268,9 @@ const Dashboard = () => {
           className="cursor-pointer"
         >
           <DashboardCard
-            color="c86836"
-            icon={<MdOutlineLibraryBooks className="text-[#c86836] text-3xl sm:text-4xl" />}
-            title="Total Products"
+            color="slate"
+            icon={<MdOutlineLibraryBooks className="text-slate-600 text-3xl sm:text-4xl" />}
+            title="Total Books"
             value={totalProducts}
           />
         </div>
@@ -280,8 +280,8 @@ const Dashboard = () => {
           className="cursor-pointer"
         >
           <DashboardCard
-            color="FFCE1A"
-            icon={<TbCurrencyRupee className="text-[#B49214] text-3xl sm:text-4xl" />}
+            color="slate"
+            icon={<TbCurrencyRupee className="text-slate-600 text-3xl sm:text-4xl" />}
             title="Total Sales"
             prefix="₹"
             value={totalSales}
@@ -293,8 +293,8 @@ const Dashboard = () => {
           className="cursor-pointer"
         >
           <DashboardCard
-            color="0D0842"
-            icon={<AiOutlineShoppingCart className="text-[#0D0842] text-3xl sm:text-4xl" />}
+            color="slate"
+            icon={<AiOutlineShoppingCart className="text-slate-600 text-3xl sm:text-4xl" />}
             title="Total Orders"
             value={totalOrders}
           />
@@ -305,14 +305,14 @@ const Dashboard = () => {
         <div
           onClick={() => navigate("/dashboard/sales")}
           className="
-          bg-white rounded-xl p-6 shadow-md cursor-pointer border-t-4 border-[#c86836]
-          hover:shadow-lg transform transition-all duration-300
+          bg-gradient-to-br from-white/80 via-white/60 to-slate-50/70 backdrop-blur-xl rounded-2xl p-6 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.45)] cursor-pointer border border-white/70 ring-1 ring-black/5
+          hover:shadow-[0_22px_50px_-32px_rgba(15,23,42,0.55)] hover:-translate-y-0.5 transition-all duration-300
         "
         >
           <h2
-            className="text-xl sm:text-2xl font-bold text-[#0D0842] mb-6 flex items-center gap-2 select-none font-pt-serif"
+            className="text-xl sm:text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2 select-none font-montserrat"
           >
-            <FaChartLine className="text-[#c86836] text-2xl sm:text-3xl" />
+            <FaChartLine className="text-slate-600 text-2xl sm:text-3xl" />
             Sales Overview
           </h2>
 
@@ -324,43 +324,43 @@ const Dashboard = () => {
               >
                 <defs>
                   <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={BRONZE} stopOpacity={0.8} />
-                    <stop offset="95%" stopColor={BRONZE} stopOpacity={0} />
+                    <stop offset="5%" stopColor={SLATE} stopOpacity={0.6} />
+                    <stop offset="95%" stopColor={SLATE} stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <XAxis
                   dataKey="date"
-                  tick={{ fontSize: 11, fill: "#4B5563", fontFamily: "Montserrat" }}
+                  tick={{ fontSize: 11, fill: "#64748B", fontFamily: "Montserrat" }}
                   interval={Math.floor(salesChartData.length / 5)}
                   tickFormatter={(tick) => tick.split("/").slice(0, 2).join("/")}
                 />
                 <YAxis
-                  tick={{ fill: "#4B5563", fontSize: 11, fontFamily: "Montserrat" }}
+                  tick={{ fill: "#64748B", fontSize: 11, fontFamily: "Montserrat" }}
                   tickFormatter={(value) => `₹${value.toLocaleString()}`}
                 />
                 <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "#FFFFFF",
-                    border: "1px solid #E5E7EB",
+                    backgroundColor: "rgba(255,255,255,0.95)",
+                    border: "1px solid rgba(148,163,184,0.3)",
                     borderRadius: "8px",
                     fontFamily: "Montserrat",
-                    boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
+                    boxShadow: "0 6px 16px -8px rgba(15, 23, 42, 0.2)"
                   }}
                   formatter={(value) => [`₹${value.toLocaleString()}`, "Sales"]}
-                  labelStyle={{ color: "#0D0842", fontWeight: 600 }}
+                  labelStyle={{ color: "#334155", fontWeight: 600 }}
                 />
                 <Area
                   type="monotone"
                   dataKey="sales"
-                  stroke={BRONZE}
+                  stroke={SLATE_DARK}
                   fill="url(#colorSales)"
                   strokeWidth={2}
                 />
               </AreaChart>
             </ResponsiveContainer>
           ) : (
-            <div className="flex items-center justify-center h-[300px] text-gray-500 italic font-medium">
+            <div className="flex items-center justify-center h-[300px] text-slate-500 italic font-medium">
               No sales data available for the selected period.
             </div>
           )}
@@ -368,14 +368,14 @@ const Dashboard = () => {
         <div
           onClick={() => navigate("/dashboard/orders")}
           className="
-            bg-white rounded-xl p-6 shadow-md cursor-pointer border-t-4 border-[#0D0842]
-            hover:shadow-lg transform transition-all duration-300
+            bg-gradient-to-br from-white/80 via-white/60 to-slate-50/70 backdrop-blur-xl rounded-2xl p-6 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.45)] cursor-pointer border border-white/70 ring-1 ring-black/5
+            hover:shadow-[0_22px_50px_-32px_rgba(15,23,42,0.55)] hover:-translate-y-0.5 transition-all duration-300
           "
         >
           <h2
-            className="text-xl sm:text-2xl font-bold text-[#0D0842] mb-6 flex items-center gap-2 select-none font-pt-serif"
+            className="text-xl sm:text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2 select-none font-montserrat"
           >
-            <FaChartPie className="text-[#0D0842] text-2xl sm:text-3xl" />
+            <FaChartPie className="text-slate-600 text-2xl sm:text-3xl" />
             Orders by Status
           </h2>
 
@@ -397,19 +397,24 @@ const Dashboard = () => {
                       {ordersByStatus.map((entry, index) => {
                         let fillColor;
                         switch (entry.name?.toLowerCase()) {
-                          case "delivered": fillColor = "#10B981"; break;
+                          case "delivered": fillColor = "#5A7F6A"; break;
                           case "cancelled":
-                          case "canceled": fillColor = "#EF4444"; break;
-                          case "pending": fillColor = GOLD; break;
-                          case "processing": fillColor = DARK_BLUE; break;
-                          case "shipped": fillColor = BRONZE; break;
+                          case "canceled": fillColor = "#9B5C5C"; break;
+                          case "pending": fillColor = "#B59B6A"; break;
+                          case "processing": fillColor = "#6B7280"; break;
+                          case "shipped": fillColor = "#7C8AA5"; break;
                           default: fillColor = PIE_COLORS[index % PIE_COLORS.length];
                         }
                         return <Cell key={index} fill={fillColor} stroke="#fff" strokeWidth={2} />;
                       })}
                     </Pie>
                     <Tooltip
-                      contentStyle={{ fontFamily: 'Montserrat', borderRadius: '8px' }}
+                      contentStyle={{
+                        fontFamily: 'Montserrat',
+                        borderRadius: '8px',
+                        backgroundColor: "rgba(255,255,255,0.95)",
+                        border: "1px solid rgba(148,163,184,0.3)"
+                      }}
                     />
                   </PieChart>
                 </ResponsiveContainer>
@@ -418,29 +423,29 @@ const Dashboard = () => {
                 {ordersByStatus.map((entry, index) => {
                   let color;
                   switch (entry.name?.toLowerCase()) {
-                    case "delivered": color = "#10B981"; break;
+                    case "delivered": color = "#5A7F6A"; break;
                     case "cancelled":
-                    case "canceled": color = "#EF4444"; break;
-                    case "pending": color = GOLD; break;
-                    case "processing": color = DARK_BLUE; break;
-                    case "shipped": color = BRONZE; break;
+                    case "canceled": color = "#9B5C5C"; break;
+                    case "pending": color = "#B59B6A"; break;
+                    case "processing": color = "#6B7280"; break;
+                    case "shipped": color = "#7C8AA5"; break;
                     default: color = PIE_COLORS[index % PIE_COLORS.length];
                   }
                   return (
-                    <div key={index} className="flex items-center text-gray-700 text-sm font-medium">
+                    <div key={index} className="flex items-center text-slate-700 text-sm font-medium">
                       <span
                         className="w-3 h-3 rounded-full mr-3 shadow-sm"
                         style={{ backgroundColor: color }}
                       ></span>
                       <span className="capitalize">{entry.name}</span>
-                      <span className="text-[#0D0842] font-semibold ml-auto">{entry.value}</span>
+                      <span className="text-slate-900 font-semibold ml-auto">{entry.value}</span>
                     </div>
                   );
                 })}
               </div>
             </div>
           ) : (
-            <div className="flex items-center justify-center h-[300px] text-gray-500 italic font-medium">
+            <div className="flex items-center justify-center h-[300px] text-slate-500 italic font-medium">
               No order data available for the selected period.
             </div>
           )}
@@ -450,12 +455,12 @@ const Dashboard = () => {
       <div
         onClick={() => navigate("/dashboard/sales")}
         className="
-        bg-white rounded-xl p-6 shadow-md mb-6 cursor-pointer border-t-4 border-[#FFCE1A]
-        hover:shadow-lg transform transition-all duration-300 select-none
+        bg-gradient-to-br from-white/80 via-white/60 to-slate-50/70 backdrop-blur-xl rounded-2xl p-6 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.45)] mb-6 cursor-pointer border border-white/70 ring-1 ring-black/5
+        hover:shadow-[0_22px_50px_-32px_rgba(15,23,42,0.55)] hover:-translate-y-0.5 transition-all duration-300 select-none
       "
       >
-        <h2 className="text-xl sm:text-2xl font-bold text-[#0D0842] mb-6 flex items-center gap-2 font-pt-serif">
-          <FaBook className="text-[#FFCE1A] text-2xl sm:text-3xl" />
+        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2 font-montserrat">
+          <FaBook className="text-slate-600 text-2xl sm:text-3xl" />
           Top Selling Books
         </h2>
 
@@ -469,7 +474,7 @@ const Dashboard = () => {
               <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
               <XAxis
                 dataKey="name"
-                tick={{ fontSize: 11, fill: "#4B5563", fontFamily: "Montserrat" }}
+                tick={{ fontSize: 11, fill: "#64748B", fontFamily: "Montserrat" }}
                 interval={0}
                 angle={-25}
                 textAnchor="end"
@@ -478,8 +483,8 @@ const Dashboard = () => {
               <YAxis tick={{ fontSize: 11, fontFamily: "Montserrat" }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "#FFFFFF",
-                  border: "1px solid #E5E7EB",
+                  backgroundColor: "rgba(255,255,255,0.95)",
+                  border: "1px solid rgba(148,163,184,0.3)",
                   borderRadius: "8px",
                   fontFamily: "Montserrat",
                 }}
@@ -488,13 +493,13 @@ const Dashboard = () => {
               />
               <Bar dataKey="stock" radius={[4, 4, 0, 0]} animationDuration={1000}>
                 {topBooks.map((_, i) => (
-                  <Cell key={i} fill={i % 2 === 0 ? DARK_BLUE : BRONZE} />
+                  <Cell key={i} fill={i % 2 === 0 ? SLATE_DARK : SLATE_LIGHT} />
                 ))}
               </Bar>
             </BarChart>
           </ResponsiveContainer>
         ) : (
-          <div className="flex items-center justify-center h-[300px] text-gray-500 italic font-medium">
+          <div className="flex items-center justify-center h-[300px] text-slate-500 italic font-medium">
             No book sales data available for the selected period.
           </div>
         )}
@@ -504,29 +509,19 @@ const Dashboard = () => {
 };
 
 const DashboardCard = ({ color, icon, title, value, prefix = "" }) => {
-  // Generate styles based on prop color, though we moved to specific hex props in usage,
-  // we can fallback or handle the prop logic here.
-  // However, to keep it clean with the new design, let's treat 'color' as a key or just style directly.
-
-  // Mapping for border colors if we keep the "purple/green" prop names for compatibility, 
-  // OR we can just use the exact colors passed in the rewrite above.
-  // The rewrite passes hex codes directly or keys. Let's handle the specific keys passed above.
-
-  let borderClass = "";
-  if (color === "c86836") borderClass = "border-l-4 border-[#c86836]"; // Bronze
-  else if (color === "FFCE1A") borderClass = "border-l-4 border-[#FFCE1A]"; // Gold
-  else if (color === "0D0842") borderClass = "border-l-4 border-[#0D0842]"; // Blue
-  else borderClass = "border-l-4 border-gray-300";
+  const borderClass = color ? "border border-white/70 ring-1 ring-black/5" : "border border-slate-200/70";
 
   return (
     <motion.div
       whileHover={{ scale: 1.02 }}
-      className={`flex items-center gap-5 p-6 bg-white rounded-xl shadow-md ${borderClass} hover:shadow-lg transition-shadow duration-300`}
+      className={`flex items-center gap-5 p-6 bg-gradient-to-br from-white/80 via-white/60 to-slate-50/70 backdrop-blur-xl rounded-2xl shadow-[0_18px_40px_-30px_rgba(15,23,42,0.45)] ${borderClass} hover:shadow-[0_22px_46px_-32px_rgba(15,23,42,0.55)] hover:-translate-y-0.5 transition-all duration-300`}
     >
-      <div className="p-4 bg-gray-50 rounded-full shadow-inner">{icon}</div>
+      <div className="p-4 bg-white/70 backdrop-blur rounded-full border border-white/80 ring-1 ring-black/5 shadow-[inset_0_1px_6px_rgba(15,23,42,0.08)]">
+        {icon}
+      </div>
       <div>
-        <p className="text-gray-500 text-sm font-semibold tracking-wide uppercase font-montserrat">{title}</p>
-        <p className="text-3xl font-bold text-[#0D0842] mt-1 font-pt-serif">
+        <p className="text-slate-500 text-sm font-semibold tracking-wide uppercase font-montserrat">{title}</p>
+        <p className="text-3xl font-bold text-slate-900 mt-1 font-montserrat">
           {prefix}<CountUp end={value} duration={2} separator="," />
         </p>
       </div>

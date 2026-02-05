@@ -213,188 +213,198 @@ const ManageReviews = () => {
     activeCategory === "pending" ? pendingReviews : approvedReviews;
 
   return (
-    <div className="container mx-auto px-4 font-figtree font-normal leading-snug">
-      <div className="mb-6 mt-5">
-        <div className="flex justify-between items-center mb-6">
-          <button
-            onClick={() => navigate(-1)}
-            className="flex items-center justify-center rounded-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400 transition-all duration-300 text-white font-medium rounded-[6px] px-2 py-1"
-          >
-            <ArrowBackIcon className="w-2 h-2" />
-            Back
-          </button>
-
-          {/* TAB SWITCHER */}
-          <div className="flex bg-white rounded-lg p-1 shadow-sm border border-gray-200">
+    <div className="container mt-[40px] font-montserrat text-slate-700">
+      <div className="container mx-auto">
+        <div className="max-w-8xl mx-auto p-0 rounded-lg">
+          <div className="mb-6 mt-5">
             <button
-              onClick={() => setActiveTab("books")}
-              className={`flex items-center px-4 py-2 rounded-md transition-all ${activeTab === "books" ? "bg-blue-100 text-blue-700 font-bold" : "text-gray-500 hover:bg-gray-50"
-                }`}
+              onClick={() => navigate("/dashboard/cms")}
+              className="flex items-center gap-2 justify-center rounded-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 text-slate-700 hover:bg-white/90 transition-colors duration-200 px-3 py-1.5 text-sm font-medium"
             >
-              <BookIcon className="w-5 h-5 mr-2" />
-              Book Reviews
+              <ArrowBackIcon className="w-4 h-4" />
+              Back
             </button>
-            <div className="w-px bg-gray-200 mx-1"></div>
-            <button
-              onClick={() => setActiveTab("events")}
-              className={`flex items-center px-4 py-2 rounded-md transition-all ${activeTab === "events" ? "bg-purple-100 text-purple-700 font-bold" : "text-gray-500 hover:bg-gray-50"
-                }`}
-            >
-              <EventIcon className="w-5 h-5 mr-2" />
-              Event Ratings
-            </button>
-          </div>
-        </div>
 
-        <div className="relative flex justify-center mb-8 mt-8 bg-gray-200 rounded-full p-1 max-w-md mx-auto shadow-inner">
-          <div
-            className={`absolute top-1 left-1 w-1/2 h-10 rounded-full bg-gradient-to-r ${activeTab === 'books' ? 'from-orange-400 to-orange-600 hover:from-orange-600 hover:to-orange-400' : 'from-purple-600 to-purple-800'} transform transition-transform duration-300 ${activeCategory === "approved" ? "translate-x-full" : ""
-              }`}
-          ></div>
-          <button
-            className={`relative flex-1 py-2 flex items-center justify-center gap-2 rounded-full font-semibold text-md transition-all duration-300 transform ${activeCategory === "pending"
-              ? "text-white"
-              : "text-gray-700 hover:text-gray-900 hover:scale-105"
-              }`}
-            onClick={() => setActiveCategory("pending")}
-          >
-            <PendingIcon className="w-5 h-5" />
-            Pending ({pendingReviews.length})
-          </button>
-          <button
-            className={`relative flex-1 py-2 flex items-center justify-center gap-2 rounded-full font-semibold text-md transition-all duration-300 transform ${activeCategory === "approved"
-              ? "text-white"
-              : "text-gray-700 hover:text-gray-900 hover:scale-105"
-              }`}
-            onClick={() => setActiveCategory("approved")}
-          >
-            <CheckCircleIcon className="w-5 h-5" />
-            Approved ({approvedReviews.length})
-          </button>
-        </div>
-      </div>
-
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="text-center font-figtree mb-10">
-          <h3 className="text-2xl md:text-3xl font-playfair text-gray-800 mb-2 mt-6 text-center">
-            {activeCategory === "pending"
-              ? `Pending ${activeTab === "books" ? "Book Reviews" : "Event Ratings"}`
-              : `Approved ${activeTab === "books" ? "Book Reviews" : "Event Ratings"}`}
-          </h3>
-          <p className="text-lg text-gray-600 mt-1">
-            {activeCategory === "pending"
-              ? "Review and approve feedback"
-              : "View all approved feedback"}
-          </p>
-        </div>
-
-        <div className="p-6">
-          {currentReviews.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-              {activeCategory === "pending" ? (
-                <>
-                  <PendingIcon className="w-12 h-12 mb-2 text-gray-400" />
-                  <p className="text-sm font-medium">No pending {activeTab === "books" ? "reviews" : "ratings"}</p>
-                  <p className="text-xs">All processed!</p>
-                </>
-              ) : (
-                <>
-                  <CheckCircleIcon className="w-12 h-12 mb-2 text-gray-400" />
-                  <p className="text-sm font-medium">No approved {activeTab === "books" ? "reviews" : "ratings"}</p>
-                </>
-              )}
+            <div className="relative flex justify-center mb-4 mt-6 bg-white/60 backdrop-blur-xl border border-[#7A1F2B] ring-1 ring-white/70 rounded-full p-1.5 max-w-md mx-auto shadow-sm overflow-hidden">
+              <div
+                className={`absolute top-1.5 left-1.5 w-[calc(50%-0.375rem)] h-10 bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 rounded-full border border-[#7A1F2B] ring-1 ring-black/5 shadow-[0_8px_18px_-12px_rgba(122,31,43,0.45)] transform transition-transform duration-300 ${activeTab === "events" ? "translate-x-full" : ""}`}
+              ></div>
+              <button
+                onClick={() => setActiveTab("books")}
+                className={`relative flex-1 py-2 flex items-center justify-center gap-2 rounded-full font-semibold text-sm md:text-base transition-colors duration-200 ${activeTab === "books" ? "text-[#7A1F2B]" : "text-slate-500 hover:text-slate-800"
+                  }`}
+              >
+                <BookIcon className="w-5 h-5" />
+                Book Reviews
+              </button>
+              <button
+                onClick={() => setActiveTab("events")}
+                className={`relative flex-1 py-2 flex items-center justify-center gap-2 rounded-full font-semibold text-sm md:text-base transition-colors duration-200 ${activeTab === "events" ? "text-[#7A1F2B]" : "text-slate-500 hover:text-slate-800"
+                  }`}
+              >
+                <EventIcon className="w-5 h-5" />
+                Event Ratings
+              </button>
             </div>
-          ) : (
-            <div className="space-y-4">
-              {currentReviews.map((review) => (
-                <div
-                  key={review._id}
-                  className={`bg-white border rounded-lg p-4 transition-all hover:shadow-md ${review.isNew
-                    ? "border-yellow-500 bg-yellow-50"
-                    : "border-gray-200"
-                    }`}
-                >
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <h3 className="font-semibold text-gray-900">
-                          {review.userName}
-                        </h3>
-                        <span className="text-xs text-gray-500">
-                          {new Date(review.createdAt).toLocaleDateString()}
-                        </span>
-                        {/* Identify context if needed */}
-                        <span className={`text-xs px-2 py-0.5 rounded ${activeTab === "books" ? "bg-blue-100 text-blue-800" : "bg-purple-100 text-purple-800"}`}>
-                          {activeTab === "books" ? "Book" : "Event"}
-                        </span>
-                      </div>
 
-                      {/* 1. Name */}
-                      <p className="text-sm text-gray-500 mb-2">
-                        {activeTab === "books" ? "Book: " : "Event: "}
-                        <strong className="text-gray-900 text-base">{review.bookName || review.event?.title || "Unknown"}</strong>
-                      </p>
+          </div>
 
-                      {/* 2. Stars */}
-                      <div className="flex items-center gap-1 mb-2">
-                        {Array.from({ length: review.rating }).map((_, i) => (
-                          <span key={i} className="text-yellow-500 text-lg">
-                            ★
-                          </span>
-                        ))}
-                        {Array.from({ length: 5 - review.rating }).map(
-                          (_, i) => (
-                            <span key={i} className="text-gray-300 text-lg">
-                              ★
-                            </span>
-                          )
-                        )}
-                      </div>
+          <div className="bg-white/70 backdrop-blur-xl rounded-2xl shadow-[0_18px_45px_-30px_rgba(15,23,42,0.45)] border border-white/70 ring-1 ring-black/5 overflow-hidden">
+            <div className="px-6 pt-4 pb-3">
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-3">
+                <div className="hidden md:block" />
+                <div className="text-center">
+                  <h3 className="text-2xl md:text-3xl font-semibold text-[#7A1F2B] mb-1 font-montserrat">
+                    {activeCategory === "pending"
+                      ? `Pending ${activeTab === "books" ? "Book Reviews" : "Event Ratings"}`
+                      : `Approved ${activeTab === "books" ? "Book Reviews" : "Event Ratings"}`}
+                  </h3>
+                  <p className="text-sm md:text-base text-slate-500">
+                    {activeCategory === "pending"
+                      ? "Review and approve feedback"
+                      : "View all approved feedback"}
+                  </p>
+                </div>
 
-                      {/* 3. Comment */}
-                      <p className="text-gray-700 italic mb-2">
-                        "{review.comment}"
-                      </p>
-                    </div>
-
-                    <div className="flex gap-2">
-                      {activeCategory === "pending" ? (
-                        <>
-                          <button
-                            onClick={() => approveReview(review._id)}
-                            className={`inline-flex items-center justify-center px-4 py-2 rounded-full text-white text-sm font-medium transition-colors ${activeTab === 'books' ? 'bg-gradient-to-r from-green-600 to-green-800 hover:from-green-800 hover:to-green-600' : 'bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-700 hover:to-teal-500'}`}
-                          >
-                            Approve
-                          </button>
-                          <button
-                            onClick={() =>
-                              disapproveReview(review._id, review.userName)
-                            }
-                            className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-gradient-to-r from-red-600 to-red-800 hover:from-red-800 hover:to-red-600 text-white text-sm font-medium transition-colors"
-                          >
-                            Disapprove
-                          </button>
-                        </>
-                      ) : (
-                        <span className="inline-flex items-center px-4 py-2 bg-green-100 text-green-800 text-sm font-medium rounded-full">
-                          <CheckCircleIcon className="w-4 h-4 mr-1" />
-                          Approved
-                        </span>
-                      )}
-                    </div>
+                <div className="flex justify-center md:justify-end md:mt-[-2px]">
+                  <div className="relative flex bg-white/60 backdrop-blur-xl border border-[#7A1F2B] ring-1 ring-white/70 rounded-full p-1 shadow-sm overflow-hidden w-full sm:w-auto max-w-none min-w-[260px] sm:min-w-[300px] md:min-w-[320px]">
+                    <div
+                      className={`absolute inset-y-1 left-0.5 w-[calc(50%-0.25rem)] bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 rounded-full border border-[#7A1F2B] ring-1 ring-black/5 shadow-[0_6px_14px_-12px_rgba(122,31,43,0.35)] transform transition-transform duration-300 ${activeCategory === "approved" ? "translate-x-full" : ""}`}
+                    ></div>
+                    <button
+                      className={`relative flex-1 py-2 flex items-center justify-center gap-2 rounded-full font-medium text-xs sm:text-sm leading-none tracking-tight whitespace-nowrap transition-colors duration-200 ${activeCategory === "pending"
+                        ? "text-[#7A1F2B]"
+                        : "text-slate-500 hover:text-slate-800"
+                        }`}
+                      onClick={() => setActiveCategory("pending")}
+                    >
+                      <PendingIcon className="w-3.5 h-3.5" />
+                      Pending ({pendingReviews.length})
+                    </button>
+                    <button
+                      className={`relative flex-1 py-2 flex items-center justify-center gap-2 rounded-full font-medium text-xs sm:text-sm leading-none tracking-tight whitespace-nowrap transition-colors duration-200 ${activeCategory === "approved"
+                        ? "text-[#7A1F2B]"
+                        : "text-slate-500 hover:text-slate-800"
+                        }`}
+                      onClick={() => setActiveCategory("approved")}
+                    >
+                      <CheckCircleIcon className="w-3.5 h-3.5" />
+                      Approved ({approvedReviews.length})
+                    </button>
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
-          )}
-        </div>
-      </div>
-      <style>{`
+
+            <div className="p-6">
+              {currentReviews.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-12 text-slate-500">
+                  {activeCategory === "pending" ? (
+                    <>
+                      <PendingIcon className="w-12 h-12 mb-2 text-slate-400" />
+                      <p className="text-sm font-medium">No pending {activeTab === "books" ? "reviews" : "ratings"}</p>
+                      <p className="text-xs">All processed!</p>
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircleIcon className="w-12 h-12 mb-2 text-slate-400" />
+                      <p className="text-sm font-medium">No approved {activeTab === "books" ? "reviews" : "ratings"}</p>
+                    </>
+                  )}
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {currentReviews.map((review) => (
+                    <div
+                      key={review._id}
+                      className={`bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-xl p-4 transition-colors duration-200 shadow-sm hover:bg-white/90 ${review.isNew
+                        ? "border-[#7A1F2B]/50 bg-[#7A1F2B]/5"
+                        : ""
+                        }`}
+                    >
+                      <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-2">
+                            <h3 className="font-semibold text-slate-800">
+                              {review.userName}
+                            </h3>
+                            <span className="text-xs text-slate-500">
+                              {new Date(review.createdAt).toLocaleDateString()}
+                            </span>
+                            {/* Identify context if needed */}
+                            <span className="text-xs px-2 py-0.5 rounded-full bg-[#7A1F2B]/10 text-[#7A1F2B] border border-[#7A1F2B]/20">
+                              {activeTab === "books" ? "Book" : "Event"}
+                            </span>
+                          </div>
+
+                          {/* 1. Name */}
+                          <p className="text-sm text-slate-500 mb-2">
+                            {activeTab === "books" ? "Book: " : "Event: "}
+                            <strong className="text-slate-800 text-base">{review.bookName || review.event?.title || "Unknown"}</strong>
+                          </p>
+
+                          {/* 2. Stars */}
+                          <div className="flex items-center gap-1 mb-2">
+                            {Array.from({ length: review.rating }).map((_, i) => (
+                              <span key={i} className="text-amber-500 text-lg">
+                                ★
+                              </span>
+                            ))}
+                            {Array.from({ length: 5 - review.rating }).map(
+                              (_, i) => (
+                                <span key={i} className="text-slate-300 text-lg">
+                                  ★
+                                </span>
+                              )
+                            )}
+                          </div>
+
+                          {/* 3. Comment */}
+                          <p className="text-slate-600 italic mb-2">
+                            "{review.comment}"
+                          </p>
+                        </div>
+
+                        <div className="flex gap-2">
+                          {activeCategory === "pending" ? (
+                            <>
+                              <button
+                                onClick={() => approveReview(review._id)}
+                                className="inline-flex items-center justify-center px-4 py-2 rounded-full text-emerald-700 text-sm font-medium bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/90 transition-colors duration-200"
+                              >
+                                Approve
+                              </button>
+                              <button
+                                onClick={() =>
+                                  disapproveReview(review._id, review.userName)
+                                }
+                                className="inline-flex items-center justify-center px-4 py-2 rounded-full text-red-600 text-sm font-medium bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/90 transition-colors duration-200"
+                              >
+                                Disapprove
+                              </button>
+                            </>
+                          ) : (
+                            <span className="inline-flex items-center px-4 py-2 bg-white/70 text-emerald-700 text-sm font-medium rounded-full border border-white/70 ring-1 ring-black/5">
+                              <CheckCircleIcon className="w-4 h-4 mr-1" />
+                              Approved
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+          <style>{`
         @media (max-width: 640px) {
           .swal2-popup { width: 95% !important; padding: 15px !important; }
           #disapproval-reason { font-size: 14px !important; min-height: 100px !important; }
         }
       `}</style>
+        </div>
+      </div>
     </div>
   );
 };

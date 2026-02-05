@@ -90,7 +90,7 @@ const DashboardLayout = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100 font-montserrat">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#0D0842]"></div>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-2 border-gray-300 border-b-gray-800"></div>
           <p className="mt-4 text-gray-600">Verifying authentication...</p>
         </div>
       </div>
@@ -101,7 +101,7 @@ const DashboardLayout = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50 font-montserrat leading-snug">
+    <div className="flex min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 font-montserrat leading-snug">
       {isMobile && mobileSidebar && (
         <div
           className="fixed inset-0 bg-black/40 z-30"
@@ -109,14 +109,14 @@ const DashboardLayout = () => {
         ></div>
       )}
       <aside
-        className={`fixed top-0 h-screen bg-[#0D0842] text-white flex flex-col justify-between py-6 px-3 shadow-2xl z-40 transition-all duration-300 ${isMobile
+        className={`fixed top-0 h-screen bg-white/70 backdrop-blur-xl text-slate-700 flex flex-col justify-between py-6 px-3 shadow-[0_20px_45px_-30px_rgba(15,23,42,0.45)] z-40 transition-all duration-300 ${isMobile
           ? mobileSidebar
             ? "w-64 left-0"
             : "w-0 -left-64"
           : isExpanded
             ? "w-64 left-0"
             : "w-20 left-0"
-          } overflow-hidden border-r border-[#1a1655]`}
+          } overflow-hidden border border-white/60 ring-1 ring-black/5`}
       >
         <div>
           <div
@@ -125,17 +125,17 @@ const DashboardLayout = () => {
           >
             <div className="flex items-center gap-3">
               <img
-                src="/adminprofile.jpg"
+                src="/flower.webp"
                 alt="Admin Profile"
-                className="w-12 h-12 rounded-full object-cover border-2 border-[#c86836]"
+                className="w-12 h-12 rounded-full object-cover border border-white/70 ring-1 ring-black/5 shadow-sm"
               />
               {(isExpanded && !isMobile) || mobileSidebar ? (
                 <div className="flex flex-col">
-                  <span className="text-lg font-pt-serif font-bold text-white leading-tight">
+                  <span className="text-lg font-montserrat font-semibold text-slate-900 leading-tight">
                     Sita Admin
                   </span>
-                  <span className="text-xs text-[#c86836] font-montserrat font-medium">
-                    Foundation Dashboard
+                  <span className="text-xs text-slate-500 font-montserrat font-medium">
+                    Dashboard
                   </span>
                 </div>
               ) : null}
@@ -144,7 +144,7 @@ const DashboardLayout = () => {
             {!isMobile && (
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="text-gray-400 hover:text-[#c86836] transition-colors"
+                className="text-slate-500 hover:text-slate-800 transition-all duration-200 rounded-full p-2 bg-white/60 border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/80"
                 aria-label="Toggle sidebar"
               >
                 {isExpanded ? <ChevronLeftIcon fontSize="small" /> : <ChevronRightIcon fontSize="small" />}
@@ -156,10 +156,10 @@ const DashboardLayout = () => {
             <Link
               to="/dashboard"
               className={`no-underline flex items-center ${isExpanded || mobileSidebar ? "gap-4 px-4" : "justify-center px-2"
-                } py-3 rounded-lg transition-all duration-300 ${isActive("/dashboard") ? "bg-[#c86836] text-white shadow-md relative overflow-hidden" : "hover:bg-[#1a1655] text-gray-300 hover:text-white"
+                } py-2.5 rounded-xl transition-all duration-200 border border-transparent backdrop-blur-md ${isActive("/dashboard") ? "bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 text-[#7A1F2B] border-[#7A1F2B]/50 ring-1 ring-black/5 shadow-sm relative overflow-hidden" : "text-slate-600 hover:text-slate-900 hover:bg-white/70 hover:border-white/60 hover:ring-1 hover:ring-black/5"
                 }`}
             >
-              {isActive("/dashboard") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-white/20"></div>}
+              {isActive("/dashboard") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#7A1F2B]/35"></div>}
               <DashboardIcon className="w-5 h-5 flex-shrink-0" />
               {(isExpanded || mobileSidebar) && <span className="text-sm font-medium">Dashboard</span>}
             </Link>
@@ -167,12 +167,12 @@ const DashboardLayout = () => {
             <Link
               to="/dashboard/manage-books"
               className={`no-underline flex items-center ${isExpanded || mobileSidebar ? "gap-4 px-4" : "justify-center px-2"
-                } py-3 rounded-lg transition-all duration-300 ${isActive("/dashboard/manage-books")
-                  ? "bg-[#c86836] text-white shadow-md relative overflow-hidden"
-                  : "hover:bg-[#1a1655] text-gray-300 hover:text-white"
+                } py-2.5 rounded-xl transition-all duration-200 border border-transparent backdrop-blur-md ${isActive("/dashboard/manage-books")
+                  ? "bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 text-[#7A1F2B] border-[#7A1F2B]/50 ring-1 ring-black/5 shadow-sm relative overflow-hidden"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-white/70 hover:border-white/60 hover:ring-1 hover:ring-black/5"
                 }`}
             >
-              {isActive("/dashboard/manage-books") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-white/20"></div>}
+              {isActive("/dashboard/manage-books") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#7A1F2B]/35"></div>}
               <MenuBookIcon className="w-5 h-5 flex-shrink-0" />
               {(isExpanded || mobileSidebar) && <span className="text-sm font-medium">Manage Books</span>}
             </Link>
@@ -180,12 +180,12 @@ const DashboardLayout = () => {
             <Link
               to="/dashboard/add-blogs"
               className={`no-underline flex items-center ${isExpanded || mobileSidebar ? "gap-4 px-4" : "justify-center px-2"
-                } py-3 rounded-lg transition-all duration-300 ${isActive("/dashboard/add-blogs")
-                  ? "bg-[#c86836] text-white shadow-md relative overflow-hidden"
-                  : "hover:bg-[#1a1655] text-gray-300 hover:text-white"
+                } py-2.5 rounded-xl transition-all duration-200 border border-transparent backdrop-blur-md ${isActive("/dashboard/add-blogs")
+                  ? "bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 text-[#7A1F2B] border-[#7A1F2B]/50 ring-1 ring-black/5 shadow-sm relative overflow-hidden"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-white/70 hover:border-white/60 hover:ring-1 hover:ring-black/5"
                 }`}
             >
-              {isActive("/dashboard/add-blogs") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-white/20"></div>}
+              {isActive("/dashboard/add-blogs") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#7A1F2B]/35"></div>}
               <LibraryBooksIcon className="w-5 h-5 flex-shrink-0" />
               {(isExpanded || mobileSidebar) && <span className="text-sm font-medium">Manage Blogs</span>}
             </Link>
@@ -193,24 +193,24 @@ const DashboardLayout = () => {
             <Link
               to="/dashboard/cms"
               className={`no-underline flex items-center ${isExpanded || mobileSidebar ? "gap-4 px-4" : "justify-center px-2"
-                } py-3 rounded-lg transition-all duration-300 ${isActive("/dashboard/cms")
-                  ? "bg-[#c86836] text-white shadow-md relative overflow-hidden"
-                  : "hover:bg-[#1a1655] text-gray-300 hover:text-white"
+                } py-2.5 rounded-xl transition-all duration-200 border border-transparent backdrop-blur-md ${isActive("/dashboard/cms")
+                  ? "bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 text-[#7A1F2B] border-[#7A1F2B]/50 ring-1 ring-black/5 shadow-sm relative overflow-hidden"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-white/70 hover:border-white/60 hover:ring-1 hover:ring-black/5"
                 }`}
             >
-              {isActive("/dashboard/cms") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-white/20"></div>}
+              {isActive("/dashboard/cms") && <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#7A1F2B]/35"></div>}
               <ImageIcon className="w-5 h-5 flex-shrink-0" />
               {(isExpanded || mobileSidebar) && <span className="text-sm font-medium">CMS Module</span>}
             </Link>
           </nav>
         </div>
 
-        <div className={`${isExpanded || mobileSidebar ? "px-4 space-y-2" : "flex flex-col items-center space-y-2"} transition-all duration-300 border-t border-[#1a1655] pt-6`}>
+        <div className={`${isExpanded || mobileSidebar ? "px-4 space-y-2" : "flex flex-col items-center space-y-2"} transition-all duration-300 border-t border-white/60 pt-6`}>
           <Link
             to="/dashboard/settings/mfa"
-            className={`no-underline flex items-center gap-3 px-4 py-3 rounded-lg w-full transition-all duration-300 ${isActive("/dashboard/settings/mfa")
-              ? "bg-[#c86836] text-white shadow-md"
-              : "text-gray-300 hover:text-white hover:bg-[#1a1655]"
+            className={`no-underline flex items-center gap-3 px-4 py-3 rounded-xl w-full transition-all duration-300 border border-transparent backdrop-blur-md ${isActive("/dashboard/settings/mfa")
+              ? "bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 text-[#7A1F2B] border-[#7A1F2B]/50 ring-1 ring-black/5 shadow-sm"
+              : "text-slate-600 hover:text-slate-900 hover:bg-white/70 hover:border-white/60 hover:ring-1 hover:ring-black/5"
               } ${isExpanded || mobileSidebar ? "justify-start" : "justify-center"}`}
           >
             <SecurityIcon className="w-5 h-5 flex-shrink-0" />
@@ -219,7 +219,7 @@ const DashboardLayout = () => {
 
           <button
             onClick={handleLogout}
-            className={`flex items-center gap-3 px-4 py-3 text-red-400 hover:text-white hover:bg-red-600/20 rounded-lg w-full transition-all duration-300 ${isExpanded || mobileSidebar ? "justify-start" : "justify-center"
+            className={`flex items-center gap-3 px-4 py-3 text-red-500 hover:text-red-600 hover:bg-red-50/70 rounded-xl w-full transition-all duration-300 border border-transparent backdrop-blur-md hover:border-red-200/60 hover:ring-1 hover:ring-red-200/60 ${isExpanded || mobileSidebar ? "justify-start" : "justify-center"
               }`}
             aria-label="Logout"
           >
@@ -234,13 +234,13 @@ const DashboardLayout = () => {
           }`}
       >
         <header
-          className={`fixed top-0 z-20 flex flex-col items-center justify-center px-6 py-4 bg-white/90 backdrop-blur-sm shadow-sm transition-all duration-300 ${isExpanded && !isMobile ? "left-64" : !isMobile ? "left-20" : "left-0"
+          className={`fixed top-0 z-20 flex flex-col items-center justify-center px-6 py-4 bg-white/70 backdrop-blur-xl border-b border-white/60 shadow-[0_12px_30px_-24px_rgba(15,23,42,0.45)] transition-all duration-300 ${isExpanded && !isMobile ? "left-64" : !isMobile ? "left-20" : "left-0"
             } right-0`}
         >
           {isMobile && (
             <button
               onClick={() => setMobileSidebar(true)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-[#0D0842] hover:text-[#c86836]"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-700 hover:text-slate-900 rounded-full p-2 bg-white/70 border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/90 transition-all duration-200"
               aria-label="Open menu"
             >
               <MenuIcon fontSize="medium" />
