@@ -693,7 +693,7 @@ li {
 
 /* ----------------- TESTIMONIALS SECTION ----------------- */
 .sita-testimonials {
-  background-image: url("testimonial-bg.webp");
+  background-image: url("/testimonial-bg.webp");
   background-size: cover;
   background-position: center;
   padding: 40px 0 150px;
