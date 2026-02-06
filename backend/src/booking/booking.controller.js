@@ -13,7 +13,7 @@ const razorpay = new Razorpay({
  */
 const initiateBooking = async (req, res) => {
   try {
-    const { eventId, seats = 1, userName, userEmail, userPhone } = req.body;
+    const { eventId, seats = 1, userName, userEmail, userPhone, participants = [] } = req.body;
 
     const event = await Event.findById(eventId);
     if (!event) return res.status(404).json({ message: "Event not found" });
@@ -44,6 +44,7 @@ const initiateBooking = async (req, res) => {
       userName,
       userEmail,
       userPhone,
+      participants,
       seats,
       totalAmount,
       paymentStatus: totalAmount > 0 ? "pending" : "paid",
@@ -59,7 +60,25 @@ const initiateBooking = async (req, res) => {
       const { sendBookingConfirmationEmail } = require("../services/emailService");
       // Populate event for email
       const populatedBooking = await Booking.findById(booking._id).populate("event");
-      await sendBookingConfirmationEmail(populatedBooking);
+
+      // Send to all participants
+      const uniqueEmails = new Set();
+      if (populatedBooking.participants && populatedBooking.participants.length > 0) {
+        for (const p of populatedBooking.participants) {
+          if (p.email && !uniqueEmails.has(p.email)) {
+            uniqueEmails.add(p.email);
+            const pBooking = {
+              ...populatedBooking.toObject(),
+              userName: p.name,
+              userEmail: p.email
+            };
+            await sendBookingConfirmationEmail(pBooking);
+          }
+        }
+      } else {
+        // Fallback for legacy
+        await sendBookingConfirmationEmail(populatedBooking);
+      }
     }
 
     res.json({
@@ -114,9 +133,26 @@ const verifyBooking = async (req, res) => {
       await event.save();
     }
 
-    // Send Confirmation Email
+    // Send Confirmation Email to ALL participants
     const { sendBookingConfirmationEmail } = require("../services/emailService");
-    await sendBookingConfirmationEmail(booking);
+
+    const uniqueEmails = new Set();
+    if (booking.participants && booking.participants.length > 0) {
+      for (const p of booking.participants) {
+        if (p.email && !uniqueEmails.has(p.email)) {
+          uniqueEmails.add(p.email);
+          const pBooking = {
+            ...booking.toObject(),
+            userName: p.name,
+            userEmail: p.email
+          };
+          await sendBookingConfirmationEmail(pBooking);
+        }
+      }
+    } else {
+      // Fallback if no participants array
+      await sendBookingConfirmationEmail(booking);
+    }
 
     res.json({ success: true, message: "Booking confirmed!" });
 

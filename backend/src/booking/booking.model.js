@@ -12,6 +12,14 @@ const bookingSchema = new mongoose.Schema(
     userEmail: { type: String, required: true },
     userPhone: { type: String },
 
+    participants: [
+      {
+        name: { type: String },
+        email: { type: String },
+        phone: { type: String }
+      }
+    ],
+
     status: {
       type: String,
       enum: ["CONFIRMED", "CANCELLED", "PENDING"],
