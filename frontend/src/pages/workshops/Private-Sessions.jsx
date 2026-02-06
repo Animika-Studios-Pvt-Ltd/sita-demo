@@ -106,6 +106,125 @@ const PrivateSessions = () => {
           </a>
         </div>
       </section>
+
+      {/* --------------------- INDIVIDUAL SESSIONS MAY SUPPORT SECTION ---------------------- */}
+      <section className="group-sessions-core-elements individual-sessions-may-support">
+        <div className="container">
+          <h4 data-aos="fade-up">Individual Sessions May Support</h4>
+          <div className="row">
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <ul className="group-sessions-core-elements-list">
+                <li data-aos="fade-up" data-aos-delay="400">
+                  <img src="/sita-points1.webp" alt="bullet" />
+                  <span>Understanding your Soul’s Curriculum</span>
+                </li>
+                <li data-aos="fade-up" data-aos-delay="450">
+                  <img src="/sita-points1.webp" alt="bullet" />
+                  <span>
+                    Releasing karmic patterns that create repeating challenges
+                  </span>
+                </li>
+                <li data-aos="fade-up" data-aos-delay="500">
+                  <img src="/sita-points1.webp" alt="bullet" />
+                  <span>
+                    Rekindling health through Ayurvedic protocols and rhythm
+                  </span>
+                </li>
+                <li data-aos="fade-up" data-aos-delay="550">
+                  <img src="/sita-points1.webp" alt="bullet" />
+                  <span>
+                    Nervous system regulation through yogic and somatic tools
+                  </span>
+                </li>
+                <li data-aos="fade-up" data-aos-delay="400">
+                  <img src="/sita-points1.webp" alt="bullet" />
+                  <span>Aligning with career and dharma without force</span>
+                </li>
+              </ul>
+            </div>
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <ul className="group-sessions-core-elements-list">
+                <li data-aos="fade-up" data-aos-delay="450">
+                  <img src="/sita-points1.webp" alt="bullet" />
+                  <span>Emotional healing and relational clarity</span>
+                </li>
+                <li data-aos="fade-up" data-aos-delay="500">
+                  <img src="/sita-points1.webp" alt="bullet" />
+                  <span>Spiritual practice and sadhana development</span>
+                </li>
+                <li data-aos="fade-up" data-aos-delay="550">
+                  <img src="/sita-points1.webp" alt="bullet" />
+                  <span>Trauma-informed integration and embodiment</span>
+                </li>
+                <li data-aos="fade-up" data-aos-delay="550">
+                  <img src="/sita-points1.webp" alt="bullet" />
+                  <span>Reconnecting to meaning, dignity, and direction</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <p className="mb-0" data-aos="fade-up" data-aos-delay="600">
+            You are met where you are. Nothing is rushed. Nothing is forced. The
+            intention is clarity, freedom, and alignment with your deepest
+            purpose.
+          </p>
+        </div>
+      </section>
+      {/* --------------------- COUPLE SESSIONS SECTION ---------------------- */}
+      <section className="what-makes-this-work-unique couple-sessions-section">
+        <div className="container">
+          <h4 data-aos="fade-up">Couples Sessions</h4>
+          <p className="paragraph" data-aos="fade-up" data-aos-delay="100">
+            Sita also works with couples seeking clarity, healing or expansion
+            in their relationship. These sessions are not conflict management or
+            surface communication coaching. They go deeper into the energetic
+            architecture of the relationship.
+          </p>
+          <p className="heading" data-aos="fade-up" data-aos-delay="200">
+            Through Jyotish synastry, Ayurvedic psychology and yogic frameworks,
+            Sita supports couples in understanding:
+          </p>
+          <div className="row">
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <ul className="what-makes-this-work-unique-list">
+                <li data-aos="fade-up" data-aos-delay="400">
+                  <img src="/sita-points.webp" alt="bullet" />
+                  <span>Shared soul themes and karmic agreements</span>
+                </li>
+                <li data-aos="fade-up" data-aos-delay="400">
+                  <img src="/sita-points.webp" alt="bullet" />
+                  <span>Emotional and attachment patterns</span>
+                </li>
+                <li data-aos="fade-up" data-aos-delay="450">
+                  <img src="/sita-points.webp" alt="bullet" />
+                  <span>
+                    Intimacy, communication, and nervous system compatibility
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <ul className="what-makes-this-work-unique-list">
+                <li data-aos="fade-up" data-aos-delay="550">
+                  <img src="/sita-points.webp" alt="bullet" />
+                  <span>Dharma of the partnership and where it is growing</span>
+                </li>
+                <li data-aos="fade-up" data-aos-delay="400">
+                  <img src="/sita-points.webp" alt="bullet" />
+                  <span>
+                    How to strengthen the relationship through aligned practice
+                    and truth
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <p className="mb-0" data-aos="fade-up" data-aos-delay="600">
+            These sessions bring compassion, insight, and a shared language that
+            allows the relationship to make sense at the soul level.
+          </p>
+        </div>
+      </section>
       {/* ---------------- SESSIONS SECTION ---------------- */}
       <section className="sita-masterclass sessions-section">
         <div className="container text-center">
