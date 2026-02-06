@@ -688,7 +688,7 @@ li {
   background-position: center;
   padding: 40px 0 150px;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .sita-testimonial-decor {
