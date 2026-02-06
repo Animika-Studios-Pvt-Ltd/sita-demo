@@ -225,6 +225,9 @@ app.get('/api/health', async (req, res) => {
 // ============================================
 // ROUTE IMPORTS
 // ============================================
+// ============================================
+// ROUTE IMPORTS
+// ============================================
 const bookRoutes = require("./src/books/book.route")
 const orderRoutes = require("./src/orders/order.route")
 const userRoutes = require("./src/users/user.route")
@@ -239,6 +242,8 @@ const paymentRoutes = require('./src/payments/payment.route')
 const smsRoutes = require("./src/sms/sms.route")
 const shippingRoutes = require('./src/shipping/shipping.route')
 const eventRoutes = require("./src/events/event.routes");
+const articleRoutes = require("./src/articles/article.route");
+const podcastRoutes = require("./src/podcasts/podcast.route");
 app.use("/api/blocked-dates", require("./src/blockedDates/blockedDate.routes"));
 app.use("/api/bookings", require("./src//booking/booking.routes"));
 
@@ -261,6 +266,8 @@ app.use("/api/admin-auth", adminAuthRoutes)
 app.use('/api/payment', paymentRoutes)
 app.use("/api/sms", smsRoutes)
 app.use("/api/events", eventRoutes);
+app.use("/api/articles", articleRoutes);
+app.use("/api/podcasts", podcastRoutes);
 
 // ============================================
 // ROOT ENDPOINT
