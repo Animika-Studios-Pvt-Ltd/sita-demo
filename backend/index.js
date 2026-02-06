@@ -36,9 +36,6 @@ app.use(
     origin: [
       "http://localhost:5173",
       "http://admin.localhost:5173",
-      "http://store.localhost:5173",
-      "http://booking.localhost:5173",
-      "http://blog.localhost:5173",
       "http://127.0.0.1:5500",
       "http://localhost:5500",
       "https://sita-demo-front.onrender.com",
@@ -46,11 +43,6 @@ app.use(
       "https://sitashakti.com",
       "https://www.sitashakti.com",
       "https://admin.sitashakti.com",
-      "https://store.sitashakti.com",
-      "https://booking.sitashakti.com",
-      "https://blog.sitashakti.com",
-      "https://sita-demo.vercel.app",
-      /\.vercel\.app$/
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
@@ -157,9 +149,6 @@ const io = new Server(server, {
     origin: [
       "http://localhost:5173",
       "http://admin.localhost:5173",
-      "http://store.localhost:5173",
-      "http://booking.localhost:5173",
-      "http://blog.localhost:5173",
       "http://127.0.0.1:5500",
       "http://localhost:5500",
       "https://sita-demo-front.onrender.com",
@@ -167,11 +156,6 @@ const io = new Server(server, {
       "https://sitashakti.com",
       "https://www.sitashakti.com",
       "https://admin.sitashakti.com",
-      "https://store.sitashakti.com",
-      "https://booking.sitashakti.com",
-      "https://blog.sitashakti.com",
-      "https://sita-demo.vercel.app",
-      /\.vercel\.app$/
     ],
     methods: ["GET", "POST", "PATCH", "DELETE"],
   },
