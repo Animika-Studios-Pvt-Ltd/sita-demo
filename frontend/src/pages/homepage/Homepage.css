@@ -264,6 +264,25 @@ li {
   transform: scale(1.1);
 }
 
+.sita-service-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 0, 0, 0.575);
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.sita-factor-services .row:hover .sita-service-card::after {
+  opacity: 1;
+}
+
+.sita-factor-services .row .sita-service-card:hover::after {
+  opacity: 0;
+}
+
 .sita-service-card span {
   position: relative;
   width: 100%;
