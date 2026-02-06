@@ -25,7 +25,7 @@ import PrivateSessions from "../../pages/workshops/Private-Sessions";
 import ShakthiLeadership from "../../pages/workshops/Shakthi-Leadership";
 import TeacherTraining from "../../pages/workshops/Teacher-Training";
 import Articles from "../../pages/resources/Articles";
-import Podcasts from "../../pages/resources/Podcasts";
+import PodcastsPage from "../../pages/resources/PodcastsPage"; // NEW
 import PrivacyPolicy from "../../pages/privacy and disclaimer/PrivacyPolicy";
 import Disclaimer from "../../pages/privacy and disclaimer/Disclaimer";
 import Contact from "../../pages/contact/Contact";
@@ -36,6 +36,8 @@ import StudyWithSita from "../../pages/sita factor/StudyWithSita";
 // Blog Imports
 import BlogsPage from "../../pages/blogs/BlogsPage";
 import BlogDetailPage from "../../pages/blogs/BlogDetailPage";
+import ArticlesPage from "../../pages/articles/ArticlesPage";
+import ArticleDetailPage from "../../pages/articles/ArticleDetailPage";
 
 // Store Imports
 import SingleBook from "../../pages/books/SingleBook";
@@ -72,8 +74,8 @@ export const mainRoutes = [
       { path: "/private-sessions", element: <PrivateSessions /> },
       { path: "/shakthi-leadership", element: <ShakthiLeadership /> },
       { path: "/teacher-training", element: <TeacherTraining /> },
-      { path: "/articles", element: <Articles /> },
-      { path: "/podcasts", element: <Podcasts /> },
+      // { path: "/articles", element: <Articles /> }, // Commented out to use new ArticlesPage
+      { path: "/podcasts", element: <PodcastsPage /> }, // Updated
       { path: "/privacy-policy", element: <PrivacyPolicy /> },
       { path: "/disclaimer", element: <Disclaimer /> },
       { path: "/contact", element: <Contact /> },
@@ -110,6 +112,10 @@ export const mainRoutes = [
       // Blog Routes
       { path: "blogs", element: <BlogsPage /> },
       { path: "blogs/:id", element: <BlogDetailPage /> },
+
+      // Article Routes
+      { path: "articles", element: <ArticlesPage /> },
+      { path: "articles/:slug", element: <ArticleDetailPage /> },
 
       // Booking / Calendar Routes
 
