@@ -5,7 +5,8 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-const BACKEND_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const BACKEND_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const LetterFromLangshott = () => {
   const [letters, setLetters] = useState([]);
@@ -78,7 +79,7 @@ const LetterFromLangshott = () => {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb m-0 p-0 flex flex-wrap gap-2 text-sm sm:text-base">
               <li className="breadcrumb-item">
-                <a href="https://sitashakti.com" className="text-gray">
+                <a href="/" className="text-gray">
                   Home
                 </a>
               </li>
@@ -144,7 +145,9 @@ const LetterFromLangshott = () => {
                             onClick={() => window.open(fileUrl, "_blank")}>
                             <img
                               src={
-                                hoveredId === _id ? "/2-Letter-gif.gif" : "/Letter.webp"
+                                hoveredId === _id
+                                  ? "/2-Letter-gif.gif"
+                                  : "/Letter.webp"
                               }
                               alt="PDF Preview"
                               className="transition-all duration-300 ease-in-out"
@@ -155,11 +158,14 @@ const LetterFromLangshott = () => {
                               {title}
                             </h3>
                             <p className="text-xs sm:text-sm lg:text-sm text-gray-500 mb-2">
-                              {new Date(uploadedAt).toLocaleDateString("en-GB", {
-                                day: "2-digit",
-                                month: "long",
-                                year: "numeric",
-                              })}
+                              {new Date(uploadedAt).toLocaleDateString(
+                                "en-GB",
+                                {
+                                  day: "2-digit",
+                                  month: "long",
+                                  year: "numeric",
+                                },
+                              )}
                             </p>
 
                             <div className="flex justify-start gap-3 mt-4 flex-wrap">
@@ -172,10 +178,11 @@ const LetterFromLangshott = () => {
                               </a>
                               <button
                                 onClick={() => handleCopyLink(fileUrl, _id)}
-                                className={`flex flex-col items-center no-underline ${copiedId === _id
-                                  ? "text-gray-700"
-                                  : "text-gray-700 hover:text-[#2563eb]"
-                                  } text-[11px] sm:text-sm md:text-base font-medium px-2`}>
+                                className={`flex flex-col items-center no-underline ${
+                                  copiedId === _id
+                                    ? "text-gray-700"
+                                    : "text-gray-700 hover:text-[#2563eb]"
+                                } text-[11px] sm:text-sm md:text-base font-medium px-2`}>
                                 <LinkIcon className="!text-[18px] sm:!text-[20px] md:!text-[22px] mb-[4px]" />
                                 {copiedId === _id ? "Copied!" : "Copy Link"}
                               </button>
@@ -184,7 +191,7 @@ const LetterFromLangshott = () => {
                         </div>
                       </div>
                     );
-                  }
+                  },
                 )}
               </div>
 
@@ -200,7 +207,9 @@ const LetterFromLangshott = () => {
                   <ArrowLeft size={16} strokeWidth={2} />
                 </button>
 
-                {currentPage > 3 && <span className="text-gray-400 select-none">...</span>}
+                {currentPage > 3 && (
+                  <span className="text-gray-400 select-none">...</span>
+                )}
 
                 {Array.from({ length: totalPages }, (_, i) => i + 1)
                   .filter((num) => {
@@ -221,18 +230,23 @@ const LetterFromLangshott = () => {
                       key={num}
                       onClick={() => setCurrentPage(num)}
                       className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
-          ${currentPage === num
-                          ? "bg-[#993333] text-white"
-                          : "border border-transparent text-black hover:border-black hover:bg-gray-100"
-                        }`}>
+          ${
+            currentPage === num
+              ? "bg-[#993333] text-white"
+              : "border border-transparent text-black hover:border-black hover:bg-gray-100"
+          }`}>
                       {num}
                     </button>
                   ))}
 
-                {currentPage < totalPages - 2 && <span className="text-gray-400 select-none">...</span>}
+                {currentPage < totalPages - 2 && (
+                  <span className="text-gray-400 select-none">...</span>
+                )}
 
                 <button
-                  onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                  onClick={() =>
+                    setCurrentPage((p) => Math.min(p + 1, totalPages))
+                  }
                   disabled={currentPage === totalPages}
                   className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition">
                   <ArrowRight size={16} strokeWidth={2} />

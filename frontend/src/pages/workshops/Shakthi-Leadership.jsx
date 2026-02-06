@@ -30,13 +30,15 @@ const ShakthiLeadership = () => {
           </div>
         </div>
 
-        <img
-          src="/group-sessions-image.webp"
+        <div
           className="sita-inner-side-img"
-          alt="Group Sessions Image"
           data-aos="fade-left"
-          data-aos-duration="2000"
-        />
+          data-aos-duration="2000">
+          <img
+            src="/group-sessions-image.webp"
+            alt="Shakthi Leadership Image"
+          />
+        </div>
       </section>
 
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
@@ -86,7 +88,7 @@ const ShakthiLeadership = () => {
               </div>
 
               <div className="sita-inner-full-content">
-                <p>
+                <p data-aos="fade-up" data-aos-delay="450">
                   Where traditional leadership models often emphasize hierarchy,
                   competition, and authority, Shakti Leadership emphasizes
                   balance between capacities traditionally associated with the
@@ -94,7 +96,7 @@ const ShakthiLeadership = () => {
                   creates leaders and teams who are creative, adaptive,
                   inclusive, and effective.
                 </p>
-                <p>
+                <p data-aos="fade-up" data-aos-delay="600">
                   Sita brings this framework into her coaching, mentoring, and
                   group programs in a way that is accessible, human-centered,
                   and transformational. She works with individuals and teams to
@@ -105,7 +107,11 @@ const ShakthiLeadership = () => {
               </div>
             </div>
           </div>
-          <a href="/booking" className="sita-workshops-btn">
+          <a
+            href="/booking"
+            className="sita-workshops-btn"
+            data-aos="zoom-in"
+            data-aos-delay="500">
             Enquiry Now
           </a>
         </div>
@@ -182,7 +188,7 @@ const ShakthiLeadership = () => {
       {/* ---------------- CTA STRIP SECTION ---------------- */}
       <div className="sita-cta-wrapper" data-aos="zoom-in">
         <span className="cta-border">
-          <a href="/contact" className="sita-cta-btn">
+          <a href="/booking" className="sita-cta-btn">
             Book a Meeting with Sita
           </a>
         </span>

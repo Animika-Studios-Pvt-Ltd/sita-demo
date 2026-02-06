@@ -33,14 +33,15 @@ const AyurvedaNutrition = () => {
             />
           </div>
         </div>
-
-        <img
-          src="/ayurveda-nutrition-image.webp"
+        <div
           className="sita-inner-side-img"
-          alt="Yoga Therapy Image"
           data-aos="fade-left"
-          data-aos-duration="2000"
-        />
+          data-aos-duration="2000">
+          <img
+            src="/ayurveda-nutrition-image.webp"
+            alt="Ayurveda Nutrition Image"
+          />
+        </div>
       </section>
 
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
@@ -82,7 +83,6 @@ const AyurvedaNutrition = () => {
                   emotional, or energetic.
                 </p>
               </div>
-
               <div className="sita-inner-full-content">
                 <p data-aos="fade-up" data-aos-delay="100">
                   This integrative approach may include guidance on daily
@@ -121,6 +121,9 @@ const AyurvedaNutrition = () => {
               </div>
             </div>
           </div>
+          <a href="/booking" className="sita-workshops-btn mt-2">
+            Explore Workshops
+          </a>
         </div>
       </section>
 
@@ -133,7 +136,7 @@ const AyurvedaNutrition = () => {
       {/* ---------------- CTA STRIP SECTION ---------------- */}
       <div className="sita-cta-wrapper" data-aos="zoom-in">
         <span className="cta-border">
-          <a href="/contact" className="sita-cta-btn">
+          <a href="/booking" className="sita-cta-btn">
             Book a Meeting with Sita
           </a>
         </span>

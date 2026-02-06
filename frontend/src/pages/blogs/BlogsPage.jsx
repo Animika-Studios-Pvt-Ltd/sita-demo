@@ -40,7 +40,7 @@ const BlogsPage = () => {
       setBlogs(
         data
           .filter((blog) => !blog.suspended)
-          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
       );
     } catch (err) {
       console.error("Failed to fetch blogs", err);
@@ -70,17 +70,12 @@ const BlogsPage = () => {
       </section>
 
       <SitaBreadcrumb
-        items={[
-          { label: "Home", path: "https://sitashakti.com" },
-          { label: "Blogs" },
-        ]}
+        items={[{ label: "Home", path: "/" }, { label: "Blogs" }]}
       />
       <div className="container" data-aos="fade-up">
-
         <div className="max-w-6xl mx-auto px-4 text-center">
           {/* HEADER */}
-          <h2
-            className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+          <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
             BLOGS BY SITA
           </h2>
           <img
@@ -109,8 +104,7 @@ const BlogsPage = () => {
                             aspect-[2/1]
                             border-b
                             border-[#8b171b]
-                          "
-                >
+                          ">
                   {/* IMAGE */}
                   <div className="relative w-full aspect-[1.25/1] overflow-hidden mb-3">
                     <img
@@ -137,8 +131,7 @@ const BlogsPage = () => {
                                 rounded-t-md
                                 shadow
                                 font-montserratLight
-                              "
-                    >
+                              ">
                       {new Date(blog.createdAt).toLocaleDateString("en-US", {
                         month: "short",
                         day: "2-digit",
@@ -156,8 +149,7 @@ const BlogsPage = () => {
                                 mb-1
                                 text-black
                                 leading-snug
-                              "
-                    >
+                              ">
                       {blog.title}
                     </h4>
 
@@ -169,14 +161,13 @@ const BlogsPage = () => {
                                 leading-snug
                                 h-[70px]
                                 overflow-hidden
-                              "
-                    >
+                              ">
                       <span
                         dangerouslySetInnerHTML={{
                           __html: sanitizeDescription(
                             blog.description.length > 200
                               ? blog.description.slice(0, 200) + "..."
-                              : blog.description
+                              : blog.description,
                           ),
                         }}
                       />
@@ -191,8 +182,7 @@ const BlogsPage = () => {
                               italic
                               mt-2
                               mb-2
-                            "
-                  >
+                            ">
                     – {blog.author || "Sita Severson"}
                   </span>
 
@@ -212,8 +202,7 @@ const BlogsPage = () => {
                               hover:opacity-90
                               no-underline
                               mb-3
-                            `}
-                  >
+                            `}>
                     {blog.readMoreText || "Get insights"}
                   </Link>
                 </div>
@@ -227,9 +216,7 @@ const BlogsPage = () => {
             data-aos="fade-up"
             data-aos-duration="1500">
             <button
-              onClick={() =>
-                setCurrentPage((prev) => Math.max(prev - 1, 1))
-              }
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition">
               <ArrowLeft size={18} strokeWidth={2} />
@@ -257,10 +244,11 @@ const BlogsPage = () => {
                   key={num}
                   onClick={() => setCurrentPage(num)}
                   className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
-          ${currentPage === num
-                      ? "bg-[#993333] text-white"
-                      : "border border-transparent text-black hover:border-black hover:bg-gray-100"
-                    }`}>
+          ${
+            currentPage === num
+              ? "bg-[#993333] text-white"
+              : "border border-transparent text-black hover:border-black hover:bg-gray-100"
+          }`}>
                   {num}
                 </button>
               ))}

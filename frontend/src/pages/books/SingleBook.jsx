@@ -52,11 +52,16 @@ const SingleBook = () => {
 
   const { data: booksData } = useFetchAllBooksQuery();
 
-  const latestBooks = booksData?.books?.length > 0
-    ? [...booksData.books].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 4)
-    : booksData?.length > 0
-      ? [...booksData].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 4)
-      : [];
+  const latestBooks =
+    booksData?.books?.length > 0
+      ? [...booksData.books]
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .slice(0, 4)
+      : booksData?.length > 0
+        ? [...booksData]
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .slice(0, 4)
+        : [];
   const {
     data: bookById,
     isLoading: idLoading,
@@ -117,7 +122,7 @@ const SingleBook = () => {
     if (book?.reviews && currentUser) {
       const userReview = book.reviews.find(
         (rev) =>
-          rev.userId === currentUser.uid || rev.userId === currentUser.sub
+          rev.userId === currentUser.uid || rev.userId === currentUser.sub,
       );
       if (userReview) {
         setRating(userReview.rating);
@@ -304,7 +309,7 @@ const SingleBook = () => {
     (rev) =>
       rev.userId === currentUser?.uid ||
       rev.userId === currentUser?.sub ||
-      rev.userEmail === currentUser?.email
+      rev.userEmail === currentUser?.email,
   );
 
   const otherReviews = approvedReviews
@@ -326,10 +331,7 @@ const SingleBook = () => {
         </div>
       </section>
       <SitaBreadcrumb
-        items={[
-          { label: "Home", path: "https://sitashakti.com" },
-          { label: "Publications" },
-        ]}
+        items={[{ label: "Home", path: "/" }, { label: "Publications" }]}
       />
       <div className="container" data-aos="fade-up" data-aos-duration="1000">
         {isSuspended && (
@@ -371,8 +373,9 @@ const SingleBook = () => {
                       <img
                         src={book.coverImage || "/placeholder-book.jpg"}
                         alt="Front View"
-                        className={`thumb-img ${isSuspended ? "opacity-60 grayscale" : ""
-                          }`}
+                        className={`thumb-img ${
+                          isSuspended ? "opacity-60 grayscale" : ""
+                        }`}
                         onClick={() => setSelectedImage(book.coverImage)}
                       />
                     </div>
@@ -382,8 +385,9 @@ const SingleBook = () => {
                       <img
                         src={book.backImage || "/placeholder-book.jpg"}
                         alt="Back View"
-                        className={`thumb-img ${isSuspended ? "opacity-60 grayscale" : ""
-                          }`}
+                        className={`thumb-img ${
+                          isSuspended ? "opacity-60 grayscale" : ""
+                        }`}
                         onClick={() => setSelectedImage(book.backImage)}
                       />
                     </div>
@@ -444,7 +448,10 @@ const SingleBook = () => {
                 {isSuspended ? (
                   <button
                     className="out-of-stock"
-                    style={{ backgroundColor: "#993333", cursor: "not-allowed" }}
+                    style={{
+                      backgroundColor: "#993333",
+                      cursor: "not-allowed",
+                    }}
                     disabled>
                     <BlockIcon fontSize="small" />
                     Currently Out of Stock
@@ -547,7 +554,7 @@ const SingleBook = () => {
                           url: currentPageUrl,
                         })
                         .catch((error) =>
-                          console.error("Error sharing content:", error)
+                          console.error("Error sharing content:", error),
                         );
                     } else {
                       navigator.clipboard.writeText(currentPageUrl);
@@ -582,7 +589,7 @@ const SingleBook = () => {
                 {hasDiscount && (
                   <span className="discount">
                     {Math.round(
-                      ((book.oldPrice - book.newPrice) / book.oldPrice) * 100
+                      ((book.oldPrice - book.newPrice) / book.oldPrice) * 100,
                     )}
                     % off
                   </span>
@@ -763,7 +770,9 @@ const SingleBook = () => {
                           {Array.from({ length: 5 }, (_, i) => (
                             <span
                               key={i}
-                              className={i < rev.rating ? "star filled" : "star"}>
+                              className={
+                                i < rev.rating ? "star filled" : "star"
+                              }>
                               ★
                             </span>
                           ))}
@@ -840,14 +849,19 @@ const SingleBook = () => {
                         {!book.suspended ? (
                           <p>
                             {bookHasDiscount && (
-                              <span className="old-price">₹ {book.oldPrice}</span>
+                              <span className="old-price">
+                                ₹ {book.oldPrice}
+                              </span>
                             )}{" "}
-                            <span className="current-price">₹ {book.newPrice}</span>{" "}
+                            <span className="current-price">
+                              ₹ {book.newPrice}
+                            </span>{" "}
                             {bookHasDiscount && (
                               <span className="discount">
                                 {Math.round(
-                                  ((book.oldPrice - book.newPrice) / book.oldPrice) *
-                                  100
+                                  ((book.oldPrice - book.newPrice) /
+                                    book.oldPrice) *
+                                    100,
                                 )}
                                 % off
                               </span>

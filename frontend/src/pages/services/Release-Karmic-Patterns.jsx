@@ -33,14 +33,15 @@ const ReleaseKarmicPatterns = () => {
             />
           </div>
         </div>
-
-        <img
-          src="/release-karmic-patterns-image.webp"
+        <div
           className="sita-inner-side-img"
-          alt="Yoga Therapy Image"
           data-aos="fade-left"
-          data-aos-duration="2000"
-        />
+          data-aos-duration="2000">
+          <img
+            src="/release-karmic-patterns-image.webp"
+            alt="Release Karmic Patterns Image"
+          />
+        </div>
       </section>
 
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
@@ -101,6 +102,9 @@ const ReleaseKarmicPatterns = () => {
               </div>
             </div>
           </div>
+          <a href="/booking" className="sita-workshops-btn mt-2">
+            Explore Workshops
+          </a>
         </div>
       </section>
 
@@ -113,7 +117,7 @@ const ReleaseKarmicPatterns = () => {
       {/* ---------------- CTA STRIP SECTION ---------------- */}
       <div className="sita-cta-wrapper" data-aos="zoom-in">
         <span className="cta-border">
-          <a href="/contact" className="sita-cta-btn">
+          <a href="/booking" className="sita-cta-btn">
             Book a Meeting with Sita
           </a>
         </span>

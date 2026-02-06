@@ -30,14 +30,12 @@ const YogaTherapy = () => {
             <img src="/yoga-therapy-banner.webp" alt="Yoga Therapy Banner" />
           </div>
         </div>
-
-        <img
-          src="/yoga-therapy-image.webp"
+        <div
           className="sita-inner-side-img"
-          alt="Yoga Therapy Image"
           data-aos="fade-left"
-          data-aos-duration="2000"
-        />
+          data-aos-duration="2000">
+          <img src="/yoga-therapy-image.webp" alt="Yoga Therapy Image" />
+        </div>
       </section>
 
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
@@ -124,6 +122,9 @@ const YogaTherapy = () => {
               </div>
             </div>
           </div>
+          <a href="/booking" className="sita-workshops-btn mt-2">
+            Explore Workshops
+          </a>
         </div>
       </section>
 
@@ -136,7 +137,7 @@ const YogaTherapy = () => {
       {/* ---------------- CTA STRIP SECTION ---------------- */}
       <div className="sita-cta-wrapper" data-aos="zoom-in">
         <span className="cta-border">
-          <a href="/contact" className="sita-cta-btn">
+          <a href="/booking" className="sita-cta-btn">
             Book a Meeting with Sita
           </a>
         </span>

@@ -8,7 +8,8 @@ import "aos/dist/aos.css";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 import "../../assets/herosection.css";
 
-const BACKEND_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const BACKEND_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const sanitizeDescription = (html) => {
   return html
@@ -28,7 +29,6 @@ const BlogDetailPage = () => {
   const activeBooks = books.filter((book) => !book.suspended);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     AOS.init({
       duration: 1200,
@@ -47,7 +47,7 @@ const BlogDetailPage = () => {
     setFade(false);
     setTimeout(() => {
       setCurrentIndex((prev) =>
-        prev === 0 ? activeBooks.length - 1 : prev - 1
+        prev === 0 ? activeBooks.length - 1 : prev - 1,
       );
       setFade(true);
     }, 300);
@@ -104,11 +104,7 @@ const BlogDetailPage = () => {
     );
 
   if (!blog)
-    return (
-      <p className="text-center mt-10 text-gray-600">
-        Blog not found.
-      </p>
-    );
+    return <p className="text-center mt-10 text-gray-600">Blog not found.</p>;
 
   const totalPages = Math.ceil(latestBlogs.length / blogsPerPage);
   const indexOfLast = currentPage * blogsPerPage;
@@ -117,8 +113,6 @@ const BlogDetailPage = () => {
 
   return (
     <>
-
-
       <section className="blog-details-inner-hero">
         <div className="blog-details-inner-hero-bg"></div>
         <div className="blog-details-inner-hero-image">
@@ -136,7 +130,7 @@ const BlogDetailPage = () => {
 
       <SitaBreadcrumb
         items={[
-          { label: "Home", path: "https://sitashakti.com" },
+          { label: "Home", path: "/" },
           {
             label: "Blogs",
             path: "/blogs",
@@ -193,16 +187,24 @@ const BlogDetailPage = () => {
                   </h3>
                   {activeBooks.length > 0 && (
                     <div className="flex flex-col items-center text-center rounded-lg overflow-hidden relative flex-grow">
-                      <div className={`flex flex-col items-center absolute transition-all duration-700 ease-in-out transform will-change-transform ${fade ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
+                      <div
+                        className={`flex flex-col items-center absolute transition-all duration-700 ease-in-out transform will-change-transform ${fade ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
                         <>
-                          <Link to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`} className="no-underline">
+                          <Link
+                            to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`}
+                            className="no-underline">
                             <img
-                              src={activeBooks[currentIndex]?.coverImage || "/placeholder-book.jpg"}
+                              src={
+                                activeBooks[currentIndex]?.coverImage ||
+                                "/placeholder-book.jpg"
+                              }
                               alt={activeBooks[currentIndex]?.title}
                               className="w-40 h-58 object-cover mb-4 cursor-pointer hover:scale-105 transition-transform duration-500"
                             />
                           </Link>
-                          <Link to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`} className="no-underline">
+                          <Link
+                            to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`}
+                            className="no-underline">
                             <h4 className="text-[16px] sm:text-[18px] md:text-[20px] text-black font-Figtree mb-3 hover:text-[#993333] transition-colors duration-300 cursor-pointer">
                               {activeBooks[currentIndex]?.title}
                             </h4>
@@ -240,12 +242,9 @@ const BlogDetailPage = () => {
             className="max-w-8xl mx-auto py-0"
             data-aos="fade-up"
             data-aos-duration="1200">
-
             {/* HEADER */}
-            <div className="" data-aos="fade-up"
-              data-aos-duration="1200">
-              <h2
-                className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+            <div className="" data-aos="fade-up" data-aos-duration="1200">
+              <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
                 Latest Blogs
               </h2>
               <img
@@ -275,8 +274,7 @@ const BlogDetailPage = () => {
                             aspect-[2/1]
                             border-b
                             border-[#8b171b]
-                          "
-                  >
+                          ">
                     {/* IMAGE */}
                     <div className="relative w-full aspect-[1.25/1] overflow-hidden mb-3">
                       <img
@@ -303,8 +301,7 @@ const BlogDetailPage = () => {
                                 rounded-t-md
                                 shadow
                                 font-montserratLight
-                              "
-                      >
+                              ">
                         {new Date(blog.createdAt).toLocaleDateString("en-US", {
                           month: "short",
                           day: "2-digit",
@@ -322,8 +319,7 @@ const BlogDetailPage = () => {
                                 mb-1
                                 text-black
                                 leading-snug
-                              "
-                      >
+                              ">
                         {blog.title}
                       </h4>
 
@@ -335,14 +331,13 @@ const BlogDetailPage = () => {
                                 leading-snug
                                 h-[70px]
                                 overflow-hidden
-                              "
-                      >
+                              ">
                         <span
                           dangerouslySetInnerHTML={{
                             __html: sanitizeDescription(
                               blog.description.length > 200
                                 ? blog.description.slice(0, 200) + "..."
-                                : blog.description
+                                : blog.description,
                             ),
                           }}
                         />
@@ -357,8 +352,7 @@ const BlogDetailPage = () => {
                               italic
                               mt-2
                               mb-2
-                            "
-                    >
+                            ">
                       – {blog.author || "Sita Severson"}
                     </span>
 
@@ -378,8 +372,7 @@ const BlogDetailPage = () => {
                               hover:opacity-90
                               no-underline
                               mb-3
-                            `}
-                    >
+                            `}>
                       {blog.readMoreText || "Get insights"}
                     </Link>
                   </div>
@@ -387,15 +380,14 @@ const BlogDetailPage = () => {
               })}
             </div>
 
-            <div className="flex justify-center items-center gap-2 sm:gap-3 mt-10 mb-20 flex-wrap"
+            <div
+              className="flex justify-center items-center gap-2 sm:gap-3 mt-10 mb-20 flex-wrap"
               data-aos="fade-up"
-              data-aos-duration="1200"
-            >
+              data-aos-duration="1200">
               <button
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition"
-              >
+                className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition">
                 <ArrowLeft size={20} strokeWidth={2} />
               </button>
 
@@ -422,11 +414,11 @@ const BlogDetailPage = () => {
                     key={num}
                     onClick={() => setCurrentPage(num)}
                     className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
-          ${currentPage === num
-                        ? "bg-[#993333] text-white"
-                        : "border border-transparent text-black hover:border-black hover:bg-gray-100"
-                      }`}
-                  >
+          ${
+            currentPage === num
+              ? "bg-[#993333] text-white"
+              : "border border-transparent text-black hover:border-black hover:bg-gray-100"
+          }`}>
                     {num}
                   </button>
                 ))}
@@ -436,10 +428,11 @@ const BlogDetailPage = () => {
               )}
 
               <button
-                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
                 disabled={currentPage === totalPages}
-                className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition"
-              >
+                className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition">
                 <ArrowRight size={20} strokeWidth={2} />
               </button>
             </div>

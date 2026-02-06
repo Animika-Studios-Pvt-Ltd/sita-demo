@@ -4,13 +4,10 @@ import { useFetchAllBooksQuery } from "../redux/features/books/booksApi";
 import "./Footer.css";
 import { useEffect, useState } from "react";
 
-
 const BACKEND_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const Footer = () => {
-
-
   const { data: books = [] } = useFetchAllBooksQuery();
   const activeBooks = books.filter((book) => !book.suspended);
   const sortedBooks = activeBooks.sort(
@@ -65,39 +62,25 @@ const Footer = () => {
         <div className="footer-top-flex">
           <div className="footer-col footer-col-factor footer-links">
             <h6 className="footer-title">THE SITA FACTOR</h6>
-            <a href="https://sitashakti.com/yoga-therapy">Yoga Therapy</a>
-            <a href="https://sitashakti.com/ayurveda-nutrition">
-              Ayurveda – Nutrition & Integration
-            </a>
-            <a href="https://sitashakti.com/kosha-counseling">
-              Kosha Counseling
-            </a>
-            <a href="https://sitashakti.com/soul-curriculum">Soul Curriculum</a>
-            <a href="https://sitashakti.com/release-karmic-patterns">
-              Release Karmic Patterns
-            </a>
+            <a href="/yoga-therapy">Yoga Therapy</a>
+            <a href="/ayurveda-nutrition">Ayurveda – Nutrition & Integration</a>
+            <a href="/kosha-counseling">Kosha Counseling</a>
+            <a href="/soul-curriculum">Soul Curriculum</a>
+            <a href="/release-karmic-patterns">Release Karmic Patterns</a>
           </div>
           <div className="footer-col footer-col-workshops footer-links">
             <h6 className="footer-title">WORKSHOPS</h6>
-            <a href="https://sitashakti.com/teacher-training">
-              Teacher Training
-            </a>
-            <a href="https://sitashakti.com/corporate-training">
-              Corporate Training
-            </a>
-            <a href="https://sitashakti.com/shakthi-leadership">
-              Shakthi Leadership
-            </a>
-            <a href="https://sitashakti.com/group-sessions">Group Sessions</a>
-            <a href="https://sitashakti.com/private-sessions">
-              Private Sessions
-            </a>
+            <a href="/teacher-training">Teacher Training</a>
+            <a href="/corporate-training">Corporate Training</a>
+            <a href="/shakthi-leadership">Shakthi Leadership</a>
+            <a href="/group-sessions">Group Sessions</a>
+            <a href="/private-sessions">Private Sessions</a>
           </div>
           <div className="footer-col footer-col-resources footer-links">
             <h6 className="footer-title">RESOURCES</h6>
             <Link to="/blogs">Blogs</Link>
-            <a href="https://sitashakti.com/podcasts">Articles</a>
-            <a href="https://sitashakti.com/articles">Podcasts</a>
+            <a href="/podcasts">Articles</a>
+            <a href="/articles">Podcasts</a>
           </div>
           <div className="footer-col footer-col-publications footer-publication">
             <h6 className="footer-title">PUBLICATIONS</h6>
@@ -190,9 +173,9 @@ const Footer = () => {
             </a>
           </div>
           <div className="footer-middle-center">
-            <a href="https://sitashakti.com/privacy-policy">Privacy Policy</a>
+            <a href="/privacy-policy">Privacy Policy</a>
             <span>|</span>
-            <a href="https://sitashakti.com/disclaimer">Disclaimer</a>
+            <a href="/disclaimer">Disclaimer</a>
           </div>
           <div className="footer-middle-right footer-socials">
             <a href="#">

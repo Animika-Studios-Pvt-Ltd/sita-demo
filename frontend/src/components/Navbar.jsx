@@ -6,8 +6,6 @@ import { UserIcon, CartIcon } from "./Icons";
 import "./Navbar.css";
 
 const Navbar = () => {
-
-
   // Auth & Cart
   const { currentUser, isAuthenticated, logout, loginWithRedirect } = useAuth();
   const cartItems = useSelector((state) => state.cart?.cartItems || []);
@@ -262,9 +260,7 @@ const Navbar = () => {
 
                 {/* Contact Us - Desktop Position (Top Right) */}
                 <li className="nav-item">
-                  <a
-                    className="nav-link nav-contact"
-                    href="https://sitashakti.com/contact.html">
+                  <a className="nav-link nav-contact" href="/contact">
                     Contact Us
                   </a>
                 </li>
@@ -274,9 +270,7 @@ const Navbar = () => {
               <ul className="navbar-nav sita-nav">
                 {!isHomePage && (
                   <li className="nav-item">
-                    <Link
-                      className="nav-link home-icon"
-                      to="/">
+                    <Link className="nav-link home-icon" to="/">
                       <i className="fa-solid fa-house"></i>
                     </Link>
                   </li>
@@ -306,30 +300,22 @@ const Navbar = () => {
                   <ul
                     className={`dropdown-menu ${activeDropdown === "sitaFactor" ? "show" : ""}`}>
                     <li>
-                      <Link
-                        className="dropdown-item"
-                        to="/yoga-therapy">
+                      <Link className="dropdown-item" to="/yoga-therapy">
                         Yoga Therapy
                       </Link>
                     </li>
                     <li>
-                      <Link
-                        className="dropdown-item"
-                        to="/ayurveda-nutrition">
+                      <Link className="dropdown-item" to="/ayurveda-nutrition">
                         Ayurveda – Nutrition & Integration
                       </Link>
                     </li>
                     <li>
-                      <Link
-                        className="dropdown-item"
-                        to="/kosha-counseling">
+                      <Link className="dropdown-item" to="/kosha-counseling">
                         Kosha Counseling
                       </Link>
                     </li>
                     <li>
-                      <Link
-                        className="dropdown-item"
-                        to="/soul-curriculum">
+                      <Link className="dropdown-item" to="/soul-curriculum">
                         Soul Curriculum
                       </Link>
                     </li>
@@ -361,44 +347,32 @@ const Navbar = () => {
                   <ul
                     className={`dropdown-menu ${activeDropdown === "workshops" ? "show" : ""}`}>
                     <li>
-                      <Link
-                        className="dropdown-item"
-                        to="/group-sessions">
+                      <Link className="dropdown-item" to="/group-sessions">
                         Group Sessions
                       </Link>
                     </li>
                     <li>
-                      <Link
-                        className="dropdown-item"
-                        to="/private-sessions">
+                      <Link className="dropdown-item" to="/private-sessions">
                         Private Sessions
                       </Link>
                     </li>
                     <li>
-                      <Link
-                        className="dropdown-item"
-                        to="/teacher-training">
+                      <Link className="dropdown-item" to="/teacher-training">
                         Teacher Training
                       </Link>
                     </li>
                     <li>
-                      <Link
-                        className="dropdown-item"
-                        to="/corporate-training">
+                      <Link className="dropdown-item" to="/corporate-training">
                         Corporate Training
                       </Link>
                     </li>
                     <li>
-                      <Link
-                        className="dropdown-item"
-                        to="/shakthi-leadership">
+                      <Link className="dropdown-item" to="/shakthi-leadership">
                         Shakthi Leadership
                       </Link>
                     </li>
                     <li>
-                      <Link
-                        className="dropdown-item"
-                        to="/booking">
+                      <Link className="dropdown-item" to="/booking">
                         Calendar
                       </Link>
                     </li>
@@ -416,9 +390,7 @@ const Navbar = () => {
 
                 {/* Contact Us - MOBILE ONLY (d-lg-none) - At Bottom */}
                 <li className="nav-item d-lg-none">
-                  <Link
-                    className="nav-link nav-contact"
-                    to="/contact">
+                  <Link className="nav-link nav-contact" to="/contact">
                     CONTACT US
                   </Link>
                 </li>

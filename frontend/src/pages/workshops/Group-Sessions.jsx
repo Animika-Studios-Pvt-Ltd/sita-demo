@@ -30,13 +30,12 @@ const GroupSessions = () => {
           </div>
         </div>
 
-        <img
-          src="/group-sessions-image.webp"
+        <div
           className="sita-inner-side-img"
-          alt="Group Sessions Image"
           data-aos="fade-left"
-          data-aos-duration="2000"
-        />
+          data-aos-duration="2000">
+          <img src="/group-sessions-image.webp" alt="Group Sessions Image" />
+        </div>
       </section>
 
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
@@ -72,9 +71,11 @@ const GroupSessions = () => {
                 className="sita-inner-content-intro sita-workshops-content"
                 data-aos="fade-up"
                 data-aos-delay="300">
-                <h4>Families, Teams, Friends, &amp; Organizations</h4>
+                <h4 data-aos="fade-up" data-aos-delay="350">
+                  Families, Teams, Friends, &amp; Organizations
+                </h4>
 
-                <p>
+                <p data-aos="fade-up" data-aos-delay="400">
                   Group sessions are designed for collective transformation.
                   <br />
                   Families, leadership teams, friend groups, spiritual
@@ -85,7 +86,7 @@ const GroupSessions = () => {
               </div>
 
               <div className="sita-inner-full-content">
-                <p className="mb-2">
+                <p className="mb-2" data-aos="fade-up" data-aos-delay="450">
                   Sita brings her multidisciplinary background as an Ayurvedic
                   Practitioner, Kundalini Yoga Therapist, Jyotishi, educator,
                   and facilitator to support the group through insight and
@@ -94,7 +95,11 @@ const GroupSessions = () => {
               </div>
             </div>
           </div>
-          <a href="/booking" className="sita-workshops-btn">
+          <a
+            href="/booking"
+            className="sita-workshops-btn"
+            data-aos="zoom-in"
+            data-aos-delay="500">
             Enquiry Now
           </a>
         </div>
@@ -153,7 +158,7 @@ const GroupSessions = () => {
               </ul>
             </div>
           </div>
-          <p>
+          <p data-aos="fade-up" data-aos-delay="600">
             Group sessions are tailored to the needs of the system. Sita listens
             deeply and responds intuitively to the field of the group.
           </p>
@@ -203,7 +208,7 @@ const GroupSessions = () => {
               </ul>
             </div>
           </div>
-          <p>
+          <p data-aos="fade-up" data-aos-delay="600">
             Topics may include karma and dharma, nervous system literacy,
             Kundalini, Ayurveda, sacred relationships, planetary cycles, yoga
             therapy, and spiritual awakening.
@@ -214,14 +219,16 @@ const GroupSessions = () => {
       <section className="what-makes-this-work-unique">
         <div className="container">
           <h4 data-aos="fade-up">What Makes This Work Unique</h4>
-          <p>
+          <p data-aos="fade-up" data-aos-delay="100">
             Sita blends ancient knowledge with attuned facilitation. She uses
             Jyotish, Ayurveda, Yogic psychology, and intuition to reveal the
             deeper architecture of a system. Once the pattern is named, the
             group can shift from confusion to clarity and from resistance to
             collaboration.
           </p>
-          <p className="heading">This work helps groups:</p>
+          <p className="heading" data-aos="fade-up" data-aos-delay="200">
+            This work helps groups:
+          </p>
           <div className="row">
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <ul className="what-makes-this-work-unique-list">
@@ -260,7 +267,7 @@ const GroupSessions = () => {
               </ul>
             </div>
           </div>
-          <p>
+          <p data-aos="fade-up" data-aos-delay="600">
             Whether the group is a family, a leadership team, or a circle of
             friends, the intention is to create coherence, clarity, and
             connection at the soul level.
@@ -339,7 +346,7 @@ const GroupSessions = () => {
       {/* ---------------- CTA STRIP SECTION ---------------- */}
       <div className="sita-cta-wrapper" data-aos="zoom-in">
         <span className="cta-border">
-          <a href="/contact" className="sita-cta-btn">
+          <a href="/booking" className="sita-cta-btn">
             Book a Meeting with Sita
           </a>
         </span>

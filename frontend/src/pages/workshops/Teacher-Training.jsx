@@ -30,13 +30,12 @@ const TeacherTraining = () => {
           </div>
         </div>
 
-        <img
-          src="/group-sessions-image.webp"
+        <div
           className="sita-inner-side-img"
-          alt="Group Sessions Image"
           data-aos="fade-left"
-          data-aos-duration="2000"
-        />
+          data-aos-duration="2000">
+          <img src="/group-sessions-image.webp" alt="Teacher Training Image" />
+        </div>
       </section>
 
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
@@ -86,7 +85,7 @@ const TeacherTraining = () => {
               </div>
 
               <div className="sita-inner-full-content">
-                <p>
+                <p data-aos="fade-up" data-aos-delay="450">
                   These trainings are crafted for those who feel a deep call to
                   understand the inner architecture of the human being. They are
                   for yoga teachers who want to deepen their offerings,
@@ -98,7 +97,11 @@ const TeacherTraining = () => {
               </div>
             </div>
           </div>
-          <a href="/booking" className="sita-workshops-btn">
+          <a
+            href="/booking"
+            className="sita-workshops-btn"
+            data-aos="zoom-in"
+            data-aos-delay="500">
             Enquiry Now
           </a>
         </div>
@@ -175,7 +178,7 @@ const TeacherTraining = () => {
       {/* ---------------- CTA STRIP SECTION ---------------- */}
       <div className="sita-cta-wrapper" data-aos="zoom-in">
         <span className="cta-border">
-          <a href="/contact" className="sita-cta-btn">
+          <a href="/booking" className="sita-cta-btn">
             Book a Meeting with Sita
           </a>
         </span>

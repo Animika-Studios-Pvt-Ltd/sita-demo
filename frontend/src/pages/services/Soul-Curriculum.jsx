@@ -30,14 +30,12 @@ const SoulCurriculum = () => {
             <img src="soul-curriculum-banner.webp" alt="Yoga Therapy Banner" />
           </div>
         </div>
-
-        <img
-          src="/soul-curriculum-image.webp"
+        <div
           className="sita-inner-side-img"
-          alt="Yoga Therapy Image"
           data-aos="fade-left"
-          data-aos-duration="2000"
-        />
+          data-aos-duration="2000">
+          <img src="/soul-curriculum-image.webp" alt="Soul Curriculum Image" />
+        </div>
       </section>
 
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
@@ -120,6 +118,9 @@ const SoulCurriculum = () => {
               </div>
             </div>
           </div>
+          <a href="/booking" className="sita-workshops-btn mt-2">
+            Explore Workshops
+          </a>
         </div>
       </section>
 
@@ -132,7 +133,7 @@ const SoulCurriculum = () => {
       {/* ---------------- CTA STRIP SECTION ---------------- */}
       <div className="sita-cta-wrapper" data-aos="zoom-in">
         <span className="cta-border">
-          <a href="/contact" className="sita-cta-btn">
+          <a href="/booking" className="sita-cta-btn">
             Book a Meeting with Sita
           </a>
         </span>

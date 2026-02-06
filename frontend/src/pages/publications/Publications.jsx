@@ -79,10 +79,7 @@ const Publications = () => {
         </div>
       </section>
       <SitaBreadcrumb
-        items={[
-          { label: "Home", path: "https://sitashakti.com" },
-          { label: "Publications" },
-        ]}
+        items={[{ label: "Home", path: "/" }, { label: "Publications" }]}
       />
       <div className="container" data-aos="fade-up" data-aos-duration="1000">
         <div className="max-w-8xl mx-auto py-0 text-center flex flex-col justify-center items-center px-4 mb-20">
@@ -119,8 +116,9 @@ const Publications = () => {
                       style={{ perspective: "1200px" }}>
                       <div className="book-flip-inner">
                         <div
-                          className={`book-flip-front ${isSuspended ? "opacity-60 grayscale" : ""
-                            }`}>
+                          className={`book-flip-front ${
+                            isSuspended ? "opacity-60 grayscale" : ""
+                          }`}>
                           <img
                             src={book?.coverImage || "/placeholder-book.jpg"}
                             alt={book?.title}
@@ -183,7 +181,7 @@ const Publications = () => {
                             {Math.round(
                               ((book.oldPrice - book.newPrice) /
                                 book.oldPrice) *
-                              100,
+                                100,
                             )}
                             % off
                           </span>
