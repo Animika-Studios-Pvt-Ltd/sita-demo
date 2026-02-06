@@ -17,7 +17,7 @@ const WorkShopCalendar = () => {
     const tbody = document.getElementById("workshopTableBody");
     if (!tbody) return;
 
-    const BOOKING_BASE_URL = "http://localhost:5173/booking";
+    const BOOKING_BASE_URL = `${window.location.origin}/booking`;
 
     const toMinutes = (time) => {
       if (!time) return 0;
