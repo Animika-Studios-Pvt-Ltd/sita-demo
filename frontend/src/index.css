@@ -4,35 +4,35 @@
 
 @font-face {
   font-family: 'PT Serif';
-  src: url('./assets/fonts/PTSerif-Regular.ttf') format('truetype');
+  src: url('/fonts/PTSerif-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('./assets/fonts/Montserrat-Light.ttf') format('truetype');
+  src: url('/fonts/Montserrat-Light.ttf') format('truetype');
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('./assets/fonts/Montserrat-Regular.ttf') format('truetype');
+  src: url('/fonts/Montserrat-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('./assets/fonts/Montserrat-Medium.ttf') format('truetype');
+  src: url('/fonts/Montserrat-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('./assets/fonts/Montserrat-SemiBold.ttf') format('truetype');
+  src: url('/fonts/Montserrat-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
 }
@@ -197,7 +197,7 @@ a, button {
 }
 
 .admin-scope[data-admin-theme="dark"] .shadow-sm,
-.admin-scope[data-admin-theme="dark"] .shadow-[0_18px_40px_-30px_rgba(15,23,42,0.45)] {
+.admin-scope[data-admin-theme="dark"] .shadow-\[0_18px_40px_-30px_rgba\(15\,23\,42\,0\.45\)\] {
   box-shadow: 0 12px 28px -24px rgba(0, 0, 0, 0.55) !important;
 }
 
@@ -366,7 +366,7 @@ a, button {
   border-color: rgba(226, 232, 240, 0.18) !important;
 }
 
-.admin-scope[data-admin-theme="dark"] .shadow-[0_20px_45px_-30px_rgba(15,23,42,0.45)],
-.admin-scope[data-admin-theme="dark"] .shadow-[0_12px_30px_-24px_rgba(15,23,42,0.45)] {
+.admin-scope[data-admin-theme="dark"] .shadow-\[0_20px_45px_-30px_rgba\(15\,23\,42\,0\.45\)\],
+.admin-scope[data-admin-theme="dark"] .shadow-\[0_12px_30px_-24px_rgba\(15\,23\,42\,0\.45\)\] {
   box-shadow: 0 20px 45px -30px rgba(0, 0, 0, 0.65) !important;
 }
