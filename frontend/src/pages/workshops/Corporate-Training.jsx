@@ -107,6 +107,63 @@ const CorporateTraining = () => {
           </a>
         </div>
       </section>
+
+      {/* --------------------- FOCUS AREAS INCLUDE SECTION ---------------------- */}
+      <section className="group-formats-core-elements sita-specializes-in-teachings">
+        <div className="container">
+          <h4 data-aos="fade-up">Focus Areas Include</h4>
+          <div className="row">
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <ul className="group-formats-core-elements-list">
+                <li data-aos="fade-up" data-aos-delay="400">
+                  <span className="point-num">01</span>
+                  <span>Team building and interpersonal attunement</span>
+                </li>
+                <li data-aos="fade-up" data-aos-delay="400">
+                  <span className="point-num">02</span>
+                  <span>
+                    Leadership development and human-centered management
+                  </span>
+                </li>
+                <li data-aos="fade-up" data-aos-delay="450">
+                  <span className="point-num">03</span>
+                  <span>Stress reduction and nervous system resilience</span>
+                </li>
+                <li data-aos="fade-up" data-aos-delay="500">
+                  <span className="point-num">04</span>
+                  <span>
+                    Psychological safety and compassionate communication
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <ul className="group-formats-core-elements-list">
+                <li data-aos="fade-up" data-aos-delay="550">
+                  <span className="point-num">05</span>
+                  <span>Conflict navigation and repair</span>
+                </li>
+                <li data-aos="fade-up" data-aos-delay="400">
+                  <span className="point-num">06</span>
+                  <span>Organizational insight and cultural alignment</span>
+                </li>
+                <li data-aos="fade-up" data-aos-delay="450">
+                  <span className="point-num">07</span>
+                  <span>Burnout prevention and sustainable productivity</span>
+                </li>
+                <li data-aos="fade-up" data-aos-delay="450">
+                  <span className="point-num">08</span>
+                  <span>
+                    Wellness and mindfulness integration in real-world settings
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ---------------- SESSIONS SECTION ---------------- */}
       <section className="sita-masterclass sessions-section">
         <div className="container text-center">
