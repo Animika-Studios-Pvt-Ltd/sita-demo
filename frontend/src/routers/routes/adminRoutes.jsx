@@ -17,6 +17,8 @@ import SetupMFA from "../../pages/dashboard/settings/SetupMFA";
 import SalesPage from "../../pages/dashboard/salesPage/SalesPage";
 import ManageEvents from "../../pages/dashboard/CMS module/ManageEvents";
 import EventBookings from "../../pages/dashboard/CMS module/EventBookings";
+import Podcasts from "../../pages/dashboard/CMS module/Podcasts";
+import Articles from "../../pages/dashboard/CMS module/Articles";
 import PageNotFound from "../PageNotFound";
 
 export const adminRoutes = [
@@ -49,6 +51,8 @@ export const adminRoutes = [
             { path: "sales", element: <SalesPage /> },
             { path: "manage-events", element: <ManageEvents /> },
             { path: "manage-events/:id/bookings", element: <EventBookings /> },
+            { path: "podcasts", element: <Podcasts /> },
+            { path: "articles", element: <Articles /> },
         ],
     },
     { path: "*", element: <PageNotFound /> },
