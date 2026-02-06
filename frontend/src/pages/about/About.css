@@ -161,6 +161,11 @@ li {
 /* ------------------------------------------------- SERVICES PAGES SECTION ------------------------------------------------- */
 
 /* ----------------- YOGA THERAPY PAGE ----------------- */
+.yoga-therapy-section {
+  width: 50%;
+  text-align: center;
+}
+
 .sita-quote {
   font-style: italic;
   margin: 0 auto;
@@ -168,25 +173,48 @@ li {
 
 .sita-inner-content-intro .sita {
   display: block;
-  margin-top: 10px;
   width: 70px;
+  margin-left: auto;
+  margin-right: 20px;
 }
 
 @media (max-width: 991px) {
+  .yoga-therapy-section {
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+  }
+
   .sita-inner-content-intro .sita {
     width: 60px;
   }
 }
 
 @media (max-width: 767px) {
+  .yoga-therapy-section {
+    width: 90%;
+  }
+
   .sita-inner-content-intro .sita {
     width: 60px;
+    margin-right: 0px;
   }
 }
 
 @media (max-width: 575px) {
+  .yoga-therapy-section {
+    width: 100%;
+  }
+
   .sita-inner-content-intro .sita {
     width: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sita-inner-content-intro .sita {
+    width: 45px;
+    margin-right: 10px;
   }
 }
 
@@ -648,13 +676,14 @@ li {
   }
 
   @keyframes rotateWatermark {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg);
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
   }
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
 
   .ayurveda-nutrition-bg-image {
     --service-watermark-img: url("/ayurveda-nutrition-image.webp");
@@ -679,7 +708,7 @@ li {
 
   .group-sessions-bg-image {
     --service-watermark-img: url("/group-sessions-image.webp");
-  }  
+  }
 
   .sita-inner-section .container {
     position: relative;

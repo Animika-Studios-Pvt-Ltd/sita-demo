@@ -66,7 +66,7 @@ const YogaTherapy = () => {
                 />
               </div>
               <div
-                className="sita-inner-content-intro"
+                className="sita-inner-content-intro yoga-therapy-section"
                 data-aos="fade-up"
                 data-aos-delay="300">
                 <p
