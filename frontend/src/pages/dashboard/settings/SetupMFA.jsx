@@ -196,7 +196,7 @@ const SetupMFA = () => {
               className={`mt-1 inline-flex h-2.5 w-2.5 rounded-full ${mfaEnabled ? 'bg-emerald-500' : 'bg-amber-500'}`}
             ></span>
             <div>
-              <p className="font-semibold">
+              <p className="font-semibold text-[#7A1F2B]">
                 {mfaEnabled ? 'MFA is Enabled' : 'MFA is Disabled'}
               </p>
               <p className="text-sm text-slate-600">
@@ -211,7 +211,7 @@ const SetupMFA = () => {
         {/* Step 1 */}
         {step === 1 && !mfaEnabled && (
           <div>
-            <div className={`${alertBase} mb-6 border-[#7A1F2B]/20 bg-[#7A1F2B]/5`}>
+            <div className={`${alertBase} mb-6`}>
               <h3 className="font-semibold text-[#7A1F2B] mb-2">What is MFA?</h3>
               <p className="text-sm text-slate-600">
                 Multi-factor authentication adds an extra security step when logging in.
@@ -249,8 +249,8 @@ const SetupMFA = () => {
                 </code>
               </div>
 
-              <div className={`${alertBase} mt-4 border-amber-200/70 bg-amber-50/40 text-amber-800`}>
-                <p className="text-sm">
+              <div className={`${alertBase} mt-4 border-amber-200/70 bg-amber-50/40 text-gray-600`}>
+                <p className="text-sm text-gray-600">
                   <strong>Important:</strong> This QR code is permanent. Save a screenshot or the secret key securely.
                   You'll use the same code even if you set up MFA on multiple devices.
                 </p>
@@ -326,11 +326,11 @@ const SetupMFA = () => {
         <div className={`${glassPanel} mt-6 p-6`}>
           <h3 className="font-semibold text-lg mb-3 text-[#7A1F2B]">Need Help?</h3>
           <ul className="list-disc pl-5 space-y-2 text-sm text-slate-600">
-            <li>Download Google Authenticator (iOS/Android) or Microsoft Authenticator.</li>
-            <li>Make sure your phone's time is set to automatic.</li>
-            <li>Your MFA secret never changes - it's permanent for your account.</li>
-            <li>You can use the same QR code on multiple devices.</li>
-            <li>Contact support if you lose access to your authenticator app.</li>
+            <li className="text-gray-600">Download Google Authenticator (iOS/Android) or Microsoft Authenticator.</li>
+            <li className="text-gray-600">Make sure your phone's time is set to automatic.</li>
+            <li className="text-gray-600">Your MFA secret never changes - it's permanent for your account.</li>
+            <li className="text-gray-600">You can use the same QR code on multiple devices.</li>
+            <li className="text-gray-600">Contact support if you lose access to your authenticator app.</li>
           </ul>
         </div>
       </div>

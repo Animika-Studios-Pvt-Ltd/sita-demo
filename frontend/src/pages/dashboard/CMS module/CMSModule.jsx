@@ -30,6 +30,16 @@ const CMSModule = () => {
       icon: DescriptionIcon,
       route: "/dashboard/manage-events", // ✅ NEW
     },
+    {
+      name: "Podcasts",
+      icon: DescriptionIcon,
+      route: "/dashboard/podcasts",
+    },
+    {
+      name: "Articles",
+      icon: DescriptionIcon,
+      route: "/dashboard/articles",
+    },
   ];
 
   const isCardActive = (route) => location.pathname === route;
