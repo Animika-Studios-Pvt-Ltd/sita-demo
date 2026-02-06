@@ -627,7 +627,7 @@ li {
   left: 50%;
   transform: translateX(-50%);
   background: #ffffff;
-  font-size: 16px;
+  font-size: 16px !important;
   padding: 5px 20px;
   margin-bottom: 0px !important;
   border-radius: 6px 6px 0 0;
@@ -635,16 +635,16 @@ li {
 }
 
 .sita-blog-card h4 {
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat-Regular";
   font-size: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   color: black;
 }
 
 .sita-blog-card p {
   font-size: 16px;
   color: black;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }
 
 .blog-author {
@@ -653,6 +653,8 @@ li {
   font-size: 14px;
   color: black;
   font-style: italic;
+  margin-left: auto;
+  margin-right: 10px;
 }
 
 .sita-blog-btn {
@@ -1499,7 +1501,7 @@ li {
     padding: 20px 0;
   }
 
-  .sita-masterclass .row>div {
+  .sita-masterclass .row > div {
     margin-bottom: 20px;
   }
 
@@ -1537,11 +1539,11 @@ li {
     margin-bottom: 10px;
   }
 
-  .sita-masterclass .row>div {
+  .sita-masterclass .row > div {
     margin-bottom: 20px;
   }
 
-  .sita-masterclass .row>div:last-child {
+  .sita-masterclass .row > div:last-child {
     margin-bottom: 0;
   }
 
@@ -1791,6 +1793,7 @@ li {
 
   .sita-blog-card h4 {
     font-size: 18px;
+    margin-bottom: 2px;
   }
 
   .sita-blog-card p {
@@ -1798,7 +1801,7 @@ li {
   }
 
   .blog-date {
-    font-size: 14px;
+    font-size: 14px !important;
     padding: 4px 16px;
   }
 
@@ -1824,6 +1827,7 @@ li {
   .sita-blog-card h4 {
     font-size: 18px;
     line-height: 1.4;
+    margin-bottom: 0px;
   }
 
   .sita-blog-card p {
@@ -1835,7 +1839,7 @@ li {
   }
 
   .blog-date {
-    font-size: 14px;
+    font-size: 13px !important;
     padding: 6px 12px;
   }
 
@@ -1875,7 +1879,7 @@ li {
   }
 
   .blog-date {
-    font-size: 14px;
+    font-size: 16px !important;
     padding: 4px 14px;
   }
 
@@ -1904,13 +1908,20 @@ li {
   }
 
   .blog-date {
-    font-size: 13px;
+    font-size: 14px !important;
     padding: 4px 12px;
   }
 
   .sita-blog-btn {
     font-size: 14px;
     padding: 7px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-date {
+    font-size: 13px !important;
+    padding: 3px 10px;
   }
 }
 
