@@ -301,7 +301,7 @@ const AddBlogs = () => {
             {isLong ? (
               <>
                 <div
-                  className="text-slate-600 text-sm leading-relaxed mb-2"
+                  className="text-slate-700 text-sm leading-relaxed mb-2 blog-description"
                   dangerouslySetInnerHTML={{ __html: truncateHTML(blog.description, 40) }}
                 />
                 <button
@@ -314,7 +314,7 @@ const AddBlogs = () => {
               </>
             ) : (
               <div
-                className="text-slate-600 text-sm leading-relaxed"
+                className="text-slate-700 text-sm leading-relaxed blog-description"
                 dangerouslySetInnerHTML={{ __html: blog.description }}
               />
             )}
@@ -354,7 +354,7 @@ const AddBlogs = () => {
         >
           <div
             ref={contentRef}
-            className="p-6 bg-white/70 backdrop-blur-xl border-t border-white/70 text-slate-600 text-sm leading-relaxed"
+            className="p-6 bg-white/70 backdrop-blur-xl border-t border-white/70 text-slate-700 text-sm leading-relaxed blog-description"
             dangerouslySetInnerHTML={{ __html: blog.description }}
           />
         </div>

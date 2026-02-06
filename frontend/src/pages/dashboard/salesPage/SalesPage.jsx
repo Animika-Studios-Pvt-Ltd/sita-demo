@@ -37,6 +37,7 @@ const SalesPage = () => {
     const [filter, setFilter] = useState("Daily");
     const [chartType, setChartType] = useState("line");
     const [summary, setSummary] = useState({ totalSales: 0, totalOrders: 0, avgOrderValue: 0 });
+    const [adminTheme, setAdminTheme] = useState(() => localStorage.getItem("adminTheme") || "light");
     const glassPanel = "bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-2xl shadow-sm";
     const glassHeader = `${glassPanel} p-6 md:p-8 mb-5 shadow-[0_18px_40px_-30px_rgba(15,23,42,0.45)]`;
     const glassTableHead = "bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 text-slate-500 uppercase text-xs font-semibold border border-white/70";
@@ -166,6 +167,16 @@ const SalesPage = () => {
     }, [filter]);
 
     useEffect(() => {
+        const root = document.querySelector(".admin-scope");
+        if (!root) return;
+        const updateTheme = () => setAdminTheme(root.getAttribute("data-admin-theme") || "light");
+        updateTheme();
+        const observer = new MutationObserver(updateTheme);
+        observer.observe(root, { attributes: true, attributeFilter: ["data-admin-theme"] });
+        return () => observer.disconnect();
+    }, []);
+
+    useEffect(() => {
         const interval = setInterval(() => {
             fetchSalesData();
         }, 30000);
@@ -183,14 +194,15 @@ const SalesPage = () => {
             </div>
         );
 
+    const isDark = adminTheme === "dark";
     const chartConfig = {
         labels: salesData.labels,
         datasets: [
             {
                 label: "Sales ($)",
                 data: salesData.values,
-                backgroundColor: "rgba(139,23,27,0.35)",
-                borderColor: "rgba(139,23,27,0.95)",
+                backgroundColor: isDark ? "rgba(250,204,21,0.45)" : "rgba(139,23,27,0.35)",
+                borderColor: isDark ? "rgba(250,204,21,0.95)" : "rgba(139,23,27,0.95)",
                 borderWidth: 2,
                 fill: chartType === "line" ? false : true,
                 tension: 0.3,
@@ -214,12 +226,12 @@ const SalesPage = () => {
             {
                 label: "Quantity Sold",
                 data: bookSalesData.map((b) => b.quantity),
-                backgroundColor: "rgba(122,31,43,0.35)",
+                backgroundColor: isDark ? "rgba(125,211,252,0.55)" : "rgba(122,31,43,0.35)",
             },
             {
                 label: "Revenue ($)",
                 data: bookSalesData.map((b) => b.revenue),
-                backgroundColor: "rgba(15,23,42,0.45)",
+                backgroundColor: isDark ? "rgba(250,204,21,0.55)" : "rgba(15,23,42,0.45)",
             },
         ],
     };
@@ -277,14 +289,24 @@ const SalesPage = () => {
                                 animation: { duration: 800, easing: 'easeOutQuart' },
                                 responsive: true,
                                 plugins: {
-                                    legend: { position: "top" },
+                                    legend: { position: "top", labels: { color: isDark ? "#e0e0e0" : "#334155" } },
                                     tooltip: {
                                         callbacks: {
                                             label: (tooltipItem) => `$${tooltipItem.raw.toLocaleString()}`,
                                         },
                                     },
                                 },
-                                scales: { y: { beginAtZero: true, ticks: { callback: (v) => `$${v}` } } },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        ticks: { callback: (v) => `$${v}`, color: isDark ? "#b0b0b0" : "#475569" },
+                                        grid: { color: isDark ? "rgba(255,255,255,0.08)" : "rgba(15,23,42,0.08)" },
+                                    },
+                                    x: {
+                                        ticks: { color: isDark ? "#b0b0b0" : "#475569" },
+                                        grid: { color: isDark ? "rgba(255,255,255,0.05)" : "rgba(15,23,42,0.05)" },
+                                    },
+                                },
                             }}
                         />
                     ) : (
@@ -293,8 +315,21 @@ const SalesPage = () => {
                             options={{
                                 animation: { duration: 800, easing: 'easeOutQuart' },
                                 responsive: true,
-                                plugins: { legend: { position: "top" }, title: { display: true, text: `${filter} Sales Trend` } },
-                                scales: { y: { beginAtZero: true, ticks: { callback: (v) => `$${v}` } } },
+                                plugins: {
+                                    legend: { position: "top", labels: { color: isDark ? "#e0e0e0" : "#334155" } },
+                                    title: { display: true, text: `${filter} Sales Trend`, color: isDark ? "#e0e0e0" : "#334155" },
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        ticks: { callback: (v) => `$${v}`, color: isDark ? "#b0b0b0" : "#475569" },
+                                        grid: { color: isDark ? "rgba(255,255,255,0.08)" : "rgba(15,23,42,0.08)" },
+                                    },
+                                    x: {
+                                        ticks: { color: isDark ? "#b0b0b0" : "#475569" },
+                                        grid: { color: isDark ? "rgba(255,255,255,0.05)" : "rgba(15,23,42,0.05)" },
+                                    },
+                                },
                             }}
                         />
                     )}

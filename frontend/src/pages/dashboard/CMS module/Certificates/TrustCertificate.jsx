@@ -354,8 +354,8 @@ const TrustCertificate = () => {
                 ) : (
                   <div className="flex flex-col items-center justify-center py-12 text-slate-500">
                     <VerifiedIcon className="w-12 h-12 mb-2 text-slate-400" />
-                    <p className="text-sm font-medium">No certificates uploaded</p>
-                    <p className="text-xs mb-4">Upload your first trust certificate to get started</p>
+                    <p className="text-sm font-medium text-slate-700">No certificates uploaded</p>
+                    <p className="text-xs mb-4 text-slate-500">Upload your first trust certificate to get started</p>
                     <button
                       onClick={() => document.getElementById("uploadInput").click()}
                       className="px-4 py-2 rounded-full bg-gradient-to-br from-white/95 to-slate-50/80 backdrop-blur-xl border-1 border-[#7A1F2B] ring-1 ring-black/5 text-[#7A1F2B] font-semibold shadow-[0_12px_20px_-16px_rgba(15,23,42,0.45)] hover:shadow-[0_14px_22px_-16px_rgba(15,23,42,0.5)] transition-colors duration-200"

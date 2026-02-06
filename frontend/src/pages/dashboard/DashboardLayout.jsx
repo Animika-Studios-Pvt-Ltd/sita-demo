@@ -10,6 +10,8 @@ import LogoutIcon from "@mui/icons-material/Logout"
 import MenuIcon from "@mui/icons-material/Menu"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"
+import LightModeIcon from "@mui/icons-material/LightMode"
+import DarkModeIcon from "@mui/icons-material/DarkMode"
 import useIdleTimeout from "../../hooks/useIdleTimeout"
 
 const DashboardLayout = () => {
@@ -21,6 +23,7 @@ const DashboardLayout = () => {
   const [mobileSidebar, setMobileSidebar] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [adminTheme, setAdminTheme] = useState(() => localStorage.getItem("adminTheme") || "light")
 
   useIdleTimeout()
 
@@ -29,6 +32,10 @@ const DashboardLayout = () => {
     window.addEventListener("resize", handleResize)
     return () => window.removeEventListener("resize", handleResize)
   }, [])
+
+  useEffect(() => {
+    localStorage.setItem("adminTheme", adminTheme)
+  }, [adminTheme])
 
   useEffect(() => {
     const verifyToken = async () => {
@@ -101,7 +108,10 @@ const DashboardLayout = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 font-montserrat leading-snug">
+    <div
+      className="flex min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 font-montserrat leading-snug admin-scope"
+      data-admin-theme={adminTheme}
+    >
       {isMobile && mobileSidebar && (
         <div
           className="fixed inset-0 bg-black/40 z-30"
@@ -244,18 +254,37 @@ const DashboardLayout = () => {
           }`}
       >
         <header
-          className={`fixed top-0 z-20 flex flex-col items-center justify-center px-6 py-4 bg-white/70 backdrop-blur-xl border-b border-white/60 shadow-[0_12px_30px_-24px_rgba(15,23,42,0.45)] transition-all duration-300 ${isExpanded && !isMobile ? "left-64" : !isMobile ? "left-20" : "left-0"
+          className={`fixed top-0 z-20 flex flex-col items-center justify-center px-6 py-4 bg-white/70 backdrop-blur-xl border-b border-white/70 shadow-sm transition-all duration-300 ${isExpanded && !isMobile ? "left-64" : !isMobile ? "left-20" : "left-0"
             } right-0`}
         >
-          {isMobile && (
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
             <button
-              onClick={() => setMobileSidebar(true)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-700 hover:text-slate-900 rounded-full p-2 bg-white/70 border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/90 transition-all duration-200"
-              aria-label="Open menu"
+              onClick={() => setAdminTheme(adminTheme === "light" ? "dark" : "light")}
+              className={`relative inline-flex items-center w-16 h-8 rounded-full border-1 shadow-sm overflow-hidden transition-all duration-200 ${adminTheme === "dark"
+                ? "bg-[#facc15] border-[#facc15] hover:bg-[#eab308]"
+                : "bg-white/80 border-[#7A1F2B] hover:bg-white/90"
+                }`}
+              aria-label="Toggle admin theme"
             >
-              <MenuIcon fontSize="medium" />
+              <span
+                className={`absolute top-0.5 left-0.5 h-7 w-7 rounded-full flex items-center justify-center shadow-md transition-transform duration-200 ${adminTheme === "dark"
+                  ? "translate-x-8 bg-white text-[#7A1F2B]"
+                  : "translate-x-0 bg-white text-[#7A1F2B]"
+                  }`}
+              >
+                {adminTheme === "dark" ? <LightModeIcon sx={{ fontSize: 14 }} /> : <DarkModeIcon sx={{ fontSize: 14 }} />}
+              </span>
             </button>
-          )}
+            {isMobile && (
+              <button
+                onClick={() => setMobileSidebar(true)}
+                className="text-slate-700 hover:text-slate-900 rounded-full p-2 bg-white/70 border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/90 transition-all duration-200"
+                aria-label="Open menu"
+              >
+                <MenuIcon fontSize="medium" />
+              </button>
+            )}
+          </div>
         </header>
         <main className="flex-1 px-4 sm:px-6 md:px-8 pb-10 pt-[20px]">
           <Outlet />

@@ -686,7 +686,7 @@ const ManageBooks = () => {
                     {viewMode === "list" && (
                         <div className="container mt-[50px]">
                             <div className="max-w-8xl mx-auto bg-white/70 backdrop-blur-xl p-6 md:p-8 rounded-2xl border border-white/70 ring-1 ring-black/5 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.45)]">
-                                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6 text-center font-montserrat">Book List</h2>
+                                <h2 className="text-2xl md:text-3xl font-bold text-[#7A1F2B] mb-6 text-center font-montserrat">Book List</h2>
                                 <div className="hidden md:block overflow-x-auto">
                                     <table className="w-full table-auto border-collapse">
                                         <thead>

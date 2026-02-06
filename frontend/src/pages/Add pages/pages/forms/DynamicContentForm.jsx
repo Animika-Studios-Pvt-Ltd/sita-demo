@@ -7,11 +7,11 @@ export default function DynamicContentForm({ content, onUpdate, type }) {
 
     return (
         <div className="space-y-4">
-            <div className="bg-blue-50/50 p-4 rounded-lg border border-blue-100 mb-4">
-                <h4 className="text-sm font-semibold text-blue-800 mb-1 capitalize">
+            <div className="bg-white/70 backdrop-blur-xl p-4 rounded-lg border border-white/70 ring-1 ring-black/5 mb-4">
+                <h4 className="text-sm font-semibold text-slate-700 mb-1 capitalize">
                     {type} Settings
                 </h4>
-                <p className="text-sm text-blue-600">
+                <p className="text-sm text-slate-600">
                     This section will automatically display the 3 latest {type}.
                 </p>
             </div>

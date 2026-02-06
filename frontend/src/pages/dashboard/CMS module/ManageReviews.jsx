@@ -302,13 +302,13 @@ const ManageReviews = () => {
                   {activeCategory === "pending" ? (
                     <>
                       <PendingIcon className="w-12 h-12 mb-2 text-slate-400" />
-                      <p className="text-sm font-medium">No pending {activeTab === "books" ? "reviews" : "ratings"}</p>
-                      <p className="text-xs">All processed!</p>
+                      <p className="text-sm font-medium text-slate-700">No pending {activeTab === "books" ? "reviews" : "ratings"}</p>
+                      <p className="text-xs text-slate-500">All processed!</p>
                     </>
                   ) : (
                     <>
                       <CheckCircleIcon className="w-12 h-12 mb-2 text-slate-400" />
-                      <p className="text-sm font-medium">No approved {activeTab === "books" ? "reviews" : "ratings"}</p>
+                      <p className="text-sm font-medium text-slate-700">No approved {activeTab === "books" ? "reviews" : "ratings"}</p>
                     </>
                   )}
                 </div>

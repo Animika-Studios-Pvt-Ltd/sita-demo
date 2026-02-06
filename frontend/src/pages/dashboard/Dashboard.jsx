@@ -239,7 +239,7 @@ const Dashboard = () => {
           <div className="shield-glow p-3 bg-white/70 backdrop-blur-md rounded-full border border-white/60 ring-1 ring-black/5">
             <MdSecurity className="text-slate-600 text-3xl sm:text-4xl" />
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight text-center font-montserrat">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#7A1F2B] tracking-tight text-center font-montserrat">
             Dashboard
           </h2>
         </div>
@@ -310,9 +310,9 @@ const Dashboard = () => {
         "
         >
           <h2
-            className="text-xl sm:text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2 select-none font-montserrat"
+            className="text-xl sm:text-2xl font-bold text-[#7A1F2B] mb-6 flex items-center gap-2 select-none font-montserrat"
           >
-            <FaChartLine className="text-slate-600 text-2xl sm:text-3xl" />
+            <FaChartLine className="text-[#7A1F2B] text-2xl sm:text-3xl" />
             Sales Overview
           </h2>
 
@@ -373,9 +373,9 @@ const Dashboard = () => {
           "
         >
           <h2
-            className="text-xl sm:text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2 select-none font-montserrat"
+            className="text-xl sm:text-2xl font-bold text-[#7A1F2B] mb-6 flex items-center gap-2 select-none font-montserrat"
           >
-            <FaChartPie className="text-slate-600 text-2xl sm:text-3xl" />
+            <FaChartPie className="text-[#7A1F2B] text-2xl sm:text-3xl" />
             Orders by Status
           </h2>
 
@@ -459,8 +459,8 @@ const Dashboard = () => {
         hover:shadow-[0_22px_50px_-32px_rgba(15,23,42,0.55)] hover:-translate-y-0.5 transition-all duration-300 select-none
       "
       >
-        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2 font-montserrat">
-          <FaBook className="text-slate-600 text-2xl sm:text-3xl" />
+        <h2 className="text-xl sm:text-2xl font-bold text-[#7A1F2B] mb-6 flex items-center gap-2 font-montserrat">
+          <FaBook className="text-[#7A1F2B] text-2xl sm:text-3xl" />
           Top Selling Books
         </h2>
 
