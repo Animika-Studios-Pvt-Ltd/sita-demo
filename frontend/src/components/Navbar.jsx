@@ -54,7 +54,7 @@ const Navbar = () => {
       pathname.startsWith("/books") ||
       pathname.startsWith("/cart") ||
       pathname.startsWith("/checkout") ||
-      pathname.startsWith("/orders") ||
+      pathname.startsWith("/my-orders") ||
       pathname.startsWith("/ebook"));
 
   useEffect(() => {
@@ -131,8 +131,13 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/orders">
+                      <Link className="dropdown-item" to="/my-orders">
                         My Orders
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/my-bookings">
+                        My Bookings
                       </Link>
                     </li>
                     <li>
@@ -217,8 +222,13 @@ const Navbar = () => {
                           </Link>
                         </li>
                         <li>
-                          <Link className="dropdown-item" to="/orders">
+                          <Link className="dropdown-item" to="/my-orders">
                             My Orders
+                          </Link>
+                        </li>
+                        <li>
+                          <Link className="dropdown-item" to="/my-bookings">
+                            My Bookings
                           </Link>
                         </li>
                         <li>

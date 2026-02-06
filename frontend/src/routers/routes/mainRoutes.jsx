@@ -47,6 +47,7 @@ import BookPreview from "../../pages/books/BookPreview";
 // Booking Imports
 import BookingHome from "../../pages/booking/BookingHome";
 import BookingEvent from "../../pages/booking/BookingEvent";
+import MyBookings from "../../pages/booking/MyBookings";
 import RateEvent from "../../pages/RateEvent";
 import CmsPage from "../../pages/Add pages/pages/CmsPage";
 
@@ -99,7 +100,7 @@ export const mainRoutes = [
         ),
       },
       {
-        path: "orders",
+        path: "my-orders",
         element: (
           <PrivateRoute>
             <OrderPage />
@@ -115,6 +116,7 @@ export const mainRoutes = [
 
       { path: "booking", element: <BookingHome /> }, // Alias
       { path: "booking/:slug", element: <CmsPage /> },
+      { path: "my-bookings", element: <MyBookings /> },
       { path: "rate-event/:bookingId", element: <RateEvent /> },
 
       // Events (General)
