@@ -43,6 +43,7 @@ app.use(
       "https://sitashakti.com",
       "https://www.sitashakti.com",
       "https://admin.sitashakti.com",
+      "https://sita-frontend.pages.dev"
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
@@ -156,6 +157,7 @@ const io = new Server(server, {
       "https://sitashakti.com",
       "https://www.sitashakti.com",
       "https://admin.sitashakti.com",
+      "https://sita-frontend.pages.dev"
     ],
     methods: ["GET", "POST", "PATCH", "DELETE"],
   },
