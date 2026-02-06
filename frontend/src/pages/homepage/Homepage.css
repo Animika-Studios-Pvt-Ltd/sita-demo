@@ -1480,7 +1480,7 @@ li {
     padding: 20px 0;
   }
 
-  .sita-masterclass .row > div {
+  .sita-masterclass .row>div {
     margin-bottom: 20px;
   }
 
@@ -1518,11 +1518,11 @@ li {
     margin-bottom: 10px;
   }
 
-  .sita-masterclass .row > div {
+  .sita-masterclass .row>div {
     margin-bottom: 20px;
   }
 
-  .sita-masterclass .row > div:last-child {
+  .sita-masterclass .row>div:last-child {
     margin-bottom: 0;
   }
 
@@ -1620,6 +1620,18 @@ li {
 }
 
 /* Sita Verses Section */
+@media (max-width: 1440px) {
+  .sita-verses blockquote {
+    width: 40%;
+  }
+}
+
+@media (max-width: 1336px) {
+  .sita-verses blockquote {
+    width: 50%;
+  }
+}
+
 @media (max-width: 1200px) {
   .sita-verses .motif {
     margin-bottom: 20px;
