@@ -93,19 +93,14 @@ const PodcastCard = ({ podcast, index }) => {
                         {!isUpcoming && (
                             <button
                                 onClick={() => embedUrl ? setIsPlaying(true) : window.open(podcast.podcastLink, '_blank')}
-                                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-[#8b171b] shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-110 transition-transform duration-300 z-10 group-active:scale-95"
+                                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 border-[1.5px] border-white text-white rounded-full flex items-center justify-center transition-all duration-300 z-10 group-active:scale-95 backdrop-blur-[2px]"
                                 aria-label="Play Podcast"
                             >
-                                <Play fill="currentColor" className="ml-1" size={32} />
+                                <Play fill="currentColor" strokeWidth={0} className="ml-1" size={24} />
                             </button>
                         )}
 
-                        {/* Platform Badge (Optional) */}
-                        <div className="absolute bottom-4 left-4 flex gap-2">
-                            {podcast.podcastLink.includes('youtube') && <span className="text-xs font-bold text-white bg-red-600 px-2 py-1 rounded">YouTube</span>}
-                            {podcast.podcastLink.includes('spotify') && <span className="text-xs font-bold text-white bg-green-500 px-2 py-1 rounded">Spotify</span>}
-                            {podcast.podcastLink.includes('apple') && <span className="text-xs font-bold text-white bg-purple-500 px-2 py-1 rounded">Apple</span>}
-                        </div>
+
                     </div>
                 )}
             </div>
