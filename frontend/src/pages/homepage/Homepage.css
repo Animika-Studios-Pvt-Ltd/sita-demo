@@ -466,8 +466,6 @@ li {
 
 .sita-verses .carousel-inner {
   min-height: 140px;
-  display: flex;
-  align-items: center;
 }
 
 .sita-verses blockquote {
@@ -488,6 +486,24 @@ li {
 
 .sita-verses .carousel-item {
   width: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.sita-verses .carousel-item.active {
+  opacity: 1;
+}
+
+.sita-verses .carousel-fade .active.carousel-item-start,
+.sita-verses .carousel-fade .active.carousel-item-end {
+  transition: opacity 0.4s ease-out;
+  opacity: 0;
+}
+
+.sita-verses .carousel-fade .carousel-item-next.carousel-item-start,
+.sita-verses .carousel-fade .carousel-item-prev.carousel-item-end {
+  transition: opacity 0.4s ease-in 0.4s;
+  opacity: 1;
 }
 
 .sita-verses-arrows {
@@ -701,12 +717,28 @@ li {
 
 .sita-testimonials-carousel-inner {
   min-height: 140px;
-  display: flex;
-  align-items: center;
 }
 
 .sita-testimonials-carousel-inner .carousel-item {
   width: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.sita-testimonials-carousel-inner .carousel-item.active {
+  opacity: 1;
+}
+
+.sita-testimonials .carousel-fade .active.carousel-item-start,
+.sita-testimonials .carousel-fade .active.carousel-item-end {
+  transition: opacity 0.4s ease-out;
+  opacity: 0;
+}
+
+.sita-testimonials .carousel-fade .carousel-item-next.carousel-item-start,
+.sita-testimonials .carousel-fade .carousel-item-prev.carousel-item-end {
+  transition: opacity 0.4s ease-in 0.4s;
+  opacity: 1;
 }
 
 .sita-testimonials-carousel-inner p {

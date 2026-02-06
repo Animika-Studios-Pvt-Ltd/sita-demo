@@ -343,7 +343,7 @@ const HomePage = () => {
 
             <div
               id="sitaVersesCarousel"
-              className="carousel slide"
+              className="carousel slide carousel-fade"
               data-bs-ride="carousel"
               data-bs-interval="3000">
               <div className="carousel-inner">
