@@ -613,7 +613,7 @@ const ManageBooks = () => {
                                         </div>
                                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                             <div>
-                                                <label className="block text-sm font-semibold text-slate-700 mb-1">Actual Price (₹)</label>
+                                                <label className="block text-sm font-semibold text-slate-700 mb-1">Actual Price ($)</label>
                                                 <input
                                                     type="number"
                                                     step="1"
@@ -625,7 +625,7 @@ const ManageBooks = () => {
                                                 />
                                             </div>
                                             <div>
-                                                <label className="block text-sm font-semibold text-slate-700 mb-1">Offer Price (₹)</label>
+                                                <label className="block text-sm font-semibold text-slate-700 mb-1">Offer Price ($)</label>
                                                 <input
                                                     type="number"
                                                     step="1"
@@ -653,7 +653,7 @@ const ManageBooks = () => {
 
                                         {oldPrice > 0 && (newPrice > 0 || discount > 0) && (
                                             <p className="mt-3 text-md text-slate-700">
-                                                Final Price: <span className="font-semibold text-green-600">₹{newPrice || 0}</span>
+                                                Final Price: <span className="font-semibold text-green-600">${newPrice || 0}</span>
                                                 {discount > 0 && (
                                                     <span className="ml-2 text-red-500 font-semibold">({roundPct(discount)}% OFF)</span>
                                                 )}
@@ -691,10 +691,10 @@ const ManageBooks = () => {
                                     <table className="w-full table-auto border-collapse">
                                         <thead>
                                             <tr className="bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 text-slate-500 uppercase text-xs font-semibold border border-white/70">
-                                                <th className="px-6 py-3 text-left">#</th>
-                                                <th className="px-6 py-3 text-left">Book Title</th>
+                                                <th className="px-6 py-3 text-center">#</th>
+                                                <th className="px-6 py-3 text-center">Book Title</th>
                                                 <th className="px-6 py-3 text-center align-middle">Price</th>
-                                                <th className="px-6 py-3 text-left">Stock</th>
+                                                <th className="px-6 py-3 text-center">Stock</th>
                                                 <th className="px-6 py-3 text-center align-middle">Actions</th>
                                             </tr>
                                         </thead>
@@ -702,25 +702,25 @@ const ManageBooks = () => {
                                             {books && books.length > 0 ? (
                                                 books.map((book, index) => (
                                                     <tr key={book._id} className="border-b hover:bg-white/70">
-                                                        <td className="px-6 py-4 text-sm">{index + 1}</td>
-                                                        <td className="px-6 py-4 text-sm">{book.title}</td>
-                                                        <td className="px-6 py-4 text-sm">
+                                                        <td className="px-6 py-4 text-sm text-center">{index + 1}</td>
+                                                        <td className="px-6 py-4 text-sm text-center">{book.title}</td>
+                                                        <td className="px-6 py-4 text-sm text-center">
                                                             {book.oldPrice && book.discount > 0 ? (
                                                                 <div>
-                                                                    <span className="text-slate-400 line-through mr-2">₹{book.oldPrice}</span>
-                                                                    <span className="text-green-600 font-semibold">₹{book.newPrice}</span>
+                                                                    <span className="text-slate-400 line-through mr-2">${book.oldPrice}</span>
+                                                                    <span className="text-green-600 font-semibold">${book.newPrice}</span>
                                                                     <span className="ml-2 text-red-500 font-semibold">({book.discount}% OFF)</span>
                                                                 </div>
                                                             ) : (
-                                                                <span className="text-green-600 font-semibold">₹{book.newPrice}</span>
+                                                                <span className="text-green-600 font-semibold">${book.newPrice}</span>
                                                             )}
                                                         </td>
-                                                        <td className="px-6 py-4 text-sm">
+                                                        <td className="px-6 py-4 text-sm text-center">
                                                             <span className={`${book.stock < 10 ? 'text-red-600 font-semibold' : 'text-slate-700'}`}>
                                                                 {book.stock || 0}
                                                             </span>
                                                         </td>
-                                                        <td className="px-6 py-4 text-sm space-x-4 flex items-center">
+                                                        <td className="px-6 py-4 text-sm space-x-4 flex items-center text-center">
                                                             <button
                                                                 onClick={() => handleEditBook(book._id)}
                                                                 className="flex items-center gap-1 px-3 py-1 rounded-full text-blue-600 text-sm font-medium bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/90 transition-colors duration-200"
@@ -767,10 +767,10 @@ const ManageBooks = () => {
                                                     {book.oldPrice && book.discount > 0 ? (
                                                         <>
                                                             <span className="line-through text-slate-400 mr-1">
-                                                                ₹{book.oldPrice}
+                                                                ${book.oldPrice}
                                                             </span>
                                                             <span className="text-green-600 font-semibold">
-                                                                ₹{book.newPrice}
+                                                                ${book.newPrice}
                                                             </span>
                                                             <span className="ml-1 text-red-500 font-semibold">
                                                                 ({book.discount}% OFF)
@@ -778,7 +778,7 @@ const ManageBooks = () => {
                                                         </>
                                                     ) : (
                                                         <span className="text-green-600 font-semibold">
-                                                            ₹{book.newPrice}
+                                                            ${book.newPrice}
                                                         </span>
                                                     )}
                                                 </div>

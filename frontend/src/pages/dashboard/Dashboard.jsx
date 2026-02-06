@@ -5,7 +5,7 @@ import Loading from "../../components/Loading";
 import getBaseUrl from "../../utils/baseURL";
 import { MdOutlineLibraryBooks, MdSecurity } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { TbCurrencyRupee } from "react-icons/tb";
+import { TbCurrencyDollar } from "react-icons/tb";
 import CountUp from "react-countup";
 import { motion } from "framer-motion";
 import { FaBook, FaChartLine, FaChartPie } from "react-icons/fa";
@@ -281,9 +281,9 @@ const Dashboard = () => {
         >
           <DashboardCard
             color="slate"
-            icon={<TbCurrencyRupee className="text-slate-600 text-3xl sm:text-4xl" />}
+            icon={<TbCurrencyDollar className="text-slate-600 text-3xl sm:text-4xl" />}
             title="Total Sales"
-            prefix="₹"
+            prefix="$"
             value={totalSales}
           />
         </div>
@@ -336,7 +336,7 @@ const Dashboard = () => {
                 />
                 <YAxis
                   tick={{ fill: "#64748B", fontSize: 11, fontFamily: "Montserrat" }}
-                  tickFormatter={(value) => `₹${value.toLocaleString()}`}
+                  tickFormatter={(value) => `$${value.toLocaleString()}`}
                 />
                 <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
                 <Tooltip
@@ -347,7 +347,7 @@ const Dashboard = () => {
                     fontFamily: "Montserrat",
                     boxShadow: "0 6px 16px -8px rgba(15, 23, 42, 0.2)"
                   }}
-                  formatter={(value) => [`₹${value.toLocaleString()}`, "Sales"]}
+                  formatter={(value) => [`$${value.toLocaleString()}`, "Sales"]}
                   labelStyle={{ color: "#334155", fontWeight: 600 }}
                 />
                 <Area

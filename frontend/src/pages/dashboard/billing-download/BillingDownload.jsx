@@ -18,11 +18,11 @@ const BillingDownload = ({ order }) => {
 
     let y = 60;
     order.products.forEach((product, index) => {
-      doc.text(`${index + 1}. ${product.title} - ₹${product.price}`, 10, y);
+      doc.text(`${index + 1}. ${product.title} - $${product.price}`, 10, y);
       y += 10;
     });
 
-    doc.text(`Total Price: ₹${order.totalPrice}`, 10, y + 10);
+    doc.text(`Total Price: $${order.totalPrice}`, 10, y + 10);
 
     doc.save(`Invoice_${order._id}.pdf`);
   };

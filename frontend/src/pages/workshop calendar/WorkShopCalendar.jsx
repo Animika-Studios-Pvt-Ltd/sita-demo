@@ -30,7 +30,7 @@ const WorkShopCalendar = () => {
     const tbody = document.getElementById("workshopTableBody");
     if (!tbody) return;
 
-    const BOOKING_BASE_URL = "https://booking.sitashakti.com";
+    const BOOKING_BASE_URL = "https://sitashakti.com";
 
     const toMinutes = (time) => {
       if (!time) return 0;
@@ -93,21 +93,20 @@ const WorkShopCalendar = () => {
 			  <td>${e.availability ?? "-"}</td>
 			  <td>${e.ageGroup || "-"}</td>
 			  <td>
-				${
-          Number(e.availability) === 0
-            ? `<span class="sita-booking-closed">Booking Closed</span>`
-            : e.bookingUrl
-              ? `<a
+				${Number(e.availability) === 0
+              ? `<span class="sita-booking-closed">Booking Closed</span>`
+              : e.bookingUrl
+                ? `<a
 						  href="${BOOKING_BASE_URL}/${e.bookingUrl}"
 						  class="sita-book-now"
 						  target="_blank"
 						>
 						  Book Now
 						</a>`
-              : `<button disabled class="sita-book-now disabled">
+                : `<button disabled class="sita-book-now disabled">
 						  Coming Soon
 						</button>`
-        }
+            }
 			  </td>
 			</tr>
 		  `;

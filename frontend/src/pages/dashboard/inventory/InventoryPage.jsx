@@ -16,7 +16,7 @@ const InventoryPage = () => {
   const glassHeader = `${glassPanel} p-6 md:p-8 mb-5 shadow-[0_18px_40px_-30px_rgba(15,23,42,0.45)]`;
   const glassTableHead = "bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 text-slate-500 uppercase text-xs font-semibold border border-white/70";
   const glassInput = "bg-white/80 border border-white/70 ring-1 ring-black/5 rounded-lg px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7A1F2B]/30 focus:border-[#7A1F2B]/40";
-  const glassButton = "bg-[#7A1F2B] hover:bg-[#8b171b] text-white font-medium py-2 px-4 rounded-lg transition duration-200 shadow-sm";
+  const glassButton = "px-3 py-1.5 rounded-full bg-white/70 backdrop-blur-xl border-1 border-[#7A1F2B] ring-1 ring-black/5 text-[#7A1F2B] hover:bg-white/90 transition-colors duration-200 font-medium shadow-sm";
 
   const fetchBooks = async () => {
     try {
@@ -123,15 +123,15 @@ const InventoryPage = () => {
         </div>
         <div className={`hidden lg:block ${glassPanel} overflow-hidden`}>
           <div className="overflow-x-auto">
-            <table className="min-w-full">
+            <table className="min-w-full table-auto border-collapse">
               <thead className={glassTableHead}>
                 <tr>
-                  <th className="px-3 py-4 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Sl. No</th>
-                  <th className="px-4 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Book Title</th>
-                  <th className="px-4 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Author</th>
-                  <th className="px-4 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Pricing</th>
-                  <th className="px-4 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Stock Status</th>
-                  <th className="px-4 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Update Stock</th>
+                  <th className="px-3 py-4 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">#</th>
+                  <th className="px-4 py-4 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Book Title</th>
+                  <th className="px-4 py-4 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Author</th>
+                  <th className="px-4 py-4 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Pricing</th>
+                  <th className="px-4 py-4 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Stock Status</th>
+                  <th className="px-4 py-4 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Update Stock</th>
                   <th className="px-4 py-4 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
@@ -140,21 +140,21 @@ const InventoryPage = () => {
                   <tr><td colSpan="7" className="text-center py-12 text-slate-500"><svg className="mx-auto h-12 w-12 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg><p className="mt-2 font-medium">No books found</p></td></tr>
                 ) : (
                   books.map((book, index) => (
-                    <tr key={book._id} className="hover:bg-white/60 transition duration-150">
+                    <tr key={book._id} className="border-b border-slate-200/70 hover:bg-white/60 transition duration-150">
                       <td className="px-4 py-4 text-center"><span className="text-sm font-medium text-slate-600">{index + 1}</span></td>
-                      <td className="px-4 py-4"><p className="text-sm font-medium text-slate-900">{book.title}</p></td>
-                      <td className="px-4 py-4"><p className="text-sm text-slate-700">{book.author || "Unknown"}</p></td>
-                      <td className="px-4 py-4">
-                        <div className="text-sm">
+                      <td className="px-4 py-4 text-center"><p className="text-sm font-medium text-slate-900">{book.title}</p></td>
+                      <td className="px-4 py-4 text-center"><p className="text-sm text-slate-700">{book.author || "Unknown"}</p></td>
+                      <td className="px-4 py-4 text-center">
+                        <div className="text-sm text-center">
                           {book.oldPrice && book.oldPrice > book.newPrice ? (
-                            <div><span className="line-through text-slate-400 text-xs">₹{book.oldPrice?.toFixed(2)}</span><p className="font-semibold text-slate-900">₹{book.newPrice?.toFixed(2)}</p></div>
+                            <div><span className="line-through text-slate-400 text-xs">${book.oldPrice?.toFixed(2)}</span><p className="font-semibold text-slate-900">${book.newPrice?.toFixed(2)}</p></div>
                           ) : (
-                            <p className="font-semibold text-slate-900">₹{book.newPrice?.toFixed(2)}</p>
+                            <p className="font-semibold text-slate-900">${book.newPrice?.toFixed(2)}</p>
                           )}
                         </div>
                       </td>
-                      <td className="px-4 py-4"><span className={`text-xs font-medium px-3 py-1.5 rounded-full border-2 inline-block ${getStockStatusColor(book.stock)}`}>{getStockStatusText(book.stock)} ({book.stock || 0})</span></td>
-                      <td className="px-4 py-4"><input type="text" value={stockInputs[book._id] || ""} onChange={(e) => handleStockChange(book._id, e.target.value)} className={`${glassInput} w-24 text-center`} placeholder="0" /></td>
+                      <td className="px-4 py-4 text-center"><span className={`text-xs font-medium px-3 py-1.5 rounded-full border-2 inline-block ${getStockStatusColor(book.stock)}`}>{getStockStatusText(book.stock)} ({book.stock || 0})</span></td>
+                      <td className="px-4 py-4 text-center"><input type="text" value={stockInputs[book._id] || ""} onChange={(e) => handleStockChange(book._id, e.target.value)} className={`${glassInput} w-24 text-center`} placeholder="0" /></td>
                       <td className="px-4 py-4 text-center"><button onClick={() => updateStock(book._id)} className={glassButton}>Update</button></td>
                     </tr>
                   ))
@@ -181,9 +181,9 @@ const InventoryPage = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       {book.oldPrice && book.oldPrice > book.newPrice ? (
-                        <div><span className="line-through text-slate-400 text-xs">₹{book.oldPrice?.toFixed(2)}</span><p className="font-semibold text-slate-900">₹{book.newPrice?.toFixed(2)}</p></div>
+                        <div><span className="line-through text-slate-400 text-xs">${book.oldPrice?.toFixed(2)}</span><p className="font-semibold text-slate-900">${book.newPrice?.toFixed(2)}</p></div>
                       ) : (
-                        <p className="font-semibold text-slate-900">₹{book.newPrice?.toFixed(2)}</p>
+                        <p className="font-semibold text-slate-900">${book.newPrice?.toFixed(2)}</p>
                       )}
                     </div>
                     <span className={`text-xs font-medium px-3 py-1 rounded-full border-2 ${getStockStatusColor(book.stock)}`}>{getStockStatusText(book.stock)}</span>

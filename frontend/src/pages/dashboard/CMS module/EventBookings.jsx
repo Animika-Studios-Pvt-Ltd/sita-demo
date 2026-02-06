@@ -205,7 +205,7 @@ const EventBookings = () => {
                                                 </td>
 
                                                 <td className="p-3 text-center font-semibold">
-                                                    {b.totalAmount > 0 ? `₹${b.totalAmount}` : "Free"}
+                                                    {b.totalAmount > 0 ? `$${b.totalAmount}` : "Free"}
                                                 </td>
 
                                                 <td className="p-3 text-center">

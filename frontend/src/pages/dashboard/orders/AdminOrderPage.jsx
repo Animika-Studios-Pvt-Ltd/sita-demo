@@ -400,7 +400,7 @@ const AdminOrderPage = () => {
               <p className="text-slate-600 text-sm md:text-base">
                 Total Sales:{" "}
                 <span className="font-semibold text-[#7A1F2B]">
-                  ₹
+                  $
                   <CountUp
                     end={totalSales}
                     duration={2.5}
@@ -438,10 +438,10 @@ const AdminOrderPage = () => {
             <table className="min-w-full table-fixed">
               <thead className={glassTableHead}>
                 <tr>
-                  <th className="w-[25%] px-3 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Order Details</th>
-                  <th className="w-[15%] px-3 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Customer</th>
-                  <th className="w-[15%] px-3 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Status</th>
-                  <th className="w-[30%] px-3 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Tracking ID</th>
+                  <th className="w-[25%] px-3 py-3 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Order Details</th>
+                  <th className="w-[15%] px-3 py-3 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Customer</th>
+                  <th className="w-[15%] px-3 py-3 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Status</th>
+                  <th className="w-[30%] px-3 py-3 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Tracking ID</th>
                   <th className="w-[15%] px-3 py-3 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">Invoice</th>
                 </tr>
               </thead>
@@ -484,13 +484,13 @@ const AdminOrderPage = () => {
                                 </p>
 
                                 <p className="text-xs font-semibold text-slate-900 mt-1">
-                                  ₹{order.totalPrice?.toFixed(2)}
+                                  ${order.totalPrice?.toFixed(2)}
                                 </p>
                               </div>
                             </div>
                           </td>
-                          <td className="px-3 py-3">
-                            <div className="min-w-0">
+                          <td className="px-3 py-3b ">
+                            <div className="min-w-0 text-center">
                               <p className="text-xs font-medium text-slate-900 truncate">{order.name}</p>
                               <p className="text-xs text-slate-500 truncate">{order.email}</p>
                               {order.phone && <p className="text-xs text-slate-500 truncate">{order.phone}</p>}
@@ -580,7 +580,7 @@ const AdminOrderPage = () => {
                                         </div>
                                         <div className="text-xs text-slate-600 ml-4">
                                           <span className="font-semibold">
-                                            ₹{((product.price || 0) * (product.quantity || 1)).toFixed(2)}
+                                            ${((product.price || 0) * (product.quantity || 1)).toFixed(2)}
                                           </span>
                                         </div>
                                       </div>
@@ -663,7 +663,7 @@ const AdminOrderPage = () => {
                       <svg className={`w-5 h-5 transform transition-transform ${expandedRows[order._id] ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                     </button>
                     {expandedRows[order._id] && (
-                      <div className="mt-3 bg-[#7A1F2B]/5 rounded-lg p-3 space-y-2">{order.products && order.products.length > 0 ? order.products.map((product, index) => (<div key={index} className="flex justify-between items-start py-2 border-b last:border-b-0 border-[#7A1F2B]/15"><div className="flex-1 pr-2"><p className="text-sm text-slate-900">{product.title || "Untitled Book"}</p><p className="text-xs text-slate-500">Qty: {product.quantity || 1} × ₹{(product.price || 0).toFixed(2)}</p></div><p className="text-sm font-semibold text-slate-900">₹{((product.price || 0) * (product.quantity || 1)).toFixed(2)}</p></div>)) : <p className="text-sm text-slate-500">No items</p>}</div>
+                      <div className="mt-3 bg-[#7A1F2B]/5 rounded-lg p-3 space-y-2">{order.products && order.products.length > 0 ? order.products.map((product, index) => (<div key={index} className="flex justify-between items-start py-2 border-b last:border-b-0 border-[#7A1F2B]/15"><div className="flex-1 pr-2"><p className="text-sm text-slate-900">{product.title || "Untitled Book"}</p><p className="text-xs text-slate-500">Qty: {product.quantity || 1} × ${(product.price || 0).toFixed(2)}</p></div><p className="text-sm font-semibold text-slate-900">${((product.price || 0) * (product.quantity || 1)).toFixed(2)}</p></div>)) : <p className="text-sm text-slate-500">No items</p>}</div>
                     )}
                   </div>
                   <div className="flex flex-col space-y-2 pt-2">
@@ -676,7 +676,7 @@ const AdminOrderPage = () => {
                     </div>
                   </div>
                   <div className="flex items-center justify-between pt-2 border-t">
-                    <p className="text-lg font-bold text-slate-900">₹{order.totalPrice?.toFixed(2)}</p>
+                    <p className="text-lg font-bold text-slate-900">${order.totalPrice?.toFixed(2)}</p>
                     <div className="flex gap-2">
                       <button onClick={() => previewInvoice(order)} className={`${iconBtnBase} text-[#7A1F2B] hover:text-[#8b171b]`} title="Preview"><VisibilityIcon style={{ fontSize: 18 }} /></button>
                       <button onClick={() => downloadInvoice(order)} className={`${iconBtnBase} text-emerald-600 hover:text-emerald-700 border-emerald-200/60`} title="Download"><DownloadIcon style={{ fontSize: 18 }} /></button>

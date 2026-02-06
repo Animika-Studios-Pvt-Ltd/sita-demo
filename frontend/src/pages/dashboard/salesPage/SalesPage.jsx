@@ -35,7 +35,7 @@ const SalesPage = () => {
     const [salesData, setSalesData] = useState({ labels: [], values: [] });
     const [bookSalesData, setBookSalesData] = useState([]);
     const [filter, setFilter] = useState("Daily");
-    const [chartType, setChartType] = useState("bar");
+    const [chartType, setChartType] = useState("line");
     const [summary, setSummary] = useState({ totalSales: 0, totalOrders: 0, avgOrderValue: 0 });
     const glassPanel = "bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-2xl shadow-sm";
     const glassHeader = `${glassPanel} p-6 md:p-8 mb-5 shadow-[0_18px_40px_-30px_rgba(15,23,42,0.45)]`;
@@ -187,7 +187,7 @@ const SalesPage = () => {
         labels: salesData.labels,
         datasets: [
             {
-                label: "Sales (₹)",
+                label: "Sales ($)",
                 data: salesData.values,
                 backgroundColor: "rgba(139,23,27,0.35)",
                 borderColor: "rgba(139,23,27,0.95)",
@@ -217,7 +217,7 @@ const SalesPage = () => {
                 backgroundColor: "rgba(122,31,43,0.35)",
             },
             {
-                label: "Revenue (₹)",
+                label: "Revenue ($)",
                 data: bookSalesData.map((b) => b.revenue),
                 backgroundColor: "rgba(15,23,42,0.45)",
             },
@@ -237,7 +237,7 @@ const SalesPage = () => {
                     <p className="text-slate-600 text-sm md:text-base">
                         Total Sales:{" "}
                         <span className="font-semibold text-[#7A1F2B]">
-                            ₹<CountUp end={summary.totalSales} duration={1.2} separator="," />
+                            $<CountUp end={summary.totalSales} duration={1.2} separator="," />
                         </span>{" "}
                         | Active Orders:{" "}
                         <span className="font-semibold text-[#7A1F2B]">
@@ -280,11 +280,11 @@ const SalesPage = () => {
                                     legend: { position: "top" },
                                     tooltip: {
                                         callbacks: {
-                                            label: (tooltipItem) => `₹${tooltipItem.raw.toLocaleString()}`,
+                                            label: (tooltipItem) => `$${tooltipItem.raw.toLocaleString()}`,
                                         },
                                     },
                                 },
-                                scales: { y: { beginAtZero: true, ticks: { callback: (v) => `₹${v}` } } },
+                                scales: { y: { beginAtZero: true, ticks: { callback: (v) => `$${v}` } } },
                             }}
                         />
                     ) : (
@@ -294,7 +294,7 @@ const SalesPage = () => {
                                 animation: { duration: 800, easing: 'easeOutQuart' },
                                 responsive: true,
                                 plugins: { legend: { position: "top" }, title: { display: true, text: `${filter} Sales Trend` } },
-                                scales: { y: { beginAtZero: true, ticks: { callback: (v) => `₹${v}` } } },
+                                scales: { y: { beginAtZero: true, ticks: { callback: (v) => `$${v}` } } },
                             }}
                         />
                     )}
@@ -314,8 +314,8 @@ const SalesPage = () => {
                                 tooltip: {
                                     callbacks: {
                                         label: (tooltipItem) =>
-                                            tooltipItem.dataset.label === "Revenue (₹)"
-                                                ? `₹${tooltipItem.raw.toLocaleString()}`
+                                            tooltipItem.dataset.label === "Revenue ($)"
+                                                ? `$${tooltipItem.raw.toLocaleString()}`
                                                 : tooltipItem.raw,
                                     },
                                 },
@@ -330,20 +330,22 @@ const SalesPage = () => {
                         <FaBook /> Book Sales Details
                     </h2>
                     <div className="overflow-x-auto">
-                        <table className="min-w-full border border-white/70">
-                            <thead className={glassTableHead}>
-                                <tr>
-                                    <th className="py-3 px-4 border-b border-white/70 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Book Title</th>
-                                    <th className="py-3 px-4 border-b border-white/70 text-right text-xs font-semibold text-slate-600 uppercase tracking-wider">Quantity Sold</th>
-                                    <th className="py-3 px-4 border-b border-white/70 text-right text-xs font-semibold text-slate-600 uppercase tracking-wider">Revenue (₹)</th>
+                        <table className="w-full table-auto border-collapse">
+                            <thead>
+                                <tr className="bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 text-slate-500 uppercase text-xs font-semibold border border-white/70">
+                                    <th className="px-6 py-3 text-center">#</th>
+                                    <th className="px-6 py-3 text-center">Book Title</th>
+                                    <th className="px-6 py-3 text-center">Quantity Sold</th>
+                                    <th className="px-6 py-3 text-center">Revenue ($)</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {bookSalesData.map((b, i) => (
-                                    <tr key={i} className="hover:bg-white/60">
-                                        <td className="py-3 px-4 border-b border-white/60 text-sm text-slate-700">{b.title}</td>
-                                        <td className="py-3 px-4 border-b border-white/60 text-right text-sm text-slate-700">{b.quantity}</td>
-                                        <td className="py-3 px-4 border-b border-white/60 text-right text-sm text-slate-700">₹{b.revenue.toLocaleString()}</td>
+                                    <tr key={i} className="border-b hover:bg-white/70">
+                                        <td className="px-6 py-4 text-sm text-slate-600 text-center">{i + 1}</td>
+                                        <td className="px-6 py-4 text-sm text-slate-700 text-center">{b.title}</td>
+                                        <td className="px-6 py-4 text-sm text-slate-700 text-center">{b.quantity}</td>
+                                        <td className="px-6 py-4 text-sm text-slate-700 text-center">${b.revenue.toLocaleString()}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -356,5 +358,10 @@ const SalesPage = () => {
 };
 
 export default SalesPage;
+
+
+
+
+
 
 
