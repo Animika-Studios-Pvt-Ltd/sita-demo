@@ -17,7 +17,7 @@ const WorkShopCalendar = () => {
     const tbody = document.getElementById("workshopTableBody");
     if (!tbody) return;
 
-    const BOOKING_BASE_URL = "https://sitashakti.com";
+    const BOOKING_BASE_URL = "http://localhost:5173/booking";
 
     const toMinutes = (time) => {
       if (!time) return 0;
@@ -43,7 +43,7 @@ const WorkShopCalendar = () => {
       return endMinutes > nowMinutes;
     };
 
-    fetch("https://sita-demo-production.up.railway.app/api/events")
+    fetch("http://localhost:5000/api/events")
       .then((res) => res.json())
       .then((events) => {
         tbody.innerHTML = "";

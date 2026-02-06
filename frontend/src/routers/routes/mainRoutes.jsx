@@ -133,8 +133,7 @@ export const mainRoutes = [
 
       { path: "auth", element: <Auth /> },
 
-      // ⚠️ MUST BE LAST - CMS Pages
-      { path: ":slug", element: <CmsPage /> },
+      // CMS Pages disabled to prevent root-level slugs like /Guru
     ],
   },
   { path: "*", element: <PageNotFound /> },
