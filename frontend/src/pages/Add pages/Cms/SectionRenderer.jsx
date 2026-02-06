@@ -3,12 +3,38 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-import { ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import BookingModal from '../../../components/BookingModal';
 import SitaBreadcrumb from '../../breadcrumbs/SitaBreadcrumb';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { ChevronDown, ChevronUp, ExternalLink, ArrowRight, ArrowLeft } from 'lucide-react';
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
+import RemoveShoppingCartOutlinedIcon from "@mui/icons-material/RemoveShoppingCartOutlined";
+import BlockIcon from "@mui/icons-material/Block";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, clearCart } from "../../../redux/features/cart/cartSlice";
 import parse from 'html-react-parser';
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+
+import { useFetchAllBooksQuery } from '../../../redux/features/books/booksApi';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+import { useParams, useLocation } from 'react-router-dom';
+
+const sanitizeDescription = (html) => {
+  if (!html) return "";
+  return html
+    .replace(/class="ql-align-[^"]*"/g, "")
+    .replace(/style="[^"]*"/g, "");
+};
 
 export default function SectionRenderer({ section }) {
   useEffect(() => {
@@ -35,6 +61,16 @@ export default function SectionRenderer({ section }) {
       return <BookingSection content={content} />;
     case 'main':
       return <MainSection content={content} />;
+    case 'events':
+      return <EventsSection content={content} />;
+    case 'blogs':
+      return <BlogsSection content={content} />;
+    case 'books':
+      return <BooksSection content={content} />;
+    case 'articles':
+      return <ArticlesSection content={content} />;
+    case 'podcasts':
+      return <PodcastsSection content={content} />;
     default:
       return null;
   }
@@ -284,7 +320,7 @@ function FaqSection({ content }) {
   const questionColor = style.questionColor || '#1f2937';
   const answerColor = style.answerColor || '#6b7280';
   const accentColor = style.accentColor || '#8b171b';
-  const padding = style.padding || 'py-2';
+  const padding = style.padding || 'py-12';
 
   if (items.length === 0) return null;
 
@@ -310,6 +346,7 @@ function FaqSection({ content }) {
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
                 className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors"
+                style={{ fontFamily: 'Montserrat-Regular' }}
               >
                 <span
                   className="font-semibold pr-4"
@@ -337,7 +374,7 @@ function FaqSection({ content }) {
                     backgroundColor: backgroundColor === '#ffffff' ? '#f9fafb' : backgroundColor
                   }}
                 >
-                  <p style={{ color: answerColor }}>{item.a}</p>
+                  <p style={{ color: answerColor, fontFamily: 'Montserrat-Light' }}>{item.a}</p>
                 </div>
               )}
             </div>
@@ -345,5 +382,517 @@ function FaqSection({ content }) {
         </div>
       </div>
     </section>
+  );
+}
+
+// === DYNAMIC CONTENT SECTIONS ===
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const BACKEND_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+
+const DynamicSectionLayout = ({ title, children, linkTo, linkText = "View All" }) => (
+  <section className="py-16 bg-white">
+    <div className="container mx-auto px-4">
+      {title && (
+        <div className="text-center mb-12">
+          <h2 className="font-serifSita text-[#8b171b] text-3xl md:text-4xl leading-tight mb-2">
+            {title.toUpperCase()}
+          </h2>
+          <img src="/sita-motif.webp" alt="Motif" className="mx-auto w-32 md:w-40" />
+        </div>
+      )}
+
+      {children}
+
+      <div className="text-center mt-12">
+        <Link
+          to={linkTo}
+          className="inline-block px-8 py-3 bg-[#8b171b] text-white font-montserratLight rounded-full hover:bg-[#a62024] transition-colors"
+        >
+          {linkText}
+        </Link>
+      </div>
+    </div>
+  </section>
+);
+
+
+function EventsSection({ content }) {
+  const [events, setEvents] = useState([]);
+  const count = content.count || 3;
+  const { id } = useParams(); // Get current page ID (if any)
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/events`);
+        const data = await res.json();
+
+        // Filter upcoming AND exclude current event
+        const upcoming = data.filter(e => {
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          const [y, m, d] = e.date.split("-").map(Number);
+          const eventDate = new Date(y, m - 1, d);
+
+          if (id && e._id === id) return false;
+          if (id && e.bookingUrl === id) return false;
+
+          return eventDate >= today;
+        });
+
+        setEvents(upcoming.slice(0, count));
+        setTimeout(() => AOS.refresh(), 100);
+      } catch (err) {
+        console.error("Failed to fetch events", err);
+      }
+    };
+    fetchEvents();
+  }, [count, id]);
+
+  if (events.length === 0) return null;
+
+  const showCarousel = events.length > 3;
+
+  const EventCard = ({ event }) => {
+    const dateObj = new Date(event.date);
+    const day = dateObj.getDate();
+    const month = dateObj.toLocaleString("en-US", { month: "short" });
+    const eventImage = event.imageUrl || "https://images.unsplash.com/photo-1544367563-12123d8965cd";
+
+    return (
+      <div className="group rounded-2xl overflow-hidden bg-white shadow-md flex flex-col border-1 border-transparent transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:border-[#8b171b] h-full">
+        {/* IMAGE */}
+        <div className="relative w-full aspect-[16/9] overflow-hidden shrink-0">
+          <div
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+            style={{
+              backgroundImage: `url(${eventImage?.startsWith("http") ? eventImage : `${BACKEND_BASE_URL}${eventImage}`})`
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        </div>
+
+        {/* CONTENT */}
+        <div className="p-4 flex flex-col space-y-3 flex-1">
+          <h3 className="text-lg md:text-xl font-bold text-gray-900 transition-colors duration-300 group-hover:text-[#8b171b] line-clamp-2">
+            {event.title}
+          </h3>
+
+          <div className="flex items-start gap-3 flex-1">
+            <div className="px-3 py-2 bg-[#8b171b] text-white rounded-lg text-center shrink-0">
+              <div className="text-xs uppercase">{month}</div>
+              <div className="text-lg font-bold">{day}</div>
+            </div>
+
+            <div className="text-sm text-gray-600 flex-1">
+              <div>{new Date(event.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+              <div>Location: {event.location || "Location TBA"}</div>
+              {Number(event.availability) > 0 && (
+                <p className="text-sm text-gray-700 mt-1">
+                  Available Slots: <span className="font-semibold text-[#8b171b]">{event.availability}</span>
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="mt-auto pt-2">
+            {Number(event.availability) === 0 ? (
+              <span className="block w-full text-center py-2 bg-gray-500 text-white rounded-lg">Bookings Closed</span>
+            ) : event.bookingUrl ? (
+              <Link to={`/booking/${event.bookingUrl || event._id}`} className="block w-full text-center no-underline py-2 bg-[#8b171b] text-white font-semibold rounded-lg transition-all duration-300 hover:bg-[#a62024] hover:scale-[1.02]">
+                Book Now
+              </Link>
+            ) : (
+              <span className="block w-full text-center py-2 bg-lime-600 text-white rounded-lg">Coming Soon</span>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <DynamicSectionLayout title={content.title} linkTo="/workshop-calendar" linkText="View Calendar">
+      {showCarousel ? (
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          spaceBetween={24}
+          slidesPerView={1}
+          navigation
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 5000 }}
+          breakpoints={{
+            640: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+          }}
+          className="pb-12 px-2"
+        >
+          {events.map(event => (
+            <SwiperSlide key={event._id} className="h-auto pb-8">
+              <EventCard event={event} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {events.map(event => (
+            <EventCard key={event._id} event={event} />
+          ))}
+        </div>
+      )}
+    </DynamicSectionLayout>
+  );
+}
+
+
+function BlogsSection({ content }) {
+  const [currentBlogs, setCurrentBlogs] = useState([]);
+  const count = content.count || 3;
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchLatestBlogs = async () => {
+      try {
+        const res = await fetch(`${BACKEND_BASE_URL}/api/blogs`);
+        const data = await res.json();
+        const latest = data
+          .filter(b => !b.suspended && b._id !== id && b.slug !== id) // Exclude current
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .slice(0, count);
+        setCurrentBlogs(latest);
+        // Refresh AOS to ensure new elements animate
+        setTimeout(() => AOS.refresh(), 100);
+      } catch (err) {
+        console.error("Failed to fetch latest blogs", err);
+      }
+    };
+    fetchLatestBlogs();
+  }, [count, id]);
+
+  if (currentBlogs.length === 0) return null;
+
+  return (
+    <DynamicSectionLayout title={null} linkTo="/blogs" linkText="Read All Blogs">
+      {/* HEADER */}
+      <div className="" data-aos="fade-up" data-aos-duration="1200">
+        <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+          {content.title || "Latest Blogs"}
+        </h2>
+        <img
+          src="/sita-motif.webp"
+          alt="Sita Motif"
+          className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+        />
+      </div>
+
+      {/* BLOG GRID */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {currentBlogs.map((blog, index) => {
+          const btnColors = [
+            "bg-[#d86c87]",
+            "bg-[#e29a7a]",
+            "bg-[#c36c6c]",
+          ];
+
+          return (
+            <div
+              key={blog._id}
+              className="flex flex-col text-center border-b border-[#8b171b] h-full pb-4"
+            >
+              {/* IMAGE */}
+              <div
+                className="relative w-full aspect-[1.25/1] overflow-hidden mb-3"
+                style={{ aspectRatio: "1.25/1" }}
+              >
+                <div
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                  style={{
+                    backgroundImage: `url(${blog.image?.startsWith("http") ? blog.image : `${BACKEND_BASE_URL}${blog.image}`})`
+                  }}
+                />
+
+                {/* DATE */}
+                <p className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-3 py-1 text-[16px] rounded-t-md shadow font-montserratLight">
+                  {new Date(blog.createdAt).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "2-digit",
+                    year: "numeric",
+                  })}
+                </p>
+              </div>
+
+              {/* CONTENT */}
+              <div className="flex flex-col flex-grow px-1 mt-4">
+                <h4 className="font-montserratLight text-[20px] mb-1 text-black leading-snug line-clamp-2">
+                  {blog.title}
+                </h4>
+
+                <div className="font-montserratLight text-[16px] text-black leading-snug h-[70px] overflow-hidden mb-2">
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeDescription(
+                        blog.description?.length > 200
+                          ? blog.description.slice(0, 200) + "..."
+                          : blog.description || ""
+                      ),
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* AUTHOR */}
+              <span className="font-montserratLight text-[14px] italic mt-2 mb-2">
+                – {blog.author || "Sita Severson"}
+              </span>
+
+              {/* CTA */}
+              <Link
+                to={`/blogs/${blog.slug || blog._id}`}
+                className={`
+                    font-montserratLight
+                    ${btnColors[index % btnColors.length]}
+                    text-white
+                    px-4
+                    py-2
+                    text-[16px]
+                    mx-auto
+                    [clip-path:polygon(10%_0%,90%_0%,100%_50%,90%_100%,10%_100%,0%_50%)]
+                    transition
+                    hover:opacity-90
+                    no-underline
+                    mb-3
+                  `}
+              >
+                {blog.readMoreText || "Get insights"}
+              </Link>
+            </div>
+          );
+        })}
+      </div>
+    </DynamicSectionLayout>
+  );
+}
+
+
+function BooksSection({ content }) {
+  const { data: booksData } = useFetchAllBooksQuery();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const { id } = useParams();
+
+  // Refresh AOS when books data loads
+  useEffect(() => {
+    if (booksData) {
+      setTimeout(() => AOS.refresh(), 100);
+    }
+  }, [booksData]);
+
+  const count = content.count || 3;
+
+  // Handle inconsistent API response structure (array vs object with books array)
+  const books = booksData?.books || booksData || [];
+
+  // Memoize latestBooks to prevent re-renders ideally, but inside render is fine for now
+  const latestBooks = Array.isArray(books)
+    ? [...books]
+      .filter(b => !b.suspended && b._id !== id && b.slug !== id) // Exclude current
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .slice(0, count)
+    : [];
+
+  const handleAddToCart = (book) => {
+    if (book.suspended || book.stock <= 0) return;
+    const exists = cartItems.find((item) => item._id === book._id);
+    if (exists) { navigate("/cart"); return; }
+    dispatch(addToCart(book));
+  };
+
+  const handleBuyNow = (book) => {
+    if (book.suspended || book.stock <= 0) return;
+    dispatch(clearCart());
+    dispatch(addToCart(book));
+    navigate("/checkout");
+  };
+
+  if (latestBooks.length === 0) return null;
+
+  const showCarousel = latestBooks.length > 3;
+
+  const BookCard = ({ book }) => {
+    const inCart = cartItems.find((item) => item._id === book._id);
+    const isSuspended = book.suspended;
+    const isOutOfStock = book.stock <= 0;
+
+    return (
+      <div className="group relative bg-white mb-0 overflow-hidden transition-all duration-500 h-full flex flex-col items-center">
+        <Link to={`/books/${book.slug || book._id}`} className="block w-full">
+          <div className="relative w-full aspect-[2/3] max-w-[280px] mx-auto overflow-hidden group book-flip" style={{ perspective: "1200px" }}>
+            <div className="book-flip-inner transition-transform duration-700 preserve-3d">
+              <div className={`book-flip-front absolute w-full h-full backface-hidden ${isSuspended ? "opacity-60 grayscale" : ""}`}>
+                <img src={book?.coverImage || "/placeholder-book.jpg"} alt={book?.title} className="w-full h-full object-cover rounded-md shadow-md" />
+              </div>
+              <div className="book-flip-back absolute w-full h-full backface-hidden rotate-y-180 rounded-md flex flex-col items-center justify-center">
+                <img src={book?.backImage || book?.coverImage || "/default-back.webp"} alt={`${book?.title} back`} className="w-full h-full object-cover" />
+                <span className="absolute flex items-center justify-center text-white font-bold uppercase tracking-widest">VIEW BOOK</span>
+              </div>
+            </div>
+            {isSuspended && (
+              <div className="absolute top-3 right-3 bg-[#993333] text-white px-3 py-1 rounded-md text-xs font-semibold z-30 flex items-center gap-1">
+                <BlockIcon fontSize="small" /> Out of Stock
+              </div>
+            )}
+          </div>
+        </Link>
+
+        <div className="text-center mt-4 w-full px-2 flex-grow flex flex-col">
+          <h3 className="text-lg md:text-lg font-medium text-gray-700 mb-2 font-figtree break-words line-clamp-2 h-[3.5rem] flex items-center justify-center">
+            {book?.title}
+          </h3>
+
+          {!isSuspended && (
+            <div className="inline-flex justify-center items-center gap-2 w-full flex-wrap md:flex-nowrap mb-3 mt-auto">
+              {book?.oldPrice > book?.newPrice && (
+                <span className="text-gray-500 line-through text-base sm:text-lg font-figtree font-light">₹{book?.oldPrice}</span>
+              )}
+              <span className="text-[#993333] font-figtree font-light text-lg sm:text-xl font-semibold">₹{book?.newPrice}</span>
+              {book?.oldPrice > book?.newPrice && (
+                <span className="text-xs sm:text-sm bg-[#993333] text-white px-1.5 py-0.5 font-figtree font-light rounded-sm">
+                  {Math.round(((book.oldPrice - book.newPrice) / book.oldPrice) * 100)}% off
+                </span>
+              )}
+            </div>
+          )}
+          {isSuspended && <div className="mb-3 py-1 mt-auto"><span className="text-[#993333] font-figtree font-medium text-base">Currently Out of Stock</span></div>}
+        </div>
+
+        <div className="text-center mt-auto w-full px-1 mb-4">
+          <div className="flex justify-center gap-2 mt-1 px-0 flex-nowrap w-full">
+            {isSuspended ? (
+              <button className="flex-1 flex items-center justify-center gap-1 px-2 py-2 text-xs sm:text-sm bg-[#993333] text-white rounded cursor-not-allowed opacity-70" disabled>
+                <BlockIcon fontSize="small" /> Out of Stock
+              </button>
+            ) : isOutOfStock ? (
+              <button className="flex-1 flex items-center justify-center gap-1 px-2 py-2 text-xs sm:text-sm bg-gray-400 text-white rounded opacity-70" disabled>
+                <RemoveShoppingCartOutlinedIcon fontSize="small" /> Out of Stock
+              </button>
+            ) : (
+              <>
+                <button onClick={inCart ? () => navigate("/cart") : () => handleAddToCart(book)} className={`flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs sm:text-sm font-semibold rounded transition-colors shadow-sm ${inCart ? "bg-[#C76F3B] hover:bg-[#A35427] text-white" : "bg-[#C76F3B] hover:bg-[#A35427] text-white"}`}>
+                  {inCart ? <StorefrontOutlinedIcon fontSize="small" /> : <ShoppingCartOutlinedIcon fontSize="small" />} {inCart ? "Go to Cart" : "Add to Cart"}
+                </button>
+                <button onClick={() => handleBuyNow(book)} className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs sm:text-sm bg-[#993333] text-white font-semibold rounded hover:bg-[#662222] transition-colors shadow-sm">
+                  <ShoppingBagOutlinedIcon fontSize="small" /> Buy Now
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <DynamicSectionLayout title={content.title} linkTo="/publications" linkText="Visit Store">
+      {showCarousel ? (
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          spaceBetween={20}
+          slidesPerView={1}
+          navigation
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 7000 }}
+          breakpoints={{
+            540: { slidesPerView: 2 },
+            920: { slidesPerView: 3 },
+          }}
+          className="pb-12"
+        >
+          {latestBooks.map(book => (
+            <SwiperSlide key={book._id} className="h-auto px-2 py-2">
+              <BookCard book={book} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 justify-center">
+          {latestBooks.map(book => (
+            <BookCard key={book._id} book={book} />
+          ))}
+        </div>
+      )}
+    </DynamicSectionLayout>
+  );
+}
+
+function ArticlesSection({ content }) {
+  const [articles, setArticles] = useState([]);
+  const count = content.count || 3;
+
+  useEffect(() => {
+    // Placeholder fetching logic - API might not exist yet
+    fetch(`${API_URL}/api/articles`)
+      .then(res => {
+        if (!res.ok) throw new Error("No articles API");
+        return res.json();
+      })
+      .then(data => setArticles(data.slice(0, count)))
+      .catch(() => setArticles([]));
+  }, [count]);
+
+  if (articles.length === 0) return null; // Hide if no data
+
+  return (
+    <DynamicSectionLayout title={content.title} linkTo="/articles">
+      {/* Placeholder Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {articles.map(article => (
+          <div key={article._id} className="p-6 bg-gray-50 rounded-xl">
+            <h3 className="font-bold mb-2">{article.title}</h3>
+            <p className="text-sm text-gray-600">{article.excerpt}</p>
+          </div>
+        ))}
+      </div>
+    </DynamicSectionLayout>
+  );
+}
+
+function PodcastsSection({ content }) {
+  const [podcasts, setPodcasts] = useState([]);
+  const count = content.count || 3;
+
+  useEffect(() => {
+    // Placeholder fetching logic - API might not exist yet
+    fetch(`${API_URL}/api/podcasts`)
+      .then(res => {
+        if (!res.ok) throw new Error("No podcasts API");
+        return res.json();
+      })
+      .then(data => setPodcasts(data.slice(0, count)))
+      .catch(() => setPodcasts([]));
+  }, [count]);
+
+  if (podcasts.length === 0) return null; // Hide if no data
+
+  return (
+    <DynamicSectionLayout title={content.title} linkTo="/podcasts">
+      {/* Placeholder Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {podcasts.map(pod => (
+          <div key={pod._id} className="flex items-center gap-4 p-4 border rounded-xl hover:bg-gray-50">
+            <div className="w-12 h-12 bg-[#8b171b] rounded-full flex items-center justify-center text-white">
+              <Mic size={20} />
+            </div>
+            <div>
+              <h4 className="font-bold">{pod.title}</h4>
+              <p className="text-xs text-gray-500">{pod.duration}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </DynamicSectionLayout>
   );
 }

@@ -16,6 +16,11 @@ import {
   Code,
   HelpCircle,
   Ticket,
+  Calendar,
+  BookOpen,
+  Book,
+  FileText,
+  Mic,
 } from "lucide-react";
 
 // Import form components
@@ -24,6 +29,7 @@ import FaqForm from "./forms/FaqForm";
 import HtmlForm from "./forms/HtmlForm";
 import LinksForm from "./forms/LinksForm";
 import BookingForm from "./forms/BookingForm";
+import DynamicContentForm from "./forms/DynamicContentForm";
 /* ================= GLASS BUTTON STYLES ================= */
 const glassBtn =
   "inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium " +
@@ -120,13 +126,49 @@ export default function EnhancedCmsEditor() {
 
   const handleDragEnd = (result) => {
     if (!result.destination) return;
+
+    // 1. Prevent moving the Hero section (which is at index 0)
+    if (result.source.index === 0) {
+      return;
+    }
+
+    // 2. Prevent dropping anything into index 0 (replacing/pushing Hero)
+    if (result.destination.index === 0) {
+      return;
+    }
+
     const items = Array.from(sections);
     const [reordered] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reordered);
     setSections(items);
   };
 
+  const moveSection = (index, direction) => {
+    // direction: -1 for up, 1 for down
+    const newIndex = index + direction;
+
+    if (newIndex < 0 || newIndex >= sections.length) return;
+
+    // Constraints:
+    // 1. Cannot move Hero (index 0)
+    if (index === 0) return;
+
+    // 2. Cannot move something INTO index 0 (above Hero)
+    if (newIndex === 0) return;
+
+    const items = Array.from(sections);
+    const [movedItem] = items.splice(index, 1);
+    items.splice(newIndex, 0, movedItem);
+    setSections(items);
+  };
+
   const addSection = (type) => {
+    // Prevent adding a second Hero section
+    if (type === "hero" && sections.some((s) => s.key === "hero")) {
+      Swal.fire("Action Blocked", "Only one Hero section is allowed.", "warning");
+      return;
+    }
+
     const newSection = {
       id: `section-${Date.now()}`,
       key: type,
@@ -335,9 +377,19 @@ export default function EnhancedCmsEditor() {
               </p>
 
               <div className="flex flex-wrap gap-2">
-                <AddSectionButton icon={Type} label="Hero" onClick={() => addSection("hero")} />
+                <AddSectionButton
+                  icon={Type}
+                  label="Hero"
+                  onClick={() => addSection("hero")}
+                  disabled={sections.some(s => s.key === "hero")}
+                />
                 <AddSectionButton icon={Code} label="HTML" onClick={() => addSection("html")} />
                 <AddSectionButton icon={HelpCircle} label="FAQ" onClick={() => addSection("faq")} />
+                <AddSectionButton icon={Calendar} label="Events" onClick={() => addSection("events")} />
+                <AddSectionButton icon={BookOpen} label="Blogs" onClick={() => addSection("blogs")} />
+                <AddSectionButton icon={Book} label="Books" onClick={() => addSection("books")} />
+                <AddSectionButton icon={FileText} label="Articles" onClick={() => addSection("articles")} />
+                <AddSectionButton icon={Mic} label="Podcasts" onClick={() => addSection("podcasts")} />
                 {/* <AddSectionButton icon={LinkIcon} label="Links" onClick={() => addSection("links")} /> */}
                 {/* <AddSectionButton icon={Ticket} label="Booking" onClick={() => addSection("booking")} /> */}
               </div>
@@ -361,11 +413,14 @@ export default function EnhancedCmsEditor() {
                           >
                             <SectionCard
                               section={section}
+                              index={index}
+                              totalSections={sections.length}
                               dragHandleProps={provided.dragHandleProps}
                               onDelete={() => deleteSection(section.id)}
                               onUpdate={(field, value) => updateSection(section.id, field, value)}
                               isExpanded={expandedSections.has(section.id)}
                               onToggle={() => toggleSection(section.id)}
+                              onMove={moveSection}
                               pageSlug={pageSlug}
                             />
                           </div>
@@ -395,11 +450,16 @@ export default function EnhancedCmsEditor() {
   );
 }
 
-function AddSectionButton({ icon: Icon, label, onClick }) {
+function AddSectionButton({ icon: Icon, label, onClick, disabled }) {
   return (
     <button
       onClick={onClick}
-      className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 text-slate-700 hover:bg-white/90 hover:text-[#7A1F2B] transition-colors duration-200"
+      disabled={disabled}
+      className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border ring-1 ring-black/5 transition-colors duration-200
+        ${disabled
+          ? "bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed opacity-60"
+          : "bg-white/70 backdrop-blur-xl border-white/70 text-slate-700 hover:bg-white/90 hover:text-[#7A1F2B]"
+        }`}
     >
       <Icon size={16} />
       {label}
@@ -408,7 +468,7 @@ function AddSectionButton({ icon: Icon, label, onClick }) {
 }
 
 // Section Card Component
-function SectionCard({ section, dragHandleProps, onDelete, onUpdate, isExpanded, onToggle, pageSlug }) {
+function SectionCard({ section, index, totalSections, dragHandleProps, onDelete, onUpdate, isExpanded, onToggle, onMove, pageSlug }) {
   const getSectionIcon = (key) => {
     const icons = {
       hero: Type,
@@ -416,6 +476,11 @@ function SectionCard({ section, dragHandleProps, onDelete, onUpdate, isExpanded,
       html: Code,
       links: LinkIcon,
       booking: Ticket,
+      events: Calendar,
+      blogs: BookOpen,
+      books: Book,
+      articles: FileText,
+      podcasts: Mic,
     };
     const Icon = icons[key] || Type;
     return <Icon size={20} />;
@@ -431,10 +496,31 @@ function SectionCard({ section, dragHandleProps, onDelete, onUpdate, isExpanded,
       <div className="flex items-center gap-3 p-4 bg-white/70 backdrop-blur-xl rounded-t-2xl border-b border-white/70">
         <div
           {...dragHandleProps}
-          className="cursor-grab active:cursor-grabbing text-slate-400 hover:text-slate-600 transition-colors duration-200"
+          className={`cursor-grab active:cursor-grabbing text-slate-400 hover:text-slate-600 transition-colors duration-200 ${section.key === "hero" ? "invisible pointer-events-none" : ""}`}
         >
           <GripVertical size={20} />
         </div>
+
+        {section.key !== "hero" && (
+          <div className="flex flex-col gap-1 mr-2">
+            <button
+              onClick={() => onMove(index, -1)}
+              disabled={index <= 1} // Cannot move up if index is 1 (index 0 is Hero)
+              className={`p-0.5 rounded hover:bg-gray-200 transition ${index <= 1 ? "opacity-30 cursor-not-allowed" : ""}`}
+              title="Move Up"
+            >
+              <ChevronUp size={14} />
+            </button>
+            <button
+              onClick={() => onMove(index, 1)}
+              disabled={index >= totalSections - 1}
+              className={`p-0.5 rounded hover:bg-gray-200 transition ${index >= totalSections - 1 ? "opacity-30 cursor-not-allowed" : ""}`}
+              title="Move Down"
+            >
+              <ChevronDown size={14} />
+            </button>
+          </div>
+        )}
 
         <div className={`p-2 rounded-lg ${getSectionColor(section.key)}`}>
           {getSectionIcon(section.key)}
@@ -452,13 +538,15 @@ function SectionCard({ section, dragHandleProps, onDelete, onUpdate, isExpanded,
           {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
         </button>
 
-        <button
-          onClick={onDelete}
-          className={glassDeleteBtn}
-          title="Delete Section"
-        >
-          <Trash2 size={16} />
-        </button>
+        {section.key !== "hero" && (
+          <button
+            onClick={onDelete}
+            className={glassDeleteBtn}
+            title="Delete Section"
+          >
+            <Trash2 size={16} />
+          </button>
+        )}
       </div>
 
       {/* Section Content */}
@@ -478,6 +566,9 @@ function SectionCard({ section, dragHandleProps, onDelete, onUpdate, isExpanded,
           )}
           {section.key === "booking" && (
             <BookingForm content={section.content} onUpdate={onUpdate} pageSlug={pageSlug} />
+          )}
+          {["events", "blogs", "books", "articles", "podcasts"].includes(section.key) && (
+            <DynamicContentForm content={section.content} onUpdate={onUpdate} type={section.key} />
           )}
         </div>
       )}
@@ -529,7 +620,12 @@ function getDefaultContent(type) {
       eventId: "",
       buttonText: "Book Now",
       alignment: "center"
-    }
+    },
+    events: { title: "Upcoming Events", count: 3 },
+    blogs: { title: "Latest Blogs", count: 3 },
+    books: { title: "Recent Books", count: 3 },
+    articles: { title: "Featured Articles", count: 3 },
+    podcasts: { title: "Recent Podcasts", count: 3 },
   };
   return defaults[type] || {};
 }
