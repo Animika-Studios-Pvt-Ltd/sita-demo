@@ -43,7 +43,7 @@ app.use(
       "https://sitashakti.com",
       "https://www.sitashakti.com",
       "https://admin.sitashakti.com",
-      "https://sita-frontend.pages.dev"
+      "https://sita-demo.pages.dev"
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
