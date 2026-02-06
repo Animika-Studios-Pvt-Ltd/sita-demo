@@ -381,7 +381,11 @@ li {
   text-decoration: none;
   line-height: 1;
   clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
-  transition: background-color 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.masterclass-card-btn:hover {
+  transform: scale(1.08);
 }
 
 .masterclass-card-btn.pink {
@@ -663,12 +667,16 @@ li {
   padding: 8px 16px;
   margin-top: auto;
   align-self: center;
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat-Medium";
   font-size: 16px;
   text-decoration: none;
   line-height: 1;
   clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
-  transition: background-color 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.sita-blog-btn:hover {
+  transform: scale(1.08);
 }
 
 .sita-blog-btn.pink {
