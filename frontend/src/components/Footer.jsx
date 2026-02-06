@@ -79,8 +79,8 @@ const Footer = () => {
           <div className="footer-col footer-col-resources footer-links">
             <h6 className="footer-title">RESOURCES</h6>
             <Link to="/blogs">Blogs</Link>
-            <a href="/podcasts">Articles</a>
-            <a href="/articles">Podcasts</a>
+            <a href="/articles">Articles</a>
+            <a href="/podcasts">Podcasts</a>
           </div>
           <div className="footer-col footer-col-publications footer-publication">
             <h6 className="footer-title">PUBLICATIONS</h6>

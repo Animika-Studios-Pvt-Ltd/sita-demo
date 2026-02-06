@@ -24,8 +24,7 @@ import GroupSessions from "../../pages/workshops/Group-Sessions";
 import PrivateSessions from "../../pages/workshops/Private-Sessions";
 import ShakthiLeadership from "../../pages/workshops/Shakthi-Leadership";
 import TeacherTraining from "../../pages/workshops/Teacher-Training";
-import Articles from "../../pages/resources/Articles";
-import PodcastsPage from "../../pages/resources/PodcastsPage"; // NEW
+import PodcastsPage from "../../pages/podcast/PodcastsPage"; // NEW
 import PrivacyPolicy from "../../pages/privacy and disclaimer/PrivacyPolicy";
 import Disclaimer from "../../pages/privacy and disclaimer/Disclaimer";
 import Contact from "../../pages/contact/Contact";
