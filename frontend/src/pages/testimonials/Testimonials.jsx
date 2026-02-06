@@ -56,7 +56,7 @@ const Testimonials = () => {
               <div className="col-lg-8 col-md-12 col-sm-12 col-12">
                 <div
                   id="testimonialCarousel"
-                  className="carousel slide"
+                  className="carousel slide carousel-fade"
                   data-bs-ride="carousel"
                   data-bs-interval="3000"
                   data-bs-pause="false">
