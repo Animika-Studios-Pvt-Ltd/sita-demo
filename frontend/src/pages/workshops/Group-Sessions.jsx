@@ -158,7 +158,7 @@ const GroupSessions = () => {
               </ul>
             </div>
           </div>
-          <p data-aos="fade-up" data-aos-delay="600">
+          <p className="mb-0" data-aos="fade-up" data-aos-delay="600">
             Group sessions are tailored to the needs of the system. Sita listens
             deeply and responds intuitively to the field of the group.
           </p>
@@ -172,43 +172,44 @@ const GroupSessions = () => {
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <ul className="group-formats-core-elements-list">
                 <li data-aos="fade-up" data-aos-delay="400">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <span className="point-num">01</span>
                   <span>
                     Facilitated relational work (any type of relationship)
                   </span>
                 </li>
                 <li data-aos="fade-up" data-aos-delay="400">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <span className="point-num">02</span>
                   <span>Family soul curriculum sessions</span>
                 </li>
                 <li data-aos="fade-up" data-aos-delay="450">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <span className="point-num">03</span>
                   <span>Leadership and executive team alignment</span>
                 </li>
                 <li data-aos="fade-up" data-aos-delay="500">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <span className="point-num">04</span>
                   <span>Organizational or community purpose alignment</span>
                 </li>
               </ul>
             </div>
+
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <ul className="group-formats-core-elements-list">
                 <li data-aos="fade-up" data-aos-delay="550">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <span className="point-num">05</span>
                   <span>Friend group spiritual intensives or retreats</span>
                 </li>
                 <li data-aos="fade-up" data-aos-delay="400">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <span className="point-num">06</span>
                   <span>Speaking engagements on specific topics</span>
                 </li>
                 <li data-aos="fade-up" data-aos-delay="450">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <span className="point-num">07</span>
                   <span>Ceremony, ritual, and guided practice</span>
                 </li>
               </ul>
             </div>
           </div>
-          <p data-aos="fade-up" data-aos-delay="600">
+          <p className="mb-0" data-aos="fade-up" data-aos-delay="600">
             Topics may include karma and dharma, nervous system literacy,
             Kundalini, Ayurveda, sacred relationships, planetary cycles, yoga
             therapy, and spiritual awakening.
@@ -267,7 +268,7 @@ const GroupSessions = () => {
               </ul>
             </div>
           </div>
-          <p data-aos="fade-up" data-aos-delay="600">
+          <p className="mb-0" data-aos="fade-up" data-aos-delay="600">
             Whether the group is a family, a leadership team, or a circle of
             friends, the intention is to create coherence, clarity, and
             connection at the soul level.
