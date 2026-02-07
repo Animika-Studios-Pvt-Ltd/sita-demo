@@ -20,7 +20,6 @@ const GroupSessions = () => {
       {/* -------------------- HERO SECTION -------------------- */}
       <section className="sita-inner-hero">
         <div className="sita-hero-inner-bg" data-aos="fade-in"></div>
-
         <div className="sita-inner-hero-image">
           <div
             className="sita-inner-hero-image-banner"
@@ -29,7 +28,6 @@ const GroupSessions = () => {
             <img src="group-sessions-banner.webp" alt="Group Sessions Banner" />
           </div>
         </div>
-
         <div
           className="sita-inner-side-img"
           data-aos="fade-left"
@@ -37,7 +35,6 @@ const GroupSessions = () => {
           <img src="/group-sessions-image.webp" alt="Group Sessions Image" />
         </div>
       </section>
-
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
       <SitaBreadcrumb
         items={[
@@ -46,7 +43,6 @@ const GroupSessions = () => {
           { label: "Group Sessions" },
         ]}
       />
-
       {/* --------------------- INNER PAGE CONTENT ---------------------- */}
       <section className="sita-inner-section">
         <div className="container position-relative">
@@ -58,7 +54,6 @@ const GroupSessions = () => {
                 <h2 data-aos="fade-up" data-aos-delay="100">
                   Group Sessions
                 </h2>
-
                 <img
                   src="/sita-motif.webp"
                   className="motif"
@@ -74,7 +69,6 @@ const GroupSessions = () => {
                 <h4 data-aos="fade-up" data-aos-delay="350">
                   Families, Teams, Friends, &amp; Organizations
                 </h4>
-
                 <p data-aos="fade-up" data-aos-delay="400">
                   Group sessions are designed for collective transformation.
                   <br />
@@ -84,7 +78,6 @@ const GroupSessions = () => {
                   communication and karmic dynamics.
                 </p>
               </div>
-
               <div className="sita-inner-full-content">
                 <p className="mb-2" data-aos="fade-up" data-aos-delay="450">
                   Sita brings her multidisciplinary background as an Ayurvedic
@@ -191,7 +184,6 @@ const GroupSessions = () => {
                 </li>
               </ul>
             </div>
-
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <ul className="group-formats-core-elements-list">
                 <li data-aos="fade-up" data-aos-delay="550">
@@ -299,7 +291,6 @@ const GroupSessions = () => {
                 </div>
               </div>
             </div>
-
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
@@ -320,7 +311,6 @@ const GroupSessions = () => {
                 </div>
               </div>
             </div>
-
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"

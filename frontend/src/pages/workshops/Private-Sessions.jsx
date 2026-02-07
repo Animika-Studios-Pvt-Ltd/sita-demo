@@ -20,7 +20,6 @@ const PrivateSessions = () => {
       {/* -------------------- HERO SECTION -------------------- */}
       <section className="sita-inner-hero">
         <div className="sita-hero-inner-bg" data-aos="fade-in"></div>
-
         <div className="sita-inner-hero-image">
           <div
             className="sita-inner-hero-image-banner"
@@ -29,7 +28,6 @@ const PrivateSessions = () => {
             <img src="group-sessions-banner.webp" alt="Group Sessions Banner" />
           </div>
         </div>
-
         <div
           className="sita-inner-side-img"
           data-aos="fade-left"
@@ -37,7 +35,6 @@ const PrivateSessions = () => {
           <img src="/group-sessions-image.webp" alt="Private Sessions Image" />
         </div>
       </section>
-
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
       <SitaBreadcrumb
         items={[
@@ -46,7 +43,6 @@ const PrivateSessions = () => {
           { label: "Private Sessions" },
         ]}
       />
-
       {/* --------------------- INNER PAGE CONTENT ---------------------- */}
       <section className="sita-inner-section">
         <div className="container position-relative">
@@ -58,7 +54,6 @@ const PrivateSessions = () => {
                 <h2 data-aos="fade-up" data-aos-delay="100">
                   Private Sessions
                 </h2>
-
                 <img
                   src="/sita-motif.webp"
                   className="motif"
@@ -72,7 +67,6 @@ const PrivateSessions = () => {
                 data-aos="fade-up"
                 data-aos-delay="300">
                 <h4>Individuals & Couples</h4>
-
                 <p>
                   Private sessions are for those who are ready to understand
                   themselves at the level of soul, not symptom.
@@ -83,7 +77,6 @@ const PrivateSessions = () => {
                   purpose, and emotional life.
                 </p>
               </div>
-
               <div className="sita-inner-full-content">
                 <p data-aos="fade-up" data-aos-delay="450">
                   Sita’s approach is multidimensional. She reads your Soul’s
@@ -106,7 +99,6 @@ const PrivateSessions = () => {
           </a>
         </div>
       </section>
-
       {/* --------------------- INDIVIDUAL SESSIONS MAY SUPPORT SECTION ---------------------- */}
       <section className="group-sessions-core-elements individual-sessions-may-support">
         <div className="container">
@@ -249,7 +241,6 @@ const PrivateSessions = () => {
                 </div>
               </div>
             </div>
-
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
@@ -270,7 +261,6 @@ const PrivateSessions = () => {
                 </div>
               </div>
             </div>
-
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"

@@ -26,7 +26,6 @@ const TeacherTraining = () => {
       {/* -------------------- HERO SECTION -------------------- */}
       <section className="sita-inner-hero">
         <div className="sita-hero-inner-bg" data-aos="fade-in"></div>
-
         <div className="sita-inner-hero-image">
           <div
             className="sita-inner-hero-image-banner"
@@ -35,7 +34,6 @@ const TeacherTraining = () => {
             <img src="group-sessions-banner.webp" alt="Group Sessions Banner" />
           </div>
         </div>
-
         <div
           className="sita-inner-side-img"
           data-aos="fade-left"
@@ -43,7 +41,6 @@ const TeacherTraining = () => {
           <img src="/group-sessions-image.webp" alt="Teacher Training Image" />
         </div>
       </section>
-
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
       <SitaBreadcrumb
         items={[
@@ -52,7 +49,6 @@ const TeacherTraining = () => {
           { label: "Teacher Training" },
         ]}
       />
-
       {/* --------------------- INNER PAGE CONTENT ---------------------- */}
       <section className="sita-inner-section">
         <div className="container position-relative">
@@ -64,7 +60,6 @@ const TeacherTraining = () => {
                 <h2 data-aos="fade-up" data-aos-delay="100">
                   Teacher Training
                 </h2>
-
                 <img
                   src="/sita-motif.webp"
                   className="motif"
@@ -78,7 +73,6 @@ const TeacherTraining = () => {
                 data-aos="fade-up"
                 data-aos-delay="300">
                 <h4>Teacher Trainings and Continuing Education</h4>
-
                 <p>
                   For over two decades, Sita has taught the inner sciences of
                   Yoga to dedicated practitioners, teachers, healers, and
@@ -89,7 +83,6 @@ const TeacherTraining = () => {
                   kosha-based therapeutics, and energy psychology.
                 </p>
               </div>
-
               <div className="sita-inner-full-content">
                 <p data-aos="fade-up" data-aos-delay="450">
                   These trainings are crafted for those who feel a deep call to
@@ -112,7 +105,6 @@ const TeacherTraining = () => {
           </a>
         </div>
       </section>
-
       {/* --------------------- SITA SPECIALIZES IN TEACHINGS SECTION ---------------------- */}
       <section className="group-formats-core-elements sita-specializes-in-teachings">
         <div className="container">
@@ -148,7 +140,6 @@ const TeacherTraining = () => {
                 </li>
               </ul>
             </div>
-
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <ul className="group-formats-core-elements-list">
                 <li data-aos="fade-up" data-aos-delay="550">
@@ -174,19 +165,19 @@ const TeacherTraining = () => {
           </div>
         </div>
       </section>
-
       {/* --------------------- TEACHER TRANING ACCORDION SECTION ---------------------- */}
-      <section className="accordion-section teacher-training-accordion">
+      <section className="accordion-section">
         <div className="container">
-          <p>
+          <p data-aos="fade-up" data-aos-delay="100">
             These are not surface-level trainings. They are built from lived
             experience, long-term practice, and direct study. Students learn not
             only the philosophy but the embodiment and application that brings
             the teachings into real-world practice.
           </p>
+          {/* Accordion Item 1 */}
           <div
             className={`accordion-item ${activeIndex === 0 ? "active" : ""}`}>
-            <h4 onClick={() => toggleAccordion(0)}>
+            <h4 onClick={() => toggleAccordion(0)} data-aos="fade-up">
               Who These Trainings Are For
               <span className="accordion-icon">
                 {activeIndex === 0 ? "−" : "+"}
@@ -232,6 +223,8 @@ const TeacherTraining = () => {
                 </ul>
                 <div
                   className="accordion-read-less"
+                  data-aos="fade-up"
+                  data-aos-delay="650"
                   onClick={() => toggleAccordion(0)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -242,7 +235,7 @@ const TeacherTraining = () => {
           {/* Accordion Item 2 */}
           <div
             className={`accordion-item ${activeIndex === 1 ? "active" : ""}`}>
-            <h4 onClick={() => toggleAccordion(1)}>
+            <h4 onClick={() => toggleAccordion(1)} data-aos="fade-up">
               What You Receive
               <span className="accordion-icon">
                 {activeIndex === 1 ? "−" : "+"}
@@ -290,6 +283,8 @@ const TeacherTraining = () => {
                 </ul>
                 <div
                   className="accordion-read-less"
+                  data-aos="fade-up"
+                  data-aos-delay="650"
                   onClick={() => toggleAccordion(1)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -300,7 +295,7 @@ const TeacherTraining = () => {
           {/* Accordion Item 3 */}
           <div
             className={`accordion-item ${activeIndex === 2 ? "active" : ""}`}>
-            <h4 onClick={() => toggleAccordion(2)}>
+            <h4 onClick={() => toggleAccordion(2)} data-aos="fade-up">
               Training Philosophy
               <span className="accordion-icon">
                 {activeIndex === 2 ? "−" : "+"}
@@ -308,7 +303,7 @@ const TeacherTraining = () => {
             </h4>
             {activeIndex === 2 && (
               <div className="accordion-content">
-                <p>
+                <p data-aos="fade-up" data-aos-delay="100">
                   Sita teaches in a way that honors the tradition and honors the
                   individual. She translates subtle concepts into embodied
                   knowledge without losing the depth of the teachings. Students
@@ -359,13 +354,15 @@ const TeacherTraining = () => {
                     </span>
                   </li>
                 </ul>
-                <p>
+                <p data-aos="fade-up" data-aos-delay="200">
                   This path is for those who know that Yoga is not performance.
                   It is inner alchemy and the steady maturation of awareness and
                   capacity.
                 </p>
                 <div
                   className="accordion-read-less"
+                  data-aos="fade-up"
+                  data-aos-delay="650"
                   onClick={() => toggleAccordion(2)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -373,17 +370,15 @@ const TeacherTraining = () => {
               </div>
             )}
           </div>
-
           {/* Accordion Item 4 */}
           <div
             className={`accordion-item ${activeIndex === 3 ? "active" : ""}`}>
-            <h4 onClick={() => toggleAccordion(3)}>
+            <h4 onClick={() => toggleAccordion(3)} data-aos="fade-up">
               Structure and Format
               <span className="accordion-icon">
                 {activeIndex === 3 ? "−" : "+"}
               </span>
             </h4>
-
             {activeIndex === 3 && (
               <div className="accordion-content">
                 <ul className="accordion-section-list">
@@ -417,19 +412,21 @@ const TeacherTraining = () => {
                     <span>Optional private mentoring available</span>
                   </li>
                 </ul>
-                <p>
+                <p data-aos="fade-up" data-aos-delay="100">
                   Sita teaches with clarity and experience. Students often speak
                   of her guidance as the missing link between classical Yoga
                   theory and practical application in modern practice and
                   teaching.
                 </p>
-                <p>
+                <p data-aos="fade-up" data-aos-delay="200">
                   If you are called to deepen, to mature your teaching, and to
                   work from the subtle body instead of the surface, this is the
                   right place
                 </p>
                 <div
                   className="accordion-read-less"
+                  data-aos="fade-up"
+                  data-aos-delay="650"
                   onClick={() => toggleAccordion(3)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -439,7 +436,6 @@ const TeacherTraining = () => {
           </div>
         </div>
       </section>
-
       {/* ---------------- SESSIONS SECTION ---------------- */}
       <section className="sita-masterclass sessions-section">
         <div className="container text-center">
@@ -464,7 +460,6 @@ const TeacherTraining = () => {
                 </div>
               </div>
             </div>
-
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
@@ -485,7 +480,6 @@ const TeacherTraining = () => {
                 </div>
               </div>
             </div>
-
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
