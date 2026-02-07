@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 const WorkShopCalendar = () => {
   useEffect(() => {
     AOS.init({
@@ -17,7 +19,7 @@ const WorkShopCalendar = () => {
     const tbody = document.getElementById("workshopTableBody");
     if (!tbody) return;
 
-    const BOOKING_BASE_URL = `${window.location.origin}/booking`;
+    const BOOKING_BASE_URL = "/booking";
 
     const toMinutes = (time) => {
       if (!time) return 0;
@@ -43,12 +45,19 @@ const WorkShopCalendar = () => {
       return endMinutes > nowMinutes;
     };
 
-    fetch("http://localhost:5000/api/events")
-      .then((res) => res.json())
+    fetch(`${API_URL}/api/events`)
+      .then(async (res) => {
+        if (!res.ok) {
+          throw new Error(`Failed to fetch events (${res.status})`);
+        }
+        return res.json();
+      })
       .then((events) => {
         tbody.innerHTML = "";
 
-        const upcomingEvents = events.filter(isUpcomingEvent);
+        const upcomingEvents = Array.isArray(events)
+          ? events.filter(isUpcomingEvent)
+          : [];
 
         if (!upcomingEvents.length) {
           tbody.innerHTML = `
@@ -78,9 +87,10 @@ const WorkShopCalendar = () => {
                   Number(e.availability) === 0
                     ? `<span class="sita-booking-closed">Booking Closed</span>`
                     : e.bookingUrl
-                      ? `<a href="${BOOKING_BASE_URL}/${e.bookingUrl}" 
+                      ? `<a href="${BOOKING_BASE_URL}/${e.bookingUrl || e._id}" 
                          class="sita-book-now" 
-                         target="_blank">
+                         target="_blank"
+                         rel="noopener noreferrer">
                          Book Now
                        </a>`
                       : `<button disabled class="sita-book-now disabled">
