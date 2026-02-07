@@ -7,6 +7,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 import "../../assets/herosection.css";
+import "../homepage/Homepage.css";
 
 const BACKEND_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -239,123 +240,80 @@ const BlogDetailPage = () => {
             )}
           </div>
           <div
-            className="max-w-8xl mx-auto py-0"
+            className="max-w-8xl mx-auto py-0 w-full"
             data-aos="fade-up"
             data-aos-duration="1200">
             {/* HEADER */}
-            <div className="" data-aos="fade-up" data-aos-duration="1200">
-              <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
-                Latest Blogs
-              </h2>
-              <img
-                src="/sita-motif.webp"
-                alt="Sita Motif"
-                className="mx-auto mt-1 w-40 sm:w-48 mb-8"
-              />
+            <div className="sita-recent-blogs">
+              <div className="container text-center">
+                <h2>Latest Blogs</h2>
+                <img src="/sita-motif.webp" alt="Sita Motif" className="motif" />
+              </div>
             </div>
 
             {/* BLOG GRID */}
-            <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentBlogs.map((blog, index) => {
                 const btnColors = [
-                  "bg-[#d86c87]",
-                  "bg-[#e29a7a]",
-                  "bg-[#c36c6c]",
+                  "pink",
+                  "peach",
+                  "rose",
                 ];
                 const btnColor = btnColors[index % btnColors.length];
                 return (
                   <div
                     key={blog._id}
                     data-aos="fade-up"
-                    data-aos-delay={(index + 1) * 100}
-                    className="
-                            flex flex-col
-                            text-center
-                            aspect-[2/1]
-                            border-b
-                            border-[#8b171b]
-                          ">
-                    {/* IMAGE */}
-                    <div className="relative w-full aspect-[1.25/1] overflow-hidden mb-3">
-                      <img
-                        src={
-                          blog.image?.startsWith("http")
-                            ? blog.image
-                            : `${BACKEND_BASE_URL}${blog.image}`
-                        }
-                        alt={blog.title}
-                        className="w-full h-full object-cover"
-                      />
+                    data-aos-delay={(index + 1) * 100}>
+                    <div className="sita-blog-card">
+                      <div className="sita-blog-image">
+                        <img
+                          src={
+                            blog.image?.startsWith("http")
+                              ? blog.image
+                              : `${BACKEND_BASE_URL}${blog.image}`
+                          }
+                          className="img-fluid w-100"
+                          alt={blog.title}
+                          style={{ height: "250px", objectFit: "cover" }}
+                        />
+                        <p className="blog-date">
+                          {new Date(blog.createdAt).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "short",
+                              day: "2-digit",
+                              year: "numeric",
+                            },
+                          )}
+                        </p>
+                      </div>
 
-                      {/* DATE */}
-                      <p
-                        className="
-                                absolute
-                                -bottom-4
-                                left-1/2
-                                -translate-x-1/2
-                                bg-white
-                                px-3
-                                py-1
-                                text-[16px]
-                                rounded-t-md
-                                shadow
-                                font-montserratLight
-                              ">
-                        {new Date(blog.createdAt).toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "2-digit",
-                          year: "numeric",
-                        })}
-                      </p>
-                    </div>
+                      <h4>{blog.title}</h4>
 
-                    {/* CONTENT */}
-                    <div className="flex flex-col flex-grow px-1">
-                      <h4
-                        className="
-                                font-montserratLight
-                                text-[20px]
-                                mb-1
-                                text-black
-                                leading-snug
-                              ">
-                        {blog.title}
-                      </h4>
-
-                      <p
-                        className="
-                                font-montserratLight
-                                text-[16px]
-                                text-black
-                                leading-snug
-                                h-[70px]
-                                overflow-hidden
-                              ">
-                        <span
+                      <div className="blog-description-wrapper">
+                        <p
                           dangerouslySetInnerHTML={{
                             __html: sanitizeDescription(
-                              blog.description.length > 200
-                                ? blog.description.slice(0, 200) + "..."
+                              blog.description.length > 150
+                                ? blog.description.slice(0, 150) + "..."
                                 : blog.description,
                             ),
                           }}
                         />
-                      </p>
+                      </div>
+
+                      <span className="blog-author mb-3">
+                        - {blog.author || "Sita Severson"}
+                      </span>
+
+                      <Link
+                        to={`/blogs/${blog.slug || blog._id}`}
+                        className={`sita-blog-btn ${btnColor}`}
+                        style={{ minWidth: "150px", display: "inline-flex", justifyContent: "center", alignItems: "center" }}>
+                        {blog.readMoreText || "Read More"}
+                      </Link>
                     </div>
-
-                    {/* AUTHOR */}
-                    <span className="blog-author mb-3">
-                      - {blog.author || "Sita Severson"}
-                    </span>
-
-                    {/* CTA */}
-                    <Link
-                      to={`/blogs/${blog.slug || blog._id}`}
-                      className={`sita-blog-btn ${btnColor}`}
-                      style={{ minWidth: "150px", display: "inline-flex", justifyContent: "center", alignItems: "center",marginBottom:"14px" }}>
-                      {blog.readMoreText || "Get insights"}
-                    </Link>
                   </div>
                 );
               })}

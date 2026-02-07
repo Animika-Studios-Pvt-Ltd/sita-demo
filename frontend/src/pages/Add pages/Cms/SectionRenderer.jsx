@@ -7,7 +7,7 @@ import BookingModal from '../../../components/BookingModal';
 import SitaBreadcrumb from '../../breadcrumbs/SitaBreadcrumb';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { ChevronDown, ChevronUp, ExternalLink, ArrowRight, ArrowLeft } from 'lucide-react';
+import { ChevronDown, ChevronUp, ExternalLink, ArrowRight, ArrowLeft, Mic } from 'lucide-react';
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
@@ -28,6 +28,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 import '../../about/About.css'; // Import About CSS for hero styles
+import '../../homepage/Homepage.css'; // Import Homepage CSS for card styles
 
 import { useParams, useLocation } from 'react-router-dom';
 
@@ -841,68 +842,299 @@ function BooksSection({ content }) {
 }
 
 function ArticlesSection({ content }) {
-  const [articles, setArticles] = useState([]);
+  const [currentArticles, setCurrentArticles] = useState([]);
   const count = content.count || 3;
+  const { id } = useParams();
 
   useEffect(() => {
-    // Placeholder fetching logic - API might not exist yet
-    fetch(`${API_URL}/api/articles`)
-      .then(res => {
-        if (!res.ok) throw new Error("No articles API");
-        return res.json();
-      })
-      .then(data => setArticles(data.slice(0, count)))
-      .catch(() => setArticles([]));
-  }, [count]);
+    const fetchLatestArticles = async () => {
+      try {
+        const res = await fetch(`${BACKEND_BASE_URL}/api/articles`);
+        const data = await res.json();
+        const latest = data
+          .filter(a => !a.suspended && a._id !== id && a.slug !== id) // Exclude current if any
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .slice(0, count);
+        setCurrentArticles(latest);
+        // Refresh AOS to ensure new elements animate
+        setTimeout(() => AOS.refresh(), 100);
+      } catch (err) {
+        console.error("Failed to fetch latest articles", err);
+      }
+    };
+    fetchLatestArticles();
+  }, [count, id]);
 
-  if (articles.length === 0) return null; // Hide if no data
+  if (currentArticles.length === 0) return null;
 
   return (
-    <DynamicSectionLayout title={content.title} linkTo="/articles">
-      {/* Placeholder Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {articles.map(article => (
-          <div key={article._id} className="p-6 bg-gray-50 rounded-xl">
-            <h3 className="font-bold mb-2">{article.title}</h3>
-            <p className="text-sm text-gray-600">{article.excerpt}</p>
-          </div>
-        ))}
+    <DynamicSectionLayout title={null}>
+      {/* HEADER */}
+      <div className="" data-aos="fade-up" data-aos-duration="1200">
+        <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+          {content.title || "Latest Articles"}
+        </h2>
+        <img
+          src="/sita-motif.webp"
+          alt="Sita Motif"
+          className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+        />
+      </div>
+
+      {/* ARTICLE GRID */}
+      <div className="row">
+        {currentArticles.map((article, index) => {
+          const btnColors = [
+            "pink",
+            "peach",
+            "rose",
+          ];
+          const btnColor = btnColors[index % btnColors.length]; // Cycle colors
+
+          return (
+            <div
+              key={article._id}
+              className="col-lg-4 col-md-4 col-sm-12 col-12"
+              data-aos="fade-up"
+              data-aos-delay={(index + 1) * 100}>
+              <div className="sita-blog-card">
+                <div className="sita-blog-image">
+                  <img
+                    src={
+                      article.image?.startsWith("http")
+                        ? article.image
+                        : `${BACKEND_BASE_URL}${article.image}`
+                    }
+                    className="img-fluid w-100"
+                    alt={article.title}
+                    style={{ height: "250px", objectFit: "cover" }}
+                  />
+                  <p className="blog-date">
+                    {new Date(article.createdAt).toLocaleDateString(
+                      "en-US",
+                      {
+                        month: "short",
+                        day: "2-digit",
+                        year: "numeric",
+                      },
+                    )}
+                  </p>
+                </div>
+
+                <h4>{article.title}</h4>
+
+                <div className="blog-description-wrapper">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeDescription(
+                        article.description.length > 150
+                          ? article.description.slice(0, 150) + "..."
+                          : article.description,
+                      ),
+                    }}
+                  />
+                </div>
+
+                <span className="blog-author mb-3">
+                  - {article.author || "Sita Severson"}
+                </span>
+
+                <Link
+                  to={`/articles/${article.slug || article._id}`}
+                  className={`sita-blog-btn ${btnColor}`}
+                  style={{ minWidth: "150px", display: "inline-flex", justifyContent: "center", alignItems: "center" }}>
+                  {article.readMoreText || "Read More"}
+                </Link>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </DynamicSectionLayout>
   );
 }
+
+// Helper: Generate embed URL
+const getEmbedUrl = (url) => {
+  if (!url) return null;
+  try {
+    if (url.includes("open.spotify.com/episode")) {
+      const parts = url.split("open.spotify.com/");
+      return `https://open.spotify.com/embed/${parts[1]}`;
+    }
+    if (url.includes("podcasts.apple.com")) {
+      return url.replace("podcasts.apple.com", "embed.podcasts.apple.com");
+    }
+    if (url.includes("youtube.com/watch")) {
+      const urlObj = new URL(url);
+      const videoId = urlObj.searchParams.get("v");
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+    }
+    if (url.includes("youtu.be/")) {
+      const videoId = url.split("youtu.be/")[1];
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+    }
+    return null; // Not supported for embed
+  } catch (e) {
+    console.error("Error parsing URL for embed", e);
+    return null;
+  }
+};
 
 function PodcastsSection({ content }) {
   const [podcasts, setPodcasts] = useState([]);
   const count = content.count || 3;
 
   useEffect(() => {
-    // Placeholder fetching logic - API might not exist yet
-    fetch(`${API_URL}/api/podcasts`)
-      .then(res => {
-        if (!res.ok) throw new Error("No podcasts API");
-        return res.json();
-      })
-      .then(data => setPodcasts(data.slice(0, count)))
-      .catch(() => setPodcasts([]));
+    const fetchPodcasts = async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/podcasts`);
+        const data = await res.json();
+        // Filter suspended and sort by date descending
+        const active = data.filter(p => !p.suspended)
+          .sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
+
+        setPodcasts(active.slice(0, count));
+        setTimeout(() => AOS.refresh(), 100);
+      } catch (err) {
+        console.error("Failed to fetch podcasts", err);
+      }
+    };
+    fetchPodcasts();
   }, [count]);
 
-  if (podcasts.length === 0) return null; // Hide if no data
+  if (podcasts.length === 0) return null;
+
+  const PodcastCard = ({ podcast, index }) => {
+    const [isPlaying, setIsPlaying] = useState(false);
+    const embedUrl = getEmbedUrl(podcast.podcastLink);
+    const isUpcoming = new Date(podcast.releaseDate) > new Date();
+    // Import icons locally for this component scope or ensure they are in main imports
+    // Assuming Play, Calendar, User, ArrowRight are imported at top level
+
+    const thumbnailSrc = podcast.thumbnail
+      ? podcast.thumbnail.startsWith("http")
+        ? podcast.thumbnail
+        : `${BACKEND_BASE_URL}${podcast.thumbnail}`
+      : "/placeholder.jpg";
+
+    return (
+      <div
+        data-aos="fade-up"
+        data-aos-delay={(index % 2) * 100}
+        className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-[#8b171b]/10 hover:border-[#8b171b]/30 shadow-sm hover:shadow-xl transition-all duration-500 ease-out transform hover:-translate-y-1 relative"
+      >
+        {isUpcoming && (
+          <div className="absolute top-4 right-4 z-20 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md tracking-wider">
+            UPCOMING
+          </div>
+        )}
+
+        <div className="relative w-full aspect-video bg-gray-100 overflow-hidden">
+          {isPlaying && embedUrl ? (
+            <iframe
+              src={embedUrl}
+              width="100%"
+              height="100%"
+              frameBorder="0"
+              allow="encrypted-media; clipboard-write; picture-in-picture; autoplay"
+              allowFullScreen
+              title={podcast.title}
+              className="absolute inset-0 w-full h-full animate-in fade-in duration-500"
+            />
+          ) : (
+            <div className="relative w-full h-full">
+              <img
+                src={thumbnailSrc}
+                alt={podcast.title}
+                className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
+
+              {!isUpcoming && (
+                <button
+                  onClick={() => embedUrl ? setIsPlaying(true) : window.open(podcast.podcastLink, '_blank')}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 border-[1.5px] border-white text-white rounded-full flex items-center justify-center transition-all duration-300 z-10 group-active:scale-95 backdrop-blur-[2px]"
+                  aria-label="Play Podcast"
+                >
+                  {/* Using standard unicode play triangle if icon not available, but should be imported */}
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" xmlns="http://www.w3.org/2000/svg" className="ml-1">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className="p-6 md:p-8 flex flex-col flex-grow text-left">
+          <div className="flex flex-wrap items-center gap-4 text-xs font-montserratLight text-slate-500 mb-4 tracking-wide uppercase">
+            <span className="flex items-center gap-1.5">
+              {/* Calendar Icon SVG fallback */}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#8b171b]"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              {new Date(podcast.releaseDate).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </span>
+            {podcast.host && (
+              <span className="flex items-center gap-1.5 border-l border-slate-300 pl-4">
+                {/* User Icon SVG fallback */}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#8b171b]"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                {podcast.host}
+              </span>
+            )}
+          </div>
+
+          <h3 className="font-serifSita text-2xl text-[#2d2d2d] group-hover:text-[#8b171b] mb-4 leading-tight transition-colors duration-300">
+            {podcast.title}
+          </h3>
+
+          <div className="font-montserratLight text-sm text-slate-600 leading-relaxed mb-6 line-clamp-3 flex-grow">
+            <div dangerouslySetInnerHTML={{ __html: sanitizeDescription(podcast.description) }} />
+          </div>
+
+          <div className="pt-6 border-t border-slate-100 mt-auto flex justify-between items-center group/btn">
+            {isUpcoming ? (
+              <span className="text-slate-400 font-medium text-sm flex items-center gap-2 cursor-not-allowed">
+                Coming Soon
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              </span>
+            ) : (
+              <button
+                onClick={() => embedUrl ? setIsPlaying(true) : window.open(podcast.podcastLink, '_blank')}
+                className="text-[#8b171b] font-medium text-sm flex items-center gap-2 group-hover/btn:translate-x-1 transition-transform duration-300"
+              >
+                {embedUrl ? "Play Episode" : "Listen on Platform"}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </button>
+            )}
+
+            <Mic size={20} className="text-slate-300 group-hover:text-[#8b171b]/20 transition-colors" />
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
-    <DynamicSectionLayout title={content.title} linkTo="/podcasts">
-      {/* Placeholder Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {podcasts.map(pod => (
-          <div key={pod._id} className="flex items-center gap-4 p-4 border rounded-xl hover:bg-gray-50">
-            <div className="w-12 h-12 bg-[#8b171b] rounded-full flex items-center justify-center text-white">
-              <Mic size={20} />
-            </div>
-            <div>
-              <h4 className="font-bold">{pod.title}</h4>
-              <p className="text-xs text-gray-500">{pod.duration}</p>
-            </div>
-          </div>
+    <DynamicSectionLayout>
+      {/* HEADER */}
+      <div className="" data-aos="fade-up" data-aos-duration="1200">
+        <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+          {content.title || "Latest Podcasts"}
+        </h2>
+        <img
+          src="/sita-motif.webp"
+          alt="Sita Motif"
+          className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
+        {podcasts.map((pod, index) => (
+          <PodcastCard key={pod._id} podcast={pod} index={index} />
         ))}
       </div>
     </DynamicSectionLayout>

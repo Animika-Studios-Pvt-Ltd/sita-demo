@@ -6,6 +6,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 import "../../assets/herosection.css";
+import "../about/About.css";
+import "../homepage/Homepage.css";
 
 const BACKEND_BASE_URL =
     import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -86,121 +88,70 @@ const ArticlesPage = () => {
                     />
 
                     {/* ARTICLE GRID */}
-                    <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="row">
                         {currentArticles.map((article, index) => {
                             const btnColors = [
-                                "bg-[#d86c87]",
-                                "bg-[#e29a7a]",
-                                "bg-[#c36c6c]",
+                                "pink",
+                                "peach",
+                                "rose",
                             ];
+                            const btnColor = btnColors[index % btnColors.length]; // Cycle colors
 
                             return (
                                 <div
                                     key={article._id}
+                                    className="col-lg-4 col-md-4 col-sm-12 col-12"
                                     data-aos="fade-up"
-                                    data-aos-delay={(index + 1) * 100}
-                                    className="
-                            flex flex-col
-                            text-center
-                            aspect-[2/1]
-                            border-b
-                            border-[#8b171b]
-                          ">
-                                    {/* IMAGE */}
-                                    <div className="relative w-full aspect-[1.25/1] overflow-hidden mb-3">
-                                        <img
-                                            src={
-                                                article.image
-                                                    ? article.image.startsWith("http")
+                                    data-aos-delay={(index + 1) * 100}>
+                                    <div className="sita-blog-card">
+                                        <div className="sita-blog-image">
+                                            <img
+                                                src={
+                                                    article.image?.startsWith("http")
                                                         ? article.image
                                                         : `${BACKEND_BASE_URL}${article.image}`
-                                                    : "/placeholder.jpg" // Ensure you have a placeholder image or use a valid URL
-                                            }
-                                            alt={article.title}
-                                            className="w-full h-full object-cover"
-                                        />
+                                                }
+                                                className="img-fluid w-100"
+                                                alt={article.title}
+                                                style={{ height: "250px", objectFit: "cover" }}
+                                            />
+                                            <p className="blog-date">
+                                                {new Date(article.createdAt).toLocaleDateString(
+                                                    "en-US",
+                                                    {
+                                                        month: "short",
+                                                        day: "2-digit",
+                                                        year: "numeric",
+                                                    },
+                                                )}
+                                            </p>
+                                        </div>
 
-                                        {/* DATE */}
-                                        <p
-                                            className="
-                                absolute
-                                -bottom-4
-                                left-1/2
-                                -translate-x-1/2
-                                bg-white
-                                px-3
-                                py-1
-                                text-[16px]
-                                rounded-t-md
-                                shadow
-                                font-montserratLight
-                              ">
-                                            {new Date(article.createdAt).toLocaleDateString("en-US", {
-                                                month: "short",
-                                                day: "2-digit",
-                                                year: "numeric",
-                                            })}
-                                        </p>
-                                    </div>
+                                        <h4>{article.title}</h4>
 
-                                    {/* CONTENT */}
-                                    <div className="flex flex-col flex-grow px-1">
-                                        <h4
-                                            className="
-                                font-montserratLight
-                                text-[20px]
-                                mb-1
-                                text-black
-                                leading-snug
-                              ">
-                                            {article.title}
-                                        </h4>
-
-                                        <p
-                                            className="
-                                font-montserratLight
-                                text-[16px]
-                                text-black
-                                leading-snug
-                                h-[70px]
-                                overflow-hidden
-                              ">
-                                            <span
+                                        <div className="blog-description-wrapper">
+                                            <p
                                                 dangerouslySetInnerHTML={{
                                                     __html: sanitizeDescription(
-                                                        article.description.length > 200
-                                                            ? article.description.slice(0, 200) + "..."
+                                                        article.description.length > 150
+                                                            ? article.description.slice(0, 150) + "..."
                                                             : article.description,
                                                     ),
                                                 }}
                                             />
-                                        </p>
+                                        </div>
+
+                                        <span className="blog-author mb-3">
+                                            - {article.author || "Sita Severson"}
+                                        </span>
+
+                                        <Link
+                                            to={`/articles/${article.slug || article._id}`}
+                                            className={`sita-blog-btn ${btnColor}`}
+                                            style={{ minWidth: "150px", display: "inline-flex", justifyContent: "center", alignItems: "center" }}>
+                                            {article.readMoreText || "Read More"}
+                                        </Link>
                                     </div>
-
-                                    {/* AUTHOR */}
-                                    <span className="blog-author mb-3">
-                                        - {article.author || "Sita Severson"}
-                                    </span>
-
-                                    {/* CTA */}
-                                    <Link
-                                        to={`/articles/${article.slug || article._id}`}
-                                        className={`
-                              font-montserratLight
-                              ${btnColors[index % btnColors.length]}
-                              text-white
-                              px-4
-                              py-2
-                              text-[16px]
-                              mx-auto
-                              [clip-path:polygon(10%_0%,90%_0%,100%_50%,90%_100%,10%_100%,0%_50%)]
-                              transition
-                              hover:opacity-90
-                              no-underline
-                              mb-3
-                            `}>
-                                        {article.readMoreText || "Read Article"}
-                                    </Link>
                                 </div>
                             );
                         })}
