@@ -30,7 +30,12 @@ const EventDetail = () => {
                 const res = await axios.get(`${API}/events`);
                 // Since getEvents returns all, we find the one we need. 
                 // Ideally backend should have getEventById
-                const found = res.data.find(e => e._id === id || e.bookingUrl === id || e.slug === id);
+                const found = res.data.find(e =>
+                    e._id === id ||
+                    e.bookingUrl?.toLowerCase() === id?.toLowerCase() ||
+                    e.slug?.toLowerCase() === id?.toLowerCase() ||
+                    e.code === id
+                );
                 setEvent(found);
                 setLoading(false);
             } catch (err) {

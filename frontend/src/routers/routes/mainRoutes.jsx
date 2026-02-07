@@ -1,4 +1,5 @@
-// Public pages
+import React from "react";
+import { Navigate } from "react-router-dom";
 import App from "../../App";
 import DynamicPage from "../../pages/Add pages/DynamicPage";
 import Publications from "../../pages/publications/Publications";
@@ -124,8 +125,8 @@ export const mainRoutes = [
       { path: "my-bookings", element: <MyBookings /> },
       { path: "rate-event/:bookingId", element: <RateEvent /> },
 
-      // Events (General)
-      { path: "events", element: <EventList /> }, // Keep list if needed, or redirect
+      // Events (Redirect to Booking)
+      { path: "events", element: <Navigate to="/booking" replace /> },
       { path: "booking/:id", element: <EventDetail /> },
 
       // User Dashboard
@@ -139,8 +140,7 @@ export const mainRoutes = [
       },
 
       { path: "auth", element: <Auth /> },
-
-      // CMS Pages disabled to prevent root-level slugs like /Guru
+      { path: ":slug", element: <CmsPage /> },
     ],
   },
   { path: "*", element: <PageNotFound /> },

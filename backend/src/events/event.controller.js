@@ -143,6 +143,20 @@ const upsertEvent = async (req, res) => {
     capacity = Number(capacity);
     if (isNaN(capacity) || capacity < 0) capacity = 0;
 
+    // ✅ 3. URL HANDLING & PAGE CLAIMING
+    if (bookingUrl) {
+      // Check for DUPLICATE EVENT (not page)
+      const existingQuery = {
+        bookingUrl: { $regex: new RegExp(`^${bookingUrl}$`, "i") }
+      };
+      if (id) existingQuery._id = { $ne: id };
+
+      const duplicateEvent = await Event.findOne(existingQuery);
+      if (duplicateEvent) {
+        return res.status(409).json({ message: "Booking URL is already used by another Event" });
+      }
+    }
+
     /* ================= CREATE EVENT ================= */
     if (!id) {
       const code = await generateEventCode(title, date);
@@ -159,32 +173,50 @@ const upsertEvent = async (req, res) => {
         fees,
         price: finalPrice,
         capacity,
-        availability: capacity, // ✅ auto-set
+        availability: capacity,
         ageGroup,
         description,
         bookingUrl: bookingUrl || null,
         imageUrl,
       });
 
-      // ✅ AUTO-CREATE PAGE Logic
+      // ✅ AUTO-CREATE / CLAIM PAGE Logic
       if (bookingUrl) {
         try {
-          const existingPage = await Page.findOne({ slug: bookingUrl });
-          if (!existingPage) {
+          // Find existing page (Case Insensitive)
+          let page = await Page.findOne({
+            slug: { $regex: new RegExp(`^${bookingUrl}$`, "i") }
+          });
+
+          const pageData = {
+            title,
+            slug: bookingUrl,
+            content: `<h1>${title}</h1><p>${description || 'Event Details'}</p>`,
+            status: 'published',
+            metaTitle: title,
+            metaDescription: description,
+            eventId: event._id,
+            createdFrom: 'manage-events', // 👈 KEY: Mark as Event Page
+            updatedAt: new Date()
+          };
+
+          if (page) {
+            // CLAIM EXISTING PAGE
+            Object.assign(page, pageData);
+            await page.save();
+            console.log(`✅ Converted existing page to Event Page: ${bookingUrl}`);
+          } else {
+            // CREATE NEW PAGE
             await Page.create({
-              title: title,
-              slug: bookingUrl,
-              content: `<h1>${title}</h1><p>${description || 'Event Details'}</p>`,
-              status: 'published', // or draft
+              ...pageData,
               sections: [],
-              metaTitle: title,
-              metaDescription: description
+              createdBy: req.user?.id || 'system'
             });
-            console.log(`✅ Auto-created page for event: ${bookingUrl}`);
+            console.log(`✅ Created new Event Page: ${bookingUrl}`);
           }
+
         } catch (pageErr) {
-          console.error("⚠️ Failed to auto-create page:", pageErr.message);
-          // Don't fail the event creation just because page creation failed
+          console.error("⚠️ Failed to manage page:", pageErr.message);
         }
       }
 

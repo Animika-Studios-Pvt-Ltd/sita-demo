@@ -371,6 +371,9 @@ const ManageEvents = () => {
       if (!eventForm.title.trim())
         return errorAlert("Missing title", "Event title is required");
 
+      if (urlStatus === "taken")
+        return errorAlert("Duplicate URL", "This Booking URL is already in use.");
+
       if (!eventForm.date || !eventForm.startTime || !eventForm.endTime)
         return errorAlert("Missing fields", "Date & time required");
 
@@ -459,6 +462,31 @@ const ManageEvents = () => {
     setEventPage(1);
     setBlockPage(1);
   }, [activeTab]);
+
+  /* ================= URL VALIDATION ================= */
+  const [urlStatus, setUrlStatus] = useState("idle");
+
+  useEffect(() => {
+    const url = eventForm.bookingUrl?.trim();
+    if (!url) {
+      setUrlStatus("idle");
+      return;
+    }
+
+    setUrlStatus("checking");
+    const timer = setTimeout(() => {
+      // Check if URL exists in ANY event (except current one if editing)
+      // Case-insensitive check
+      const exists = events.some(e =>
+        e.bookingUrl?.toLowerCase() === url.toLowerCase() &&
+        e._id !== editingEventId
+      );
+
+      setUrlStatus(exists ? "taken" : "available");
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [eventForm.bookingUrl, events, editingEventId]);
 
   const eventTotal = filteredEvents.length;
 
@@ -705,14 +733,42 @@ const ManageEvents = () => {
                 </select>
               </div>
 
-              <input
-                placeholder="Booking URL (example: Yoga-Therapy)"
-                className={`${glassInput} mb-4`}
-                value={eventForm.bookingUrl}
-                onChange={(e) =>
-                  setEventForm({ ...eventForm, bookingUrl: e.target.value })
-                }
-              />
+              <div className="mb-4">
+                <div className="relative">
+                  <input
+                    placeholder="Booking URL (example: Yoga-Therapy)"
+                    className={`${glassInput} ${urlStatus === "taken"
+                      ? "border-red-400 focus:ring-red-200"
+                      : urlStatus === "available"
+                        ? "border-emerald-400 focus:ring-emerald-200"
+                        : "border-white/70"
+                      }`}
+                    value={eventForm.bookingUrl}
+                    onChange={(e) =>
+                      setEventForm({ ...eventForm, bookingUrl: e.target.value.replace(/\s+/g, "-") })
+                    }
+                  />
+                  {/* STATUS INDICATOR */}
+                  {eventForm.bookingUrl && (
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold">
+                      {urlStatus === "checking" && (
+                        <span className="text-slate-400">Checking...</span>
+                      )}
+                      {urlStatus === "available" && (
+                        <span className="text-emerald-600 flex items-center gap-1">Available</span>
+                      )}
+                      {urlStatus === "taken" && (
+                        <span className="text-red-500 flex items-center gap-1">Taken</span>
+                      )}
+                    </div>
+                  )}
+                </div>
+                {urlStatus === "taken" && (
+                  <p className="text-xs text-red-500 mt-1 ml-1">
+                    This URL is already used by another event.
+                  </p>
+                )}
+              </div>
 
               <textarea
                 placeholder="Description"

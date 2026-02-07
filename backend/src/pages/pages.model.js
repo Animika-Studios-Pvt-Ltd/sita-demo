@@ -35,13 +35,24 @@ const cmsPageSchema = new mongoose.Schema(
 
     editorType: {
       type: String,
+      enum: ["json", "html"],
       default: "json",
     },
 
-    createdBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Admin",
+    createdFrom: {
+      type: String,
+      enum: ["manage-pages", "manage-events"],
+      default: "manage-pages",
     },
+
+    eventId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Event",
+      default: null,
+    },
+
+    createdBy: { type: String, required: true },
+    updatedAt: { type: Date, default: Date.now },
   },
   { timestamps: true }
 );

@@ -27,6 +27,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+import '../../about/About.css'; // Import About CSS for hero styles
+
 import { useParams, useLocation } from 'react-router-dom';
 
 const sanitizeDescription = (html) => {
@@ -36,7 +38,7 @@ const sanitizeDescription = (html) => {
     .replace(/style="[^"]*"/g, "");
 };
 
-export default function SectionRenderer({ section }) {
+export default function SectionRenderer({ section, createdFrom, pageSlug }) {
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -50,7 +52,7 @@ export default function SectionRenderer({ section }) {
 
   switch (key) {
     case 'hero':
-      return <HeroSection content={content} />;
+      return <HeroSection content={content} createdFrom={createdFrom} pageSlug={pageSlug} />;
     case 'html':
       return <HtmlSection content={content} />;
     case 'links':
@@ -106,9 +108,10 @@ function BookingSection({ content }) {
 }
 
 // Hero Section Component (Updated)
-function HeroSection({ content }) {
+function HeroSection({ content, createdFrom, pageSlug }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null);
+  const location = useLocation();
 
   const {
     title = '',
@@ -117,12 +120,19 @@ function HeroSection({ content }) {
     primaryCta = {},
   } = content;
 
-  // Breadcrumb items
-  const breadcrumbItems = [
-    { label: "Home", path: "/" },
-    { label: "Workshops", path: "/" },
-    { label: title || "Page", path: null }
-  ];
+  // Dynamic Breadcrumb Logic
+  const isBookingPage = location.pathname.startsWith('/booking/');
+
+  const breadcrumbItems = isBookingPage
+    ? [
+      { label: "Home", path: "/" },
+      { label: "Workshops", path: "/events" }, // Or just path: null if no events page
+      { label: pageSlug ? pageSlug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase()) : (title || "Workshop"), path: null }
+    ]
+    : [
+      { label: "Home", path: "/" },
+      { label: pageSlug ? pageSlug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase()) : (title || "Page"), path: null }
+    ];
 
   const handleCtaClick = () => {
     if (primaryCta.eventId) {
@@ -140,13 +150,28 @@ function HeroSection({ content }) {
 
   return (
     <>
-      {/* 1. Hero Image - Always first */}
-      <section className="booking-inner-hero">
-        <div className="booking-inner-hero-bg"></div>
-        <div className="booking-inner-hero-image">
-          <img src={backgroundImage || "/images/about-banner.webp"} alt="Hero Banner" />
-        </div>
-      </section>
+      {/* 1. Hero Image - Conditional Style */}
+      {(location.pathname === '/test' || createdFrom === 'manage-pages') ? (
+        <section className="sita-inner-hero">
+          <div className="sita-hero-inner-bg" data-aos="fade-in"></div>
+
+          <div className="sita-inner-hero-image">
+            <div
+              className="sita-inner-hero-image-banner"
+              data-aos="zoom-out"
+              data-aos-duration="1500">
+              <img src={backgroundImage || "/about-banner.webp"} alt="Hero Banner" />
+            </div>
+          </div>
+        </section>
+      ) : (
+        <section className="booking-inner-hero">
+          <div className="booking-inner-hero-bg"></div>
+          <div className="booking-inner-hero-image">
+            <img src={backgroundImage || "/images/about-banner.webp"} alt="Hero Banner" />
+          </div>
+        </section>
+      )}
 
       {/* 2. Breadcrumbs using SitaBreadcrumb - Now after image */}
       <SitaBreadcrumb items={breadcrumbItems} />

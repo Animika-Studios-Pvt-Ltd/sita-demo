@@ -42,6 +42,22 @@ export default function CmsPage({ slug: propSlug }) {
     return null;
   }
 
+  // New useEffect for early redirect and title update
+  useEffect(() => {
+    if (!slug) return;
+
+    fetchCmsPage(slug).then((data) => {
+      setCms(data);
+      if (data) {
+        // ✅ REDIRECT TO EVENT PAGE if converted
+        if (data.createdFrom === "manage-events" && !window.location.pathname.startsWith("/booking/")) {
+          navigate(`/booking/${data.slug}`, { replace: true });
+        }
+        document.title = data.metaTitle || data.title || "Page";
+      }
+    });
+  }, [slug, navigate]); // Added navigate to dependency array
+
   useEffect(() => {
     const checkCmsAndLoadPage = async () => {
       try {
@@ -228,7 +244,7 @@ export default function CmsPage({ slug: propSlug }) {
       <main>
         {cms.sections.map((section, i) => {
           console.log(`🎨 Rendering section ${i}:`, section.key, section.content);
-          return <SectionRenderer key={section._id || i} section={section} pageSlug={slug} />;
+          return <SectionRenderer key={section._id || i} section={section} pageSlug={slug} createdFrom={cms.createdFrom} />;
         })}
       </main>
     </div>

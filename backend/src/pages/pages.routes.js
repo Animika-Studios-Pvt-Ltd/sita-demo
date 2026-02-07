@@ -89,6 +89,15 @@ router.post("/", auth0Middleware, tenantMiddleware, async (req, res) => {
       return res.status(400).json({ message: "slug and sections are required" });
     }
 
+    // Check for existing page (Case Insensitive)
+    const existingPage = await CmsPage.findOne({
+      tenantId: req.tenantId,
+      slug: { $regex: new RegExp(`^${slug}$`, "i") }
+    });
+    if (existingPage) {
+      return res.status(409).json({ message: "Page with this link already exists!" });
+    }
+
     // Handle both array and object formats
     let normalizedSections;
 
@@ -99,24 +108,69 @@ router.post("/", auth0Middleware, tenantMiddleware, async (req, res) => {
       normalizedSections = Object.entries(sections).map(([key, content]) => ({ key, content }));
     }
 
-    const page = await CmsPage.findOneAndUpdate(
-      { tenantId: req.tenantId, slug },
-      {
-        tenantId: req.tenantId,
-        slug,
-        sections: normalizedSections,
-        status: status || "published",
-        editorType: editorType || "json", // Track which editor was used
-        createdBy: req.user.id,
-        updatedAt: new Date()
-      },
-      { upsert: true, new: true }
-    );
+    const page = await CmsPage.create({
+      tenantId: req.tenantId,
+      slug,
+      sections: normalizedSections,
+      status: status || "published",
+      editorType: editorType || "json", // Track which editor was used
+      createdFrom: "manage-pages", // ✅ Explicitly set source
+      createdBy: req.user.id,
+      updatedAt: new Date()
+    });
 
     res.json(page);
   } catch (err) {
     console.error("❌ CMS save error:", err);
     res.status(500).json({ message: "Failed to save CMS page", error: err.message });
+  }
+});
+
+/* ---------- ADMIN: Update CMS page ---------- */
+router.put("/:slug", auth0Middleware, tenantMiddleware, async (req, res) => {
+  try {
+    const { sections, status, editorType } = req.body;
+    const { slug } = req.params;
+
+    if (!sections) {
+      return res.status(400).json({ message: "Sections are required" });
+    }
+
+    // Handle both array and object formats
+    let normalizedSections;
+
+    if (Array.isArray(sections)) {
+      normalizedSections = sections;
+    } else {
+      normalizedSections = Object.entries(sections).map(([key, content]) => ({ key, content }));
+    }
+
+    const page = await CmsPage.findOne({ tenantId: req.tenantId, slug });
+
+    if (!page) {
+      return res.status(404).json({ message: "Page not found" });
+    }
+
+    page.sections = normalizedSections;
+    page.status = status || "published";
+    page.editorType = editorType || "json";
+    page.updatedAt = new Date();
+
+    // ✅ Ensure createdFrom is set for older pages
+    if (!page.createdFrom) {
+      page.createdFrom = "manage-pages";
+    }
+
+    await page.save();
+
+    if (!page) {
+      return res.status(404).json({ message: "Page not found" });
+    }
+
+    res.json(page);
+  } catch (err) {
+    console.error("❌ CMS update error:", err);
+    res.status(500).json({ message: "Failed to update CMS page", error: err.message });
   }
 });
 

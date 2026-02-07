@@ -79,10 +79,51 @@ export default function EnhancedCmsEditor() {
   const navigate = useNavigate();
   const [pageSlug, setPageSlug] = useState(slug || "");
   const [pageStatus, setPageStatus] = useState("draft");
-  const [sections, setSections] = useState([]);
+  const [sections, setSections] = useState(() => {
+    // Should be empty initially, but will be populated if new page
+    return slug ? [] : [{
+      id: `section-hero-${Date.now()}`,
+      key: "hero",
+      content: getDefaultContent("hero"),
+    }];
+  });
   const [loading, setLoading] = useState(!!slug);
   const [previewMode, setPreviewMode] = useState(false);
-  const [expandedSections, setExpandedSections] = useState(new Set());
+  const [expandedSections, setExpandedSections] = useState(() => {
+    // If new page, expand the initial hero section
+    return slug ? new Set() : new Set(sections?.map(s => s.id) || []);
+  });
+
+  /* ================= SLUG CHECK ================= */
+  const [slugStatus, setSlugStatus] = useState("idle"); // idle, checking, available, taken, error
+
+  useEffect(() => {
+    // Only check for NEW pages
+    if (slug || !pageSlug.trim()) {
+      setSlugStatus("idle");
+      return;
+    }
+
+    const checkSlug = async () => {
+      setSlugStatus("checking");
+      try {
+        await api.get(`/api/cms/admin/${pageSlug}`);
+        // If 200 OK -> Page exists -> Taken
+        setSlugStatus("taken");
+      } catch (err) {
+        if (err.response && err.response.status === 404) {
+          // 404 -> Page not found -> Available
+          setSlugStatus("available");
+        } else {
+          console.error("Slug check error:", err);
+          setSlugStatus("error");
+        }
+      }
+    };
+
+    const timer = setTimeout(checkSlug, 500); // 500ms debounce
+    return () => clearTimeout(timer);
+  }, [pageSlug, slug]);
 
   useEffect(() => {
     if (!slug) return;
@@ -104,14 +145,29 @@ export default function EnhancedCmsEditor() {
           setLoading(false);
           return;
         }
-        const sectionsArray = (page.sections || []).map((s, idx) => ({
+        let sectionsArray = (page.sections || []).map((s, idx) => ({
           id: `section-${idx}-${Date.now()}`,
           key: s.key,
           content: s.content,
         }));
+
+        // ✅ ENSURE HERO SECTION EXISTS
+        if (!sectionsArray.some(s => s.key === 'hero')) {
+          const heroSection = {
+            id: `section-hero-${Date.now()}`,
+            key: 'hero',
+            content: getDefaultContent('hero'),
+          };
+          sectionsArray = [heroSection, ...sectionsArray];
+        }
+
         setSections(sectionsArray);
         setPageStatus(page.status || "draft");
-        setExpandedSections(new Set(sectionsArray.map((s) => s.id)));
+
+        // ✅ DEFAULT EXPAND HERO
+        const initialExpanded = new Set(sectionsArray.map((s) => s.id));
+        setExpandedSections(initialExpanded);
+
         setLoading(false);
       })
       .catch((err) => {
@@ -174,11 +230,25 @@ export default function EnhancedCmsEditor() {
       key: type,
       content: getDefaultContent(type),
     };
-    setSections([...sections, newSection]);
+
+    // ✅ FORCE HERO TO TOP
+    if (type === "hero") {
+      setSections([newSection, ...sections]);
+    } else {
+      setSections([...sections, newSection]);
+    }
+
     setExpandedSections(new Set([...expandedSections, newSection.id]));
   };
 
   const deleteSection = (id) => {
+    // 1. Prevent deleting Hero section
+    const section = sections.find(s => s.id === id);
+    if (section && section.key === 'hero') {
+      Swal.fire("Action Blocked", "The Hero section cannot be deleted.", "warning");
+      return;
+    }
+
     Swal.fire({
       title: "Delete this section?",
       text: "This action cannot be undone.",
@@ -272,7 +342,14 @@ export default function EnhancedCmsEditor() {
         status,
       };
 
-      const response = await api.post("/api/cms/pages", payload);
+      let response;
+      if (slug) {
+        // Edit existing page
+        response = await api.put(`/api/cms/pages/${slug}`, payload);
+      } else {
+        // Create new page
+        response = await api.post("/api/cms/pages", payload);
+      }
 
       Swal.fire({
         icon: "success",
@@ -305,6 +382,8 @@ export default function EnhancedCmsEditor() {
     );
   }
 
+
+
   return (
     <div className="font-montserrat text-slate-700">
       {/* Header */}
@@ -317,21 +396,54 @@ export default function EnhancedCmsEditor() {
               <label className="block text-md font-medium text-slate-700 mb-1">
                 Event Page Link
               </label>
-              <input
-                type="text"
-                value={pageSlug}
-                onChange={(e) =>
-                  setPageSlug(e.target.value.toLowerCase().replace(/\s+/g, "-"))
-                }
-                disabled={!!slug}
-                className="w-full px-4 py-2 rounded-lg bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
-                placeholder="example-about-us"
-              />
-              {/* {slug && (
-                <p className="text-xs text-slate-500 mt-1">
-                  Page URL: /{slug}
+              <div className="relative">
+                <input
+                  type="text"
+                  value={pageSlug}
+                  onChange={(e) =>
+                    setPageSlug(e.target.value.toLowerCase().replace(/\s+/g, "-"))
+                  }
+                  disabled={!!slug}
+                  className={`w-full px-4 py-2 rounded-lg bg-white/70 backdrop-blur-xl border ring-1 ring-black/5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80 ${slugStatus === "taken"
+                    ? "border-red-400 focus:ring-red-200"
+                    : slugStatus === "available"
+                      ? "border-emerald-400 focus:ring-emerald-200"
+                      : "border-white/70"
+                    }`}
+                  placeholder="example-about-us"
+                />
+
+                {/* STATUS INDICATOR */}
+                {!slug && pageSlug && (
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold">
+                    {slugStatus === "checking" && (
+                      <span className="text-slate-400">Checking...</span>
+                    )}
+                    {slugStatus === "available" && (
+                      <span className="text-emerald-600 flex items-center gap-1">
+                        Available
+                      </span>
+                    )}
+                    {slugStatus === "taken" && (
+                      <span className="text-red-500 flex items-center gap-1">
+                        Taken
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* HELPER TEXT */}
+              {slugStatus === "taken" && !slug && (
+                <p className="text-xs text-red-500 mt-1 ml-1">
+                  This link is already in use. Please choose another.
                 </p>
-              )} */}
+              )}
+              {slugStatus === "available" && !slug && (
+                <p className="text-xs text-emerald-600 mt-1 ml-1">
+                  This link is available!
+                </p>
+              )}
             </div>
 
             {/* ACTIONS */}
