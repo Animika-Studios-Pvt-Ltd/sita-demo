@@ -16,6 +16,10 @@ const BACKEND_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000"
 const glassPanel = "bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-2xl";
 const glassHeader = `${glassPanel} p-6 md:p-8 shadow-[0_18px_40px_-30px_rgba(15,23,42,0.45)]`;
 const glassCard = `${glassPanel} p-5 md:p-6 transition-all duration-300 hover:shadow-lg`;
+const actionPill =
+  "flex items-center justify-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium " +
+  "bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 shadow-sm " +
+  "hover:bg-white/90 transition-colors duration-200";
 
 const Podcasts = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm({
@@ -165,16 +169,35 @@ const Podcasts = () => {
 
   const handleSuspend = async (podcast) => {
     const action = podcast.suspended ? "unsuspend" : "suspend";
+
+    const result = await Swal.fire({
+      title: `Are you sure you want to ${action} this podcast?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: action === "suspend" ? "Yes, suspend!" : "Yes, unsuspend!",
+    });
+
+    if (!result.isConfirmed) return;
+
     try {
       const res = await fetch(`${BACKEND_BASE_URL}/api/podcasts/suspend/${podcast.slug}`, {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
       });
+      let data = {};
+      try {
+        data = await res.json();
+      } catch (_) { }
+
       if (res.ok) {
+        Swal.fire("Success", `Podcast ${action}ed successfully`, "success");
         fetchPodcasts();
+      } else {
+        Swal.fire("Error", data.message || `Failed to ${action} podcast`, "error");
       }
     } catch (err) {
       console.error(err);
+      Swal.fire("Error", `Failed to ${action} podcast`, "error");
     }
   };
 
@@ -216,17 +239,29 @@ const Podcasts = () => {
                 </span>
               </div>
             </div>
-            <div className="flex gap-2">
-              <button onClick={() => handleEdit(podcast)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition-colors">
-                <FiEdit />
+            <div className="flex gap-2 flex-wrap justify-end">
+              <button
+                onClick={() => handleEdit(podcast)}
+                className={`${actionPill} text-blue-700`}
+              >
+                <FiEdit fontSize="small" /> Edit
               </button>
-              <button onClick={() => handleDelete(podcast.slug)} className="p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors">
-                <FiTrash2 />
+              <button
+                onClick={() => handleSuspend(podcast)}
+                className={`${actionPill} ${podcast.suspended ? "text-teal-700" : "text-amber-700"}`}
+              >
+                {podcast.suspended ? "Unsuspend" : "Suspend"}
+              </button>
+              <button
+                onClick={() => handleDelete(podcast.slug)}
+                className={`${actionPill} text-red-600`}
+              >
+                <FiTrash2 fontSize="small" /> Delete
               </button>
             </div>
           </div>
 
-          <div className="text-slate-600 text-sm leading-relaxed mb-4 flex-1">
+          <div className="text-slate-600 text-sm leading-relaxed mb-4 flex-1 blog-description">
             <div dangerouslySetInnerHTML={{ __html: expanded ? podcast.description : podcast.description.slice(0, 150) + (podcast.description.length > 150 ? "..." : "") }} />
             {podcast.description.length > 150 && (
               <button onClick={() => setExpanded(!expanded)} className="text-[#7A1F2B] font-medium text-xs mt-1 hover:underline">
@@ -235,16 +270,10 @@ const Podcasts = () => {
             )}
           </div>
 
-          <div className="flex items-center gap-4 mt-auto pt-4 border-t border-slate-100/50">
+          <div className="flex items-center mt-auto pt-4 border-t border-slate-100/50">
             <a href={podcast.podcastLink} target="_blank" rel="noreferrer" className="text-[#7A1F2B] hover:underline text-sm font-medium flex items-center gap-2">
               <FiHeadphones /> Listen to Episode
             </a>
-            <button
-              onClick={() => handleSuspend(podcast)}
-              className={`text-xs px-3 py-1 rounded-full border ${podcast.suspended ? "border-teal-200 text-teal-700 bg-teal-50" : "border-slate-200 text-slate-500 hover:bg-slate-50"}`}
-            >
-              {podcast.suspended ? "Unsuspend" : "Suspend"}
-            </button>
           </div>
         </div>
       </div>
