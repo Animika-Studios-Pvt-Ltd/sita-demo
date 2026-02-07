@@ -175,6 +175,22 @@
   margin-bottom: 6px;
 }
 
+.accordion-section .points-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.accordion-section .points-heading {
+  font-family: "Montserrat-Regular";
+  color: #8b171b !important;
+  margin-bottom: 0px;
+}
+
+.accordion-section .points-main-heading {
+  font-family: "Montserrat-Medium";
+  font-size: 20px;
+}
+
 @media (max-width: 1440px) {
   .accordion-section p {
     width: 80%;
@@ -237,6 +253,10 @@
   .accordion-section-list li img {
     width: 19px;
   }
+
+  .accordion-section .points-main-heading {
+    font-size: 18px;
+  }
 }
 
 @media (max-width: 767px) {
@@ -274,6 +294,10 @@
   .accordion-section-list li img {
     width: 18px;
   }
+
+  .accordion-section .points-main-heading {
+    font-size: 17px;
+  }
 }
 
 @media (max-width: 575px) {
@@ -300,6 +324,10 @@
 
   .accordion-section-list li img {
     width: 17px;
+  }
+
+  .accordion-section .points-main-heading {
+    font-size: 16px;
   }
 }
 
@@ -592,6 +620,10 @@
   color: white !important;
 }
 
+.what-makes-this-work-unique-list span {
+  color: white !important;
+}
+
 .what-makes-this-work-unique-list li img {
   width: 20px;
   height: auto;
@@ -688,6 +720,10 @@ li {
   color: black !important;
 }
 
+.what-makes-this-work-unique.couple-sessions-section span {
+  color: black !important;
+}
+
 .what-makes-this-work-unique.couple-sessions-section .paragraph {
   margin-bottom: 15px;
   width: 100%;
@@ -731,5 +767,15 @@ li {
 }
 
 .group-formats-core-elements.sita-specializes-in-teachings h4 {
-   color: black !important;
+  color: black !important;
+}
+
+.group-formats-core-elements.sita-specializes-in-teachings ul {
+  margin-bottom: 0px;
+}
+
+/* ------------------------------------------------- SHAKTHI LEADERSHIP SECTION ------------------------------------------------- */
+
+.accordion-section.shakthi-leadership-accordion p {
+  width: 100%;
 }
