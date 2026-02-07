@@ -262,7 +262,7 @@ const BlogDetailPage = () => {
                   "bg-[#e29a7a]",
                   "bg-[#c36c6c]",
                 ];
-
+                const btnColor = btnColors[index % btnColors.length];
                 return (
                   <div
                     key={blog._id}
@@ -345,34 +345,15 @@ const BlogDetailPage = () => {
                     </div>
 
                     {/* AUTHOR */}
-                    <span
-                      className="
-                              font-montserratLight
-                              text-[14px]
-                              italic
-                              mt-2
-                              mb-2
-                            ">
-                      – {blog.author || "Sita Severson"}
+                    <span className="blog-author mb-3">
+                      - {blog.author || "Sita Severson"}
                     </span>
 
                     {/* CTA */}
                     <Link
                       to={`/blogs/${blog.slug || blog._id}`}
-                      className={`
-                              font-montserratLight
-                              ${btnColors[index % btnColors.length]}
-                              text-white
-                              px-4
-                              py-2
-                              text-[16px]
-                              mx-auto
-                              [clip-path:polygon(10%_0%,90%_0%,100%_50%,90%_100%,10%_100%,0%_50%)]
-                              transition
-                              hover:opacity-90
-                              no-underline
-                              mb-3
-                            `}>
+                      className={`sita-blog-btn ${btnColor}`}
+                      style={{ minWidth: "150px", display: "inline-flex", justifyContent: "center", alignItems: "center",marginBottom:"14px" }}>
                       {blog.readMoreText || "Get insights"}
                     </Link>
                   </div>
@@ -414,11 +395,10 @@ const BlogDetailPage = () => {
                     key={num}
                     onClick={() => setCurrentPage(num)}
                     className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
-          ${
-            currentPage === num
-              ? "bg-[#993333] text-white"
-              : "border border-transparent text-black hover:border-black hover:bg-gray-100"
-          }`}>
+          ${currentPage === num
+                        ? "bg-[#993333] text-white"
+                        : "border border-transparent text-black hover:border-black hover:bg-gray-100"
+                      }`}>
                     {num}
                   </button>
                 ))}

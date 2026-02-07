@@ -178,15 +178,8 @@ const ArticlesPage = () => {
                                     </div>
 
                                     {/* AUTHOR */}
-                                    <span
-                                        className="
-                              font-montserratLight
-                              text-[14px]
-                              italic
-                              mt-2
-                              mb-2
-                            ">
-                                        – {article.author || "Sita Severson"}
+                                    <span className="blog-author mb-3">
+                                        - {article.author || "Sita Severson"}
                                     </span>
 
                                     {/* CTA */}
