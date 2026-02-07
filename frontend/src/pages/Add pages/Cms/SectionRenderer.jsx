@@ -186,7 +186,7 @@ function HeroSection({ content }) {
 function HtmlSection({ content }) {
   // Extract styling options
   const backgroundColor = content.style?.backgroundColor || '#ffffff';
-  const padding = 'py-[20px]';
+  const padding = 'py-[40px]';
   const maxWidth = content.style?.maxWidth || 'max-w-7xl';
   const columnGap = content.columnGap || 'gap-6';
 
@@ -289,7 +289,7 @@ function LinksSection({ content }) {
   if (items.length === 0) return null;
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-[40px] bg-gray-50">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12 sita-factor-highlight" style={{ fontFamily: 'Montserrat-Light' }}>{title}</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -320,7 +320,7 @@ function FaqSection({ content }) {
   const questionColor = style.questionColor || '#1f2937';
   const answerColor = style.answerColor || '#6b7280';
   const accentColor = style.accentColor || '#8b171b';
-  const padding = style.padding || 'py-12';
+  const padding = style.padding || 'py-[40px]';
 
   if (items.length === 0) return null;
 
@@ -392,7 +392,7 @@ const BACKEND_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000"
 
 
 const DynamicSectionLayout = ({ title, children, linkTo, linkText = "View All" }) => (
-  <section className="py-16 bg-white">
+  <section className="py-[40px] bg-white">
     <div className="container mx-auto px-4">
       {title && (
         <div className="text-center mb-12">
@@ -405,14 +405,16 @@ const DynamicSectionLayout = ({ title, children, linkTo, linkText = "View All" }
 
       {children}
 
-      <div className="text-center mt-12">
-        <Link
-          to={linkTo}
-          className="inline-block px-8 py-3 bg-[#8b171b] text-white font-montserratLight rounded-full hover:bg-[#a62024] transition-colors"
-        >
-          {linkText}
-        </Link>
-      </div>
+      {linkTo && (
+        <div className="text-center mt-12">
+          <Link
+            to={linkTo}
+            className="inline-block px-8 py-3 bg-[#8b171b] text-white font-montserratLight rounded-full hover:bg-[#a62024] transition-colors"
+          >
+            {linkText}
+          </Link>
+        </div>
+      )}
     </div>
   </section>
 );
@@ -515,7 +517,7 @@ function EventsSection({ content }) {
   }
 
   return (
-    <DynamicSectionLayout title={content.title} linkTo="/workshop-calendar" linkText="View Calendar">
+    <DynamicSectionLayout title={content.title}>
       {showCarousel ? (
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
@@ -575,7 +577,7 @@ function BlogsSection({ content }) {
   if (currentBlogs.length === 0) return null;
 
   return (
-    <DynamicSectionLayout title={null} linkTo="/blogs" linkText="Read All Blogs">
+    <DynamicSectionLayout title={null}>
       {/* HEADER */}
       <div className="" data-aos="fade-up" data-aos-duration="1200">
         <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
@@ -589,85 +591,70 @@ function BlogsSection({ content }) {
       </div>
 
       {/* BLOG GRID */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="row">
         {currentBlogs.map((blog, index) => {
           const btnColors = [
-            "bg-[#d86c87]",
-            "bg-[#e29a7a]",
-            "bg-[#c36c6c]",
+            "pink",
+            "peach",
+            "rose",
           ];
+          const btnColor = btnColors[index % btnColors.length]; // Cycle colors
 
           return (
             <div
               key={blog._id}
-              className="flex flex-col text-center border-b border-[#8b171b] h-full pb-4"
-            >
-              {/* IMAGE */}
-              <div
-                className="relative w-full aspect-[1.25/1] overflow-hidden mb-3"
-                style={{ aspectRatio: "1.25/1" }}
-              >
-                <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                  style={{
-                    backgroundImage: `url(${blog.image?.startsWith("http") ? blog.image : `${BACKEND_BASE_URL}${blog.image}`})`
-                  }}
-                />
+              className="col-lg-4 col-md-4 col-sm-12 col-12"
+              data-aos="fade-up"
+              data-aos-delay={(index + 1) * 100}>
+              <div className="sita-blog-card">
+                <div className="sita-blog-image">
+                  <img
+                    src={
+                      blog.image?.startsWith("http")
+                        ? blog.image
+                        : `${BACKEND_BASE_URL}${blog.image}`
+                    }
+                    className="img-fluid w-100"
+                    alt={blog.title}
+                    style={{ height: "250px", objectFit: "cover" }}
+                  />
+                  <p className="blog-date">
+                    {new Date(blog.createdAt).toLocaleDateString(
+                      "en-US",
+                      {
+                        month: "short",
+                        day: "2-digit",
+                        year: "numeric",
+                      },
+                    )}
+                  </p>
+                </div>
 
-                {/* DATE */}
-                <p className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-3 py-1 text-[16px] rounded-t-md shadow font-montserratLight">
-                  {new Date(blog.createdAt).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "2-digit",
-                    year: "numeric",
-                  })}
-                </p>
-              </div>
+                <h4>{blog.title}</h4>
 
-              {/* CONTENT */}
-              <div className="flex flex-col flex-grow px-1 mt-4">
-                <h4 className="font-montserratLight text-[20px] mb-1 text-black leading-snug line-clamp-2">
-                  {blog.title}
-                </h4>
-
-                <div className="font-montserratLight text-[16px] text-black leading-snug h-[70px] overflow-hidden mb-2">
-                  <span
+                <div className="blog-description-wrapper">
+                  <p
                     dangerouslySetInnerHTML={{
                       __html: sanitizeDescription(
-                        blog.description?.length > 200
-                          ? blog.description.slice(0, 200) + "..."
-                          : blog.description || ""
+                        blog.description.length > 150
+                          ? blog.description.slice(0, 150) + "..."
+                          : blog.description,
                       ),
                     }}
                   />
                 </div>
+
+                <span className="blog-author mb-3">
+                  - {blog.author || "Sita Severson"}
+                </span>
+
+                <Link
+                  to={`/blogs/${blog.slug || blog._id}`}
+                  className={`sita-blog-btn ${btnColor}`}
+                  style={{ minWidth: "150px", display: "inline-flex", justifyContent: "center", alignItems: "center" }}>
+                  {blog.readMoreText || "Read More"}
+                </Link>
               </div>
-
-              {/* AUTHOR */}
-              <span className="font-montserratLight text-[14px] italic mt-2 mb-2">
-                – {blog.author || "Sita Severson"}
-              </span>
-
-              {/* CTA */}
-              <Link
-                to={`/blogs/${blog.slug || blog._id}`}
-                className={`
-                    font-montserratLight
-                    ${btnColors[index % btnColors.length]}
-                    text-white
-                    px-4
-                    py-2
-                    text-[16px]
-                    mx-auto
-                    [clip-path:polygon(10%_0%,90%_0%,100%_50%,90%_100%,10%_100%,0%_50%)]
-                    transition
-                    hover:opacity-90
-                    no-underline
-                    mb-3
-                  `}
-              >
-                {blog.readMoreText || "Get insights"}
-              </Link>
             </div>
           );
         })}
@@ -796,7 +783,7 @@ function BooksSection({ content }) {
   }
 
   return (
-    <DynamicSectionLayout title={content.title} linkTo="/publications" linkText="Visit Store">
+    <DynamicSectionLayout title={content.title}>
       {showCarousel ? (
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
