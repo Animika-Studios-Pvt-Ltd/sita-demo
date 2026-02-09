@@ -381,7 +381,7 @@ li {
   text-decoration: none;
   line-height: 1;
   clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
-    transition: transform 0.3s ease, background-color 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .masterclass-card-btn:hover {
@@ -836,6 +836,11 @@ li {
   padding: 10px 36px;
   text-decoration: none;
   clip-path: polygon(6% 0, 94% 0, 100% 50%, 94% 100%, 6% 100%, 0 50%);
+  transition: transform 0.3s ease;
+}
+
+.sita-cta-btn:hover {
+  transform: scale(1.06);
 }
 
 /* ------------------------------------------------- RESPONSIVE CODE ------------------------------------------------- */
@@ -1509,7 +1514,7 @@ li {
     padding: 20px 0;
   }
 
-  .sita-masterclass .row > div {
+  .sita-masterclass .row>div {
     margin-bottom: 20px;
   }
 
@@ -1547,11 +1552,11 @@ li {
     margin-bottom: 10px;
   }
 
-  .sita-masterclass .row > div {
+  .sita-masterclass .row>div {
     margin-bottom: 20px;
   }
 
-  .sita-masterclass .row > div:last-child {
+  .sita-masterclass .row>div:last-child {
     margin-bottom: 0;
   }
 
@@ -1935,6 +1940,11 @@ li {
 
 /* Sita Testimonials Section */
 @media (max-width: 1200px) {
+  .sita-testimonials {
+    background-image: none;
+    background-color: #f9e3c1;
+  }
+
   .sita-testimonial-decor {
     width: 280px;
   }

@@ -205,8 +205,10 @@ li {
 }
 
 .dropdown-item:hover {
-  background: transparent !important;
-  color: #8b171b !important;
+  /* background: transparent !important;
+  color: #8b171b !important; */
+  background-color: #8b171b !important;
+  color: white !important;
 }
 
 @media (max-width: 1440px) {

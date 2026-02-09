@@ -181,10 +181,13 @@ const Footer = () => {
             <a href="#">
               <i className="fa-brands fa-x-twitter"></i>
             </a>
-            <a href="#">
-              <i className="fa-brands fa-linkedin-in"></i>
+            <a
+              href="https://sitaseverson.substack.com/"
+              target="_blank"
+              rel="noopener noreferrer">
+              <img src="substack.png" alt="Substack Icon" />
             </a>
-            <a href="#">
+            <a href="https://www.instagram.com/sitapk_1/">
               <i className="fa-brands fa-instagram"></i>
             </a>
             <a href="#">

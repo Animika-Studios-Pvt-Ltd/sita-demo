@@ -23,11 +23,13 @@
   clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
   transition: background-color 0.3s ease;
   margin-bottom: 20px;
+  transition: transform 0.3s ease;
 }
 
 .sita-workshops-btn:hover {
   background-color: #8b171b;
   color: #ffffff;
+  transform: scale(1.05);
 }
 
 @media (max-width: 1200px) {
