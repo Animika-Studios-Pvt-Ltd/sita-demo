@@ -222,7 +222,7 @@ const PodcastsPage = () => {
                         <img
                             src="/sita-motif.webp"
                             alt="Sita Motif"
-                            className="mx-auto w-32 md:w-40 opacity-80"
+                            className="mx-auto mt-1 w-40 sm:w-48 mb-6"
                         />
                     </div>
 
