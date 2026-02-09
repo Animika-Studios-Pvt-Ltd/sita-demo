@@ -124,7 +124,6 @@ const BlogDetailPage = () => {
                 : `${BACKEND_BASE_URL}${blog.image}`
             }
             alt={blog.title}
-            className="blog-details-inner-hero-image"
           />
         </div>
       </section>
@@ -159,7 +158,7 @@ const BlogDetailPage = () => {
           </div>
 
           <div
-            className="max-w-8xl mx-auto px-0 py- grid gap-10 lg:grid-cols-1 xl:grid-cols-4"
+            className="max-w-8xl mx-auto px-0 py-2 grid gap-10 lg:grid-cols-1 xl:grid-cols-4"
             data-aos="fade-up"
             data-aos-duration="1200">
             <div className="col-span-1 xl:col-span-3">
