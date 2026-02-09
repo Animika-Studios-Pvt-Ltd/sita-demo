@@ -745,7 +745,7 @@ const ManageEvents = () => {
                       }`}
                     value={eventForm.bookingUrl}
                     onChange={(e) =>
-                      setEventForm({ ...eventForm, bookingUrl: e.target.value.replace(/\s+/g, "-") })
+                      setEventForm({ ...eventForm, bookingUrl: e.target.value.toLowerCase().replace(/\s+/g, "-") })
                     }
                   />
                   {/* STATUS INDICATOR */}

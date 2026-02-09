@@ -121,6 +121,9 @@ function HeroSection({ content, createdFrom, pageSlug }) {
     primaryCta = {},
   } = content;
 
+  // Determine the display title: use content title if available, otherwise format the pageSlug
+  const displayTitle = title || (pageSlug ? pageSlug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase()) : "");
+
   // Dynamic Breadcrumb Logic
   const isBookingPage = location.pathname.startsWith('/booking/');
 
@@ -128,11 +131,11 @@ function HeroSection({ content, createdFrom, pageSlug }) {
     ? [
       { label: "Home", path: "/" },
       { label: "Workshops", path: "/events" }, // Or just path: null if no events page
-      { label: pageSlug ? pageSlug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase()) : (title || "Workshop"), path: null }
+      { label: pageSlug ? pageSlug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase()) : (displayTitle || "Workshop"), path: null }
     ]
     : [
       { label: "Home", path: "/" },
-      { label: pageSlug ? pageSlug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase()) : (title || "Page"), path: null }
+      { label: pageSlug ? pageSlug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase()) : (displayTitle || "Page"), path: null }
     ];
 
   const handleCtaClick = () => {
@@ -180,7 +183,7 @@ function HeroSection({ content, createdFrom, pageSlug }) {
       {/* 3. Hero Content (Workshop Section style) - Now after image */}
       <section className="booking-section" style={{ padding: '40px 0' }}>
         <div className="container text-center sita-factor-content" data-aos="fade-up">
-          {title && <h2>{title}</h2>}
+          {displayTitle && <h2>{displayTitle}</h2>}
           <img src="/sita-motif.webp" alt="Sita Motif" className="motif mx-auto justify-center my-3 block" style={{ width: 'auto', height: 'auto' }} />
 
           {subtitle && <p className="sita-factor-text mb-4">{subtitle}</p>}

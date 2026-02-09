@@ -53,7 +53,9 @@ export default function CmsPage({ slug: propSlug }) {
         if (data.createdFrom === "manage-events" && !window.location.pathname.startsWith("/booking/")) {
           navigate(`/booking/${data.slug}`, { replace: true });
         }
-        document.title = data.metaTitle || data.title || "Page";
+
+        const formattedSlug = slug ? slug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase()) : "Page";
+        document.title = data.metaTitle || data.title || formattedSlug;
       }
     });
   }, [slug, navigate]); // Added navigate to dependency array
