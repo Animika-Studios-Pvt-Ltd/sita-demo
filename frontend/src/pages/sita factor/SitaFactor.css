@@ -1,0 +1,45 @@
+/* ------------------------------------------------- SITA FACTOR INNER PAGES ------------------------------------------------- */
+
+.sita-factor-inner-pages {
+	padding: 40px 0px;
+}
+
+.sita-factor-inner-pages h2 {
+	text-align: center;
+}
+
+.sita-factor-inner-pages .motif {
+	display: block;
+	margin: 0 auto 30px;
+}
+
+/* ------------------------------------------------- RESPONSIVE CODE ------------------------------------------------- */
+@media (max-width: 991px) {
+	.sita-factor-inner-pages {
+		padding: 30px 0px;
+	}
+
+	.sita-factor-inner-pages .motif {
+		margin: 0 auto 25px;
+	}
+}
+
+@media (max-width: 767px) {
+	.sita-factor-inner-pages {
+		padding: 20px 0px;
+	}
+
+	.sita-factor-inner-pages .motif {
+		margin: 0 auto 20px;
+	}
+}
+
+@media (max-width: 575px) {
+	.sita-factor-inner-pages {
+		padding: 10px 0px;
+	}
+
+	.sita-factor-inner-pages .motif {
+		margin: 0 auto 15px;
+	}
+}

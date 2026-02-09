@@ -1,7 +1,17 @@
+import { useEffect } from "react";
 import "aos/dist/aos.css";
+import AOS from "aos";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 
 const Disclaimer = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 900,
+      easing: "ease-in-out",
+      once: true,
+      offset: 80,
+    });
+  }, []);
   return (
     <>
       {/* --------------------  HERO SECTION -------------------- */}
@@ -22,6 +32,14 @@ const Disclaimer = () => {
       <SitaBreadcrumb
         items={[{ label: "Home", path: "/" }, { label: "Disclaimer" }]}
       />
+
+      {/* -------------------- DISCLAIMER SECTION -------------------- */}
+      <section className="sita-factor-inner-pages">
+        <div className="container">
+          <h2>Disclaimer</h2>
+          <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
+        </div>
+      </section>
     </>
   );
 };

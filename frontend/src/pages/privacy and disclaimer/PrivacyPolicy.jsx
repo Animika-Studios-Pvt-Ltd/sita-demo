@@ -1,7 +1,17 @@
+import { useEffect } from "react";
 import "aos/dist/aos.css";
+import AOS from "aos";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 
 const PrivacyPolicy = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 900,
+      easing: "ease-in-out",
+      once: true,
+      offset: 80,
+    });
+  }, []);
   return (
     <>
       {/* --------------------  HERO SECTION -------------------- */}
@@ -22,6 +32,14 @@ const PrivacyPolicy = () => {
       <SitaBreadcrumb
         items={[{ label: "Home", path: "/" }, { label: "Privacy Policy" }]}
       />
+
+      {/* -------------------- PRIVACY POLICY SECTION -------------------- */}
+      <section className="sita-factor-inner-pages">
+        <div className="container">
+          <h2>Privacy Policy</h2>
+          <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
+        </div>
+      </section>
     </>
   );
 };

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import "aos/dist/aos.css";
 import AOS from "aos";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
+import "./SitaFactor.css";
 
 const EngageSita = () => {
   useEffect(() => {
@@ -32,6 +33,14 @@ const EngageSita = () => {
       <SitaBreadcrumb
         items={[{ label: "Home", path: "/" }, { label: "Engage Sita" }]}
       />
+
+      {/* -------------------- ENGAGE WITH SITA SECTION -------------------- */}
+      <section className="sita-factor-inner-pages">
+        <div className="container">
+          <h2>Engage with Sita</h2>
+          <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
+        </div>
+      </section>
     </>
   );
 };

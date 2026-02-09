@@ -53,7 +53,6 @@ import MyBookings from "../../pages/booking/MyBookings";
 import RateEvent from "../../pages/RateEvent";
 import CmsPage from "../../pages/Add pages/pages/CmsPage";
 
-
 export const mainRoutes = [
   {
     path: "/",
@@ -82,7 +81,7 @@ export const mainRoutes = [
       { path: "/contact", element: <Contact /> },
       { path: "/consult-sita", element: <ConsultSita /> },
       { path: "/engage-sita", element: <EngageSita /> },
-      { path: "/styudy-with-sita", element: <StudyWithSita /> },
+      { path: "/study-with-sita", element: <StudyWithSita /> },
 
       // Publications / Store (Consolidated)
       { path: "publications", element: <Publications /> },

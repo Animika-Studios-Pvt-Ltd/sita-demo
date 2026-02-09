@@ -60,12 +60,13 @@ li {
   text-decoration: none;
   line-height: 1;
   clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .sita-btn:hover {
   background-color: #8b171b;
   color: #ffffff;
+  transform: scale(1.07);
 }
 
 /* ----------------- HERO SECTION ----------------- */
