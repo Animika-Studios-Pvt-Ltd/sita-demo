@@ -90,11 +90,12 @@ li {
 }
 
 /* ---------------------------------- INNER PAGE HERO ---------------------------------- */
+/* ---------------------------------- INNER PAGE HERO ---------------------------------- */
 .booking-inner-hero {
   position: relative;
   width: 100%;
   overflow: visible;
-  margin-bottom: calc((46vw / 2.15) + 10px);
+  margin-bottom: calc((30vw / 3) + 10px);
 }
 
 .booking-inner-hero-image {
@@ -103,15 +104,16 @@ li {
   left: 50%;
   transform: translateX(-50%);
   width: 80vw;
-  aspect-ratio: 2.15 / 1;
   z-index: 2;
   overflow: hidden;
 }
 
 .booking-inner-hero-image img {
   width: 100%;
-  height: 100%;
+  height: auto;
+  aspect-ratio: 10 / 3;
   object-fit: cover;
+  object-position: center;
   display: block;
 }
 
@@ -222,7 +224,7 @@ li {
 
 @media (max-width: 1919px) {
   .booking-inner-hero {
-    height: 300px;
+    height: 290px;
   }
 
   .booking-inner-side-img {
@@ -233,7 +235,7 @@ li {
 
 @media (max-width: 1800px) {
   .booking-inner-hero {
-    height: 280px;
+    height: 270px;
   }
 
   .booking-inner-side-img {
@@ -255,19 +257,24 @@ li {
 
 @media (max-width: 1650px) {
   .booking-inner-hero {
-    height: 255px;
+    height: 280px;
+    margin-bottom: calc((30vw / 3) + 10px);
+  }
+
+  .booking-inner-hero-image {
+    width: 88vw;
   }
 }
 
 @media (max-width: 1600px) {
   .booking-inner-hero {
-    height: 245px;
+    height: 265px;
   }
 }
 
 @media (max-width: 1550px) {
   .booking-inner-hero {
-    height: 240px;
+    height: 260px;
   }
 
   .booking-inner-side-img {
@@ -277,27 +284,62 @@ li {
 
 @media (max-width: 1500px) {
   .booking-inner-hero {
-    height: 230px;
+    height: 250px;
+    margin-bottom: calc((30vw / 3) + 20px);
   }
 
   .booking-inner-hero-bg {
     height: 150px;
   }
+
+   .booking-inner-hero-image {
+    width: 92vw;
+  }
+
+  .booking-inner-side-img {
+    width: 400px;
+    bottom: -200px;
+  }
 }
 
 @media (max-width: 1440px) {
   .booking-inner-hero {
-    height: 225px;
+    height: 265px;
+    margin-bottom: calc((30vw / 3) + 10px);
   }
 
   .booking-inner-hero-bg {
     height: 160px;
   }
+
+  .booking-inner-hero-image {
+    width: 93vw;
+  }
+
+  .booking-inner-side-img {
+    width: 390px;
+    bottom: -195px;
+  }
+}
+
+@media (max-width: 1400px) {
+  .booking-inner-hero {
+    height: 245px;
+    margin-bottom: calc((30vw / 3) + 10px);
+  }
+
+  .booking-inner-hero-image {
+    width: 90vw;
+  }
+
+  .booking-inner-side-img {
+    bottom: -190px;
+  }
 }
 
 @media (max-width: 1366px) {
   .booking-inner-hero {
-    height: 210px;
+    height: 240px;
   }
 
   .booking-inner-hero-bg {
@@ -312,31 +354,51 @@ li {
 
 @media (max-width: 1320px) {
   .booking-inner-hero {
-    height: 205px;
+    height: 230px;
   }
 
   .booking-inner-hero-bg {
     height: 130px;
   }
+
+  .booking-inner-side-img {
+    width: 340px;
+    bottom: -172px;
+  }
 }
 
 @media (max-width: 1280px) {
   .booking-inner-hero {
-    height: 200px;
+    height: 230px;
+    /* margin-bottom: calc((94vw / 3) + 10px); */
   }
 
   .booking-inner-hero-bg {
     height: 125px;
   }
+
+  .booking-inner-hero-image {
+    width: 94vw;
+  }
+
+  .booking-inner-side-img {
+    width: 330px;
+    bottom: -166px;
+  }
 }
 
 @media (max-width: 1240px) {
   .booking-inner-hero {
-    height: 190px;
+    height: 225px;
+    /* margin-bottom: calc((95vw / 3) + 10px); */
   }
 
   .booking-inner-hero-bg {
     height: 120px;
+  }
+
+  .booking-inner-hero-image {
+    width: 95vw;
   }
 
   .booking-inner-side-img {
@@ -347,31 +409,57 @@ li {
 
 @media (max-width: 1200px) {
   .booking-inner-hero {
-    height: 185px;
+    height: 220px;
   }
 
   .booking-inner-hero-bg {
     height: 115px;
   }
+
+  .booking-inner-side-img {
+    width: 315px;
+    bottom: -160px;
+  }
+}
+
+@media (max-width: 1150px) {
+  .booking-inner-hero {
+    height: 205px;
+  }
+
+  .booking-inner-side-img {
+    width: 315px;
+    bottom: -150px;
+  }
 }
 
 @media (max-width: 1100px) {
   .booking-inner-hero {
-    height: 170px;
+    height: 200px;
   }
 
   .booking-inner-hero-bg {
     height: 110px;
   }
+
+  .booking-inner-side-img {
+    width: 300px;
+    bottom: -145px;
+  }
 }
 
 @media (max-width: 1024px) {
   .booking-inner-hero {
-    height: 160px;
+    height: 185px;
   }
 
   .booking-inner-hero-bg {
     height: 105px;
+  }
+
+  .booking-inner-side-img {
+    width: 280px;
+    bottom: -135px;
   }
 }
 
@@ -381,46 +469,144 @@ li {
   }
 
   .booking-inner-hero {
-    height: 155px;
+    height: 165px;
+    margin-bottom: calc((30vw / 3) + 10px);
+  }
+
+  .booking-inner-hero-bg {
+    height: 100px;
+  }
+
+  .booking-inner-hero-image {
+    width: 88vw;
+  }
+
+  .booking-inner-side-img {
+    display: none;
+  }
+
+  .booking-inner-section {
+    position: relative;
+  }
+
+  .booking-inner-section::before {
+    content: "";
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background-image: var(--service-watermark-img);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 0;
+    animation: rotateWatermark 180s linear infinite;
+  }
+
+  @keyframes rotateWatermark {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  .ayurveda-nutrition-bg-image {
+    --service-watermark-img: url("/ayurveda-nutrition-image.webp");
+
+  }
+
+  .kosha-counseling-bg-image {
+    --service-watermark-img: url("/kosha-counseling-image.webp");
+  }
+
+  .release-karmic-patterns-bg-image {
+    --service-watermark-img: url("/release-karmic-patterns-image.webp");
+  }
+
+  .soul-curriculum-bg-image {
+    --service-watermark-img: url("/soul-curriculum-image.webp");
+  }
+
+  .yoga-therapy-bg-image {
+    --service-watermark-img: url("/yoga-therapy-image.webp");
+  }
+
+  .group-sessions-bg-image {
+    --service-watermark-img: url("/group-sessions-image.webp");
+  }
+
+  .booking-inner-section .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .booking-inner-content {
+    width: 100%;
+  }
+
+  .booking-inner-content,
+  .booking-inner-full-content {
+    text-align: justify;
   }
 }
 
 @media (max-width: 950px) {
   .booking-inner-hero {
-    height: 145px;
+    height: 155px;
+    margin-bottom: calc((30vw / 3) + 10px);
+
   }
 }
 
 @media (max-width: 900px) {
   .booking-inner-hero {
-    height: 140px;
+    height: 145px;
+    margin-bottom: calc((30vw / 3) + 10px);
+
   }
 }
 
 @media (max-width: 850px) {
   .booking-inner-hero {
-    height: 135px;
+    height: 140px;
+    margin-bottom: calc((30vw / 3) + 10px);
   }
 
   .booking-inner-hero-bg {
     height: 80px;
   }
+
+  .booking-inner-hero-image {
+    width: 90vw;
+  }
 }
 
 @media (max-width: 800px) {
   .booking-inner-hero {
-    height: 130px;
+    height: 135px;
+    margin-bottom: calc((30vw / 3) + 10px);
   }
 
   .booking-inner-hero-bg {
     height: 85px;
+  }
+
+  .booking-inner-hero-image {
+    width: 92vw;
   }
 }
 
 @media (max-width: 767px) {
   .booking-inner-hero {
     height: 150px;
-    margin-bottom: calc((55vw / 2.15) + 10px);
+    margin-bottom: calc((30vw / 3) + 10px);
   }
 
   .booking-inner-hero-bg {
@@ -434,81 +620,138 @@ li {
   .booking-inner-content p {
     margin-bottom: 10px;
   }
+
+  .booking-inner-full-content p {
+    margin-bottom: 10px;
+  }
+
+  .booking-inner-section::before {
+    width: 450px;
+    height: 450px;
+  }
+}
+
+@media (max-width: 730px) {
+  .booking-inner-hero {
+    height: 140px;
+    margin-bottom: calc((30vw / 3) + 10px);
+  }
 }
 
 @media (max-width: 700px) {
   .booking-inner-hero {
-    height: 140px;
+    height: 135px;
+    margin-bottom: calc((30vw / 3) + 10px);
   }
 }
 
 @media (max-width: 650px) {
   .booking-inner-hero {
-    height: 130px;
+    height: 125px;
+    margin-bottom: calc((30vw / 3) + 10px);
   }
 }
 
 @media (max-width: 600px) {
   .booking-inner-hero {
-    height: 120px;
+    height: 115px;
+    margin-bottom: calc((30vw / 3) + 10px);
+
   }
 }
 
 @media (max-width: 575px) {
   .booking-inner-hero {
-    height: 115px;
+    height: 110px;
+    margin-bottom: calc((30vw / 3) + 10px);
   }
 
   .booking-inner-hero-image {
     width: 100vw;
   }
+
+  .booking-inner-content .motif {
+    margin-bottom: 10px !important;
+  }
+
+  .booking-inner-content p {
+    margin-bottom: 5px;
+  }
+
+  .booking-inner-full-content p {
+    margin-bottom: 5px;
+  }
+
+  .booking-inner-section::before {
+    width: 400px;
+    height: 400px;
+    opacity: 0.2;
+  }
 }
 
 @media (max-width: 550px) {
   .booking-inner-hero {
-    height: 110px;
+    height: 105px;
+    margin-bottom: calc((30vw / 3) + 10px);
   }
 }
 
 @media (max-width: 520px) {
   .booking-inner-hero {
     height: 100px;
+    margin-bottom: calc((30vw / 3) + 10px);
   }
 }
 
 @media (max-width: 480px) {
   .booking-inner-hero {
     height: 95px;
+    margin-bottom: calc((30vw / 3) + 10px);
+  }
+
+  .booking-inner-section::before {
+    width: 350px;
+    height: 350px;
   }
 }
 
 @media (max-width: 450px) {
   .booking-inner-hero {
     height: 90px;
+    margin-bottom: calc((30vw / 3) + 10px);
   }
 }
 
 @media (max-width: 420px) {
   .booking-inner-hero {
     height: 80px;
+    margin-bottom: calc((30vw / 3) + 10px);
+  }
+
+  .booking-inner-section::before {
+    width: 300px;
+    height: 300px;
   }
 }
 
 @media (max-width: 400px) {
   .booking-inner-hero {
     height: 75px;
+    margin-bottom: calc((30vw / 3) + 10px);
   }
 }
 
 @media (max-width: 360px) {
   .booking-inner-hero {
     height: 70px;
+    margin-bottom: calc((30vw / 3) + 10px);
   }
 }
 
 @media (max-width: 320px) {
   .booking-inner-hero {
     height: 60px;
+    margin-bottom: calc((30vw / 3) + 10px);
   }
 }
 

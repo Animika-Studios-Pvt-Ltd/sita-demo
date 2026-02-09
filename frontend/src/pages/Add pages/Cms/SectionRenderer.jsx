@@ -277,7 +277,7 @@ function HtmlSection({ content }) {
   };
 
   return (
-    <section className={`${padding} w-full container sita-factor-content`} style={{ backgroundColor }}>
+    <section className={`${padding} container sita-inner-section `} style={{ backgroundColor }}>
       {/* Inject custom CSS if provided */}
       {content.css && (
         <style dangerouslySetInnerHTML={{ __html: content.css }} />
