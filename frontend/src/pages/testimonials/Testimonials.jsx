@@ -1,7 +1,11 @@
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "aos/dist/aos.css";
 
 const Testimonials = () => {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+
   useEffect(() => {
     const carousel = document.getElementById("testimonialCarousel");
     const nameEl = document.querySelector(".sita-testimonial-name");
@@ -30,12 +34,14 @@ const Testimonials = () => {
   return (
     <>
       <section className="sita-testimonials">
-        <img
-          src="lotus-1.webp"
-          alt=""
-          className="sita-testimonial-decor sita-decor"
-          aria-hidden="true"
-        />
+        {isHomePage && (
+          <img
+            src="lotus-1.webp"
+            alt=""
+            className="sita-testimonial-decor sita-decor"
+            aria-hidden="true"
+          />
+        )}
 
         <div className="container">
           <h2 data-aos="fade-up">Testimonials</h2>
