@@ -1,8 +1,17 @@
 import { useEffect } from "react";
+import AOS from "aos";
 import { useLocation } from "react-router-dom";
 import "aos/dist/aos.css";
 
 const Testimonials = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 900,
+      easing: "ease-in-out",
+      once: true,
+      offset: 80,
+    });
+  }, []);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
@@ -48,7 +57,7 @@ const Testimonials = () => {
 
           <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
 
-          <div className="sita-testimonial-wrapper">
+          <div className="sita-testimonial-wrapper" data-aos="zoom-in">
             <div className="row">
               <div className="col-lg-2 col-md-12 col-sm-12 col-12 text-center">
                 <img
