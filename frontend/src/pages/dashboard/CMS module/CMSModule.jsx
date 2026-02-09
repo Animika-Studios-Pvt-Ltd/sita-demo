@@ -4,6 +4,12 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import StarIcon from "@mui/icons-material/Star";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import PagesIcon from "@mui/icons-material/Pages";
+import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import MicIcon from "@mui/icons-material/Mic";
+import ArticleIcon from "@mui/icons-material/Article";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+
 
 const CMSModule = () => {
   const location = useLocation();
@@ -21,23 +27,23 @@ const CMSModule = () => {
       route: "/dashboard/certificates/trust-certificate",
     },
     {
-      name: "Manage Event Pages",
-      icon: DescriptionIcon,
+      name: "Manage Pages",
+      icon: EditNoteIcon,
       route: "/dashboard/manage-pages",
     },
     {
       name: "Workshop / Event Calendar",
-      icon: DescriptionIcon,
-      route: "/dashboard/manage-events", // ✅ NEW
+      icon: EventAvailableIcon,
+      route: "/dashboard/manage-events",
     },
     {
       name: "Podcasts",
-      icon: DescriptionIcon,
+      icon: MicIcon,
       route: "/dashboard/podcasts",
     },
     {
       name: "Articles",
-      icon: DescriptionIcon,
+      icon: ArticleIcon,
       route: "/dashboard/articles",
     },
   ];
@@ -62,38 +68,38 @@ const CMSModule = () => {
           const isActive = isCardActive(module.route);
           const Icon = module.icon;
           return (
-          <Link
-            to={module.route}
-            key={index}
+            <Link
+              to={module.route}
+              key={index}
               className={`group flex flex-col items-center justify-center text-center min-h-[130px] p-4 rounded-2xl border transition-colors duration-200 no-underline bg-white/70 backdrop-blur-xl ring-1 ring-black/5 shadow-[0_12px_30px_-24px_rgba(15,23,42,0.35)]
               ${isActive
-                ? "border-[#7A1F2B] bg-gradient-to-br from-[#7A1F2B]/10 via-white/95 to-white/80"
-                : "border-white/70 hover:bg-white/90"
-              }`}
-          >
-            <div
+                  ? "border-[#7A1F2B] bg-gradient-to-br from-[#7A1F2B]/10 via-white/95 to-white/80"
+                  : "border-white/70 hover:bg-white/90"
+                }`}
+            >
+              <div
                 className={`p-3 rounded-full mb-2 border transition-colors duration-200
                 ${isActive
-                  ? "bg-white/80 border-[#7A1F2B]/40"
-                  : "bg-white/80 border-white/70 group-hover:bg-white"
-                }`}
-            >
-              <Icon
-                fontSize="large"
-                className={`${isActive ? "text-[#7A1F2B]" : "text-slate-400 group-hover:text-[#7A1F2B]"}`}
-              />
-            </div>
+                    ? "bg-white/80 border-[#7A1F2B]/40"
+                    : "bg-white/80 border-white/70 group-hover:bg-white"
+                  }`}
+              >
+                <Icon
+                  fontSize="large"
+                  className={`${isActive ? "text-[#7A1F2B]" : "text-slate-400 group-hover:text-[#7A1F2B]"}`}
+                />
+              </div>
 
-            <h4
-              className={`text-sm md:text-base font-semibold
+              <h4
+                className={`text-sm md:text-base font-semibold
                 ${isActive
-                  ? "text-[#7A1F2B]"
-                  : "text-slate-700 group-hover:text-[#7A1F2B]"
-                }`}
-            >
-              {module.name}
-            </h4>
-          </Link>
+                    ? "text-[#7A1F2B]"
+                    : "text-slate-700 group-hover:text-[#7A1F2B]"
+                  }`}
+              >
+                {module.name}
+              </h4>
+            </Link>
           );
         })}
       </div>

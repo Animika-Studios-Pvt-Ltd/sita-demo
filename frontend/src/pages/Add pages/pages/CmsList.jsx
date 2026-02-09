@@ -154,7 +154,7 @@ export default function CmsList() {
                         className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-br from-white/95 to-slate-50/80 backdrop-blur-xl border-1 border-[#7A1F2B] ring-1 ring-black/5 text-[#7A1F2B] font-semibold shadow-[0_12px_20px_-16px_rgba(15,23,42,0.45)] hover:shadow-[0_14px_22px_-16px_rgba(15,23,42,0.5)] transition-colors duration-200 text-sm"
                     >
                         <Plus className="w-4 h-4" />
-                        New Event Page
+                        New Page
                     </button>
                 </div>
             </div>

@@ -20,7 +20,7 @@ const AdminManagePages = () => {
               Back
             </button>
             <h2 className="text-2xl md:text-3xl font-bold text-[#7A1F2B] mb-2 text-center">
-              Manage Event Pages
+              Manage Pages
             </h2>
             <p className="text-sm text-slate-500 mt-1 text-center">
               Organize and manage your Events content.
