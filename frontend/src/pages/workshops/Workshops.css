@@ -777,7 +777,32 @@ li {
 }
 
 /* ------------------------------------------------- SHAKTHI LEADERSHIP SECTION ------------------------------------------------- */
-
 .accordion-section.shakthi-leadership-accordion p {
   width: 100%;
+}
+
+/* ------------------------------------------------- SOUL CURRICULUM SECTION ------------------------------------------------- */
+
+.group-sessions-core-elements.soul-curriculum-how-it-works {
+  background-color: #f7e3c0 !important;
+}
+
+.group-sessions-core-elements.soul-curriculum-how-it-works p {
+  width: 100%;
+}
+
+.accordion-section.soul-curriculum-accordion {
+  padding: 0px 0px 40px;
+}
+
+@media (max-width: 991px) {
+  .accordion-section.soul-curriculum-accordion {
+    padding: 10px 0px 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .accordion-section.soul-curriculum-accordion {
+    padding: 10px 0px 20px;
+  }
 }
