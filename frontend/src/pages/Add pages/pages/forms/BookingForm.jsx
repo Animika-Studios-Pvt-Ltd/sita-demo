@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import getBaseUrl from "../../../../../utils/baseURL";
 
 const BookingForm = ({ content, onUpdate, pageSlug }) => {
     const [events, setEvents] = useState([]);
@@ -8,7 +9,7 @@ const BookingForm = ({ content, onUpdate, pageSlug }) => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/events");
+                const res = await axios.get(`${getBaseUrl()}/api/events`);
                 setEvents(res.data);
 
                 // Auto-select event if content.eventId is empty AND pageSlug matches a bookingUrl

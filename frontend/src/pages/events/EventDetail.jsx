@@ -3,9 +3,10 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import RazorpayPayment from "../../components/RazorpayPayment";
 import Swal from "sweetalert2";
+import getBaseUrl from "../../utils/baseURL";
 import CmsPage from "../Add pages/pages/CmsPage";
 
-const API = "http://localhost:5000/api";
+const API = `${getBaseUrl()}/api`;
 
 const EventDetail = () => {
     const { id } = useParams();

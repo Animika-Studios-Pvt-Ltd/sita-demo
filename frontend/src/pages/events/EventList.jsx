@@ -3,8 +3,9 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import getBaseUrl from "../../utils/baseURL";
 
-const API = "http://localhost:5000/api";
+const API = `${getBaseUrl()}/api`;
 
 const EventList = () => {
     const [events, setEvents] = useState([]);

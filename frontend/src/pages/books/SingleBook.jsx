@@ -28,6 +28,7 @@ import nlp from "compromise";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
+import getBaseUrl from "../../utils/baseURL";
 import "../../assets/herosection.css";
 
 const SingleBook = () => {
@@ -55,12 +56,12 @@ const SingleBook = () => {
   const latestBooks =
     booksData?.books?.length > 0
       ? [...booksData.books]
-          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-          .slice(0, 4)
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .slice(0, 4)
       : booksData?.length > 0
         ? [...booksData]
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-            .slice(0, 4)
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .slice(0, 4)
         : [];
   const {
     data: bookById,
@@ -207,10 +208,7 @@ const SingleBook = () => {
     navigate("/checkout");
   };
 
-  const BASE_URL =
-    process.env.NODE_ENV === "production"
-      ? "http://localhost:5000"
-      : "http://localhost:5000";
+  const BASE_URL = getBaseUrl();
 
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
@@ -373,9 +371,8 @@ const SingleBook = () => {
                       <img
                         src={book.coverImage || "/placeholder-book.jpg"}
                         alt="Front View"
-                        className={`thumb-img ${
-                          isSuspended ? "opacity-60 grayscale" : ""
-                        }`}
+                        className={`thumb-img ${isSuspended ? "opacity-60 grayscale" : ""
+                          }`}
                         onClick={() => setSelectedImage(book.coverImage)}
                       />
                     </div>
@@ -385,9 +382,8 @@ const SingleBook = () => {
                       <img
                         src={book.backImage || "/placeholder-book.jpg"}
                         alt="Back View"
-                        className={`thumb-img ${
-                          isSuspended ? "opacity-60 grayscale" : ""
-                        }`}
+                        className={`thumb-img ${isSuspended ? "opacity-60 grayscale" : ""
+                          }`}
                         onClick={() => setSelectedImage(book.backImage)}
                       />
                     </div>
@@ -861,7 +857,7 @@ const SingleBook = () => {
                                 {Math.round(
                                   ((book.oldPrice - book.newPrice) /
                                     book.oldPrice) *
-                                    100,
+                                  100,
                                 )}
                                 % off
                               </span>
