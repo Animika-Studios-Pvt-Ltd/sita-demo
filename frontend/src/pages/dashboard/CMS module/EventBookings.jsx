@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import getBaseUrl from "../../../../utils/baseURL";
+import getBaseUrl from "../../../utils/baseURL";
 
 const API = `${getBaseUrl()}/api`;
 const PAGE_LIMIT = 10;

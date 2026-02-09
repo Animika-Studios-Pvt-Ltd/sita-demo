@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import getBaseUrl from "../../../../../utils/baseURL";
+import getBaseUrl from "../../../../utils/baseURL";
 
 const BookingForm = ({ content, onUpdate, pageSlug }) => {
     const [events, setEvents] = useState([]);

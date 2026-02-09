@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import { FaUser, FaEnvelope, FaMapMarkerAlt, FaEdit, FaSave, FaTimes, FaShoppingBag, FaShoppingCart, FaClock, FaPlus, FaTrash } from "react-icons/fa";
 import { MdPhone } from "react-icons/md";
 import { useAuth0 } from '@auth0/auth0-react';
-import getBaseUrl from "../../../../utils/baseURL";
+import getBaseUrl from "../../../utils/baseURL";
 
 const API_URL = getBaseUrl();
 
