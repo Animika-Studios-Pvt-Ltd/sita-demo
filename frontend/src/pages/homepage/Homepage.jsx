@@ -156,7 +156,7 @@ const HomePage = () => {
               <h1>SITA GUIDES</h1>
               <p>Spiritual Mentor, Author, Healer.</p>
               <a href="/about" className="sita-btn">
-                Discover
+                Explore Sita
               </a>
             </div>
           </div>
@@ -191,7 +191,7 @@ const HomePage = () => {
               </p>
 
               <a href="/about" className="sita-btn">
-                Read More
+                Her Journey
               </a>
             </div>
           </div>
