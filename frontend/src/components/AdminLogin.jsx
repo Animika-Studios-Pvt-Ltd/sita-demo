@@ -1,211 +1,237 @@
-import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
+import { FaUserShield } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const AdminLogin = () => {
-  const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [mfaRequired, setMfaRequired] = useState(false);
-  const [tempToken, setTempToken] = useState('');
-  const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Check if user is already verified via cookie
-    const checkAuth = async () => {
-      try {
-        await axios.get(
-          `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin-auth/verify`,
-          { withCredentials: true }
-        );
-        navigate('/dashboard', { replace: true });
-      } catch (error) {
-        // Not authenticated, stay on login
-      }
-    };
-    checkAuth();
-  }, [navigate]);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [mfaRequired, setMfaRequired] = useState(false);
+  const [tempToken, setTempToken] = useState("");
 
-  const onSubmit = async (formData) => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+  /* Auto redirect */
+  useEffect(() => {
+    const verify = async () => {
+      try {
+        await axios.get(`${API_URL}/api/admin-auth/verify`, {
+          withCredentials: true,
+        });
+        navigate("/dashboard", { replace: true });
+      } catch { }
+    };
+    verify();
+  }, [navigate, API_URL]);
+
+  const onSubmit = async (data) => {
     setLoading(true);
-    setMessage('');
+    setMessage("");
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin-auth/admin`,
-        {
-          username: formData.username,
-          password: formData.password,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true
-        }
+      const res = await axios.post(
+        `${API_URL}/api/admin-auth/admin`,
+        data,
+        { withCredentials: true }
       );
 
-      if (response.data.mfaRequired) {
+      if (res.data.mfaRequired) {
         setMfaRequired(true);
-        setTempToken(response.data.tempToken);
-        setMessage('Please enter your 6-digit MFA code');
+        setTempToken(res.data.tempToken);
         reset();
       } else {
-        // Successful login
-        if (response.data.token) {
-          localStorage.setItem('adminToken', response.data.token);
-        }
-        navigate('/dashboard', { replace: true });
+        localStorage.setItem("adminToken", res.data.token);
+
+        await Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          text: "Welcome to the Admin Dashboard",
+          timer: 1500,
+          showConfirmButton: false,
+          customClass: {
+            popup: "rounded-2xl",
+          },
+        });
+
+        navigate("/dashboard", { replace: true });
       }
-    } catch (error) {
-      setMessage(error.response?.data?.message || 'Invalid username or password');
+    } catch (err) {
+      setMessage(err.response?.data?.message || "Invalid credentials");
     } finally {
       setLoading(false);
     }
   };
 
-  const onMFASubmit = async (formData) => {
+  const onMFASubmit = async (data) => {
     setLoading(true);
-    setMessage('');
+    setMessage("");
+
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin-auth/verify-mfa-login`,
-        {
-          tempToken: tempToken,
-          mfaCode: formData.mfaCode,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true
-        }
+      const res = await axios.post(
+        `${API_URL}/api/admin-auth/verify-mfa-login`,
+        { tempToken, mfaCode: data.mfaCode },
+        { withCredentials: true }
       );
-      // Successful login (cookie set by backend)
-      if (response.data.token) {
-        localStorage.setItem('adminToken', response.data.token);
-      }
-      navigate('/dashboard', { replace: true });
-    } catch (error) {
-      setMessage(error.response?.data?.message || 'Invalid MFA code');
+
+      localStorage.setItem("adminToken", res.data.token);
+      navigate("/dashboard", { replace: true });
+    } catch (err) {
+      setMessage(err.response?.data?.message || "Invalid code");
     } finally {
       setLoading(false);
     }
   };
-  const handleBackToLogin = () => {
-    setMfaRequired(false);
-    setTempToken('');
-    setMessage('');
-    reset();
-    navigate('/', { replace: true });
-  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 px-4">
-      <div className="w-full max-w-md">
-        <div className="bg-white shadow-2xl rounded-lg px-8 pt-8 pb-8">
+    <div className="min-h-screen grid grid-cols-1 md:grid-cols-2 font-montserrat admin-scope">
+
+      {/* ================= LEFT SECTION ================= */}
+      <div
+        className="hidden md:flex items-center justify-center text-center text-white relative px-16"
+        style={{
+          backgroundImage: `
+      linear-gradient(
+        rgba(0, 0, 0, 0.35),
+        rgba(0, 0, 0, 0.35)
+      ),
+      url("/group-sessions-parallax.webp")
+    `,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        {/* Center content */}
+        <div className="relative z-10 max-w-md">
+          <h1 className="text-4xl font-semibold tracking-tight mb-6 text-white/90">
+            Admin Dashboard
+          </h1>
+
+          <p className="text-white/80 text-lg leading-relaxed">
+            Manage content, users, analytics, and system settings securely from
+            one central place.
+          </p>
+        </div>
+
+        {/* Footer */}
+        <p className="absolute bottom-8 left-0 right-0 text-center text-sm text-white/60">
+          © 2026 Sita Admin Panel
+        </p>
+      </div>
+
+
+
+      {/* ================= RIGHT SECTION ================= */}
+      <div className="flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-100 px-6">
+        <div
+          className="
+            w-full max-w-md
+            bg-white/70 backdrop-blur-xl
+            border border-white/60 ring-1 ring-black/5
+            shadow-[0_20px_45px_-30px_rgba(15,23,42,0.45)]
+            rounded-2xl px-8 pt-10 pb-8
+          "
+        >
+          {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">
-              {mfaRequired ? 'Two-Factor Authentication' : 'Admin Portal'}
-            </h1>
-            <p className="text-gray-600 text-sm">
-              {mfaRequired ? 'Enter your 6-digit code' : 'Sign in to access the dashboard'}
+            <div className="flex flex-col items-center justify-center gap-1 mb-1">
+              <div className="shield-glow p-3 bg-white/70 backdrop-blur-md rounded-full border border-white/60 ring-1 ring-black/5">
+                <FaUserShield className="text-slate-600 text-3xl sm:text-4xl" />
+              </div>
+            </div>
+
+            <h2 className="text-2xl font-semibold tracking-tight text-[#7A1F2B]">
+              {mfaRequired ? "Verify Access" : "Admin Login"}
+            </h2>
+            <p className="text-slate-500 text-sm mt-1">
+              {mfaRequired
+                ? "Enter your 6-digit authentication code"
+                : "Authorized personnel only"}
             </p>
           </div>
+
           {!mfaRequired ? (
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div>
-                <label htmlFor="username" className="block text-sm font-semibold text-gray-700 mb-2">
-                  Username
-                </label>
+              <input
+                {...register("username", { required: true })}
+                placeholder="Username"
+                className="
+    w-full px-4 py-3 rounded-xl
+    bg-white/80 border border-slate-200
+    focus:outline-none
+    focus:border-[#7A1F2B]
+    focus:ring-2 focus:ring-[#7A1F2B]/40
+    transition
+  "
+              />
+
+              <div className="relative">
                 <input
-                  {...register('username', { required: 'Username is required' })}
-                  id="username"
-                  type="text"
-                  placeholder="Enter your username"
-                  className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  disabled={loading}
-                  autoComplete="username"
+                  {...register("password", { required: true })}
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  className="
+    w-full px-4 py-3 pr-12 rounded-xl
+    bg-white/80 border border-slate-200
+    focus:outline-none
+    focus:border-[#7A1F2B]
+    focus:ring-2 focus:ring-[#7A1F2B]/40
+    transition
+  "
                 />
-                {errors.username && <p className="text-red-500 text-xs mt-1">{errors.username.message}</p>}
-              </div>
-              <div>
-                <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
-                  Password
-                </label>
-                <input
-                  {...register('password', { required: 'Password is required' })}
-                  id="password"
-                  type="password"
-                  placeholder="Enter your password"
-                  className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  disabled={loading}
-                  autoComplete="current-password"
-                />
-                {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
 
               {message && (
-                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                <div className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
                   {message}
                 </div>
               )}
+
               <button
-                type="submit"
                 disabled={loading}
-                className="w-full py-3 px-4 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400"
+                className="w-full py-3 rounded-xl font-semibold bg-gradient-to-br from-[#7A1F2B] to-[#8b171b] text-white shadow-md hover:opacity-95"
               >
-                {loading ? 'Signing in...' : 'Sign In'}
+                {loading ? "Signing in..." : "Sign In"}
               </button>
             </form>
           ) : (
             <form onSubmit={handleSubmit(onMFASubmit)} className="space-y-6">
-              <div>
-                <label htmlFor="mfaCode" className="block text-sm font-semibold text-gray-700 mb-2">
-                  Authentication Code
-                </label>
-                <input
-                  {...register('mfaCode', {
-                    required: 'MFA code is required',
-                    pattern: {
-                      value: /^[0-9]{6}$/,
-                      message: 'Code must be 6 digits',
-                    },
-                  })}
-                  id="mfaCode"
-                  type="text"
-                  maxLength="6"
-                  placeholder="000000"
-                  className="w-full px-4 py-3 border rounded-lg text-center text-2xl tracking-widest focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  disabled={loading}
-                  autoFocus
-                  autoComplete="off"
-                />
-                {errors.mfaCode && <p className="text-red-500 text-xs mt-1">{errors.mfaCode.message}</p>}
-              </div>
+              <input
+                {...register("mfaCode", { required: true })}
+                maxLength={6}
+                className="w-full text-center tracking-widest text-2xl px-4 py-3 rounded-xl bg-white/80 border ring-1 ring-black/5 focus:ring-2 focus:ring-[#7A1F2B]/40"
+              />
+
               {message && (
-                <div className={`border px-4 py-3 rounded-lg text-sm ${message.includes('Invalid')
-                  ? 'bg-red-50 border-red-200 text-red-700'
-                  : 'bg-blue-50 border-blue-200 text-blue-700'
-                  }`}>
+                <div className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
                   {message}
                 </div>
               )}
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-3 px-4 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400"
-              >
-                {loading ? 'Verifying...' : 'Verify Code'}
-              </button>
-              <button
-                type="button"
-                onClick={handleBackToLogin}
-                className="w-full text-sm text-gray-600 hover:text-gray-800 hover:underline"
-              >
-                ← Back to login
+
+              <button className="w-full py-3 rounded-xl font-semibold bg-gradient-to-br from-[#7A1F2B] to-[#8b171b] text-white">
+                Verify
               </button>
             </form>
           )}
-          <div className="mt-6 text-center">
-            <p className="text-xs text-gray-500">© 2026 Sita. All Rights Reserved.</p>
-          </div>
         </div>
       </div>
     </div>

@@ -13,6 +13,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 import LightModeIcon from "@mui/icons-material/LightMode"
 import DarkModeIcon from "@mui/icons-material/DarkMode"
 import useIdleTimeout from "../../hooks/useIdleTimeout"
+import Swal from "sweetalert2"
 
 const DashboardLayout = () => {
   const navigate = useNavigate()
@@ -76,21 +77,43 @@ const DashboardLayout = () => {
   }, [navigate])
 
   const handleLogout = async () => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out of the admin panel.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, logout",
+      cancelButtonText: "Cancel",
+      reverseButtons: true,
+      focusCancel: true,
+      customClass: {
+        popup: "rounded-2xl",
+        confirmButton:
+          "bg-[#7A1F2B] hover:bg-[#641823] text-white px-6 py-2 border-1 border-[#641823] rounded-xl ml-3",
+        cancelButton:
+          "bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 border-1 border-[#641823] rounded-xl mr-3",
+      },
+
+      buttonsStyling: false,
+    })
+
+    if (!result.isConfirmed) return
+
     try {
       await axios.post(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin-auth/logout`,
+        `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/admin-auth/logout`,
         {},
         { withCredentials: true }
       )
     } catch (error) {
-      console.error('Logout failed:', error)
+      console.error("Logout failed:", error)
     } finally {
       localStorage.removeItem("adminToken")
       localStorage.removeItem("lastActivity")
-      setIsAuthenticated(false)
       navigate("/", { replace: true })
     }
   }
+
 
   const isActive = (path) => location.pathname === path
   if (isLoading) {
@@ -246,8 +269,11 @@ const DashboardLayout = () => {
             aria-label="Logout"
           >
             <LogoutIcon className="w-5 h-5 flex-shrink-0" />
-            {(isExpanded || mobileSidebar) && <span className="text-sm font-medium">Logout</span>}
+            {(isExpanded || mobileSidebar) && (
+              <span className="text-sm font-medium">Logout</span>
+            )}
           </button>
+
         </div>
       </aside>
 
