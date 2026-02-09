@@ -1,18 +1,15 @@
-.sita-decor {
+/* .sita-decor {
   position: absolute;
   pointer-events: none;
   will-change: transform;
   transform: translateY(0);
-}
+} */
 
-.sita-publications-decor {
+/* .sita-publications-decor {
   display: none;
-  /* Hidden by default on mobile/tablet */
   position: absolute;
   top: 120px;
-  /* Start after navbar approx */
   margin-right: -210px;
-  /* Half of 420px width to show only half */
   width: 350px;
   height: auto;
   transform: translateY(-50%);
@@ -25,6 +22,5 @@
 @media (min-width: 1024px) {
   .sita-publications-decor {
     display: block;
-    /* Visible on desktop/laptop */
   }
-}
+} */

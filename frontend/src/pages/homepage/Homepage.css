@@ -592,6 +592,73 @@ li {
   padding-top: 20px;
 }
 
+
+/* .sita-publications {
+  padding: 60px 0 30px;
+  position: relative;
+  overflow: visible;
+}
+
+.sita-publications-decor {
+  position: absolute;
+  right: -180px;
+  top: 72%;
+  width: 420px;
+  height: auto;
+  transform: translateY(-50%);
+  z-index: 1;
+  opacity: 0.5;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.sita-publications .container,
+.sita-recent-blogs .container {
+  position: relative;
+  z-index: 5;
+}
+
+.sita-publications .motif {
+  display: block;
+  margin: 0 auto 20px;
+}
+
+.sita-publications-wrapper {
+  margin-top: 40px;
+}
+
+.carousel-item {
+  padding: 20px 0;
+}
+
+.publication-book {
+  max-width: 240px;
+  margin: auto;
+}
+
+.publication-content h3 {
+  font-size: 42px;
+  font-family: "Playfair Display", serif;
+  margin-bottom: 0px;
+  color: #8b171b;
+}
+
+.publication-content h5 {
+  font-style: italic;
+  margin-bottom: 5px;
+  color: #5a3c32;
+}
+
+.publication-content p {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 0px;
+}
+
+.sita-author-img {
+  max-height: 410px;
+} */
+
 /* ----------------- RECENT BLOGS SECTION ----------------- */
 .sita-recent-blogs {
   padding: 40px 0;
@@ -1797,6 +1864,133 @@ li {
     margin-top: 10px;
   }
 }
+/* @media (max-width: 1440px) {
+  .sita-publications-decor {
+    top: 80%;
+    right: -200px;
+    width: 380px;
+    height: 360px;
+  }
+}
+
+@media (max-width: 1336px) {
+  .sita-publications-decor {
+    top: 84%;
+    right: -215px;
+    width: 360px;
+    height: 350px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .sita-publications-decor {
+    right: -190px;
+    width: 340px;
+    height: 320px;
+  }
+
+  .sita-publications {
+    padding: 40px 0 20px;
+  }
+
+  .publication-content h3 {
+    font-size: 40px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .publication-book {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 991px) {
+  .sita-publications-decor {
+    display: none;
+  }
+
+  .sita-publications-wrapper {
+    margin-top: 20px;
+  }
+
+  #publicationsCarousel {
+    margin-top: 30px;
+  }
+
+  .carousel-item {
+    padding: 0px;
+  }
+
+  .publication-book {
+    max-width: 200px;
+  }
+
+  .publication-content {
+    text-align: center;
+    margin-top: 0px;
+  }
+
+  .publication-content h3 {
+    font-size: 36px;
+  }
+
+  .sita-author-img {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .sita-author-fixed {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sita-publications {
+    padding: 30px 0 15px;
+  }
+
+  .sita-publications .motif {
+    margin-bottom: 10px;
+  }
+
+  .sita-publications-wrapper {
+    margin-top: 10px;
+  }
+
+  .publication-book {
+    max-width: 180px;
+  }
+
+  .publication-content h3 {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 575px) {
+  .sita-publications {
+    padding: 20px 0 10px;
+  }
+
+  .sita-publications .motif {
+    margin-top: 10px;
+  }
+
+  .sita-publications-wrapper {
+    margin-top: 0px;
+  }
+
+  #publicationsCarousel {
+    margin-top: 20px;
+  }
+
+  .publication-content {
+    margin-top: 10px;
+  }
+
+  .publication-content h3 {
+    font-size: 28px;
+  }
+} */
 
 /* Recent Blogs Section */
 @media (max-width: 1200px) {

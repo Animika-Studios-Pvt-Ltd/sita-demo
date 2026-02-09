@@ -118,6 +118,24 @@ const HomePage = () => {
     };
   }, []);
 
+  /* Publications Carousel Auto Scroll */
+  // useEffect(() => {
+  //   const pubCarouselEl = document.getElementById("publicationsCarousel");
+  //   if (!pubCarouselEl) return;
+
+  //   const pubCarousel = new Carousel(pubCarouselEl, {
+  //     interval: 5000,
+  //     ride: "carousel",
+  //     pause: false,
+  //     wrap: true,
+  //     touch: true,
+  //   });
+
+  //   return () => {
+  //     pubCarousel.dispose();
+  //   };
+  // }, []);
+
   return (
     <>
       {/* ---------------- HERO SECTION ---------------- */}
@@ -438,6 +456,71 @@ const HomePage = () => {
           />
         </div>
       </section>
+      {/* <section className="sita-publications">
+        <img
+          src="flower.webp"
+          alt=""
+          className="sita-publications-decor sita-decor"
+          aria-hidden="true"
+        />
+        <div className="container">
+          <h2 className="text-center">Publications</h2>
+          <img src="sita-motif.webp" alt="Motif" className="motif" />
+          <div className="row align-items-center sita-publications-wrapper">
+            <div className="col-lg-7 col-md-12 col-sm-12 col-12 order-lg-1 order-2">
+              <div
+                id="publicationsCarousel"
+                className="carousel slide carousel-fade">
+                <div className="carousel-inner">
+                  <div className="carousel-item active">
+                    <div className="row align-items-center">
+                      <div className="col-lg-5 col-md-5 col-sm-5 col-12 text-center">
+                        <img
+                          src="anaya-book.webp"
+                          className="img-fluid publication-book"
+                          alt="Book"
+                        />
+                      </div>
+                      <div className="col-lg-7 col-md-7 col-sm-7 col-12 publication-content">
+                        <h3>Anaya</h3>
+                        <h5>A Devotee’s Journey Home</h5>
+                        <p>
+                          Written with love & devotion by Sita Severson. A
+                          spiritual exploration guiding seekers toward inner
+                          transformation.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="carousel-item">
+                    <div className="row align-items-center">
+                      <div className="col-lg-5 col-md-5 col-sm-5 col-12 text-center">
+                        <img
+                          src="anaya-book.webp"
+                          className="img-fluid publication-book"
+                          alt="Book"
+                        />
+                      </div>
+                      <div className="col-lg-7 col-md-7 col-sm-7 col-12 publication-content">
+                        <h3>Second Book</h3>
+                        <h5>Subtitle Here</h5>
+                        <p>Add another publication description here.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-5 col-md-12 col-sm-12 col-12 text-center sita-author-fixed order-lg-2 order-1">
+              <img
+                src="sita-author.JPG"
+                alt="Sita"
+                className="img-fluid sita-author-img"
+              />
+            </div>
+          </div>
+        </div>
+      </section> */}
       {/* ---------------- RECENT BLOGS SECTION ---------------- */}
       <section className="sita-recent-blogs">
         <div className="container text-center">
@@ -448,11 +531,7 @@ const HomePage = () => {
           <div className="row">
             {currentBlogs.length > 0 ? (
               currentBlogs.map((blog, index) => {
-                const btnColors = [
-                  "pink",
-                  "peach",
-                  "rose",
-                ];
+                const btnColors = ["pink", "peach", "rose"];
                 const btnColor = btnColors[index % btnColors.length]; // Cycle colors
 
                 return (
@@ -506,7 +585,12 @@ const HomePage = () => {
                       <Link
                         to={`/blogs/${blog.slug || blog._id}`}
                         className={`sita-blog-btn ${btnColor}`}
-                        style={{ minWidth: "150px", display: "inline-flex", justifyContent: "center", alignItems: "center" }}>
+                        style={{
+                          minWidth: "150px",
+                          display: "inline-flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}>
                         {blog.readMoreText || "Read More"}
                       </Link>
                     </div>
