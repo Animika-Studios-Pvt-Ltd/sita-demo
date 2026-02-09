@@ -54,7 +54,7 @@ li {
 }
 
 /* ---------------------------------- BLOGS SECTION ---------------------------------- */
-.blogs-hero.sita-inner-hero {
+.blogs-hero.blogs-hero-hero {
   position: relative;
   width: 100%;
   overflow: visible;
@@ -62,7 +62,7 @@ li {
   padding-top: 0;
 }
 
-.blogs-hero .sita-inner-hero-image {
+.blogs-hero .blogs-hero-hero-image {
   position: absolute;
   top: 0;
   left: 50%;
@@ -73,7 +73,7 @@ li {
   overflow: hidden;
 }
 
-.blogs-hero .sita-inner-hero-image img {
+.blogs-hero .blogs-hero-hero-image img {
   width: 100%;
   height: 100%;
   display: block;
@@ -156,187 +156,372 @@ li {
 }
 
 @media (min-width: 1919px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 300px;
   }
 }
 
 @media (max-width: 1919px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 300px;
   }
 }
 
 @media (max-width: 1800px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 280px;
   }
 }
 
 @media (max-width: 1750px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 270px;
   }
 }
 
 @media (max-width: 1700px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 260px;
   }
 }
 
 @media (max-width: 1650px) {
-  .blogs-hero.sita-inner-hero {
-    height: 255px;
+  .blogs-hero-hero {
+    height: 280px;
+  }
+
+  .blogs-hero-hero-image {
+    width: 88vw;
   }
 }
 
 @media (max-width: 1600px) {
-  .blogs-hero.sita-inner-hero {
-    height: 245px;
+  .blogs-hero-hero {
+    height: 265px;
   }
 }
 
 @media (max-width: 1550px) {
-  .blogs-hero.sita-inner-hero {
-    height: 240px;
+  .blogs-hero-hero {
+    height: 260px;
+  }
+
+  .blogs-hero-side-img {
+    bottom: -207px;
   }
 }
 
 @media (max-width: 1500px) {
-  .blogs-hero.sita-inner-hero {
-    height: 230px;
+  .blogs-hero-hero {
+    height: 250px;
   }
 
-  .blogs-hero .sita-hero-inner-bg {
+  .sita-hero-inner-bg {
     height: 150px;
+  }
+
+  .blogs-hero-hero-image {
+    width: 92vw;
+  }
+
+  .blogs-hero-side-img {
+    width: 400px;
+    bottom: -200px;
   }
 }
 
 @media (max-width: 1440px) {
-  .blogs-hero.sita-inner-hero {
-    height: 225px;
+  .blogs-hero-hero {
+    height: 260px;
   }
 
-  .blogs-hero .sita-hero-inner-bg {
+  .sita-hero-inner-bg {
     height: 160px;
+  }
+
+  .blogs-hero-hero-image {
+    width: 93vw;
+  }
+
+  .blogs-hero-side-img {
+    width: 390px;
+    bottom: -195px;
+  }
+}
+
+@media (max-width: 1400px) {
+  .blogs-hero-hero {
+    height: 245px;
+  }
+
+  .blogs-hero-hero-image {
+    width: 90vw;
+  }
+
+  .blogs-hero-side-img {
+    bottom: -190px;
   }
 }
 
 @media (max-width: 1366px) {
-  .blogs-hero.sita-inner-hero {
-    height: 210px;
+  .blogs-hero-hero {
+    height: 240px;
   }
 
-  .blogs-hero .sita-hero-inner-bg {
+  .sita-hero-inner-bg {
     height: 140px;
+  }
+
+  .blogs-hero-side-img {
+    width: 350px;
+    bottom: -180px;
   }
 }
 
 @media (max-width: 1320px) {
-  .blogs-hero.sita-inner-hero {
-    height: 205px;
+  .blogs-hero-hero {
+    height: 230px;
   }
 
-  .blogs-hero .sita-hero-inner-bg {
+  .sita-hero-inner-bg {
     height: 130px;
+  }
+
+  .blogs-hero-side-img {
+    width: 340px;
+    bottom: -172px;
   }
 }
 
 @media (max-width: 1280px) {
-  .blogs-hero.sita-inner-hero {
-    height: 200px;
+  .blogs-hero-hero {
+    height: 230px;
   }
 
-  .blogs-hero .sita-hero-inner-bg {
+  .sita-hero-inner-bg {
     height: 125px;
+  }
+
+  .blogs-hero-hero-image {
+    width: 94vw;
+  }
+
+  .blogs-hero-side-img {
+    width: 330px;
+    bottom: -166px;
   }
 }
 
 @media (max-width: 1240px) {
-  .blogs-hero.sita-inner-hero {
-    height: 190px;
+  .blogs-hero-hero {
+    height: 225px;
   }
 
-  .blogs-hero .sita-hero-inner-bg {
+  .sita-hero-inner-bg {
     height: 120px;
+  }
+
+  .blogs-hero-hero-image {
+    width: 95vw;
+  }
+
+  .blogs-hero-side-img {
+    width: 325px;
+    bottom: -160px;
   }
 }
 
 @media (max-width: 1200px) {
-  .blogs-hero.sita-inner-hero {
-    height: 185px;
+  .blogs-hero-hero {
+    height: 220px;
   }
 
-  .blogs-hero .sita-hero-inner-bg {
+  .sita-hero-inner-bg {
     height: 115px;
+  }
+
+  .blogs-hero-side-img {
+    width: 315px;
+    bottom: -160px;
+  }
+}
+
+@media (max-width: 1150px) {
+  .blogs-hero-hero {
+    height: 205px;
+  }
+
+  .blogs-hero-side-img {
+    width: 315px;
+    bottom: -150px;
   }
 }
 
 @media (max-width: 1100px) {
-  .blogs-hero.sita-inner-hero {
-    height: 170px;
+  .blogs-hero-hero {
+    height: 200px;
   }
 
-  .blogs-hero .sita-hero-inner-bg {
+  .sita-hero-inner-bg {
     height: 110px;
+  }
+
+  .blogs-hero-side-img {
+    width: 300px;
+    bottom: -145px;
   }
 }
 
 @media (max-width: 1024px) {
-  .blogs-hero.sita-inner-hero {
-    height: 160px;
+  .blogs-hero-hero {
+    height: 185px;
   }
 
-  .blogs-hero .sita-hero-inner-bg {
+  .sita-hero-inner-bg {
     height: 105px;
+  }
+
+  .blogs-hero-side-img {
+    width: 280px;
+    bottom: -135px;
   }
 }
 
 @media (max-width: 991px) {
-  .blogs-hero.sita-inner-hero {
-    height: 155px;
+  .blogs-hero-section {
+    padding: 10px 0;
   }
 
-  .blogs-hero .sita-hero-inner-bg {
+  .blogs-hero-hero {
+    height: 165px;
+  }
+
+  .sita-hero-inner-bg {
     height: 100px;
+  }
+
+  .blogs-hero-hero-image {
+    width: 88vw;
+  }
+
+  .blogs-hero-side-img {
+    display: none;
+  }
+
+  .blogs-hero-section {
+    position: relative;
+  }
+
+  .blogs-hero-section::before {
+    content: "";
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background-image: var(--service-watermark-img);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 0;
+    animation: rotateWatermark 180s linear infinite;
+  }
+
+  @keyframes rotateWatermark {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  .ayurveda-nutrition-bg-image {
+    --service-watermark-img: url("/ayurveda-nutrition-image.webp");
+
+  }
+
+  .kosha-counseling-bg-image {
+    --service-watermark-img: url("/kosha-counseling-image.webp");
+  }
+
+  .release-karmic-patterns-bg-image {
+    --service-watermark-img: url("/release-karmic-patterns-image.webp");
+  }
+
+  .soul-curriculum-bg-image {
+    --service-watermark-img: url("/soul-curriculum-image.webp");
+  }
+
+  .yoga-therapy-bg-image {
+    --service-watermark-img: url("/yoga-therapy-image.webp");
+  }
+
+  .group-sessions-bg-image {
+    --service-watermark-img: url("/group-sessions-image.webp");
+  }
+
+  .blogs-hero-section .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .blogs-hero-content {
+    width: 100%;
+  }
+
+  .blogs-hero-content,
+  .blogs-hero-full-content {
+    text-align: justify;
   }
 }
 
 @media (max-width: 950px) {
-  .blogs-hero.sita-inner-hero {
-    height: 145px;
+  .blogs-hero-hero {
+    height: 155px;
   }
 }
 
 @media (max-width: 900px) {
-  .blogs-hero.sita-inner-hero {
-    height: 140px;
+  .blogs-hero-hero {
+    height: 145px;
   }
 }
 
 @media (max-width: 850px) {
-  .blogs-hero.sita-inner-hero {
-    height: 135px;
+  .blogs-hero-hero {
+    height: 140px;
   }
 
-  .blogs-hero .sita-hero-inner-bg {
-    height: 100px;
+  .sita-hero-inner-bg {
+    height: 80px;
+  }
+
+  .blogs-hero-hero-image {
+    width: 90vw;
   }
 }
 
 @media (max-width: 800px) {
-  .blogs-hero.sita-inner-hero {
-    height: 130px;
+  .blogs-hero-hero {
+    height: 135px;
   }
 
-  .blogs-hero .sita-hero-inner-bg {
-    height: 100px;
+  .sita-hero-inner-bg {
+    height: 85px;
+  }
+
+  .blogs-hero-hero-image {
+    width: 92vw;
   }
 }
 
 @media (max-width: 767px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 150px;
   }
 
@@ -344,31 +529,31 @@ li {
     height: 70px;
   }
 
-  .blogs-hero .sita-inner-hero-image {
+  .blogs-hero .blogs-hero-hero-image {
     width: 100vw;
   }
 }
 
 @media (max-width: 700px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 140px;
   }
 }
 
 @media (max-width: 650px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 130px;
   }
 }
 
 @media (max-width: 600px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 120px;
   }
 }
 
 @media (max-width: 575px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 115px;
   }
 
@@ -376,55 +561,55 @@ li {
     height: 60px;
   }
 
-  .blogs-hero .sita-inner-hero-image {
+  .blogs-hero .blogs-hero-hero-image {
     width: 100vw;
   }
 }
 
 @media (max-width: 550px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 110px;
   }
 }
 
 @media (max-width: 520px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 100px;
   }
 }
 
 @media (max-width: 480px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 100px;
   }
 }
 
 @media (max-width: 450px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 90px;
   }
 }
 
 @media (max-width: 420px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 85px;
   }
 }
 
 @media (max-width: 400px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 85px;
   }
 }
 
 @media (max-width: 360px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 75px;
   }
 }
 
 @media (max-width: 320px) {
-  .blogs-hero.sita-inner-hero {
+  .blogs-hero.blogs-hero-hero {
     height: 70px;
   }
 }
