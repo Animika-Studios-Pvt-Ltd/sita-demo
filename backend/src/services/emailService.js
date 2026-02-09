@@ -1384,7 +1384,11 @@ async function sendEventRatingEmail(booking, event) {
     const userEmail = booking.userEmail;
     const userName = booking.userName;
     const eventName = event.title;
-    const ratingLink = `${process.env.BOOKING_FRONTEND_URL || 'http://booking.localhost:5173'}/rate-event/${booking._id}`;
+    const baseUrl = process.env.CLIENT_URL
+      ? (process.env.CLIENT_URL.startsWith('http') ? process.env.CLIENT_URL : `https://${process.env.CLIENT_URL}`)
+      : 'http://booking.localhost:5173';
+
+    const ratingLink = `${baseUrl}/rate-event/${booking._id}`;
 
     const html = `
       <!DOCTYPE html>
