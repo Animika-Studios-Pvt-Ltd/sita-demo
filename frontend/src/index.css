@@ -61,7 +61,8 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-a, button {
+a,
+button {
   transition: all 0.3s ease-in-out;
 }
 
@@ -75,12 +76,10 @@ a, button {
   content: "";
   position: absolute;
   inset: -25%;
-  background: radial-gradient(
-    circle at bottom left,
-    rgba(122, 31, 43, 0.22) 0%,
-    rgba(122, 31, 43, 0.12) 35%,
-    rgba(255, 255, 255, 0) 65%
-  );
+  background: radial-gradient(circle at bottom left,
+      rgba(122, 31, 43, 0.22) 0%,
+      rgba(122, 31, 43, 0.12) 35%,
+      rgba(255, 255, 255, 0) 65%);
   filter: blur(6px);
   opacity: 0.65;
   pointer-events: none;
@@ -90,12 +89,10 @@ a, button {
   content: "";
   position: absolute;
   inset: -35%;
-  background: linear-gradient(
-    135deg,
-    rgba(122, 31, 43, 0.24) 0%,
-    rgba(122, 31, 43, 0.12) 35%,
-    rgba(255, 255, 255, 0) 60%
-  );
+  background: linear-gradient(135deg,
+      rgba(122, 31, 43, 0.24) 0%,
+      rgba(122, 31, 43, 0.12) 35%,
+      rgba(255, 255, 255, 0) 60%);
   filter: blur(6px);
   opacity: 0.7;
   animation: shield-glow-sweep 2.8s ease-in-out infinite;
@@ -106,9 +103,11 @@ a, button {
   0% {
     transform: translate(28%, -28%);
   }
+
   50% {
     transform: translate(-28%, 28%);
   }
+
   100% {
     transform: translate(28%, -28%);
   }
@@ -184,12 +183,10 @@ a, button {
 }
 
 .admin-scope[data-admin-theme="dark"] .bg-gradient-to-br {
-  background-image: linear-gradient(
-    135deg,
-    rgba(139, 23, 27, 0.12) 0%,
-    rgba(30, 30, 30, 0.92) 55%,
-    rgba(44, 44, 44, 0.85) 100%
-  ) !important;
+  background-image: linear-gradient(135deg,
+      rgba(139, 23, 27, 0.12) 0%,
+      rgba(30, 30, 30, 0.92) 55%,
+      rgba(44, 44, 44, 0.85) 100%) !important;
 }
 
 .admin-scope[data-admin-theme="dark"] .ring-1 {
@@ -218,32 +215,32 @@ a, button {
 .admin-scope[data-admin-theme="dark"] .text-red-600,
 .admin-scope[data-admin-theme="dark"] .text-rose-500,
 .admin-scope[data-admin-theme="dark"] .text-rose-600 {
-  color: #facc15 !important;
+  color: #f6971d !important;
 }
 
 .admin-scope[data-admin-theme="dark"] [style*="color: #7A1F2B"],
 .admin-scope[data-admin-theme="dark"] [style*="color:#7A1F2B"],
 .admin-scope[data-admin-theme="dark"] [style*="color: #8b171b"],
 .admin-scope[data-admin-theme="dark"] [style*="color:#8b171b"] {
-  color: #facc15 !important;
+  color: #f6971d !important;
 }
 
 .admin-scope[data-admin-theme="dark"] [fill="#7A1F2B"],
 .admin-scope[data-admin-theme="dark"] [fill="#8b171b"],
 .admin-scope[data-admin-theme="dark"] [stroke="#7A1F2B"],
 .admin-scope[data-admin-theme="dark"] [stroke="#8b171b"] {
-  fill: #facc15 !important;
-  stroke: #facc15 !important;
+  fill: #f6971d !important;
+  stroke: #f6971d !important;
 }
 
 .admin-scope[data-admin-theme="dark"] [class*="bg-[#7A1F2B]"],
 .admin-scope[data-admin-theme="dark"] [class*="bg-[#8b171b]"] {
-  background-color: #facc15 !important;
+  background-color: #f6971d !important;
 }
 
 .admin-scope[data-admin-theme="dark"] [class*="bg-[#7A1F2B]"],
 .admin-scope[data-admin-theme="dark"] [class*="bg-[#8b171b]"],
-.admin-scope[data-admin-theme="dark"] [class*="bg-[#facc15]"],
+.admin-scope[data-admin-theme="dark"] [class*="bg-[#f6971d]"],
 .admin-scope[data-admin-theme="dark"] .bg-yellow-400,
 .admin-scope[data-admin-theme="dark"] .bg-yellow-500 {
   color: #ffffff !important;
@@ -252,7 +249,7 @@ a, button {
 .admin-scope[data-admin-theme="dark"] [class*="border-[#7A1F2B]"],
 .admin-scope[data-admin-theme="dark"] [class*="border-[#8b171b]"],
 .admin-scope[data-admin-theme="dark"] .border-rose-200 {
-  border-color: #facc15 !important;
+  border-color: #f6971d !important;
 }
 
 .admin-scope[data-admin-theme="dark"] [class*="ring-[#7A1F2B]"],
@@ -305,7 +302,7 @@ a, button {
 }
 
 .admin-scope[data-admin-theme="dark"] button[aria-label="Toggle admin theme"] svg {
-  color: #facc15 !important;
+  color: #f6971d !important;
 }
 
 /* Admin dark mode: make the logo read better */
@@ -342,21 +339,27 @@ a, button {
 .admin-scope[data-admin-theme="dark"] .bg-green-100 {
   background-color: rgba(16, 185, 129, 0.2) !important;
 }
+
 .admin-scope[data-admin-theme="dark"] .bg-yellow-100 {
   background-color: rgba(250, 204, 21, 0.2) !important;
 }
+
 .admin-scope[data-admin-theme="dark"] .bg-red-100 {
   background-color: rgba(239, 68, 68, 0.2) !important;
 }
+
 .admin-scope[data-admin-theme="dark"] .bg-blue-100 {
   background-color: rgba(59, 130, 246, 0.2) !important;
 }
+
 .admin-scope[data-admin-theme="dark"] .bg-purple-100 {
   background-color: rgba(139, 92, 246, 0.2) !important;
 }
+
 .admin-scope[data-admin-theme="dark"] .bg-orange-100 {
   background-color: rgba(249, 115, 22, 0.2) !important;
 }
+
 .admin-scope[data-admin-theme="dark"] .border-green-200,
 .admin-scope[data-admin-theme="dark"] .border-yellow-200,
 .admin-scope[data-admin-theme="dark"] .border-red-200,

@@ -107,6 +107,11 @@ const DashboardLayout = () => {
     return null
   }
 
+  const adminLogo =
+    adminTheme === "dark"
+      ? "/sita-admin-logo-4.webp"
+      : "/sita-admin-logo-1.webp"
+
   return (
     <div
       className="flex min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 font-montserrat leading-snug admin-scope"
@@ -134,24 +139,21 @@ const DashboardLayout = () => {
           >
             <div className="flex flex-col items-center gap-2">
               <img
-                src="/flower.webp"
-                alt="Admin Profile"
-                className={`w-full ${isExpanded || mobileSidebar ? "max-w-[110px]" : "max-w-[52px]"} h-auto object-contain rounded-none`}
+                src={adminLogo}
+                alt="Admin Logo"
+                className={`w-full ${isExpanded || mobileSidebar
+                  ? "max-w-[110px]"
+                  : "max-w-[52px]"
+                  } h-auto object-contain transition-all duration-300`}
               />
+
               {(isExpanded || mobileSidebar) && (
                 <div className="relative w-full flex items-center justify-center">
-                  <div className="flex flex-col items-center text-center">
-                    <span className="text-base font-montserrat font-semibold text-slate-900 leading-tight">
-                      Sita Admin
-                    </span>
-                    <span className="text-xs text-slate-500 font-montserrat font-medium">
-                      Dashboard
-                    </span>
-                  </div>
+
                   {!isMobile && (
                     <button
                       onClick={() => setIsExpanded(!isExpanded)}
-                      className="absolute right-0 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-800 transition-all duration-200 rounded-full p-1.5 bg-white/60 border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/80"
+                      className="absolute right-0 top-3/2 -translate-y-1/2 text-slate-500 hover:text-slate-800 transition-all duration-200 rounded-full p-1.5 bg-white/60 border border-white/70 ring-1 ring-black/5 shadow-sm hover:bg-white/80"
                       aria-label="Toggle sidebar"
                     >
                       {isExpanded ? <ChevronLeftIcon fontSize="small" /> : <ChevronRightIcon fontSize="small" />}
@@ -261,7 +263,7 @@ const DashboardLayout = () => {
             <button
               onClick={() => setAdminTheme(adminTheme === "light" ? "dark" : "light")}
               className={`relative inline-flex items-center w-16 h-8 rounded-full border-1 shadow-sm overflow-hidden transition-all duration-200 ${adminTheme === "dark"
-                ? "bg-[#facc15] border-[#facc15] hover:bg-[#eab308]"
+                ? "bg-[#f6971d] border-[#f6971d] hover:bg-[#eab308]"
                 : "bg-white/80 border-[#7A1F2B] hover:bg-white/90"
                 }`}
               aria-label="Toggle admin theme"

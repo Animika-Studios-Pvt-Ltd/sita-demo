@@ -9,6 +9,8 @@ import { TbCurrencyDollar } from "react-icons/tb";
 import CountUp from "react-countup";
 import { motion } from "framer-motion";
 import { FaBook, FaChartLine, FaChartPie } from "react-icons/fa";
+import { FaUserShield } from "react-icons/fa";
+
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell,
@@ -237,10 +239,10 @@ const Dashboard = () => {
       >
         <div className="flex flex-col items-center justify-center gap-1 mb-1">
           <div className="shield-glow p-3 bg-white/70 backdrop-blur-md rounded-full border border-white/60 ring-1 ring-black/5">
-            <MdSecurity className="text-slate-600 text-3xl sm:text-4xl" />
+            <FaUserShield className="text-slate-600 text-3xl sm:text-4xl" />
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-[#7A1F2B] tracking-tight text-center font-montserrat">
-            Dashboard
+            Admin Dashboard
           </h2>
         </div>
         <p className="text-slate-500 text-sm sm:text-base max-w-xl mx-auto font-medium">
