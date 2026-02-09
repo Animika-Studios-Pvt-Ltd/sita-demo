@@ -155,24 +155,36 @@ function HeroSection({ content, createdFrom, pageSlug }) {
   return (
     <>
       {/* 1. Hero Image - Conditional Style */}
+      {/* Pages created via "Manage Pages" (or /test route) get the "About Us" style hero */}
       {(location.pathname === '/test' || createdFrom === 'manage-pages') ? (
-        <section className="sita-inner-hero">
+        <section className="sita-inner-hero" style={{ overflow: 'hidden' }}>
+          {/* Inner BG for overlay/effects if needed */}
           <div className="sita-hero-inner-bg" data-aos="fade-in"></div>
 
-          <div className="sita-inner-hero-image">
+          <div className="sita-inner-hero-image" style={{ height: '100%' }}>
             <div
               className="sita-inner-hero-image-banner"
               data-aos="zoom-out"
-              data-aos-duration="1500">
-              <img src={backgroundImage || "/about-banner.webp"} alt="Hero Banner" />
+              data-aos-duration="1500"
+              style={{ height: '100%' }}
+            >
+              <img
+                src={backgroundImage || "/about-banner.webp"}
+                alt="Hero Banner"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+              />
             </div>
           </div>
         </section>
       ) : (
+        /* Event Pages (or others) get the standard "Booking" style hero */
         <section className="booking-inner-hero">
           <div className="booking-inner-hero-bg"></div>
           <div className="booking-inner-hero-image">
-            <img src={backgroundImage || "/images/about-banner.webp"} alt="Hero Banner" />
+            <img
+              src={backgroundImage || "/images/about-banner.webp"}
+              alt="Hero Banner"
+            />
           </div>
         </section>
       )}
@@ -188,7 +200,7 @@ function HeroSection({ content, createdFrom, pageSlug }) {
 
           {subtitle && <p className="sita-factor-text mb-4">{subtitle}</p>}
 
-          {primaryCta.label && (
+          {createdFrom === 'manage-events' && primaryCta.label && (
             <div className="mt-4">
               <button
                 onClick={handleCtaClick}
@@ -448,6 +460,90 @@ const DynamicSectionLayout = ({ title, children, linkTo, linkText = "View All" }
   </section>
 );
 
+/* ================= CATEGORY IMAGE SET ================= */
+const categoryImages = {
+  "Yoga Therapy": [
+    "https://images.unsplash.com/photo-1496483353456-90997957cf99",
+    "https://images.unsplash.com/photo-1593810451137-5dc55105dace",
+    "https://images.unsplash.com/photo-1506126613408-eca07ce68773",
+  ],
+  "Ayurveda – Nutrition & Integration": [
+    "https://images.unsplash.com/photo-1615485290382-441e4d049cb5",
+    "https://images.unsplash.com/photo-1604908177522-040c8b7e16ad",
+    "https://images.unsplash.com/photo-1540420773420-3366772f4999",
+  ],
+  "Kosha Counseling": [
+    "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2",
+    "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
+    "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+  ],
+  "Soul Curriculum": [
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+    "https://images.unsplash.com/photo-1502082553048-f009c37129b9",
+    "https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d",
+  ],
+  "Release Karmic Patterns": [
+    "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429",
+    "https://images.unsplash.com/photo-1494173853739-c21f58b16055",
+    "https://images.unsplash.com/photo-1470770841072-f978cf4d019e",
+  ],
+  Others: [
+    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d",
+    "https://images.unsplash.com/photo-1515169067865-5387ec356754",
+    "https://images.unsplash.com/photo-1503428593586-e225b39bddfe",
+  ],
+};
+
+/* ================= PER-CATEGORY IMAGE ROTATION ================= */
+const categoryCounters = {};
+
+const getCategoryImage = (category) => {
+  const images = categoryImages[category] || categoryImages["Others"];
+
+  if (!categoryCounters[category]) {
+    categoryCounters[category] = 0;
+  }
+
+  const image = images[categoryCounters[category] % images.length];
+  categoryCounters[category]++;
+
+  return image;
+};
+
+/* ================= TIME FORMAT ================= */
+const formatTimeRange = (start, end) => {
+  if (!start || !end) return "TBA";
+
+  const format = (time) => {
+    const [h, m] = time.split(":").map(Number);
+    const period = h >= 12 ? "PM" : "AM";
+    const hour = h % 12 || 12;
+    return `${hour}:${String(m).padStart(2, "0")} ${period}`;
+  };
+
+  return `${format(start)} – ${format(end)}`;
+};
+
+/* ================= UPCOMING EVENT CHECK ================= */
+const isUpcomingEvent = (event) => {
+  const now = new Date();
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const [y, m, d] = event.date.split("-").map(Number);
+  const eventDate = new Date(y, m - 1, d);
+  eventDate.setHours(0, 0, 0, 0);
+
+  if (eventDate > today) return true;
+  if (eventDate < today) return false;
+
+  const [eh, em] = event.endTime.split(":").map(Number);
+  const eventEnd = new Date();
+  eventEnd.setHours(eh, em, 0, 0);
+
+  return eventEnd > now;
+};
 
 function EventsSection({ content }) {
   const [events, setEvents] = useState([]);
@@ -460,18 +556,18 @@ function EventsSection({ content }) {
         const res = await fetch(`${API_URL}/api/events`);
         const data = await res.json();
 
-        // Filter upcoming AND exclude current event
+        // Filter strictly for UPCOMING events using helper
         const upcoming = data.filter(e => {
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
-          const [y, m, d] = e.date.split("-").map(Number);
-          const eventDate = new Date(y, m - 1, d);
+          if (!isUpcomingEvent(e)) return false;
 
-          if (id && e._id === id) return false;
-          if (id && e.bookingUrl === id) return false;
+          // Exclude current event page if we are on it
+          if (id && (e._id === id || e.bookingUrl === id)) return false;
 
-          return eventDate >= today;
+          return true;
         });
+
+        // Sort by date (ascending)
+        upcoming.sort((a, b) => new Date(a.date) - new Date(b.date));
 
         setEvents(upcoming.slice(0, count));
         setTimeout(() => AOS.refresh(), 100);
@@ -490,7 +586,7 @@ function EventsSection({ content }) {
     const dateObj = new Date(event.date);
     const day = dateObj.getDate();
     const month = dateObj.toLocaleString("en-US", { month: "short" });
-    const eventImage = event.imageUrl || "https://images.unsplash.com/photo-1544367563-12123d8965cd";
+    const eventImage = event.imageUrl || getCategoryImage(event.category);
 
     return (
       <div className="group rounded-2xl overflow-hidden bg-white shadow-md flex flex-col border-1 border-transparent transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:border-[#8b171b] h-full">
@@ -518,7 +614,7 @@ function EventsSection({ content }) {
             </div>
 
             <div className="text-sm text-gray-600 flex-1">
-              <div>{new Date(event.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+              <div>{formatTimeRange(event.startTime, event.endTime)}</div>
               <div>Location: {event.location || "Location TBA"}</div>
               {Number(event.availability) > 0 && (
                 <p className="text-sm text-gray-700 mt-1">

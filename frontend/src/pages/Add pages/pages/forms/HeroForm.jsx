@@ -3,7 +3,7 @@ import { Upload, Trash2 } from "lucide-react";
 import { api } from "../../../../utils/api";
 import axios from "axios";
 
-export default function HeroForm({ content, onUpdate, pageSlug }) {
+export default function HeroForm({ content, onUpdate, pageSlug, createdFrom }) {
   const [uploadingBg, setUploadingBg] = useState(false);
   const [events, setEvents] = useState([]);
 
@@ -50,6 +50,8 @@ export default function HeroForm({ content, onUpdate, pageSlug }) {
     }
   };
 
+  const isEventPage = createdFrom === "manage-events";
+
   return (
     <div className="bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-2xl p-6 space-y-6">
       <h3 className="text-lg font-semibold text-[#7A1F2B] border-b border-white/70 pb-2">Hero / Banner Details</h3>
@@ -57,7 +59,7 @@ export default function HeroForm({ content, onUpdate, pageSlug }) {
       {/* 1. Image Upload */}
       <div>
         <label className="block text-sm font-medium text-slate-700 mb-2">
-          Banner Image
+          Banner Image <span className="text-red-500">*</span>
         </label>
         {content.backgroundImage ? (
           <div className="relative">
@@ -94,10 +96,10 @@ export default function HeroForm({ content, onUpdate, pageSlug }) {
 
       {/* 2. Event Title */}
       <FormField
-        label="Event Title"
+        label={isEventPage ? "Event Title" : "Title"}
         value={content.title || ""}
         onChange={(val) => onUpdate("title", val)}
-        placeholder="Enter event title"
+        placeholder={isEventPage ? "Enter event title" : "Enter title"}
         helpText="The main heading for your hero section."
       />
 
@@ -112,56 +114,38 @@ export default function HeroForm({ content, onUpdate, pageSlug }) {
         helpText="A short description or subtitle displayed below the title."
       />
 
-      {/* 4. CTA Button (Book Now) */}
-      <div className="pt-4 border-t border-white/70">
-        <h4 className="text-md font-medium text-slate-700 mb-3">CTA Button (Book Now)</h4>
+      {/* 4. CTA Button (Book Now) - ONLY FOR EVENTS */}
+      {isEventPage && (
+        <div className="pt-4 border-t border-white/70">
+          <h4 className="text-md font-medium text-slate-700 mb-3">
+            CTA Button (Book Now) <span className="text-red-500">*</span>
+          </h4>
 
-        <div className="space-y-4">
-          {/* Label */}
-          <FormField
-            label="Button Label"
-            value={content.primaryCta?.label || "Book Now"}
-            onChange={(val) => onUpdate("primaryCta.label", val)}
-            placeholder="Book Now"
-          />
-
-          {/* Event Selection */}
-          {/* <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Select Event (for Booking)
-            </label>
-            <select
-              value={content.primaryCta?.eventId || ""}
-              onChange={(e) => onUpdate("primaryCta.eventId", e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-white"
-            >
-              <option value="">-- Choose an Event --</option>
-              {events.map((e) => (
-                <option key={e._id} value={e._id}>
-                  {e.title} ({new Date(e.date).toLocaleDateString()})
-                </option>
-              ))}
-            </select>
-            <p className="mt-1 text-xs text-gray-500">
-              Selecting an event will open the Booking Modal when clicked.
-            </p>
-          </div> */}
-
-          {/* Color Pickers */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <ColorPicker
-              label="Button Color"
-              value={content.primaryCta?.bgColor || "#3b82f6"}
-              onChange={(val) => onUpdate("primaryCta.bgColor", val)}
+          <div className="space-y-4">
+            {/* Label */}
+            <FormField
+              label="Button Label"
+              value={content.primaryCta?.label || "Book Now"}
+              onChange={(val) => onUpdate("primaryCta.label", val)}
+              placeholder="Book Now"
             />
-            <ColorPicker
-              label="Text Color"
-              value={content.primaryCta?.textColor || "#ffffff"}
-              onChange={(val) => onUpdate("primaryCta.textColor", val)}
-            />
+
+            {/* Color Pickers */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <ColorPicker
+                label="Button Color"
+                value={content.primaryCta?.bgColor || "#3b82f6"}
+                onChange={(val) => onUpdate("primaryCta.bgColor", val)}
+              />
+              <ColorPicker
+                label="Text Color"
+                value={content.primaryCta?.textColor || "#ffffff"}
+                onChange={(val) => onUpdate("primaryCta.textColor", val)}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

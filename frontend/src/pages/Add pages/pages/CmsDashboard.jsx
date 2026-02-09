@@ -36,8 +36,8 @@ export default function CmsDashboard() {
                 <h1 className="text-2xl md:text-3xl font-bold text-[#7A1F2B]">
                   {isEditing
                     ? slug
-                      ? "Edit Event Page"
-                      : "Create Event Page"
+                      ? "Edit Page"
+                      : "Create Page"
                     : "Content Management"}
                 </h1>
               </div>

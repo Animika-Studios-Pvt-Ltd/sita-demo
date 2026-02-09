@@ -79,6 +79,7 @@ export default function EnhancedCmsEditor() {
   const navigate = useNavigate();
   const [pageSlug, setPageSlug] = useState(slug || "");
   const [pageStatus, setPageStatus] = useState("draft");
+  const [createdFrom, setCreatedFrom] = useState("manage-pages");
   const [sections, setSections] = useState(() => {
     // Should be empty initially, but will be populated if new page
     return slug ? [] : [{
@@ -163,6 +164,7 @@ export default function EnhancedCmsEditor() {
 
         setSections(sectionsArray);
         setPageStatus(page.status || "draft");
+        setCreatedFrom(page.createdFrom || "manage-pages");
 
         // ✅ DEFAULT EXPAND HERO
         const initialExpanded = new Set(sectionsArray.map((s) => s.id));
@@ -327,6 +329,31 @@ export default function EnhancedCmsEditor() {
     if (!pageSlug.trim()) {
       Swal.fire("Error", "Page Link is required", "error");
       return;
+    }
+
+    // ---------------------------------------------------------
+    // VALIDATION: HERO SECTION
+    // ---------------------------------------------------------
+    const heroSection = sections.find(s => s.key === "hero");
+    if (heroSection) {
+      // 1. Image is ALWAYS required
+      if (!heroSection.content.backgroundImage) {
+        Swal.fire("Validation Error", "Hero Banner Image is required.", "warning");
+        return;
+      }
+
+      // 2. CTA Button is REQUIRED if createdFrom === 'manage-events'
+      if (createdFrom === "manage-events") {
+        if (!heroSection.content.primaryCta?.label?.trim()) {
+          Swal.fire("Validation Error", "CTA Button Label is required for Event Pages.", "warning");
+          return;
+        }
+        // If you also want to enforce a link/action:
+        // if (!heroSection.content.primaryCta?.href && !heroSection.content.primaryCta?.eventId) {
+        //   Swal.fire("Validation Error", "CTA Button must have a link or event.", "warning");
+        //   return;
+        // }
+      }
     }
 
     try {
@@ -534,6 +561,7 @@ export default function EnhancedCmsEditor() {
                               onToggle={() => toggleSection(section.id)}
                               onMove={moveSection}
                               pageSlug={pageSlug}
+                              createdFrom={createdFrom}
                             />
                           </div>
                         )}
@@ -580,7 +608,7 @@ function AddSectionButton({ icon: Icon, label, onClick, disabled }) {
 }
 
 // Section Card Component
-function SectionCard({ section, index, totalSections, dragHandleProps, onDelete, onUpdate, isExpanded, onToggle, onMove, pageSlug }) {
+function SectionCard({ section, index, totalSections, dragHandleProps, onDelete, onUpdate, isExpanded, onToggle, onMove, pageSlug, createdFrom }) {
   const getSectionIcon = (key) => {
     const icons = {
       hero: Type,
@@ -665,7 +693,7 @@ function SectionCard({ section, index, totalSections, dragHandleProps, onDelete,
       {isExpanded && (
         <div className="p-6 bg-white/70 backdrop-blur-xl">
           {section.key === "hero" && (
-            <HeroForm content={section.content} onUpdate={onUpdate} pageSlug={pageSlug} />
+            <HeroForm content={section.content} onUpdate={onUpdate} pageSlug={pageSlug} createdFrom={createdFrom} />
           )}
           {section.key === "faq" && (
             <FaqForm content={section.content} onUpdate={onUpdate} />
