@@ -1392,6 +1392,10 @@ async function sendEventRatingEmail(booking, event) {
     const participants = new Map();
     participants.set(userEmail, { name: userName, email: userEmail });
 
+    console.log(`DEBUG: Booking ID: ${booking._id}`);
+    console.log(`DEBUG: Main User: ${userEmail}`);
+    console.log(`DEBUG: Participants Raw:`, JSON.stringify(booking.participants));
+
     if (booking.participants && booking.participants.length > 0) {
       booking.participants.forEach(p => {
         if (p.email) {
