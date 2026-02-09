@@ -142,13 +142,15 @@ const BlogDetailPage = () => {
 
       <div className="container" data-aos="fade-up" data-aos-duration="1000">
         <div className="max-w-8xl mx-auto py-0 text-center flex flex-col justify-center items-center px-4">
-          <div className="max-w-6xl mx-auto px-4 text-center">
+          <div className="max-w-6xl mx-auto px-4 text-center mt-4">
             <h1
-              className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center"
+              className="font-pt-serif text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] text-center"
               data-aos="zoom-in"
-              data-aos-duration="1300">
+              data-aos-duration="1300"
+            >
               {blog.title}
             </h1>
+
             <img
               src="/sita-motif.webp"
               alt="Sita Motif"
@@ -157,7 +159,7 @@ const BlogDetailPage = () => {
           </div>
 
           <div
-            className="max-w-8xl mx-auto px-0 py-6 grid gap-10 lg:grid-cols-1 xl:grid-cols-4"
+            className="max-w-8xl mx-auto px-0 py-2 grid gap-10 lg:grid-cols-1 xl:grid-cols-4"
             data-aos="fade-up"
             data-aos-duration="1200">
             <div className="col-span-1 xl:col-span-3">
