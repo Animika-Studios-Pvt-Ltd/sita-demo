@@ -213,11 +213,11 @@ const PodcastsPage = () => {
                 items={[{ label: "Home", path: "/" }, { label: "Podcasts" }]}
             />
 
-            <div className="container py-20">
+            <div className="container py-4">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="text-center mb-16" data-aos="fade-up">
-                        <h2 className="font-serifSita text-[#8b171b] text-3xl md:text-4xl lg:text-5xl leading-tight mb-4">
-                            LATEST EPISODES
+                    <div className="text-center mb-8" data-aos="fade-up">
+                        <h2 className="font-serifSita text-[#8b171b] text-3xl md:text-4xl lg:text-5xl leading-tight mb-3">
+                            Podcats by Sita
                         </h2>
                         <img
                             src="/sita-motif.webp"
