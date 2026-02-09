@@ -21,11 +21,11 @@ const CMSModule = () => {
       icon: StarIcon,
       route: "/dashboard/manage-reviews",
     },
-    {
-      name: "Trust Certificates",
-      icon: WorkspacePremiumIcon,
-      route: "/dashboard/certificates/trust-certificate",
-    },
+    // {
+    //   name: "Trust Certificates",
+    //   icon: WorkspacePremiumIcon,
+    //   route: "/dashboard/certificates/trust-certificate",
+    // },
     {
       name: "Manage Pages",
       icon: EditNoteIcon,
