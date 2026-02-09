@@ -122,7 +122,7 @@ const AyurvedaNutrition = () => {
             </div>
           </div>
           <a href="/booking" className="sita-workshops-btn mt-2">
-            Explore Workshops
+            Ayurveda Guidance
           </a>
         </div>
       </section>

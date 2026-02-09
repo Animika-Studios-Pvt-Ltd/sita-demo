@@ -123,7 +123,7 @@ const YogaTherapy = () => {
             </div>
           </div>
           <a href="/booking" className="sita-workshops-btn mt-2">
-            Explore Workshops
+            Start Yoga Therapy
           </a>
         </div>
       </section>

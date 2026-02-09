@@ -178,7 +178,7 @@ const KoshaCounseling = () => {
             </div>
           </div>
           <a href="/booking" className="sita-workshops-btn mt-2">
-            Explore Workshops
+            Explore Koshas
           </a>
         </div>
       </section>
