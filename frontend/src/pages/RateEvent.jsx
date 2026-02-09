@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaStar } from "react-icons/fa";
 import Swal from "sweetalert2";
@@ -8,6 +8,8 @@ import axios from "axios";
 const RateEvent = () => {
     const { bookingId } = useParams();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const userEmail = searchParams.get("email");
 
     const [loading, setLoading] = useState(true);
     const [rating, setRating] = useState(0);
@@ -44,7 +46,8 @@ const RateEvent = () => {
             const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/events/rate`, {
                 bookingId,
                 rating,
-                comment
+                comment,
+                userEmail
             });
 
             setSubmitting(false);

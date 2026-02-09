@@ -1388,58 +1388,79 @@ async function sendEventRatingEmail(booking, event) {
       ? (process.env.CLIENT_URL.startsWith('http') ? process.env.CLIENT_URL : `https://${process.env.CLIENT_URL}`)
       : 'http://booking.localhost:5173';
 
-    const ratingLink = `${baseUrl}/rate-event/${booking._id}`;
+    // Collect all unique participants (Main booker + Participants)
+    const participants = new Map();
+    participants.set(userEmail, { name: userName, email: userEmail });
 
-    const html = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      </head>
-      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
-        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #FF6B6B 0%, #EE5253 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="margin: 0; font-size: 28px;">How was the event? 🌟</h1>
-            <p style="margin: 10px 0 0 0; font-size: 16px;">We'd love to hear your thoughts!</p>
-          </div>
-          
-          <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px;">
-            <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-              <h2 style="margin: 0 0 15px 0; color: #EE5253; font-size: 20px;">Hi ${userName},</h2>
-              <p style="margin: 10px 0; font-size: 16px; line-height: 1.8;">
-                Thank you for attending <strong>${eventName}</strong>. We hope you had a great time!
-              </p>
-              <p style="margin: 10px 0; font-size: 16px; line-height: 1.8;">
-                Your feedback helps us create better experiences for our community. Please take a moment to rate the event.
-              </p>
+    if (booking.participants && booking.participants.length > 0) {
+      booking.participants.forEach(p => {
+        if (p.email) {
+          participants.set(p.email, { name: p.name, email: p.email });
+        }
+      });
+    }
+
+    console.log(`📧 Sending rating emails to ${participants.size} participants for Event: ${eventName}`);
+
+    const emailPromises = [];
+
+    for (const participant of participants.values()) {
+      const ratingLink = `${baseUrl}/rate-event/${booking._id}?email=${encodeURIComponent(participant.email)}`;
+
+      const html = `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          </head>
+          <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
+            <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+              <div style="background: linear-gradient(135deg, #FF6B6B 0%, #EE5253 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+                <h1 style="margin: 0; font-size: 28px;">How was the event? 🌟</h1>
+                <p style="margin: 10px 0 0 0; font-size: 16px;">We'd love to hear your thoughts!</p>
+              </div>
+              
+              <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px;">
+                <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                  <h2 style="margin: 0 0 15px 0; color: #EE5253; font-size: 20px;">Hi ${participant.name},</h2>
+                  <p style="margin: 10px 0; font-size: 16px; line-height: 1.8;">
+                    Thank you for attending <strong>${eventName}</strong>. We hope you had a great time!
+                  </p>
+                  <p style="margin: 10px 0; font-size: 16px; line-height: 1.8;">
+                    Your feedback helps us create better experiences for our community. Please take a moment to rate the event.
+                  </p>
+                </div>
+    
+                <div style="text-align: center; margin: 30px 0;">
+                  <a href="${ratingLink}" 
+                     style="display: inline-block; background: #EE5253; color: white; padding: 15px 35px; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 6px rgba(238, 82, 83, 0.3);">
+                    Rate This Event
+                  </a>
+                </div>
+    
+                <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #dee2e6;">
+                  <p style="margin: 15px 0 0 0; font-size: 12px; color: #999;">
+                    If you didn't attend this event, you can ignore this email.
+                  </p>
+                </div>
+              </div>
             </div>
+          </body>
+          </html>
+        `;
 
-            <div style="text-align: center; margin: 30px 0;">
-              <a href="${ratingLink}" 
-                 style="display: inline-block; background: #EE5253; color: white; padding: 15px 35px; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 6px rgba(238, 82, 83, 0.3);">
-                Rate This Event
-              </a>
-            </div>
+      emailPromises.push(
+        sendEmail({
+          to: participant.email,
+          subject: `How was ${eventName}? - Rate your experience`,
+          html
+        }).then(() => console.log(`✅ Rating email sent to ${participant.email}`))
+          .catch(err => console.error(`❌ Failed to send rating email to ${participant.email}:`, err.message))
+      );
+    }
 
-            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #dee2e6;">
-              <p style="margin: 15px 0 0 0; font-size: 12px; color: #999;">
-                If you didn't attend this event, you can ignore this email.
-              </p>
-            </div>
-          </div>
-        </div>
-      </body>
-      </html>
-    `;
-
-    await sendEmail({
-      to: userEmail,
-      subject: `How was ${eventName}? - Rate your experience`,
-      html
-    });
-
-    console.log(`✅ Rating email sent to ${userEmail} for event ${eventName}`);
+    await Promise.all(emailPromises);
     return true;
   } catch (error) {
     console.error('❌ Rating email error:', error.message);

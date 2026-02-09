@@ -21,7 +21,7 @@ const eventRatingSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-// Prevent duplicate ratings for the same booking
-eventRatingSchema.index({ booking: 1 }, { unique: true });
+// Prevent duplicate ratings for the same booking AND same user email
+eventRatingSchema.index({ booking: 1, userEmail: 1 }, { unique: true });
 
 module.exports = mongoose.model("EventRating", eventRatingSchema);

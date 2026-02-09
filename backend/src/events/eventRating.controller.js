@@ -7,7 +7,7 @@ const emailService = require("../services/emailService");
 exports.submitRating = async (req, res) => {
     console.log("👉 HIT: submitRating endpoint", req.body);
     try {
-        const { bookingId, rating, comment } = req.body;
+        const { bookingId, rating, comment, userEmail } = req.body;
 
         // 1. Verify booking exists
         const booking = await Booking.findById(bookingId).populate("event");
@@ -19,18 +19,24 @@ exports.submitRating = async (req, res) => {
 
         console.log(`✅ Booking found:`, booking._id);
 
-        // 2. Check if already rated
-        const existingRating = await EventRating.findOne({ booking: bookingId });
+        // 2. Validate User Email (Must be booker or participant)
+        const participantEmails = [booking.userEmail, ...(booking.participants?.map(p => p.email) || [])];
+        if (!participantEmails.includes(userEmail)) {
+            return res.status(403).json({ message: "You are not authorized to rate this event." });
+        }
+
+        // 3. Check if already rated by this specific user
+        const existingRating = await EventRating.findOne({ booking: bookingId, userEmail: userEmail });
         if (existingRating) {
             return res.status(400).json({ message: "You have already rated this event" });
         }
 
-        // 3. Create rating
+        // 4. Create rating
         const newRating = new EventRating({
             event: booking.event._id,
             booking: bookingId,
-            userEmail: booking.userEmail,
-            userName: booking.userName,
+            userEmail: userEmail, // Use the email from request
+            userName: userEmail === booking.userEmail ? booking.userName : booking.participants.find(p => p.email === userEmail)?.name || 'Participant',
             rating,
             comment,
         });
