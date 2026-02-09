@@ -8,6 +8,7 @@ import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 import "../../assets/herosection.css";
 import "../about/About.css";
 import "../homepage/Homepage.css";
+import { FileText } from "lucide-react";
 
 const BACKEND_BASE_URL =
     import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -156,62 +157,72 @@ const ArticlesPage = () => {
                             );
                         })}
                     </div>
+                    {articles.length === 0 && (
+                        <div className="text-center py-20 text-slate-500 font-montserratLight">
+                            <FileText size={48} className="mx-auto mb-4 opacity-50" />
+                            <p className="text-xl">New articles coming soon.</p>
+                        </div>
+                    )}
 
                     {/* PAGINATION */}
-                    <div
-                        className="flex justify-center items-center gap-2 sm:gap-2 lg:gap-3 mt-10 mb-20 flex-wrap"
-                        data-aos="fade-up"
-                        data-aos-duration="1500">
-                        <button
-                            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                            disabled={currentPage === 1}
-                            className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition">
-                            <ArrowLeft size={18} strokeWidth={2} />
-                        </button>
+                    {totalPages > 1 && (
+                        <div
+                            className="flex justify-center items-center gap-2 sm:gap-2 lg:gap-3 mt-10 mb-20 flex-wrap"
+                            data-aos="fade-up"
+                            data-aos-duration="1500"
+                        >
+                            <button
+                                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                                disabled={currentPage === 1}
+                                className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition"
+                            >
+                                <ArrowLeft size={18} strokeWidth={2} />
+                            </button>
 
-                        {currentPage > 3 && (
-                            <span className="text-gray-400 select-none">...</span>
-                        )}
-                        {Array.from({ length: totalPages }, (_, i) => i + 1)
-                            .filter((num) => {
-                                if (currentPage <= 2) {
-                                    return num <= 3;
-                                } else if (currentPage >= totalPages - 1) {
-                                    return num >= totalPages - 2;
-                                } else {
+                            {currentPage > 3 && (
+                                <span className="text-gray-400 select-none">...</span>
+                            )}
+
+                            {Array.from({ length: totalPages }, (_, i) => i + 1)
+                                .filter((num) => {
+                                    if (currentPage <= 2) return num <= 3;
+                                    if (currentPage >= totalPages - 1) return num >= totalPages - 2;
                                     return (
                                         num === currentPage - 1 ||
                                         num === currentPage ||
                                         num === currentPage + 1
                                     );
+                                })
+                                .map((num) => (
+                                    <button
+                                        key={num}
+                                        onClick={() => setCurrentPage(num)}
+                                        className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
+            ${currentPage === num
+                                                ? "bg-[#993333] text-white"
+                                                : "border border-transparent text-black hover:border-black hover:bg-gray-100"
+                                            }`}
+                                    >
+                                        {num}
+                                    </button>
+                                ))}
+
+                            {currentPage < totalPages - 2 && (
+                                <span className="text-gray-400 select-none">...</span>
+                            )}
+
+                            <button
+                                onClick={() =>
+                                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                                 }
-                            })
-                            .map((num) => (
-                                <button
-                                    key={num}
-                                    onClick={() => setCurrentPage(num)}
-                                    className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
-          ${currentPage === num
-                                            ? "bg-[#993333] text-white"
-                                            : "border border-transparent text-black hover:border-black hover:bg-gray-100"
-                                        }`}>
-                                    {num}
-                                </button>
-                            ))}
+                                disabled={currentPage === totalPages}
+                                className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition"
+                            >
+                                <ArrowRight size={18} strokeWidth={2} />
+                            </button>
+                        </div>
+                    )}
 
-                        {currentPage < totalPages - 2 && (
-                            <span className="text-gray-400 select-none">...</span>
-                        )}
-
-                        <button
-                            onClick={() =>
-                                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                            }
-                            disabled={currentPage === totalPages}
-                            className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition">
-                            <ArrowRight size={18} strokeWidth={2} />
-                        </button>
-                    </div>
                 </div>
             </div>
         </>
