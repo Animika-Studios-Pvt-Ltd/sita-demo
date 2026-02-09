@@ -78,11 +78,11 @@ const CheckoutPage = () => {
   // CALCULATE TOTALS FIRST (BEFORE FUNCTIONS)
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.newPrice * item.qty,
-    0
+    0,
   );
   const originalTotal = cartItems.reduce(
     (acc, item) => acc + (item.oldPrice || item.newPrice) * item.qty,
-    0
+    0,
   );
   const discount = originalTotal - subtotal;
   const giftCharge = isGift ? giftWrapCharge || 0 : 0;
@@ -107,61 +107,63 @@ const CheckoutPage = () => {
   );
 
   // DEFINE FUNCTIONS (AFTER SUBTOTAL)
-  const calculateShipping = useCallback(async (pincode) => {
-    if (!pincode || pincode.length !== 6) {
-      setShippingCharge(0);
-      setEstimatedDelivery('');
-      setSelectedCourier(null);
-      return;
-    }
-
-    if (!/^\d{6}$/.test(pincode)) {
-      return;
-    }
-
-    setLoadingShipping(true);
-    try {
-      const totalWeightInGrams = cartItems.reduce((acc, item) => {
-        let bookWeight = item.weight || item.packageWeight || 0;
-        if (bookWeight < 50) {
-          bookWeight = 250;
-        }
-        const qty = item.qty || item.quantity || 1;
-        const itemTotalWeight = bookWeight * qty;
-        return acc + itemTotalWeight;
-      }, 0);
-      const response = await axios.post(
-        `${getBaseUrl()}/api/shipping/calculate-shipping`,
-        {
-          origin_pincode: '560008',
-          destination_pincode: pincode,
-          weight: totalWeightInGrams,
-          declared_value: subtotal,
-          length: 20,
-          breadth: 15,
-          height: 10,
-        }
-      );
-
-      if (response.data.success) {
-        setShippingCharge(response.data.shippingCharge);
-        setEstimatedDelivery(response.data.estimatedDays);
-        setSelectedCourier(response.data.recommendedCourier);
-
-      } else {
-        setShippingCharge(50);
-        setEstimatedDelivery('7-10 days');
+  const calculateShipping = useCallback(
+    async (pincode) => {
+      if (!pincode || pincode.length !== 6) {
+        setShippingCharge(0);
+        setEstimatedDelivery("");
         setSelectedCourier(null);
+        return;
       }
-    } catch (error) {
-      console.error('❌ Shipping calculation failed:', error);
-      setShippingCharge(50);
-      setEstimatedDelivery('7-10 days');
-      setSelectedCourier(null);
-    } finally {
-      setLoadingShipping(false);
-    }
-  }, [cartItems, subtotal]);
+
+      if (!/^\d{6}$/.test(pincode)) {
+        return;
+      }
+
+      setLoadingShipping(true);
+      try {
+        const totalWeightInGrams = cartItems.reduce((acc, item) => {
+          let bookWeight = item.weight || item.packageWeight || 0;
+          if (bookWeight < 50) {
+            bookWeight = 250;
+          }
+          const qty = item.qty || item.quantity || 1;
+          const itemTotalWeight = bookWeight * qty;
+          return acc + itemTotalWeight;
+        }, 0);
+        const response = await axios.post(
+          `${getBaseUrl()}/api/shipping/calculate-shipping`,
+          {
+            origin_pincode: "560008",
+            destination_pincode: pincode,
+            weight: totalWeightInGrams,
+            declared_value: subtotal,
+            length: 20,
+            breadth: 15,
+            height: 10,
+          },
+        );
+
+        if (response.data.success) {
+          setShippingCharge(response.data.shippingCharge);
+          setEstimatedDelivery(response.data.estimatedDays);
+          setSelectedCourier(response.data.recommendedCourier);
+        } else {
+          setShippingCharge(50);
+          setEstimatedDelivery("7-10 days");
+          setSelectedCourier(null);
+        }
+      } catch (error) {
+        console.error("❌ Shipping calculation failed:", error);
+        setShippingCharge(50);
+        setEstimatedDelivery("7-10 days");
+        setSelectedCourier(null);
+      } finally {
+        setLoadingShipping(false);
+      }
+    },
+    [cartItems, subtotal],
+  );
 
   const fetchPincodeData = useCallback(
     async (code, isGiftAddress = false) => {
@@ -174,7 +176,7 @@ const CheckoutPage = () => {
         setLoading(true);
         try {
           const res = await axios.get(
-            `https://api.postalpincode.in/pincode/${code}`
+            `https://api.postalpincode.in/pincode/${code}`,
           );
           if (res.data[0].Status === "Success") {
             const postOffice = res.data[0].PostOffice[0];
@@ -182,7 +184,6 @@ const CheckoutPage = () => {
             setValue(`${prefix}state`, postOffice.State);
             setValue(`${prefix}country`, postOffice.Country);
             trigger();
-
           }
         } catch (err) {
           console.error("Failed to fetch pincode info", err);
@@ -191,7 +192,7 @@ const CheckoutPage = () => {
         }
       }
     },
-    [setValue, trigger]
+    [setValue, trigger],
   );
 
   const populateAddressFields = (address, isGiftAddress = false) => {
@@ -199,7 +200,7 @@ const CheckoutPage = () => {
     setValue(
       `${prefix}street`,
       address.addressLine1 +
-      (address.addressLine2 ? `, ${address.addressLine2}` : "")
+        (address.addressLine2 ? `, ${address.addressLine2}` : ""),
     );
     setValue(`${prefix}city`, address.city);
     setValue(`${prefix}state`, address.state);
@@ -215,7 +216,7 @@ const CheckoutPage = () => {
   const handleAddressSelect = (addressId) => {
     setSelectedAddressId(addressId);
     const selectedAddress = userProfile.addresses.find(
-      (addr) => addr._id === addressId
+      (addr) => addr._id === addressId,
     );
     if (selectedAddress) {
       populateAddressFields(selectedAddress, false);
@@ -226,7 +227,7 @@ const CheckoutPage = () => {
   const handleGiftAddressSelect = (addressId) => {
     setSelectedGiftAddressId(addressId);
     const selectedAddress = userProfile.addresses.find(
-      (addr) => addr._id === addressId
+      (addr) => addr._id === addressId,
     );
     if (selectedAddress) {
       populateAddressFields(selectedAddress, true);
@@ -253,8 +254,7 @@ const CheckoutPage = () => {
   const formatPhoneNumber = (phone) => {
     if (!phone) return phone;
     let cleaned = phone.replace(/\D/g, "");
-    if (cleaned.startsWith("91") && cleaned.length === 12)
-      return "+" + cleaned;
+    if (cleaned.startsWith("91") && cleaned.length === 12) return "+" + cleaned;
     if (cleaned.length === 10) return "+91" + cleaned;
     if (phone.startsWith("+")) return phone;
     return "+" + cleaned;
@@ -332,7 +332,11 @@ const CheckoutPage = () => {
     try {
       const res = await loadRazorpay();
       if (!res) {
-        Swal.fire("Error", "Razorpay SDK failed to load. Are you online?", "error");
+        Swal.fire(
+          "Error",
+          "Razorpay SDK failed to load. Are you online?",
+          "error",
+        );
         setLoading(false);
         return;
       }
@@ -350,7 +354,7 @@ const CheckoutPage = () => {
           name: formData.name,
           email: formData.email,
           phone: formattedPhone,
-        }
+        },
       );
 
       if (!data.success) {
@@ -373,11 +377,10 @@ const CheckoutPage = () => {
               data.orderId,
               formData,
               response.razorpay_payment_id,
-              response.razorpay_signature
+              response.razorpay_signature,
             );
 
             setLoading(false);
-
           } catch (error) {
             setLoading(false);
 
@@ -402,12 +405,14 @@ const CheckoutPage = () => {
       const paymentObject = new window.Razorpay(options);
       paymentObject.open();
       setLoading(false);
-
     } catch (error) {
       console.error("Payment Error:", error);
       Swal.fire({
         title: "Payment Failed",
-        text: error.response?.data?.message || error.message || "Failed to process payment",
+        text:
+          error.response?.data?.message ||
+          error.message ||
+          "Failed to process payment",
         icon: "error",
         confirmButtonColor: "#C76F3B",
       });
@@ -418,7 +423,7 @@ const CheckoutPage = () => {
   const createOrderAfterPayment = async (
     formData,
     razorpayOrderId,
-    paymentId
+    paymentId,
   ) => {
     try {
       const formattedPhone = formatPhoneNumber(formData.phone);
@@ -435,7 +440,7 @@ const CheckoutPage = () => {
           zipcode: formData.zipcode,
         },
         productIds: cartItems.map((item) => item._id),
-        products: cartItems.map(item => ({
+        products: cartItems.map((item) => ({
           bookId: item._id,
           title: item.title,
           price: item.newPrice,
@@ -454,12 +459,12 @@ const CheckoutPage = () => {
         giftAddress:
           isGift && !sameAsDeliveryAddress
             ? {
-              street: formData.gift_street,
-              city: formData.gift_city,
-              country: formData.gift_country || "India",
-              state: formData.gift_state,
-              zipcode: formData.gift_zipcode,
-            }
+                street: formData.gift_street,
+                city: formData.gift_city,
+                country: formData.gift_country || "India",
+                state: formData.gift_state,
+                zipcode: formData.gift_zipcode,
+              }
             : null,
         paymentId: paymentId,
         cashfreeOrderId: razorpayOrderId, // Reusing field
@@ -467,7 +472,7 @@ const CheckoutPage = () => {
 
       const response = await axios.post(
         `${getBaseUrl()}/api/orders`,
-        orderPayload
+        orderPayload,
       );
 
       if (!response.data.success) {
@@ -500,9 +505,10 @@ const CheckoutPage = () => {
       Swal.fire({
         title: "Order Creation Failed",
         html: `
-          <p>${error.response?.data?.message ||
-          error.message ||
-          "Failed to create order"
+          <p>${
+            error.response?.data?.message ||
+            error.message ||
+            "Failed to create order"
           }</p>
           <p class="text-sm text-gray-600 mt-2">Payment ID: ${paymentId}</p>
           <p class="text-sm text-gray-600">Order ID: ${razorpayOrderId}</p>
@@ -518,7 +524,7 @@ const CheckoutPage = () => {
     razorpayOrderId,
     formData,
     paymentId,
-    signature
+    signature,
   ) => {
     try {
       const verifyResponse = await axios.post(
@@ -527,7 +533,7 @@ const CheckoutPage = () => {
           razorpay_order_id: razorpayOrderId,
           razorpay_payment_id: paymentId,
           razorpay_signature: signature,
-        }
+        },
       );
 
       if (!verifyResponse.data.success) {
@@ -535,19 +541,16 @@ const CheckoutPage = () => {
       }
 
       await createOrderAfterPayment(formData, razorpayOrderId, paymentId);
-
     } catch (error) {
       throw error; // VERY IMPORTANT
     }
   };
 
-
-
   useEffect(() => {
     const fetchGiftWrapCharge = async () => {
       try {
         const response = await axios.get(
-          `${getBaseUrl()}/api/shipping/gift-wrap-charge`
+          `${getBaseUrl()}/api/shipping/gift-wrap-charge`,
         );
         if (response.data.success) {
           setGiftWrapCharge(response.data.charge);
@@ -567,12 +570,12 @@ const CheckoutPage = () => {
         try {
           const encodedUID = encodeURIComponent(currentUser.sub);
           const response = await axios.get(
-            `${getBaseUrl()}/api/users/${encodedUID}`
+            `${getBaseUrl()}/api/users/${encodedUID}`,
           );
           setUserProfile(response.data);
 
           const defaultAddress = response.data.addresses?.find(
-            (addr) => addr.isDefault
+            (addr) => addr.isDefault,
           );
           if (defaultAddress) {
             setSelectedAddressId(defaultAddress._id);
@@ -586,10 +589,11 @@ const CheckoutPage = () => {
 
           setValue(
             "name",
-            `${response.data.name?.firstName || ""} ${response.data.name?.lastName || ""
-              }`.trim() ||
-            response.data.username ||
-            ""
+            `${response.data.name?.firstName || ""} ${
+              response.data.name?.lastName || ""
+            }`.trim() ||
+              response.data.username ||
+              "",
           );
           setValue("email", response.data.email || "");
           setValue("phone", response.data.phone?.primary || "");
@@ -626,7 +630,7 @@ const CheckoutPage = () => {
               stock: book.stock,
               newPrice: book.newPrice,
               oldPrice: book.oldPrice,
-            })
+            }),
           );
         }
       });
@@ -695,7 +699,7 @@ const CheckoutPage = () => {
                         <FaGift className="text-xl text-[#C76F3B]" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-800">
+                        <h3 className="font-montserrat font-semibold text-gray-800">
                           Send as Gift
                         </h3>
                         <p className="text-sm text-gray-600">
@@ -725,7 +729,8 @@ const CheckoutPage = () => {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <label className="block text-sm font-semibold text-gray-700 mb-2">
-                            Recipient Name <span className="text-red-500">*</span>
+                            Recipient Name{" "}
+                            <span className="text-red-500">*</span>
                           </label>
                           <input
                             type="text"
@@ -779,7 +784,7 @@ const CheckoutPage = () => {
                     Personal Details
                   </h2>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-montserrat ">
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">
                         Full Name <span className="text-red-500">*</span>
@@ -788,7 +793,7 @@ const CheckoutPage = () => {
                         {...register("name", { required: "Name is required" })}
                         type="text"
                         placeholder="Enter your full name"
-                        className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
+                        className="font-montserrat w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
                       />
                       {errors.name && (
                         <p className="text-red-500 text-sm mt-1">
@@ -847,9 +852,9 @@ const CheckoutPage = () => {
                 </div>
 
                 {isAuthenticated &&
-                  userProfile &&
-                  userProfile.addresses?.length > 0 &&
-                  !useManualAddress ? (
+                userProfile &&
+                userProfile.addresses?.length > 0 &&
+                !useManualAddress ? (
                   <div className="bg-white p-6 rounded-xl shadow-sm">
                     <div className="flex items-center justify-between mb-4">
                       <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
@@ -864,21 +869,24 @@ const CheckoutPage = () => {
                       </button>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-montserrat">
                       {userProfile.addresses.map((address) => (
                         <div
                           key={address._id}
                           onClick={() => handleAddressSelect(address._id)}
-                          className={`border-1 rounded-xl p-4 cursor-pointer transition-all ${selectedAddressId === address._id
-                            ? "border-[#C76F3B] bg-orange-50 shadow-md"
-                            : "border-gray-200 hover:border-[#C76F3B] hover:shadow-sm"
-                            }`}>
-                          <div className="flex items-start gap-3">
+                          className={`border-1 rounded-xl p-4 cursor-pointer transition-all ${
+                            selectedAddressId === address._id
+                              ? "border-[#C76F3B] bg-orange-50 shadow-md"
+                              : "border-gray-200 hover:border-[#C76F3B] hover:shadow-sm"
+                          }`}>
+                          <div className="flex items-start gap-3 font-montserrat">
                             <div className="mt-1">
                               <input
                                 type="radio"
                                 checked={selectedAddressId === address._id}
-                                onChange={() => handleAddressSelect(address._id)}
+                                onChange={() =>
+                                  handleAddressSelect(address._id)
+                                }
                                 className="w-4 h-4 text-[#C76F3B] focus:ring-[#C76F3B]"
                               />
                             </div>
@@ -907,13 +915,17 @@ const CheckoutPage = () => {
 
                                 <div className="grid grid-cols-2 gap-2 pt-2">
                                   <div>
-                                    <p className="text-xs text-gray-500">City</p>
+                                    <p className="text-xs text-gray-500">
+                                      City
+                                    </p>
                                     <p className="text-gray-800 font-medium truncate">
                                       {address.city}
                                     </p>
                                   </div>
                                   <div>
-                                    <p className="text-xs text-gray-500">State</p>
+                                    <p className="text-xs text-gray-500">
+                                      State
+                                    </p>
                                     <p className="text-gray-800 font-medium truncate">
                                       {address.state}
                                     </p>
@@ -978,7 +990,7 @@ const CheckoutPage = () => {
                       </h2>
                     )}
 
-                    <div className="space-y-4">
+                    <div className="space-y-4 font-montserrat">
                       <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
                           Street Address <span className="text-red-500">*</span>
@@ -1106,10 +1118,11 @@ const CheckoutPage = () => {
                       <button
                         type="button"
                         onClick={handleSameAsDeliveryToggle}
-                        className={`text-sm font-medium px-4 py-2 rounded-lg transition-all ${sameAsDeliveryAddress
-                          ? "bg-[#C76F3B] text-white"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                          }`}>
+                        className={`text-sm font-medium px-4 py-2 rounded-lg transition-all ${
+                          sameAsDeliveryAddress
+                            ? "bg-[#C76F3B] text-white"
+                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        }`}>
                         {sameAsDeliveryAddress
                           ? "Different Address"
                           : "✓ Same as Above"}
@@ -1137,10 +1150,11 @@ const CheckoutPage = () => {
                                   onClick={() =>
                                     handleGiftAddressSelect(address._id)
                                   }
-                                  className={`border-1 rounded-xl p-4 cursor-pointer transition-all ${selectedGiftAddressId === address._id
-                                    ? "border-[#C76F3B] bg-orange-50 shadow-md"
-                                    : "border-gray-200 hover:border-[#C76F3B]"
-                                    }`}>
+                                  className={`border-1 rounded-xl p-4 cursor-pointer transition-all ${
+                                    selectedGiftAddressId === address._id
+                                      ? "border-[#C76F3B] bg-orange-50 shadow-md"
+                                      : "border-gray-200 hover:border-[#C76F3B]"
+                                  }`}>
                                   <div className="flex items-start gap-3">
                                     <input
                                       type="radio"
@@ -1173,120 +1187,122 @@ const CheckoutPage = () => {
                         {(!isAuthenticated ||
                           useManualGiftAddress ||
                           !userProfile?.addresses?.length) && (
-                            <div className="space-y-4">
+                          <div className="space-y-4">
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                Street Address{" "}
+                                <span className="text-red-500">*</span>
+                              </label>
+                              <input
+                                {...register("gift_street", {
+                                  required:
+                                    isGift && !sameAsDeliveryAddress
+                                      ? "Gift street address is required"
+                                      : false,
+                                })}
+                                type="text"
+                                placeholder="House No., Building Name, Street"
+                                className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
+                              />
+                              {errors.gift_street && (
+                                <p className="text-red-500 text-sm mt-1">
+                                  {errors.gift_street.message}
+                                </p>
+                              )}
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                  Street Address{" "}
+                                  PIN Code{" "}
                                   <span className="text-red-500">*</span>
                                 </label>
                                 <input
-                                  {...register("gift_street", {
+                                  {...register("gift_zipcode", {
                                     required:
                                       isGift && !sameAsDeliveryAddress
-                                        ? "Gift street address is required"
+                                        ? "PIN code is required"
                                         : false,
+                                    pattern: {
+                                      value: /^[0-9]{6}$/,
+                                      message: "Enter valid 6-digit PIN code",
+                                    },
                                   })}
                                   type="text"
-                                  placeholder="House No., Building Name, Street"
+                                  placeholder="560001"
+                                  maxLength="6"
+                                  value={giftPincode}
+                                  onChange={(e) => {
+                                    const value = e.target.value.replace(
+                                      /\D/g,
+                                      "",
+                                    );
+                                    setGiftPincode(value);
+                                    setValue("gift_zipcode", value);
+                                  }}
                                   className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
                                 />
-                                {errors.gift_street && (
-                                  <p className="text-red-500 text-sm mt-1">
-                                    {errors.gift_street.message}
+                                {loadingGiftPincode && (
+                                  <p className="text-sm text-blue-600 mt-1">
+                                    📍 Fetching location...
                                   </p>
                                 )}
                               </div>
 
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    PIN Code <span className="text-red-500">*</span>
-                                  </label>
-                                  <input
-                                    {...register("gift_zipcode", {
-                                      required:
-                                        isGift && !sameAsDeliveryAddress
-                                          ? "PIN code is required"
-                                          : false,
-                                      pattern: {
-                                        value: /^[0-9]{6}$/,
-                                        message: "Enter valid 6-digit PIN code",
-                                      },
-                                    })}
-                                    type="text"
-                                    placeholder="560001"
-                                    maxLength="6"
-                                    value={giftPincode}
-                                    onChange={(e) => {
-                                      const value = e.target.value.replace(
-                                        /\D/g,
-                                        ""
-                                      );
-                                      setGiftPincode(value);
-                                      setValue("gift_zipcode", value);
-                                    }}
-                                    className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
-                                  />
-                                  {loadingGiftPincode && (
-                                    <p className="text-sm text-blue-600 mt-1">
-                                      📍 Fetching location...
-                                    </p>
-                                  )}
-                                </div>
+                              <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                  City <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                  {...register("gift_city", {
+                                    required:
+                                      isGift && !sameAsDeliveryAddress
+                                        ? "City is required"
+                                        : false,
+                                  })}
+                                  type="text"
+                                  placeholder="Bangalore"
+                                  className="w-full px-4 py-3 1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
+                                />
+                              </div>
 
-                                <div>
-                                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    City <span className="text-red-500">*</span>
-                                  </label>
-                                  <input
-                                    {...register("gift_city", {
-                                      required:
-                                        isGift && !sameAsDeliveryAddress
-                                          ? "City is required"
-                                          : false,
-                                    })}
-                                    type="text"
-                                    placeholder="Bangalore"
-                                    className="w-full px-4 py-3 1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
-                                  />
-                                </div>
+                              <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                  State <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                  {...register("gift_state", {
+                                    required:
+                                      isGift && !sameAsDeliveryAddress
+                                        ? "State is required"
+                                        : false,
+                                  })}
+                                  type="text"
+                                  placeholder="Karnataka"
+                                  className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
+                                />
+                              </div>
 
-                                <div>
-                                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    State <span className="text-red-500">*</span>
-                                  </label>
-                                  <input
-                                    {...register("gift_state", {
-                                      required:
-                                        isGift && !sameAsDeliveryAddress
-                                          ? "State is required"
-                                          : false,
-                                    })}
-                                    type="text"
-                                    placeholder="Karnataka"
-                                    className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
-                                  />
-                                </div>
-
-                                <div>
-                                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    Country <span className="text-red-500">*</span>
-                                  </label>
-                                  <input
-                                    {...register("gift_country", {
-                                      required:
-                                        isGift && !sameAsDeliveryAddress
-                                          ? "Country is required"
-                                          : false,
-                                    })}
-                                    type="text"
-                                    placeholder="India"
-                                    className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
-                                  />
-                                </div>
+                              <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                  Country{" "}
+                                  <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                  {...register("gift_country", {
+                                    required:
+                                      isGift && !sameAsDeliveryAddress
+                                        ? "Country is required"
+                                        : false,
+                                  })}
+                                  type="text"
+                                  placeholder="India"
+                                  className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
+                                />
                               </div>
                             </div>
-                          )}
+                          </div>
+                        )}
 
                         {isAuthenticated &&
                           !useManualGiftAddress &&
@@ -1304,7 +1320,7 @@ const CheckoutPage = () => {
                 )}
 
                 <div className="bg-white p-6 rounded-xl shadow-sm">
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-3 font-montserrat">
                     <input
                       type="checkbox"
                       checked={isChecked}
@@ -1330,7 +1346,7 @@ const CheckoutPage = () => {
                   </div>
                 </div>
 
-                <div className="flex justify-center mt-4">
+                <div className="flex justify-center mt-4 font-montserrat">
                   <button
                     type="submit"
                     disabled={loading || !isChecked}
@@ -1346,7 +1362,7 @@ const CheckoutPage = () => {
                   </button>
                 </div>
 
-                <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+                <div className="flex items-center justify-center gap-2 text-sm text-gray-500 font-montserrat">
                   <svg
                     className="w-4 h-4"
                     fill="currentColor"
@@ -1368,7 +1384,7 @@ const CheckoutPage = () => {
                   <h2 className="text-xl font-bold text-gray-800">
                     Order Summary
                   </h2>
-                  <div className="bg-[#C76F3B] text-white px-3 py-1 rounded-full text-sm font-semibold">
+                  <div className="bg-[#C76F3B] text-white px-3 py-1 rounded-full text-sm font-montserrat font-semibold">
                     {cartItems.reduce((a, b) => a + b.qty, 0)}{" "}
                     {cartItems.length === 1 ? "items" : "items"}
                   </div>
@@ -1380,7 +1396,7 @@ const CheckoutPage = () => {
                     .map((item) => (
                       <div
                         key={item._id}
-                        className="flex gap-3 pb-3 border-b border-gray-200 last:border-0">
+                        className="flex gap-3 pb-3 border-b border-gray-200 last:border-0 font-montserrat">
                         <div className="relative flex-shrink-0">
                           <img
                             src={item.coverImage}
@@ -1400,11 +1416,12 @@ const CheckoutPage = () => {
                               <p className="text-sm font-bold text-gray-800">
                                 ₹{(item.newPrice * item.qty).toFixed(2)}
                               </p>
-                              {item.oldPrice && item.oldPrice > item.newPrice && (
-                                <p className="text-xs text-gray-500 line-through">
-                                  ₹{(item.oldPrice * item.qty).toFixed(2)}
-                                </p>
-                              )}
+                              {item.oldPrice &&
+                                item.oldPrice > item.newPrice && (
+                                  <p className="text-xs text-gray-500 line-through">
+                                    ₹{(item.oldPrice * item.qty).toFixed(2)}
+                                  </p>
+                                )}
                             </div>
                           </div>
                         </div>
@@ -1412,8 +1429,8 @@ const CheckoutPage = () => {
                     ))}
                 </div>
 
-                <div className="space-y-3 pt-4 border-t-2 border-gray-200">
-                  <div className="flex justify-between text-gray-600">
+                <div className="space-y-3 pt-4 border-t-2 border-gray-200 font-montserrat">
+                  <div className="flex justify-between text-gray-600 font-montserrat">
                     <span>Subtotal</span>
                     <span className="font-medium">
                       ₹{originalTotal.toFixed(2)}
@@ -1485,7 +1502,9 @@ const CheckoutPage = () => {
                   <div className="mt-4 p-3 bg-orange-50 rounded-lg border border-orange-200">
                     <div className="flex items-center gap-2 text-sm text-orange-800">
                       <FaGift className="text-[#C76F3B] flex-shrink-0" />
-                      <span className="font-medium">Gift wrapping included!</span>
+                      <span className="font-medium">
+                        Gift wrapping included!
+                      </span>
                     </div>
                   </div>
                 )}

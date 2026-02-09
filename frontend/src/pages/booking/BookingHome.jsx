@@ -197,13 +197,7 @@ const BookingHome = () => {
           />
         </div>
       </section>
-      <div className="absolute inset-0 z-0 pointer-events-none h-full w-full flex flex-col items-end">
-        <img
-          ref={decorRef}
-          src="/flower.webp"
-          className="sita-publications-decor sita-decor"
-        />
-      </div>
+      <div className="absolute inset-0 z-0 pointer-events-none h-full w-full flex flex-col items-end"></div>
       <div className="relative z-10">
         <SitaBreadcrumb
           items={[

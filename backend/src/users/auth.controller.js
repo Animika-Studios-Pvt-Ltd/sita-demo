@@ -162,8 +162,8 @@ exports.setupMFA = async (req, res) => {
       console.log('⚠️ MFA secret already exists, reusing existing secret');
       const otpauth_url = speakeasy.otpauthURL({
         secret: adminUser.mfaSecret,
-        label: `BookStore Admin (${adminUser.username})`,
-        issuer: 'BookStore',
+        label: `Sita Admin (${adminUser.username})`, // Reset label
+        issuer: 'Sita',
         encoding: 'base32'
       });
       const qrCodeUrl = await QRCode.toDataURL(otpauth_url);
@@ -178,8 +178,8 @@ exports.setupMFA = async (req, res) => {
 
     console.log('✅ Generating new MFA secret (first time setup)');
     const secret = speakeasy.generateSecret({
-      name: `BookStore Admin (${adminUser.username})`,
-      issuer: 'BookStore',
+      name: `Sita Admin (${adminUser.username})`,
+      issuer: 'Sita',
       length: 32,
     });
     console.log('✅ Secret generated');

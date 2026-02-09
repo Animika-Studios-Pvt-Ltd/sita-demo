@@ -62,7 +62,7 @@ li {
 
 .book-buttons button {
   flex: 1;
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat-Medium";
   padding: 10px 0;
   border: none;
   border-radius: 5px;
@@ -308,7 +308,7 @@ li {
 }
 
 .rv-card .current-price {
-  font-family: "Figtree-Light" !important;
+  font-family: "Montserrat-Regular";
   font-size: 20px;
   color: #99301f;
   margin-right: 5px;

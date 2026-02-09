@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
 import { useFetchAllBooksQuery } from "../../redux/features/books/booksApi";
 import { useDispatch, useSelector } from "react-redux";
@@ -152,7 +151,7 @@ const Publications = () => {
                     data-aos="fade-up"
                     data-aos-duration="1000">
                     <h3
-                      className="text-lg md:text-lg font-medium text-gray-700 mb-2 font-figtree break-words"
+                      className="text-lg md:text-lg font-medium text-gray-700 mb-2 font-montserrat break-words"
                       style={{
                         height: "3rem",
                         overflow: "hidden",
@@ -167,17 +166,17 @@ const Publications = () => {
                     {!isSuspended && (
                       <div className="inline-flex justify-center items-center gap-2 w-full flex-wrap md:flex-nowrap mb-3">
                         {book?.oldPrice > book?.newPrice && (
-                          <span className="text-gray-500 line-through text-base sm:text-lg md:text-lg lg:text-xl font-figtree font-light">
+                          <span className="text-gray-500 line-through text-base sm:text-lg md:text-lg lg:text-xl font-montserrat font-light">
                             ₹{book?.oldPrice}
                           </span>
                         )}
 
-                        <span className="text-[#993333] font-figtree font-light text-lg sm:text-xl md:text-xl lg:text-2xl font-semibold">
+                        <span className="text-[#993333] font-montserrat font-light text-lg sm:text-xl md:text-xl lg:text-2xl font-semibold">
                           ₹{book?.newPrice}
                         </span>
 
                         {book?.oldPrice > book?.newPrice && (
-                          <span className="text-sm sm:text-base md:text-lg lg:text-xl bg-[#993333] text-white px-1 py-0.5 font-figtree font-light rounded-sm">
+                          <span className="text-sm sm:text-base md:text-lg lg:text-xl bg-[#993333] text-white px-1 py-0.5 font-montserrat font-light rounded-sm">
                             {Math.round(
                               ((book.oldPrice - book.newPrice) /
                                 book.oldPrice) *
@@ -191,7 +190,7 @@ const Publications = () => {
 
                     {isSuspended && (
                       <div className="mb-3 py-1">
-                        <span className="text-[#993333] font-figtree font-medium text-base">
+                        <span className="text-[#993333] font-montserrat font-medium text-base">
                           Currently Out of Stock
                         </span>
                       </div>
@@ -220,13 +219,13 @@ const Publications = () => {
                         <>
                           <button
                             onClick={() => navigate("/cart")}
-                            className="flex-1 flex items-center justify-center gap-1 px-2 sm:px-3 py-2 text-xs sm:text-sm bg-[#C76F3B] text-white rounded hover:bg-[#A35427] transition-colors min-w-[100px]">
+                            className="flex-1 flex font-montserrat font-medium items-center justify-center gap-1 px-2 sm:px-3 py-2 text-xs sm:text-sm bg-[#C76F3B] text-white rounded hover:bg-[#A35427] transition-colors min-w-[100px]">
                             <StorefrontOutlinedIcon fontSize="small" />
                             Go to Cart
                           </button>
                           <button
                             onClick={() => handleBuyNow(book)}
-                            className="flex-1 flex items-center justify-center gap-1 px-2 sm:px-3 py-2 text-xs sm:text-sm bg-[#993333] text-white rounded hover:bg-[#662222] transition-colors min-w-[100px]">
+                            className="flex-1 flex font-montserrat font-medium items-center justify-center gap-1 px-2 sm:px-3 py-2 text-xs sm:text-sm bg-[#993333] text-white rounded hover:bg-[#662222] transition-colors min-w-[100px]">
                             <ShoppingBagOutlinedIcon fontSize="small" />
                             Buy Now
                           </button>
@@ -235,13 +234,13 @@ const Publications = () => {
                         <>
                           <button
                             onClick={() => handleAddToCart(book)}
-                            className="flex-1 flex items-center justify-center gap-1 px-2 sm:px-3 py-2 text-xs sm:text-sm bg-[#C76F3B] text-white rounded hover:bg-[#A35427] transition-colors min-w-[100px]">
+                            className="flex-1 flex font-montserrat font-medium items-center justify-center gap-1 px-2 sm:px-3 py-2 text-xs sm:text-sm bg-[#C76F3B] text-white rounded hover:bg-[#A35427] transition-colors min-w-[100px]">
                             <ShoppingCartOutlinedIcon fontSize="small" />
                             Add to Cart
                           </button>
                           <button
                             onClick={() => handleBuyNow(book)}
-                            className="flex-1 flex items-center justify-center gap-1 px-2 sm:px-3 py-2 text-xs sm:text-sm bg-[#993333] text-white rounded hover:bg-[#662222] transition-colors min-w-[100px]">
+                            className="flex-1 flex font-montserrat font-medium items-center justify-center gap-1 px-2 sm:px-3 py-2 text-xs sm:text-sm bg-[#993333] text-white rounded hover:bg-[#662222] transition-colors min-w-[100px]">
                             <ShoppingBagOutlinedIcon fontSize="small" />
                             Buy Now
                           </button>

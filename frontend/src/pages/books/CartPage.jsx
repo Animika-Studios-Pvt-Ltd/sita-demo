@@ -29,10 +29,9 @@ const CartPage = () => {
   const giftDetails = useSelector((state) => state.cart.giftDetails);
   const dispatch = useDispatch();
   const [isGift, setIsGift] = useState(
-    Boolean(giftDetails?.to || giftDetails?.from || giftDetails?.message)
+    Boolean(giftDetails?.to || giftDetails?.from || giftDetails?.message),
   );
   const { data: allBooks } = useFetchAllBooksQuery();
-
 
   useEffect(() => {
     AOS.init({
@@ -45,7 +44,7 @@ const CartPage = () => {
 
   useEffect(() => {
     setIsGift(
-      Boolean(giftDetails?.to || giftDetails?.from || giftDetails?.message)
+      Boolean(giftDetails?.to || giftDetails?.from || giftDetails?.message),
     );
   }, [giftDetails]);
 
@@ -64,7 +63,7 @@ const CartPage = () => {
               stock: book.stock,
               newPrice: book.newPrice,
               oldPrice: book.oldPrice,
-            })
+            }),
           );
         }
       });
@@ -73,11 +72,11 @@ const CartPage = () => {
 
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.newPrice * item.qty,
-    0
+    0,
   );
   const originalTotal = cartItems.reduce(
     (acc, item) => acc + (item.oldPrice || item.newPrice) * item.qty,
-    0
+    0,
   );
   const discount = originalTotal - subtotal;
   const finalAmount = subtotal;
@@ -122,7 +121,6 @@ const CartPage = () => {
       console.error("Error sharing:", err);
     }
   };
-
 
   const safeGift = (overrides = {}) => ({
     to: giftDetails?.to || "",
@@ -182,7 +180,8 @@ const CartPage = () => {
                       </p>
                       <div className="mt-1 flex flex-col items-center sm:items-start">
                         <div className="inline-flex justify-center sm:justify-start items-center gap-2 w-full flex-wrap md:flex-nowrap">
-                          {Number(product?.oldPrice) > Number(product?.newPrice) && (
+                          {Number(product?.oldPrice) >
+                            Number(product?.newPrice) && (
                             <span className="text-gray-500 line-through text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px] font-Figtree font-regular">
                               ₹{product?.oldPrice}
                             </span>
@@ -190,10 +189,13 @@ const CartPage = () => {
                           <span className="text-black font-Figtree font-bold text-[14px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[18px] flex items-center">
                             ₹{product?.newPrice}
                           </span>
-                          {Number(product?.oldPrice) > Number(product?.newPrice) && (
+                          {Number(product?.oldPrice) >
+                            Number(product?.newPrice) && (
                             <span className="text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px] text-green-600 font-Figtree font-bold">
                               {Math.round(
-                                ((product.oldPrice - product.newPrice) / product.oldPrice) * 100
+                                ((product.oldPrice - product.newPrice) /
+                                  product.oldPrice) *
+                                  100,
                               )}
                               % off
                             </span>
@@ -201,10 +203,11 @@ const CartPage = () => {
                         </div>
                       </div>
                       <p
-                        className={`mt-1 text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px] font-Figtree font-regular ${product.stock <= 10
-                          ? "text-[#993333]"
-                          : "text-green-600"
-                          }`}>
+                        className={`mt-1 text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px] font-Figtree font-regular ${
+                          product.stock <= 10
+                            ? "text-[#993333]"
+                            : "text-green-600"
+                        }`}>
                         {product.stock <= 10
                           ? `In Stock - Only ${product.stock} left`
                           : "In Stock"}
@@ -239,10 +242,11 @@ const CartPage = () => {
                             size="small"
                             onClick={() => handleQtyChange(product, "increase")}
                             disabled={product.qty >= product.stock}
-                            className={`text-gray-700 transition p-1 ${product.qty >= product.stock
-                              ? "opacity-50"
-                              : "hover:bg-gray-200"
-                              }`}>
+                            className={`text-gray-700 transition p-1 ${
+                              product.qty >= product.stock
+                                ? "opacity-50"
+                                : "hover:bg-gray-200"
+                            }`}>
                             <AddOutlinedIcon fontSize="small" />
                           </IconButton>
                         </div>
@@ -263,8 +267,7 @@ const CartPage = () => {
                   data-aos-duration="1600">
                   <Link
                     to="/publications"
-                    className="mt-0 flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] text-white px-6 py-2 no-underline rounded-md font-medium transition-colors duration-300 text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px]"
-                  >
+                    className="mt-0 flex font-montserrat font-medium items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] text-white px-6 py-2 no-underline rounded-md transition-colors duration-300 text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px]">
                     <ArrowBackOutlinedIcon fontSize="small" />
                     CONTINUE SHOPPING
                   </Link>
@@ -292,7 +295,7 @@ const CartPage = () => {
                 data-aos="zoom-in"
                 data-aos-duration="1800">
                 <div className="flex justify-center">
-                  <label className="flex items-center gap-2 text-[14px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[18px] font-Figtree font-regular">
+                  <label className="flex font-montserrat font-regular items-center gap-2 text-[14px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[18px] font-Figtree font-regular">
                     <input
                       type="checkbox"
                       checked={isGift}
@@ -304,7 +307,11 @@ const CartPage = () => {
                         } else {
                           if (!giftDetails) {
                             dispatch(
-                              saveGiftDetails({ to: "", from: "", message: "" })
+                              saveGiftDetails({
+                                to: "",
+                                from: "",
+                                message: "",
+                              }),
                             );
                           }
                         }
@@ -328,7 +335,7 @@ const CartPage = () => {
                       value={giftDetails?.to || ""}
                       onChange={(e) =>
                         dispatch(
-                          saveGiftDetails(safeGift({ to: e.target.value }))
+                          saveGiftDetails(safeGift({ to: e.target.value })),
                         )
                       }
                       fullWidth
@@ -340,7 +347,7 @@ const CartPage = () => {
                       value={giftDetails?.from || ""}
                       onChange={(e) =>
                         dispatch(
-                          saveGiftDetails(safeGift({ from: e.target.value }))
+                          saveGiftDetails(safeGift({ from: e.target.value })),
                         )
                       }
                       fullWidth
@@ -354,7 +361,9 @@ const CartPage = () => {
                       value={giftDetails?.message || ""}
                       onChange={(e) =>
                         dispatch(
-                          saveGiftDetails(safeGift({ message: e.target.value }))
+                          saveGiftDetails(
+                            safeGift({ message: e.target.value }),
+                          ),
                         )
                       }
                       fullWidth
@@ -370,18 +379,18 @@ const CartPage = () => {
                 <h3 className="text-[16px] sm:text-[20px] md:text-[22px] lg:text-[23px] xl:text-[23px] font-playfair font-regular mb-3 mt-0">
                   Price Details
                 </h3>
-                <div className="flex justify-between text-[14px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[18px] text-gray-700">
+                <div className="flex font-montserrat font-medium justify-between text-[14px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[18px] text-gray-700">
                   <span>
                     Price ({cartItems.reduce((a, b) => a + b.qty, 0)} items)
                   </span>
                   <span>₹ {originalTotal.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between text-green-600 text-[14px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[18px]">
+                <div className="flex font-montserrat justify-between text-green-600 text-[14px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[18px]">
                   <span>Discount</span>
                   <span>- ₹ {discount.toFixed(2)}</span>
                 </div>
                 <hr />
-                <div className="flex justify-between font-semibold text-gray-900 text-[14px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[18px]">
+                <div className="flex font-montserrat font-medium justify-between font-semibold text-gray-900 text-[14px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[18px]">
                   <span>Total Amount</span>
                   <span>₹ {finalAmount.toFixed(2)}</span>
                 </div>
@@ -390,7 +399,7 @@ const CartPage = () => {
                 </p>
                 <Link
                   to="/checkout"
-                  className="mt-0 block w-full bg-[#C76F3B] hover:bg-[#A35427] text-white px-6 py-2 no-underline rounded-md text-center font-medium transition-colors duration-300 text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px]">
+                  className="mt-0 block font-montserrat font-medium w-full bg-[#C76F3B] hover:bg-[#A35427] text-white px-6 py-2 no-underline rounded-md text-center transition-colors duration-300 text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px]">
                   PROCEED TO CHECKOUT
                 </Link>
               </div>
@@ -416,11 +425,9 @@ const CartPage = () => {
             </p>
             <Link
               to="/publications"
-              className="inline-flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] no-underline text-white px-5 py-2 rounded-md text-center font-medium transition-colors duration-300 text-base sm:text-lg"
-            >
+              className="inline-flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] no-underline text-white px-5 py-2 rounded-md text-center font-medium transition-colors duration-300 text-base sm:text-lg">
               CONTINUE SHOPPING
             </Link>
-
           </div>
         )}
       </div>

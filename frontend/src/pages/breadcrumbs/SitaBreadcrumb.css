@@ -2,7 +2,9 @@
   font-family: "PTSerif-Regular";
   font-style: normal;
   font-weight: 400;
-  src: local("PTSerif-Regular"), local("PTSerif-Regular"),
+  src:
+    local("PTSerif-Regular"),
+    local("PTSerif-Regular"),
     url("fonts/PTSerif-Regular.ttf") format("truetype");
 }
 
@@ -10,7 +12,9 @@
   font-family: "Montserrat-Regular";
   font-style: normal;
   font-weight: 400;
-  src: local("Montserrat-Regular"), local("Montserrat-Regular"),
+  src:
+    local("Montserrat-Regular"),
+    local("Montserrat-Regular"),
     url("fonts/Montserrat-Regular.ttf") format("truetype");
 }
 
@@ -18,7 +22,9 @@
   font-family: "Montserrat-Light";
   font-style: normal;
   font-weight: 300;
-  src: local("Montserrat-Light"), local("Montserrat-Light"),
+  src:
+    local("Montserrat-Light"),
+    local("Montserrat-Light"),
     url("fonts/Montserrat-Light.ttf") format("truetype");
 }
 
@@ -48,7 +54,7 @@ nav[aria-label="breadcrumb"] {
   white-space: nowrap;
 }
 
-.breadcrumb-item+.breadcrumb-item::before {
+.breadcrumb-item + .breadcrumb-item::before {
   content: ">";
   color: #2e2e2e;
   padding: 0 4px;
@@ -75,11 +81,29 @@ nav[aria-label="breadcrumb"] {
     margin: 8px auto;
   }
 
-  .breadcrumb-item {
-    font-size: 14px;
+  .breadcrumb {
+    flex-wrap: nowrap;
+    overflow: hidden;
   }
 
-  .breadcrumb-item+.breadcrumb-item::before {
+  .breadcrumb-item {
+    font-size: 14px;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .breadcrumb-item a {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+  }
+
+  .breadcrumb-item + .breadcrumb-item::before {
     padding: 0 3px;
   }
 }
@@ -98,7 +122,7 @@ nav[aria-label="breadcrumb"] {
     font-size: 13px;
   }
 
-  .breadcrumb-item+.breadcrumb-item::before {
+  .breadcrumb-item + .breadcrumb-item::before {
     padding: 0 2px;
   }
 }
@@ -117,7 +141,7 @@ nav[aria-label="breadcrumb"] {
     font-size: 12px;
   }
 
-  .breadcrumb-item+.breadcrumb-item::before {
+  .breadcrumb-item + .breadcrumb-item::before {
     padding: 0 2px;
   }
 }
@@ -131,7 +155,7 @@ nav[aria-label="breadcrumb"] {
     font-size: 11px;
   }
 
-  .breadcrumb-item+.breadcrumb-item::before {
+  .breadcrumb-item + .breadcrumb-item::before {
     padding: 0 1px;
   }
 }
