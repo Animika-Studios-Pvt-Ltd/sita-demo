@@ -32,15 +32,12 @@ const ArticleDetailPage = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 1000,
-      easing: "ease-out-cubic",
-      once: false,
-      mirror: true,
-      offset: 120,
-      debounceDelay: 50,
+      duration: 1200,
+      easing: "ease-in-out",
+      once: true,
+
     });
 
-    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
 
   useEffect(() => {
@@ -127,12 +124,13 @@ const ArticleDetailPage = () => {
         <div className="blog-details-inner-hero-image">
           <img
             src={
-              article.image?.startsWith("http")
-                ? article.image
-                : `${BACKEND_BASE_URL}${article.image}`
+              article.image
+                ? article.image.startsWith("http")
+                  ? article.image
+                  : `${BACKEND_BASE_URL}${article.image}`
+                : "/about-banner.webp"
             }
             alt={article.title}
-            className="blog-details-inner-hero-image"
           />
         </div>
       </section>
@@ -160,15 +158,15 @@ const ArticleDetailPage = () => {
             <img
               src="/sita-motif.webp"
               alt="Sita Motif"
-              className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+              className="mx-auto mt-1 mb-8"
             />
           </div>
 
           <div
-            className="max-w-8xl mx-auto px-0 py-6 grid gap-10 lg:grid-cols-1 xl:grid-cols-4"
+            className="w-full px-0 py-6"
             data-aos="fade-up"
             data-aos-duration="1200">
-            <div className="col-span-1 xl:col-span-3">
+            <div className="w-full">
               <p className="flex items-center gap-2 text-gray-400 text-md font-regular mt-0 mb-2">
                 <CalendarDays className="w-5 h-5" />
                 {new Date(article.createdAt).toLocaleDateString(undefined, {
@@ -185,67 +183,7 @@ const ArticleDetailPage = () => {
               />
             </div>
 
-            {window.innerWidth >= 1280 && (
-              <aside
-                className="col-span-1"
-                data-aos="fade-left"
-                data-aos-duration="1300">
-                <div className="bg-[#f3e7db] border-1 border-gray-500 rounded-[6px] p-4 max-h-[700px] min-h-[540px] flex flex-col">
-                  <h3 className="text-[20px] sm:text-[24px] md:text-[28px] font-Figtree font-medium text-gray-900 font-[400] mb-4">
-                    Featured Books
-                  </h3>
-                  {activeBooks.length > 0 && (
-                    <div className="flex flex-col items-center text-center rounded-lg overflow-hidden relative flex-grow">
-                      <div
-                        className={`flex flex-col items-center absolute transition-all duration-700 ease-in-out transform will-change-transform ${fade ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
-                        <>
-                          <Link
-                            to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`}
-                            className="no-underline">
-                            <img
-                              src={
-                                activeBooks[currentIndex]?.coverImage ||
-                                "/placeholder-book.jpg"
-                              }
-                              alt={activeBooks[currentIndex]?.title}
-                              className="w-40 h-58 object-cover mb-4 cursor-pointer hover:scale-105 transition-transform duration-500"
-                            />
-                          </Link>
-                          <Link
-                            to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`}
-                            className="no-underline">
-                            <h4 className="text-[16px] sm:text-[18px] md:text-[20px] text-black font-Figtree mb-3 hover:text-[#993333] transition-colors duration-300 cursor-pointer">
-                              {activeBooks[currentIndex]?.title}
-                            </h4>
-                          </Link>
-                        </>
-                      </div>
 
-                      <div className="flex items-center justify-center gap-6 mt-auto relative z-10">
-                        <button
-                          onClick={handlePrev}
-                          className="w-8 h-8 flex items-center justify-center border border-black rounded-full group hover:bg-gray-100">
-                          <ArrowLeft
-                            size={20}
-                            strokeWidth={2}
-                            className="text-black transition-colors duration-300 group-hover:text-red-500"
-                          />
-                        </button>
-                        <button
-                          onClick={handleNext}
-                          className="w-8 h-8 flex items-center justify-center border border-black rounded-full group hover:bg-gray-100">
-                          <ArrowRight
-                            size={20}
-                            strokeWidth={2}
-                            className="text-black transition-colors duration-300 group-hover:text-red-500"
-                          />
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </aside>
-            )}
           </div>
         </div>
       </div>
