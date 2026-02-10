@@ -2,6 +2,23 @@ const Page = require("./pages.model");
 const Event = require("../events/event.model"); // Import Event model
 const { uploadToCloudinary } = require("../config/cloudinary");
 
+const RESERVED_SLUGS = [
+  "about", "ayurveda-nutrition", "kosha-counseling", "release-karmic-patterns",
+  "soul-curriculum", "yoga-therapy", "corporate-training", "group-sessions",
+  "private-sessions", "shakthi-leadership", "teacher-training", "podcasts",
+  "privacy-policy", "disclaimer", "contact", "consult-sita", "engage-sita",
+  "study-with-sita", "publications", "store", "books", "cart", "checkout",
+  "ebook", "my-orders", "blogs", "articles", "booking", "my-bookings",
+  "events", "my-profile", "auth", "admin", "login", "register", "cms"
+];
+
+const isReservedSlug = (slug) => {
+  if (!slug) return false;
+  // Check exact match or if it starts with reserved slug (e.g. booking/something)
+  // But usually CMS pages are just /slug.
+  return RESERVED_SLUGS.includes(slug.toLowerCase());
+};
+
 // Helper to sync page image to event
 async function syncEventImage(page) {
   if (!page || !page.slug) return;
@@ -80,6 +97,10 @@ async function createPage(req, res) {
     const data = JSON.parse(req.body.data);
     const files = req.files;
 
+    if (isReservedSlug(data.slug)) {
+      return res.status(400).json({ error: "This page name is reserved for system use." });
+    }
+
     if (files?.bannerImage?.[0]) {
       data.bannerImage = await handleImageUpload(files.bannerImage[0], "Banner Image");
     }
@@ -129,6 +150,11 @@ async function updatePage(req, res) {
 
     const page = await Page.findById(req.params.id);
     if (!page) return res.status(404).json({ error: "Page not found" });
+
+    // Validate slug if it is being changed
+    if (data.slug && data.slug !== page.slug && isReservedSlug(data.slug)) {
+      return res.status(400).json({ error: "This page name is reserved for system use." });
+    }
 
     if (data.deleteBanner) {
       page.bannerImage = null;

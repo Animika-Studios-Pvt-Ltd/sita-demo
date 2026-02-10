@@ -23,6 +23,16 @@ import {
   Mic,
 } from "lucide-react";
 
+const RESERVED_SLUGS = [
+  "about", "ayurveda-nutrition", "kosha-counseling", "release-karmic-patterns",
+  "soul-curriculum", "yoga-therapy", "corporate-training", "group-sessions",
+  "private-sessions", "shakthi-leadership", "teacher-training", "podcasts",
+  "privacy-policy", "disclaimer", "contact", "consult-sita", "engage-sita",
+  "study-with-sita", "publications", "store", "books", "cart", "checkout",
+  "ebook", "my-orders", "blogs", "articles", "booking", "my-bookings",
+  "events", "my-profile", "auth", "admin", "login", "register", "cms"
+];
+
 // Import form components
 import HeroForm from "./forms/HeroForm";
 import FaqForm from "./forms/FaqForm";
@@ -106,6 +116,12 @@ export default function EnhancedCmsEditor() {
     }
 
     const checkSlug = async () => {
+      // 1. Check Reserved Slugs
+      if (RESERVED_SLUGS.includes(pageSlug)) {
+        setSlugStatus("reserved");
+        return;
+      }
+
       setSlugStatus("checking");
       try {
         await api.get(`/api/cms/admin/${pageSlug}`);
@@ -431,7 +447,7 @@ export default function EnhancedCmsEditor() {
                     setPageSlug(e.target.value.toLowerCase().replace(/\s+/g, "-"))
                   }
                   disabled={!!slug}
-                  className={`w-full px-4 py-2 rounded-lg bg-white/70 backdrop-blur-xl border ring-1 ring-black/5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80 ${slugStatus === "taken"
+                  className={`w-full px-4 py-2 rounded-lg bg-white/70 backdrop-blur-xl border ring-1 ring-black/5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80 ${slugStatus === "taken" || slugStatus === "reserved"
                     ? "border-red-400 focus:ring-red-200"
                     : slugStatus === "available"
                       ? "border-emerald-400 focus:ring-emerald-200"
@@ -451,9 +467,9 @@ export default function EnhancedCmsEditor() {
                         Available
                       </span>
                     )}
-                    {slugStatus === "taken" && (
+                    {(slugStatus === "taken" || slugStatus === "reserved") && (
                       <span className="text-red-500 flex items-center gap-1">
-                        Taken
+                        {slugStatus === "reserved" ? "Reserved" : "Taken"}
                       </span>
                     )}
                   </div>
@@ -464,6 +480,11 @@ export default function EnhancedCmsEditor() {
               {slugStatus === "taken" && !slug && (
                 <p className="text-xs text-red-500 mt-1 ml-1">
                   This link is already in use. Please choose another.
+                </p>
+              )}
+              {slugStatus === "reserved" && !slug && (
+                <p className="text-xs text-red-500 mt-1 ml-1">
+                  This page name is reserved for system use.
                 </p>
               )}
               {slugStatus === "available" && !slug && (
@@ -591,18 +612,42 @@ export default function EnhancedCmsEditor() {
 }
 
 function AddSectionButton({ icon: Icon, label, onClick, disabled }) {
+  const [isAdding, setIsAdding] = useState(false);
+
+  const handleClick = () => {
+    if (disabled || isAdding) return;
+
+    setIsAdding(true);
+    onClick();
+
+    // Reset animation state after a short delay to show the effect
+    setTimeout(() => {
+      setIsAdding(false);
+    }, 600);
+  };
+
   return (
     <button
-      onClick={onClick}
-      disabled={disabled}
-      className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border ring-1 ring-black/5 transition-colors duration-200
+      onClick={handleClick}
+      disabled={disabled || isAdding}
+      className={`relative overflow-hidden flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border ring-1 ring-black/5 transition-all duration-300
         ${disabled
           ? "bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed opacity-60"
-          : "bg-white/70 backdrop-blur-xl border-white/70 text-slate-700 hover:bg-white/90 hover:text-[#7A1F2B]"
+          : isAdding
+            ? "bg-[#7A1F2B] text-white border-[#7A1F2B] scale-95 shadow-inner"
+            : "bg-white/70 backdrop-blur-xl border-white/70 text-slate-700 hover:bg-white/90 hover:text-[#7A1F2B] hover:shadow-md hover:-translate-y-0.5"
         }`}
     >
-      <Icon size={16} />
-      {label}
+      <div className={`flex items-center gap-2 transition-all duration-300 ${isAdding ? "opacity-0 translate-y-4 fixed" : "opacity-100 translate-y-0"}`}>
+        <Icon size={16} />
+        {label}
+      </div>
+
+      {isAdding && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+        </div>
+      )}
     </button>
   );
 }
