@@ -158,6 +158,7 @@ async function updatePage(req, res) {
     page.displayLocations = data.displayLocations || page.displayLocations;
     page.content = data.content || page.content;
     page.sections = data.sections || page.sections;
+    page.createdFrom = data.createdFrom || page.createdFrom; // Ensure createdFrom is updated
     page.parentHeader = data.parentHeader || null;
 
     await page.validate();

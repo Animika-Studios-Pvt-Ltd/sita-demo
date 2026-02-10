@@ -50,8 +50,14 @@ export default function CmsPage({ slug: propSlug }) {
       setCms(data);
       if (data) {
         // ✅ REDIRECT TO EVENT PAGE if converted
+        // ✅ REDIRECT TO EVENT PAGE if converted
         if (data.createdFrom === "manage-events" && !window.location.pathname.startsWith("/booking/")) {
           navigate(`/booking/${data.slug}`, { replace: true });
+        }
+
+        // ✅ REDIRECT TO NORMAL PAGE if accessed via booking url but is a normal page
+        if (data.createdFrom === "manage-pages" && window.location.pathname.startsWith("/booking/")) {
+          navigate(`/${data.slug}`, { replace: true });
         }
 
         const formattedSlug = slug ? slug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase()) : "Page";
