@@ -39,6 +39,42 @@ const sanitizeDescription = (html) => {
     .replace(/style="[^"]*"/g, "");
 };
 
+/* ================= TIME FORMAT ================= */
+const formatTimeRange = (start, end) => {
+  if (!start || !end) return "TBA";
+
+  const format = (time) => {
+    const [h, m] = time.split(":").map(Number);
+    const period = h >= 12 ? "PM" : "AM";
+    const hour = h % 12 || 12;
+    return `${hour}:${String(m).padStart(2, "0")} ${period}`;
+  };
+
+  return `${format(start)} – ${format(end)}`;
+};
+
+/* ================= UPCOMING EVENT CHECK ================= */
+const isUpcomingEvent = (event) => {
+  const now = new Date();
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const [y, m, d] = event.date.split("-").map(Number);
+  const eventDate = new Date(y, m - 1, d);
+  eventDate.setHours(0, 0, 0, 0);
+
+  if (eventDate > today) return true;
+  if (eventDate < today) return false;
+
+  const [eh, em] = event.endTime.split(":").map(Number);
+  const eventEnd = new Date();
+  eventEnd.setHours(eh, em, 0, 0);
+
+  return eventEnd > now;
+};
+
+
 export default function SectionRenderer({ section, createdFrom, pageSlug }) {
   useEffect(() => {
     AOS.init({
@@ -113,6 +149,7 @@ function HeroSection({ content, createdFrom, pageSlug }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null);
   const location = useLocation();
+  const [eventStatus, setEventStatus] = useState({ ended: false, soldOut: false });
 
   const {
     title = '',
@@ -139,6 +176,8 @@ function HeroSection({ content, createdFrom, pageSlug }) {
     ];
 
   const handleCtaClick = () => {
+    if (eventStatus.ended || eventStatus.soldOut) return;
+
     if (primaryCta.eventId) {
       setSelectedEventId(primaryCta.eventId);
       setIsModalOpen(true);
@@ -146,6 +185,28 @@ function HeroSection({ content, createdFrom, pageSlug }) {
       window.location.href = primaryCta.href;
     }
   };
+
+  useEffect(() => {
+    if (createdFrom === 'manage-events' && primaryCta.eventId) {
+      const fetchEventStatus = async () => {
+        try {
+          const res = await fetch(`${API_URL}/api/events`);
+          const events = await res.json();
+          const foundEvent = events.find(e => e._id === primaryCta.eventId);
+
+          if (foundEvent) {
+            const ended = !isUpcomingEvent(foundEvent);
+            const soldOut = Number(foundEvent.availability) === 0;
+            setEventStatus({ ended, soldOut });
+          }
+        } catch (err) {
+          console.error("Failed to check event status", err);
+        }
+      };
+      fetchEventStatus();
+    }
+  }, [createdFrom, primaryCta.eventId]);
+
 
   const ctaStyle = {
     backgroundColor: primaryCta.bgColor || "#3b82f6",
@@ -204,10 +265,11 @@ function HeroSection({ content, createdFrom, pageSlug }) {
             <div className="mt-4">
               <button
                 onClick={handleCtaClick}
-                className="px-6 py-3 masterclass-card-btn shadow-md transition hover:-translate-y-1 inline-block"
+                disabled={eventStatus.ended || eventStatus.soldOut}
+                className={`px-6 py-3 masterclass-card-btn shadow-md transition hover:-translate-y-1 inline-block ${eventStatus.ended || eventStatus.soldOut ? 'opacity-50 cursor-not-allowed hover:translate-y-0' : ''}`}
                 style={ctaStyle}
               >
-                {primaryCta.label}
+                {eventStatus.ended ? "Event Ended" : eventStatus.soldOut ? "No Seats Available" : primaryCta.label}
               </button>
             </div>
           )}
@@ -510,40 +572,6 @@ const getCategoryImage = (category) => {
   return image;
 };
 
-/* ================= TIME FORMAT ================= */
-const formatTimeRange = (start, end) => {
-  if (!start || !end) return "TBA";
-
-  const format = (time) => {
-    const [h, m] = time.split(":").map(Number);
-    const period = h >= 12 ? "PM" : "AM";
-    const hour = h % 12 || 12;
-    return `${hour}:${String(m).padStart(2, "0")} ${period}`;
-  };
-
-  return `${format(start)} – ${format(end)}`;
-};
-
-/* ================= UPCOMING EVENT CHECK ================= */
-const isUpcomingEvent = (event) => {
-  const now = new Date();
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const [y, m, d] = event.date.split("-").map(Number);
-  const eventDate = new Date(y, m - 1, d);
-  eventDate.setHours(0, 0, 0, 0);
-
-  if (eventDate > today) return true;
-  if (eventDate < today) return false;
-
-  const [eh, em] = event.endTime.split(":").map(Number);
-  const eventEnd = new Date();
-  eventEnd.setHours(eh, em, 0, 0);
-
-  return eventEnd > now;
-};
 
 function EventsSection({ content }) {
   const [events, setEvents] = useState([]);
