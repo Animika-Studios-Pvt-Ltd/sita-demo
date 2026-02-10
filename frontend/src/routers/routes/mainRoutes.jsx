@@ -13,6 +13,7 @@ import PrivateRoute from "../PrivateRoute";
 import UserDashboard from "../../pages/dashboard/users/UserDashboard";
 import PageNotFound from "../PageNotFound";
 import { Auth0Wrapper } from "../../components/Auth0Wrapper";
+import ErrorBoundary from "../../components/ErrorBoundary"; // Import ErrorBoundary
 import HomePage from "../../pages/homepage/Homepage";
 import About from "../../pages/about/About";
 import AyurvedaNutrition from "../../pages/services/Ayurveda-Nutrition";
@@ -61,6 +62,7 @@ export const mainRoutes = [
         <App />
       </Auth0Wrapper>
     ),
+    errorElement: <ErrorBoundary />,
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/about", element: <About /> },
