@@ -496,9 +496,7 @@ function FaqSection({ content }) {
       style={{ backgroundColor }}>
       <div className="container mx-auto px-4">
         {title && (
-          <h2
-            className="text-3xl font-bold text-center mb-12 sita-factor-highlight"
-            style={{ color: "#8b171b", fontFamily: "Montserrat-Light" }}>
+          <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center mb-12">
             {title}
           </h2>
         )}
