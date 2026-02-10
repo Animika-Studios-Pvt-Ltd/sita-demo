@@ -219,12 +219,14 @@ li {
 @media (min-width: 1919px) {
   .booking-inner-hero {
     height: 300px;
+        margin-bottom: calc((30vw / 3) + 10px);
   }
 }
 
 @media (max-width: 1919px) {
   .booking-inner-hero {
     height: 290px;
+        margin-bottom: calc((27vw / 3) + 10px);
   }
 
   .booking-inner-side-img {
@@ -236,6 +238,7 @@ li {
 @media (max-width: 1800px) {
   .booking-inner-hero {
     height: 270px;
+        margin-bottom: calc((27vw / 3) + 10px);
   }
 
   .booking-inner-side-img {
@@ -246,19 +249,21 @@ li {
 @media (max-width: 1750px) {
   .booking-inner-hero {
     height: 270px;
+        margin-bottom: calc((25vw / 3) + 10px);
   }
 }
 
 @media (max-width: 1700px) {
   .booking-inner-hero {
     height: 260px;
+        margin-bottom: calc((25vw / 3) + 10px);
   }
 }
 
 @media (max-width: 1650px) {
   .booking-inner-hero {
     height: 280px;
-    margin-bottom: calc((30vw / 3) + 10px);
+    margin-bottom: calc((27vw / 3) + 10px);
   }
 
   .booking-inner-hero-image {
@@ -269,12 +274,14 @@ li {
 @media (max-width: 1600px) {
   .booking-inner-hero {
     height: 265px;
+        margin-bottom: calc((28vw / 3) + 10px);
   }
 }
 
 @media (max-width: 1550px) {
   .booking-inner-hero {
     height: 260px;
+        margin-bottom: calc((27 vw / 3) + 10px);
   }
 
   .booking-inner-side-img {
@@ -285,7 +292,7 @@ li {
 @media (max-width: 1500px) {
   .booking-inner-hero {
     height: 250px;
-    margin-bottom: calc((30vw / 3) + 20px);
+    margin-bottom: calc((29vw / 3) + 20px);
   }
 
   .booking-inner-hero-bg {
@@ -305,7 +312,7 @@ li {
 @media (max-width: 1440px) {
   .booking-inner-hero {
     height: 265px;
-    margin-bottom: calc((30vw / 3) + 10px);
+    margin-bottom: calc((27vw / 3) + 10px);
   }
 
   .booking-inner-hero-bg {
@@ -325,7 +332,7 @@ li {
 @media (max-width: 1400px) {
   .booking-inner-hero {
     height: 245px;
-    margin-bottom: calc((30vw / 3) + 10px);
+    margin-bottom: calc((27vw / 3) + 10px);
   }
 
   .booking-inner-hero-image {
@@ -370,7 +377,7 @@ li {
 @media (max-width: 1280px) {
   .booking-inner-hero {
     height: 230px;
-    /* margin-bottom: calc((94vw / 3) + 10px); */
+    margin-bottom: calc((29vw / 3) + 10px);
   }
 
   .booking-inner-hero-bg {
