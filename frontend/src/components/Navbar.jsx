@@ -103,7 +103,7 @@ const Navbar = () => {
               {isAuthenticated ? (
                 <>
                   <a
-                    className="nav-link dropdown-toggle nav-icon-link p-0"
+                    className="nav-link nav-icon-link p-0"
                     href="#"
                     role="button"
                     onClick={(e) => toggleDropdown("userMobile", e)}>
@@ -200,7 +200,7 @@ const Navbar = () => {
                   {isAuthenticated ? (
                     <>
                       <a
-                        className="nav-link dropdown-toggle nav-icon-link"
+                        className="nav-link nav-icon-link"
                         href="#"
                         role="button"
                         onClick={(e) => toggleDropdown("userDesktop", e)}>
