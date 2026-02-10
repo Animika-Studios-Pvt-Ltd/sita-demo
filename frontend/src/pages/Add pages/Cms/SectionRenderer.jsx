@@ -669,6 +669,8 @@ function EventsSection({ content }) {
     );
   }
 
+  if (!events || events.length === 0) return null;
+
   return (
     <DynamicSectionLayout title={content.title}>
       {showCarousel ? (
