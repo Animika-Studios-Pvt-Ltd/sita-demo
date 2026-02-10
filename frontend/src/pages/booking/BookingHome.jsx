@@ -108,10 +108,15 @@ const BookingHome = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 1200,
-      once: true,
-      easing: "ease-in-out",
+      duration: 1000,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 120,
+      debounceDelay: 50,
     });
+
+    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
 
   const decorRef = useRef(null);
@@ -187,14 +192,15 @@ const BookingHome = () => {
 
   return (
     <div className="relative w-full overflow-hidden">
-      <section className="sita-inner-hero blogs-hero">
-        <div className="sita-hero-inner-bg"></div>
+      <section className="sita-inner-hero">
+        <div className="sita-hero-inner-bg" data-aos="fade-in"></div>
         <div className="sita-inner-hero-image">
-          <img
-            src="/about-banner.webp"
-            alt="Blogs Banner"
-            className="sita-inner-hero-img"
-          />
+          <div
+            className="sita-inner-hero-image-banner"
+            data-aos="zoom-out"
+            data-aos-duration="1500">
+            <img src="/about-banner.webp" alt="About Banner" />
+          </div>
         </div>
       </section>
       <div className="absolute inset-0 z-0 pointer-events-none h-full w-full flex flex-col items-end"></div>
@@ -209,13 +215,17 @@ const BookingHome = () => {
       <div className="container mx-auto relative z-10">
         <div className="max-w-6xl mx-auto px-4 mb-5 relative">
           {/* HEADER */}
-          <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+          <h2
+            className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center"
+            data-aos="fade-up">
             WORKSHOP CALENDAR
           </h2>
           <img
             src="/sita-motif.webp"
             alt="Sita Motif"
             className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+            data-aos="zoom-in"
+            data-aos-delay="200"
           />
 
           {upcomingEvents.length === 0 ? (
@@ -226,7 +236,7 @@ const BookingHome = () => {
             </p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {upcomingEvents.map((event) => {
+              {upcomingEvents.map((event, index) => {
                 const dateObj = new Date(event.date);
                 const day = dateObj.getDate();
                 const month = dateObj.toLocaleString("en-US", {
@@ -238,6 +248,9 @@ const BookingHome = () => {
                 return (
                   <div
                     key={event._id}
+                    data-aos="fade-up"
+                    data-aos-delay={index * 100}
+                    data-aos-duration="900"
                     className="group rounded-2xl overflow-hidden bg-white shadow-md flex flex-col border-1 border-transparent transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:border-[#8b171b]">
                     {/* IMAGE */}
                     <div className="relative w-full aspect-[16/9] overflow-hidden">

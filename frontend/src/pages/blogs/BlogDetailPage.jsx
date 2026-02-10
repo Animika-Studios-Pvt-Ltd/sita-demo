@@ -53,7 +53,7 @@ const BlogDetailPage = () => {
     setFade(false);
     setTimeout(() => {
       setCurrentIndex((prev) =>
-        prev === 0 ? activeBooks.length - 1 : prev - 1
+        prev === 0 ? activeBooks.length - 1 : prev - 1,
       );
       setFade(true);
     }, 400);
@@ -66,7 +66,6 @@ const BlogDetailPage = () => {
       setFade(true);
     }, 400);
   };
-
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -120,17 +119,22 @@ const BlogDetailPage = () => {
 
   return (
     <>
-      <section className="blog-details-inner-hero">
-        <div className="blog-details-inner-hero-bg"></div>
-        <div className="blog-details-inner-hero-image">
-          <img
-            src={
-              blog.image?.startsWith("http")
-                ? blog.image
-                : `${BACKEND_BASE_URL}${blog.image}`
-            }
-            alt={blog.title}
-          />
+      <section className="booking-inner-hero">
+        <div className="booking-inner-hero-bg" data-aos="fade-in"></div>
+        <div className="booking-inner-hero-image">
+          <div
+            className="sita-inner-hero-image-banner"
+            data-aos="zoom-out"
+            data-aos-duration="1500">
+            <img
+              src={
+                blog.image?.startsWith("http")
+                  ? blog.image
+                  : `${BACKEND_BASE_URL}${blog.image}`
+              }
+              alt={blog.title}
+            />
+          </div>
         </div>
       </section>
       <SitaBreadcrumb
@@ -190,19 +194,16 @@ const BlogDetailPage = () => {
                   </h3>
                   {activeBooks.length > 0 && (
                     <div className="relative w-full h-[420px] flex flex-col items-center justify-between overflow-hidden">
-
                       {/* FADE BOOK */}
                       <div className="relative w-full flex-1 flex items-center justify-center">
                         <div
                           key={activeBooks[currentIndex]?._id}
                           className={`absolute inset-0 flex flex-col items-center justify-center
         transition-opacity duration-700 ease-in-out
-        ${fade ? "opacity-100" : "opacity-0"}`}
-                        >
+        ${fade ? "opacity-100" : "opacity-0"}`}>
                           <Link
                             to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`}
-                            className="no-underline"
-                          >
+                            className="no-underline">
                             <img
                               src={
                                 activeBooks[currentIndex]?.coverImage ||
@@ -215,8 +216,7 @@ const BlogDetailPage = () => {
 
                           <Link
                             to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`}
-                            className="no-underline"
-                          >
+                            className="no-underline">
                             <h4 className="text-[16px] sm:text-[18px] md:text-[20px] text-black font-Figtree mb-3">
                               {activeBooks[currentIndex]?.title}
                             </h4>
@@ -229,20 +229,17 @@ const BlogDetailPage = () => {
                         <button
                           onClick={handlePrev}
                           className="w-8 h-8 flex items-center justify-center border border-black rounded-full hover:bg-gray-100 transition"
-                          aria-label="Previous book"
-                        >
+                          aria-label="Previous book">
                           <ArrowLeft size={18} strokeWidth={2} />
                         </button>
 
                         <button
                           onClick={handleNext}
                           className="w-8 h-8 flex items-center justify-center border border-black rounded-full hover:bg-gray-100 transition"
-                          aria-label="Next book"
-                        >
+                          aria-label="Next book">
                           <ArrowRight size={18} strokeWidth={2} />
                         </button>
                       </div>
-
                     </div>
                   )}
                 </div>
@@ -361,10 +358,11 @@ const BlogDetailPage = () => {
                     key={num}
                     onClick={() => setCurrentPage(num)}
                     className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
-          ${currentPage === num
-                        ? "bg-[#993333] text-white"
-                        : "border border-transparent text-black hover:border-black hover:bg-gray-100"
-                      }`}>
+          ${
+            currentPage === num
+              ? "bg-[#993333] text-white"
+              : "border border-transparent text-black hover:border-black hover:bg-gray-100"
+          }`}>
                     {num}
                   </button>
                 ))}

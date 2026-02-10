@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { ArrowLeft, ArrowRight, Play, Mic, Calendar, User } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -233,15 +232,15 @@ const PodcastsPage = () => {
 
   return (
     <>
-      <section className="sita-inner-hero blogs-hero">
-        <div className="sita-hero-inner-bg"></div>
+      <section className="sita-inner-hero">
+        <div className="sita-hero-inner-bg" data-aos="fade-in"></div>
         <div className="sita-inner-hero-image">
-          {/* Reusing about-banner or generic banner */}
-          <img
-            src="/about-banner.webp"
-            alt="Podcasts Banner"
-            className="w-full h-full object-cover attachment-fixed"
-          />
+          <div
+            className="sita-inner-hero-image-banner"
+            data-aos="zoom-out"
+            data-aos-duration="1500">
+            <img src="/about-banner.webp" alt="About Banner" />
+          </div>
         </div>
       </section>
 

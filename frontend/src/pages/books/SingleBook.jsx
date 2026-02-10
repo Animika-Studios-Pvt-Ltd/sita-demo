@@ -320,14 +320,15 @@ const SingleBook = () => {
 
   return (
     <>
-      <section className="sita-inner-hero blogs-hero">
-        <div className="sita-hero-inner-bg"></div>
+      <section className="sita-inner-hero">
+        <div className="sita-hero-inner-bg" data-aos="fade-in"></div>
         <div className="sita-inner-hero-image">
-          <img
-            src="/about-banner.webp"
-            alt="Blogs Banner"
-            className="sita-inner-hero-img"
-          />
+          <div
+            className="sita-inner-hero-image-banner"
+            data-aos="zoom-out"
+            data-aos-duration="1500">
+            <img src="/about-banner.webp" alt="About Banner" />
+          </div>
         </div>
       </section>
       <SitaBreadcrumb

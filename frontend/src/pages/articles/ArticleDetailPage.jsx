@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import { CalendarDays, ArrowRight, ArrowLeft } from "lucide-react";
+import { CalendarDays } from "lucide-react";
 import { useFetchAllBooksQuery } from "../../redux/features/books/booksApi";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -32,12 +32,15 @@ const ArticleDetailPage = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 1200,
-      easing: "ease-in-out",
-      once: true,
-
+      duration: 1000,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 120,
+      debounceDelay: 50,
     });
 
+    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
 
   useEffect(() => {
@@ -119,19 +122,24 @@ const ArticleDetailPage = () => {
 
   return (
     <>
-      <section className="blog-details-inner-hero">
-        <div className="blog-details-inner-hero-bg"></div>
-        <div className="blog-details-inner-hero-image">
-          <img
-            src={
-              article.image
-                ? article.image.startsWith("http")
-                  ? article.image
-                  : `${BACKEND_BASE_URL}${article.image}`
-                : "/about-banner.webp"
-            }
-            alt={article.title}
-          />
+      <section className="booking-inner-hero">
+        <div className="booking-inner-hero-bg" data-aos="fade-in"></div>
+        <div className="booking-inner-hero-image">
+          <div
+            className="sita-inner-hero-image-banner"
+            data-aos="zoom-out"
+            data-aos-duration="1500">
+            <img
+              src={
+                article.image
+                  ? article.image.startsWith("http")
+                    ? article.image
+                    : `${BACKEND_BASE_URL}${article.image}`
+                  : "/about-banner.webp"
+              }
+              alt={article.title}
+            />
+          </div>
         </div>
       </section>
 
@@ -182,8 +190,6 @@ const ArticleDetailPage = () => {
                 }}
               />
             </div>
-
-
           </div>
         </div>
       </div>
