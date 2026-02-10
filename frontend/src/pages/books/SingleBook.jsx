@@ -56,12 +56,12 @@ const SingleBook = () => {
   const latestBooks =
     booksData?.books?.length > 0
       ? [...booksData.books]
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        .slice(0, 4)
-      : booksData?.length > 0
-        ? [...booksData]
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .slice(0, 4)
+      : booksData?.length > 0
+        ? [...booksData]
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .slice(0, 4)
         : [];
   const {
     data: bookById,
@@ -72,12 +72,14 @@ const SingleBook = () => {
   useEffect(() => {
     AOS.init({
       duration: 1000,
-      easing: "ease-in-out",
-      once: true,
-      mirror: false,
-      offset: 100,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 120,
+      debounceDelay: 50,
     });
-    AOS.refresh();
+
+    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
 
   const book = bookBySlug || bookById;
@@ -371,8 +373,9 @@ const SingleBook = () => {
                       <img
                         src={book.coverImage || "/placeholder-book.jpg"}
                         alt="Front View"
-                        className={`thumb-img ${isSuspended ? "opacity-60 grayscale" : ""
-                          }`}
+                        className={`thumb-img ${
+                          isSuspended ? "opacity-60 grayscale" : ""
+                        }`}
                         onClick={() => setSelectedImage(book.coverImage)}
                       />
                     </div>
@@ -382,8 +385,9 @@ const SingleBook = () => {
                       <img
                         src={book.backImage || "/placeholder-book.jpg"}
                         alt="Back View"
-                        className={`thumb-img ${isSuspended ? "opacity-60 grayscale" : ""
-                          }`}
+                        className={`thumb-img ${
+                          isSuspended ? "opacity-60 grayscale" : ""
+                        }`}
                         onClick={() => setSelectedImage(book.backImage)}
                       />
                     </div>
@@ -857,7 +861,7 @@ const SingleBook = () => {
                                 {Math.round(
                                   ((book.oldPrice - book.newPrice) /
                                     book.oldPrice) *
-                                  100,
+                                    100,
                                 )}
                                 % off
                               </span>

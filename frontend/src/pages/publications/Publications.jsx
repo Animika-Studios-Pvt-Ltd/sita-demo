@@ -23,10 +23,14 @@ const Publications = () => {
   useEffect(() => {
     AOS.init({
       duration: 1000,
-      easing: "ease-in-out",
-      once: true,
-      mirror: false,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 120,
+      debounceDelay: 50,
     });
+
+    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
 
   const handleAddToCart = (book) => {
