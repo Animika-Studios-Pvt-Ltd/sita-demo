@@ -10,15 +10,23 @@ const CorporateTraining = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 900,
-      easing: "ease-in-out",
-      once: true,
-      offset: 80,
+      duration: 1000,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 120,
+      debounceDelay: 50,
     });
+
+    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
 
   const toggleAccordion = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
+
+    setTimeout(() => {
+      AOS.refreshHard();
+    }, 100);
   };
 
   return (
@@ -76,8 +84,10 @@ const CorporateTraining = () => {
                 className="sita-inner-content-intro sita-workshops-content"
                 data-aos="fade-up"
                 data-aos-delay="300">
-                <h4>Corporate Training and Organizational Development</h4>
-                <p>
+                <h4 data-aos="fade-up" data-aos-delay="350">
+                  Corporate Training and Organizational Development
+                </h4>
+                <p data-aos="fade-left" data-aos-delay="400">
                   Sita provides evidence-informed corporate trainings that
                   support healthier workplaces, stronger teams, and more
                   resilient leadership. Drawing from over two decades of
@@ -88,7 +98,7 @@ const CorporateTraining = () => {
                 </p>
               </div>
               <div className="sita-inner-full-content">
-                <p data-aos="fade-up" data-aos-delay="450">
+                <p data-aos="fade-right" data-aos-delay="450">
                   Her work treats teams and organizations as living ecosystems.
                   Every system has its own culture, communication patterns,
                   strengths, and blind spots. By understanding those dynamics,
@@ -102,7 +112,7 @@ const CorporateTraining = () => {
           <a
             href="/booking"
             className="sita-workshops-btn"
-            data-aos="zoom-in"
+            data-aos="zoom-in-up"
             data-aos-delay="500">
             Enquiry Now
           </a>
@@ -111,25 +121,27 @@ const CorporateTraining = () => {
       {/* --------------------- FOCUS AREAS INCLUDE SECTION ---------------------- */}
       <section className="group-formats-core-elements sita-specializes-in-teachings">
         <div className="container">
-          <h4 data-aos="fade-up">Focus Areas Include</h4>
+          <h4 data-aos="fade-down">Focus Areas Include</h4>
           <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div
+              className="col-lg-6 col-md-6 col-sm-12 col-12"
+              data-aos="fade-right">
               <ul className="group-formats-core-elements-list">
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-left" data-aos-delay="150">
                   <span className="point-num">01</span>
                   <span>Team building and interpersonal attunement</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-right" data-aos-delay="200">
                   <span className="point-num">02</span>
                   <span>
                     Leadership development and human-centered management
                   </span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="450">
+                <li data-aos="fade-left" data-aos-delay="250">
                   <span className="point-num">03</span>
                   <span>Stress reduction and nervous system resilience</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="500">
+                <li data-aos="fade-right" data-aos-delay="300">
                   <span className="point-num">04</span>
                   <span>
                     Psychological safety and compassionate communication
@@ -137,21 +149,23 @@ const CorporateTraining = () => {
                 </li>
               </ul>
             </div>
-            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div
+              className="col-lg-6 col-md-6 col-sm-12 col-12"
+              data-aos="fade-left">
               <ul className="group-formats-core-elements-list">
-                <li data-aos="fade-up" data-aos-delay="550">
+                <li data-aos="fade-up" data-aos-delay="150">
                   <span className="point-num">05</span>
                   <span>Conflict navigation and repair</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-up" data-aos-delay="200">
                   <span className="point-num">06</span>
                   <span>Organizational insight and cultural alignment</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="450">
+                <li data-aos="fade-up" data-aos-delay="250">
                   <span className="point-num">07</span>
                   <span>Burnout prevention and sustainable productivity</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="450">
+                <li data-aos="fade-up" data-aos-delay="300">
                   <span className="point-num">08</span>
                   <span>
                     Wellness and mindfulness integration in real-world settings
@@ -181,13 +195,13 @@ const CorporateTraining = () => {
             </h4>
             {activeIndex === 0 && (
               <div className="accordion-content">
-                <p data-aos="fade-up" data-aos-delay="150">
+                <p data-aos="fade-left" data-aos-delay="100">
                   Modern organizations carry heavy cognitive and emotional
                   workloads. Sita’s approach focuses on the human factors that
                   directly impact workplace performance and culture, including:
                 </p>
                 <ul className="accordion-section-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <div className="points-text">
                       <p className="points-heading">Resilience</p>
@@ -197,7 +211,7 @@ const CorporateTraining = () => {
                       </span>
                     </div>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="450">
+                  <li data-aos="fade-up" data-aos-delay="200">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <div className="points-text">
                       <p className="points-heading">Attunement</p>
@@ -207,7 +221,7 @@ const CorporateTraining = () => {
                       </span>
                     </div>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li data-aos="fade-up" data-aos-delay="250">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <div className="points-text">
                       <p className="points-heading">Communication</p>
@@ -217,7 +231,7 @@ const CorporateTraining = () => {
                       </span>
                     </div>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="300">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <div className="points-text">
                       <p className="points-heading">Systems Awareness</p>
@@ -227,7 +241,7 @@ const CorporateTraining = () => {
                       </span>
                     </div>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="350">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <div className="points-text">
                       <p className="points-heading">Compassion Literacy</p>
@@ -238,7 +252,7 @@ const CorporateTraining = () => {
                     </div>
                   </li>
                 </ul>
-                <p data-aos="fade-up" data-aos-delay="600">
+                <p data-aos="fade-right" data-aos-delay="400">
                   Organizations are not only structures. They are systems of
                   human beings. When people function well, organizations
                   function well.
@@ -246,7 +260,7 @@ const CorporateTraining = () => {
                 <div
                   className="accordion-read-less"
                   data-aos="fade-up"
-                  data-aos-delay="650"
+                  data-aos-delay="450"
                   onClick={() => toggleAccordion(0)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -265,56 +279,59 @@ const CorporateTraining = () => {
             </h4>
             {activeIndex === 1 && (
               <div className="accordion-content">
-                <p data-aos="fade-up" data-aos-delay="100">
+                <p data-aos="fade-left" data-aos-delay="100">
                   The foundation of Sita’s corporate work is grounded and
                   accessible. It draws from Yoga Therapy, neuroscience, positive
                   psychology, and leadership studies.
                 </p>
-                <p className="heading" data-aos="fade-up" data-aos-delay="200">
+                <p
+                  className="heading"
+                  data-aos="fade-right"
+                  data-aos-delay="200">
                   Two key components are central to her approach:
                 </p>
                 <ul className="group-formats-core-elements-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <span className="point-num">01</span>
                     <span className="points-heading points-main-heading">
                       Yogic Frameworks
                     </span>
                   </li>
-                  <p data-aos="fade-up" data-aos-delay="200">
+                  <p data-aos="fade-left" data-aos-delay="200">
                     These frameworks support:
                   </p>
                   <ul className="accordion-section-list">
-                    <li data-aos="fade-up" data-aos-delay="400">
+                    <li data-aos="fade-up" data-aos-delay="150">
                       <img src="/sita-points1.webp" alt="bullet" />
                       <span>Stress physiology and regulation</span>
                     </li>
-                    <li data-aos="fade-up" data-aos-delay="450">
+                    <li data-aos="fade-up" data-aos-delay="200">
                       <img src="/sita-points1.webp" alt="bullet" />
                       <span>Cognitive clarity and focus</span>
                     </li>
-                    <li data-aos="fade-up" data-aos-delay="500">
+                    <li data-aos="fade-up" data-aos-delay="250">
                       <img src="/sita-points1.webp" alt="bullet" />
                       <span>Decision-making under pressure</span>
                     </li>
-                    <li data-aos="fade-up" data-aos-delay="550">
+                    <li data-aos="fade-up" data-aos-delay="300">
                       <img src="/sita-points1.webp" alt="bullet" />
                       <span>
                         Emotional steadiness in challenging environments
                       </span>
                     </li>
-                    <li data-aos="fade-up" data-aos-delay="550">
+                    <li data-aos="fade-up" data-aos-delay="350">
                       <img src="/sita-points1.webp" alt="bullet" />
                       <span>Energy management throughout the workday</span>
                     </li>
                   </ul>
-                  <p data-aos="fade-up" data-aos-delay="600">
+                  <p data-aos="fade-left" data-aos-delay="400">
                     These sessions are not physical yoga classes. They are
                     practical tools for the mind, nervous system, and emotional
                     landscape.
                   </p>
                 </ul>
                 <ul className="group-formats-core-elements-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <span className="point-num">02</span>
                     <span className="points-heading points-main-heading">
                       Mind Nutrition (not related to food)
@@ -324,28 +341,28 @@ const CorporateTraining = () => {
                     Mind Nutrition refers to what we feed the mind through:
                   </p>
                   <ul className="accordion-section-list">
-                    <li data-aos="fade-up" data-aos-delay="400">
+                    <li data-aos="fade-up" data-aos-delay="150">
                       <img src="/sita-points1.webp" alt="bullet" />
                       <span>Content and information</span>
                     </li>
-                    <li data-aos="fade-up" data-aos-delay="450">
+                    <li data-aos="fade-up" data-aos-delay="200">
                       <img src="/sita-points1.webp" alt="bullet" />
                       <span>Digital stimulus</span>
                     </li>
-                    <li data-aos="fade-up" data-aos-delay="500">
+                    <li data-aos="fade-up" data-aos-delay="250">
                       <img src="/sita-points1.webp" alt="bullet" />
                       <span>Self-talk and internal narrative</span>
                     </li>
-                    <li data-aos="fade-up" data-aos-delay="550">
+                    <li data-aos="fade-up" data-aos-delay="300">
                       <img src="/sita-points1.webp" alt="bullet" />
                       <span>Organizational communication</span>
                     </li>
-                    <li data-aos="fade-up" data-aos-delay="550">
+                    <li data-aos="fade-up" data-aos-delay="350">
                       <img src="/sita-points1.webp" alt="bullet" />
                       <span>Attention patterns</span>
                     </li>
                   </ul>
-                  <p data-aos="fade-up" data-aos-delay="600">
+                  <p data-aos="fade-right" data-aos-delay="400">
                     Teams learn how mind nutrition influences performance,
                     burnout, emotional reactivity, and innovation. This training
                     helps create healthier communication, reduces cognitive
@@ -355,7 +372,7 @@ const CorporateTraining = () => {
                 <div
                   className="accordion-read-less"
                   data-aos="fade-up"
-                  data-aos-delay="650"
+                  data-aos-delay="450"
                   onClick={() => toggleAccordion(1)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -374,43 +391,43 @@ const CorporateTraining = () => {
             </h4>
             {activeIndex === 2 && (
               <div className="accordion-content">
-                <p data-aos="fade-up" data-aos-delay="150">
+                <p data-aos="fade-left" data-aos-delay="100">
                   Programs are tailored to organizational needs and may include:
                 </p>
                 <ul className="accordion-section-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>60 to 90 minute sessions</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="450">
+                  <li data-aos="fade-up" data-aos-delay="200">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Half-day workshops</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li data-aos="fade-up" data-aos-delay="250">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Multi-day trainings</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="300">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Executive intensives</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="350">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Hybrid or virtual delivery</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="400">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Ongoing curriculum and coaching</span>
                   </li>
                 </ul>
-                <p data-aos="fade-up" data-aos-delay="600">
+                <p data-aos="fade-right" data-aos-delay="450">
                   All sessions include practical tools that can be implemented
                   immediately in professional environments.
                 </p>
                 <div
                   className="accordion-read-less"
                   data-aos="fade-up"
-                  data-aos-delay="650"
+                  data-aos-delay="500"
                   onClick={() => toggleAccordion(2)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -429,43 +446,43 @@ const CorporateTraining = () => {
             </h4>
             {activeIndex === 3 && (
               <div className="accordion-content">
-                <p data-aos="fade-up" data-aos-delay="150">
+                <p data-aos="fade-left" data-aos-delay="100">
                   Sita works with:
                 </p>
                 <ul className="accordion-section-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Corporate and executive teams</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="450">
+                  <li data-aos="fade-up" data-aos-delay="200">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Healthcare providers</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li data-aos="fade-up" data-aos-delay="250">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Education and academic institutions</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="300">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Startups and mission-driven organizations</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="350">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Clinical and wellness programs</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="400">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Nonprofits and social impact groups</span>
                   </li>
                 </ul>
-                <p data-aos="fade-up" data-aos-delay="600">
+                <p data-aos="fade-right" data-aos-delay="450">
                   The goal is not to make organizations more spiritual. The goal
                   is to make them more humane, resilient, and effective.
                 </p>
                 <div
                   className="accordion-read-less"
                   data-aos="fade-up"
-                  data-aos-delay="650"
+                  data-aos-delay="500"
                   onClick={() => toggleAccordion(3)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -485,43 +502,43 @@ const CorporateTraining = () => {
             {activeIndex === 4 && (
               <div className="accordion-content">
                 <ul className="accordion-section-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Decreased workplace stress and burnout</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="450">
+                  <li data-aos="fade-up" data-aos-delay="200">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Improved communication and collaboration</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li data-aos="fade-up" data-aos-delay="250">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Stronger emotional intelligence and attunement</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="300">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Better conflict navigation and problem-solving</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="350">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Increased morale and team cohesion</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="400">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Healthier culture and reduced turnover</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="450">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Renewed clarity of mission and purpose</span>
                   </li>
                 </ul>
-                <p data-aos="fade-up" data-aos-delay="600">
+                <p data-aos="fade-right" data-aos-delay="500">
                   These trainings are adaptable to different environments and
                   cultures, and they meet organizations where they are.
                 </p>
                 <div
                   className="accordion-read-less"
                   data-aos="fade-up"
-                  data-aos-delay="650"
+                  data-aos-delay="550"
                   onClick={() => toggleAccordion(4)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -534,13 +551,21 @@ const CorporateTraining = () => {
       {/* ---------------- SESSIONS SECTION ---------------- */}
       <section className="sita-masterclass sessions-section">
         <div className="container text-center">
-          <h2 data-aos="fade-up">Sessions</h2>
-          <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
+          <h2 data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
+            Sessions
+          </h2>
+          <img
+            src="sita-motif.webp"
+            alt="Sita Motif"
+            className="motif"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          />
           <div className="row">
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="100">
+              data-aos-delay="250">
               <div className="masterclass-card">
                 <img
                   src="masterclass-1.webp"
@@ -558,7 +583,7 @@ const CorporateTraining = () => {
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="200">
+              data-aos-delay="400">
               <div className="masterclass-card">
                 <img
                   src="masterclass-2.webp"
@@ -578,7 +603,7 @@ const CorporateTraining = () => {
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="300">
+              data-aos-delay="550">
               <div className="masterclass-card">
                 <img
                   src="masterclass-3.webp"

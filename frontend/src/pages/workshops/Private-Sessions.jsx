@@ -8,11 +8,15 @@ import "./Workshops.css";
 const PrivateSessions = () => {
   useEffect(() => {
     AOS.init({
-      duration: 900,
-      easing: "ease-in-out",
-      once: true,
-      offset: 80,
+      duration: 1000,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 120,
+      debounceDelay: 50,
     });
+
+    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
 
   return (
@@ -67,7 +71,7 @@ const PrivateSessions = () => {
                 data-aos="fade-up"
                 data-aos-delay="300">
                 <h4>Individuals & Couples</h4>
-                <p>
+                <p data-aos="fade-left" data-aos-delay="350">
                   Private sessions are for those who are ready to understand
                   themselves at the level of soul, not symptom.
                   <br />
@@ -78,7 +82,7 @@ const PrivateSessions = () => {
                 </p>
               </div>
               <div className="sita-inner-full-content">
-                <p data-aos="fade-up" data-aos-delay="450">
+                <p data-aos="fade-right" data-aos-delay="400">
                   Sita’s approach is multidimensional. She reads your Soul’s
                   Curriculum through intuition and Jyotish, then supports you
                   through practical and spiritual pathways that fit your
@@ -93,7 +97,7 @@ const PrivateSessions = () => {
           <a
             href="/booking"
             className="sita-workshops-btn"
-            data-aos="zoom-in"
+            data-aos="zoom-in-up"
             data-aos-delay="500">
             Enquiry Now
           </a>
@@ -102,60 +106,64 @@ const PrivateSessions = () => {
       {/* --------------------- INDIVIDUAL SESSIONS MAY SUPPORT SECTION ---------------------- */}
       <section className="group-sessions-core-elements individual-sessions-may-support">
         <div className="container">
-          <h4 data-aos="fade-up">Individual Sessions May Support</h4>
+          <h4 data-aos="fade-down">Individual Sessions May Support</h4>
           <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div
+              className="col-lg-6 col-md-6 col-sm-12 col-12"
+              data-aos="fade-right">
               <ul className="group-sessions-core-elements-list">
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-left" data-aos-delay="150">
                   <img src="/sita-points1.webp" alt="bullet" />
                   <span>Understanding your Soul’s Curriculum</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="450">
+                <li data-aos="fade-right" data-aos-delay="200">
                   <img src="/sita-points1.webp" alt="bullet" />
                   <span>
                     Releasing karmic patterns that create repeating challenges
                   </span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="500">
+                <li data-aos="fade-left" data-aos-delay="250">
                   <img src="/sita-points1.webp" alt="bullet" />
                   <span>
                     Rekindling health through Ayurvedic protocols and rhythm
                   </span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="550">
+                <li data-aos="fade-right" data-aos-delay="300">
                   <img src="/sita-points1.webp" alt="bullet" />
                   <span>
                     Nervous system regulation through yogic and somatic tools
                   </span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-left" data-aos-delay="350">
                   <img src="/sita-points1.webp" alt="bullet" />
                   <span>Aligning with career and dharma without force</span>
                 </li>
               </ul>
             </div>
-            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div
+              className="col-lg-6 col-md-6 col-sm-12 col-12"
+              data-aos="fade-left">
               <ul className="group-sessions-core-elements-list">
-                <li data-aos="fade-up" data-aos-delay="450">
+                <li data-aos="fade-left" data-aos-delay="150">
                   <img src="/sita-points1.webp" alt="bullet" />
                   <span>Emotional healing and relational clarity</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="500">
+                <li data-aos="fade-right" data-aos-delay="200">
                   <img src="/sita-points1.webp" alt="bullet" />
                   <span>Spiritual practice and sadhana development</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="550">
+                <li data-aos="fade-left" data-aos-delay="250">
                   <img src="/sita-points1.webp" alt="bullet" />
                   <span>Trauma-informed integration and embodiment</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="550">
+                <li data-aos="fade-right" data-aos-delay="300">
                   <img src="/sita-points1.webp" alt="bullet" />
                   <span>Reconnecting to meaning, dignity, and direction</span>
                 </li>
               </ul>
             </div>
           </div>
-          <p className="mb-0" data-aos="fade-up" data-aos-delay="600">
+          <p className="mb-0" data-aos="fade-up" data-aos-delay="350">
             You are met where you are. Nothing is rushed. Nothing is forced. The
             intention is clarity, freedom, and alignment with your deepest
             purpose.
@@ -165,29 +173,31 @@ const PrivateSessions = () => {
       {/* --------------------- COUPLE SESSIONS SECTION ---------------------- */}
       <section className="what-makes-this-work-unique couple-sessions-section">
         <div className="container">
-          <h4 data-aos="fade-up">Couples Sessions</h4>
+          <h4 data-aos="fade-down">Couples Sessions</h4>
           <p className="paragraph" data-aos="fade-up" data-aos-delay="100">
             Sita also works with couples seeking clarity, healing or expansion
             in their relationship. These sessions are not conflict management or
             surface communication coaching. They go deeper into the energetic
             architecture of the relationship.
           </p>
-          <p className="heading" data-aos="fade-up" data-aos-delay="200">
+          <p className="heading" data-aos="fade-left" data-aos-delay="200">
             Through Jyotish synastry, Ayurvedic psychology and yogic frameworks,
             Sita supports couples in understanding:
           </p>
           <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div
+              className="col-lg-6 col-md-6 col-sm-12 col-12"
+              data-aos="fade-right">
               <ul className="what-makes-this-work-unique-list">
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-left" data-aos-delay="150">
                   <img src="/sita-points.webp" alt="bullet" />
                   <span>Shared soul themes and karmic agreements</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-right" data-aos-delay="200">
                   <img src="/sita-points.webp" alt="bullet" />
                   <span>Emotional and attachment patterns</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="450">
+                <li data-aos="fade-left" data-aos-delay="250">
                   <img src="/sita-points.webp" alt="bullet" />
                   <span>
                     Intimacy, communication, and nervous system compatibility
@@ -195,13 +205,15 @@ const PrivateSessions = () => {
                 </li>
               </ul>
             </div>
-            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div
+              className="col-lg-6 col-md-6 col-sm-12 col-12"
+              data-aos="fade-left">
               <ul className="what-makes-this-work-unique-list">
-                <li data-aos="fade-up" data-aos-delay="550">
+                <li data-aos="fade-left" data-aos-delay="150">
                   <img src="/sita-points.webp" alt="bullet" />
                   <span>Dharma of the partnership and where it is growing</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-right" data-aos-delay="200">
                   <img src="/sita-points.webp" alt="bullet" />
                   <span>
                     How to strengthen the relationship through aligned practice
@@ -220,13 +232,21 @@ const PrivateSessions = () => {
       {/* ---------------- SESSIONS SECTION ---------------- */}
       <section className="sita-masterclass sessions-section">
         <div className="container text-center">
-          <h2 data-aos="fade-up">Sessions</h2>
-          <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
+          <h2 data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
+            Sessions
+          </h2>
+          <img
+            src="sita-motif.webp"
+            alt="Sita Motif"
+            className="motif"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          />
           <div className="row">
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="100">
+              data-aos-delay="250">
               <div className="masterclass-card">
                 <img
                   src="masterclass-1.webp"
@@ -244,7 +264,7 @@ const PrivateSessions = () => {
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="200">
+              data-aos-delay="400">
               <div className="masterclass-card">
                 <img
                   src="masterclass-2.webp"
@@ -264,7 +284,7 @@ const PrivateSessions = () => {
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="300">
+              data-aos-delay="550">
               <div className="masterclass-card">
                 <img
                   src="masterclass-3.webp"

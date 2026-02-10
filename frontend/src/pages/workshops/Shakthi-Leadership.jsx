@@ -10,15 +10,23 @@ const ShakthiLeadership = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 900,
-      easing: "ease-in-out",
-      once: true,
-      offset: 80,
+      duration: 1000,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 120,
+      debounceDelay: 50,
     });
+
+    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
 
   const toggleAccordion = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
+
+    setTimeout(() => {
+      AOS.refreshHard();
+    }, 100);
   };
 
   return (
@@ -75,7 +83,7 @@ const ShakthiLeadership = () => {
                 className="sita-inner-content-intro sita-workshops-content"
                 data-aos="fade-up"
                 data-aos-delay="300">
-                <p>
+                <p data-aos="fade-up" data-aos-delay="350">
                   Sita is a certified Shakti Leadership Coach, trained through
                   Shakti Leadership and grounded in a transformative leadership
                   paradigm that integrates ancient yogic wisdom with conscious
@@ -88,7 +96,7 @@ const ShakthiLeadership = () => {
                 </p>
               </div>
               <div className="sita-inner-full-content">
-                <p data-aos="fade-up" data-aos-delay="450">
+                <p data-aos="fade-left" data-aos-delay="400">
                   Where traditional leadership models often emphasize hierarchy,
                   competition, and authority, Shakti Leadership emphasizes
                   balance between capacities traditionally associated with the
@@ -96,7 +104,7 @@ const ShakthiLeadership = () => {
                   creates leaders and teams who are creative, adaptive,
                   inclusive, and effective.
                 </p>
-                <p data-aos="fade-up" data-aos-delay="600">
+                <p data-aos="fade-right" data-aos-delay="450">
                   Sita brings this framework into her coaching, mentoring, and
                   group programs in a way that is accessible, human-centered,
                   and transformational. She works with individuals and teams to
@@ -110,7 +118,7 @@ const ShakthiLeadership = () => {
           <a
             href="/booking"
             className="sita-workshops-btn"
-            data-aos="zoom-in"
+            data-aos="zoom-in-up"
             data-aos-delay="500">
             Enquiry Now
           </a>
@@ -119,40 +127,42 @@ const ShakthiLeadership = () => {
       {/* --------------------- SHAKTHI LEADERSHIIP SUPPORTS SECTION ---------------------- */}
       <section className="group-formats-core-elements sita-specializes-in-teachings">
         <div className="container">
-          <h4 data-aos="fade-up">What Shakti Leadership Coaching Supports</h4>
+          <h4 data-aos="fade-down">What Shakti Leadership Coaching Supports</h4>
           <div className="row">
-            <div className="col-lg-12 col-md-12 col-sm-12 col-12">
+            <div
+              className="col-lg-12 col-md-12 col-sm-12 col-12"
+              data-aos="fade-left">
               <p data-aos="fade-up" data-aos-delay="100">
                 Sita offers coaching and mentoring programs for:
               </p>
               <ul className="group-formats-core-elements-list">
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-left" data-aos-delay="150">
                   <span className="point-num">01</span>
                   <span>
                     Individuals ready to lead with clarity and purpose
                   </span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-right" data-aos-delay="200">
                   <span className="point-num">02</span>
                   <span>
                     Women in leadership who want to deepen presence and impact
                   </span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="450">
+                <li data-aos="fade-left" data-aos-delay="250">
                   <span className="point-num">03</span>
                   <span>
                     Organizations and teams seeking greater cohesion and
                     psychological safety
                   </span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="500">
+                <li data-aos="fade-right" data-aos-delay="300">
                   <span className="point-num">04</span>
                   <span>
                     Groups of all genders committed to inclusive leadership
                     development
                   </span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="500" className="mb-0">
+                <li data-aos="fade-left" data-aos-delay="350" className="mb-0">
                   <span className="point-num">05</span>
                   <span>
                     Changemakers and entrepreneurs who want to lead with vision
@@ -167,7 +177,7 @@ const ShakthiLeadership = () => {
       {/* --------------------- SHAKTHI LEADERSHIP ACCORDION SECTION ---------------------- */}
       <section className="accordion-section shakthi-leadership-accordion">
         <div className="container">
-          <p data-aos="fade-up" data-aos-delay="100">
+          <p data-aos="fade-left" data-aos-delay="100">
             Her work strengthens leaders to function with confidence under
             pressure, build cultures that support psychological well-being, and
             navigate complexity with coherence.
@@ -183,33 +193,36 @@ const ShakthiLeadership = () => {
             </h4>
             {activeIndex === 0 && (
               <div className="accordion-content">
-                <p className="heading" data-aos="fade-up" data-aos-delay="200">
+                <p
+                  className="heading"
+                  data-aos="fade-left"
+                  data-aos-delay="100">
                   Balanced Leadership Development
                 </p>
-                <p data-aos="fade-up" data-aos-delay="100">
+                <p data-aos="fade-right" data-aos-delay="200">
                   Sita guides leaders in accessing both categories of capacities
                   that make leadership sustainable and humane:
                 </p>
                 <ul className="accordion-section-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Creative and cooperative capacities such as curiosity,
                       empathy, collaboration, and listening
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="450">
+                  <li data-aos="fade-up" data-aos-delay="200">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Decisiveness, accountability, structure, and strategic
                       clarity
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li data-aos="fade-up" data-aos-delay="250">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Emotional regulation in dynamic environments</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="300">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Whole-system thinking that honors context, relationships,
@@ -217,7 +230,7 @@ const ShakthiLeadership = () => {
                     </span>
                   </li>
                 </ul>
-                <p data-aos="fade-up" data-aos-delay="200">
+                <p data-aos="fade-up" data-aos-delay="400">
                   This balanced approach enhances leadership maturity and
                   creates cultures where individuals can contribute their best
                   thinking and energy without burnout.
@@ -225,7 +238,7 @@ const ShakthiLeadership = () => {
                 <div
                   className="accordion-read-less"
                   data-aos="fade-up"
-                  data-aos-delay="650"
+                  data-aos-delay="450"
                   onClick={() => toggleAccordion(0)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -244,13 +257,13 @@ const ShakthiLeadership = () => {
             </h4>
             {activeIndex === 1 && (
               <div className="accordion-content">
-                <p data-aos="fade-up" data-aos-delay="100">
+                <p data-aos="fade-left" data-aos-delay="100">
                   Sita’s Shakti Leadership Coaching is offered in flexible
                   formats that meet different organizational and individual
                   needs:
                 </p>
                 <ul className="accordion-section-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <div className="points-text">
                       <p className="points-heading">
@@ -263,7 +276,7 @@ const ShakthiLeadership = () => {
                       </span>
                     </div>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="450">
+                  <li data-aos="fade-up" data-aos-delay="200">
                     <img src="/sita-points1.webp" alt="bullet" />
 
                     <div className="points-text">
@@ -275,7 +288,7 @@ const ShakthiLeadership = () => {
                       </span>
                     </div>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li data-aos="fade-up" data-aos-delay="250">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <div className="points-text">
                       <p className="points-heading">
@@ -288,7 +301,7 @@ const ShakthiLeadership = () => {
                       </span>
                     </div>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="300">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <div className="points-text">
                       <p className="points-heading">Virtual and Live Formats</p>
@@ -299,7 +312,7 @@ const ShakthiLeadership = () => {
                     </div>
                   </li>
                 </ul>
-                <p data-aos="fade-up" data-aos-delay="200">
+                <p data-aos="fade-up" data-aos-delay="350">
                   Across all formats, Sita blends practical frameworks with
                   reflective inquiry and structured skill development to support
                   meaningful and measurable growth.
@@ -307,7 +320,7 @@ const ShakthiLeadership = () => {
                 <div
                   className="accordion-read-less"
                   data-aos="fade-up"
-                  data-aos-delay="650"
+                  data-aos-delay="400"
                   onClick={() => toggleAccordion(1)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -326,34 +339,34 @@ const ShakthiLeadership = () => {
             </h4>
             {activeIndex === 2 && (
               <div className="accordion-content">
-                <p data-aos="fade-up" data-aos-delay="100">
+                <p data-aos="fade-left" data-aos-delay="100">
                   Leadership today requires more than technical expertise. It
                   requires emotional intelligence, resilience, and relational
                   awareness. Shakti Leadership calls forward leaders who:
                 </p>
                 <ul className="accordion-section-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Lead with strength and empathy simultaneously</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="450">
+                  <li data-aos="fade-up" data-aos-delay="200">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Align strategy with human experience</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li data-aos="fade-up" data-aos-delay="250">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Build cultures that support contribution over compliance
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="300">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Navigate change with presence, clarity, and steadiness
                     </span>
                   </li>
                 </ul>
-                <p data-aos="fade-up" data-aos-delay="200">
+                <p data-aos="fade-right" data-aos-delay="350">
                   Sita’s coaching supports leaders at every stage, from emerging
                   leaders to experienced professionals seeking deeper alignment
                   and effectiveness.
@@ -361,7 +374,7 @@ const ShakthiLeadership = () => {
                 <div
                   className="accordion-read-less"
                   data-aos="fade-up"
-                  data-aos-delay="650"
+                  data-aos-delay="400"
                   onClick={() => toggleAccordion(2)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -381,40 +394,40 @@ const ShakthiLeadership = () => {
 
             {activeIndex === 3 && (
               <div className="accordion-content">
-                <p data-aos="fade-up" data-aos-delay="100">
+                <p data-aos="fade-left" data-aos-delay="100">
                   Individuals and teams working with Sita in Shakti Leadership
                   Coaching commonly report:
                 </p>
                 <ul className="accordion-section-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Greater clarity in purpose and decision-making</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="450">
+                  <li data-aos="fade-up" data-aos-delay="200">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Enhanced emotional self-regulation</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li data-aos="fade-up" data-aos-delay="300">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Stronger collaboration and trust in teams</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="350">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Increased resilience under pressure</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="400">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       More confidence in leading with integrity and inclusivity
                     </span>
                   </li>
                 </ul>
-                <p data-aos="fade-up" data-aos-delay="200">
+                <p data-aos="fade-left" data-aos-delay="450">
                   Sita’s work helps leaders show up as whole human beings,
                   capable, grounded, and adaptive in ways that positively impact
                   people, systems, and outcomes.
                 </p>
-                <p data-aos="fade-up" data-aos-delay="300">
+                <p data-aos="fade-right" data-aos-delay="500">
                   Shakti Leadership is a leadership paradigm and body of work
                   developed by Nilima Bhat and Raj Sisodia. It invites leaders
                   to embody a more conscious, balanced, and integrated form of
@@ -428,7 +441,7 @@ const ShakthiLeadership = () => {
                 <div
                   className="accordion-read-less"
                   data-aos="fade-up"
-                  data-aos-delay="650"
+                  data-aos-delay="550"
                   onClick={() => toggleAccordion(3)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -441,13 +454,21 @@ const ShakthiLeadership = () => {
       {/* ---------------- SESSIONS SECTION ---------------- */}
       <section className="sita-masterclass sessions-section">
         <div className="container text-center">
-          <h2 data-aos="fade-up">Sessions</h2>
-          <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
+          <h2 data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
+            Sessions
+          </h2>
+          <img
+            src="sita-motif.webp"
+            alt="Sita Motif"
+            className="motif"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          />
           <div className="row">
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="100">
+              data-aos-delay="250">
               <div className="masterclass-card">
                 <img
                   src="masterclass-1.webp"
@@ -465,7 +486,7 @@ const ShakthiLeadership = () => {
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="200">
+              data-aos-delay="400">
               <div className="masterclass-card">
                 <img
                   src="masterclass-2.webp"
@@ -485,7 +506,7 @@ const ShakthiLeadership = () => {
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="300">
+              data-aos-delay="550">
               <div className="masterclass-card">
                 <img
                   src="masterclass-3.webp"

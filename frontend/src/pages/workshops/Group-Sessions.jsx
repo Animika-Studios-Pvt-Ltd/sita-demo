@@ -8,11 +8,15 @@ import "./Workshops.css";
 const GroupSessions = () => {
   useEffect(() => {
     AOS.init({
-      duration: 900,
-      easing: "ease-in-out",
-      once: true,
-      offset: 80,
+      duration: 1000,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 120,
+      debounceDelay: 50,
     });
+
+    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
 
   return (
@@ -91,8 +95,8 @@ const GroupSessions = () => {
           <a
             href="/booking"
             className="sita-workshops-btn"
-            data-aos="zoom-in"
-            data-aos-delay="500">
+            data-aos="zoom-in-up"
+            data-aos-delay="400">
             Enquiry Now
           </a>
         </div>
@@ -100,23 +104,25 @@ const GroupSessions = () => {
       {/* --------------------- CORE ELEMENTS SECTION ---------------------- */}
       <section className="group-sessions-core-elements">
         <div className="container">
-          <h4 data-aos="fade-up">Core Elements of Group Work</h4>
+          <h4 data-aos="fade-down">Core Elements of Group Work</h4>
           <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div
+              className="col-lg-6 col-md-6 col-sm-12 col-12"
+              data-aos="fade-right">
               <ul className="group-sessions-core-elements-list">
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-up" data-aos-delay="150">
                   <img src="/sita-points1.webp" alt="bullet" />
                   <span>Soul Curriculum mapping for the group or system</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="450">
+                <li data-aos="fade-up" data-aos-delay="200">
                   <img src="/sita-points1.webp" alt="bullet" />
                   <span>Relationship and compatibility dynamics</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="500">
+                <li data-aos="fade-up" data-aos-delay="250">
                   <img src="/sita-points1.webp" alt="bullet" />
                   <span>Karmic and dharmic agreements within the group</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="550">
+                <li data-aos="fade-up" data-aos-delay="300">
                   <img src="/sita-points1.webp" alt="bullet" />
                   <span>
                     Identifying shared lessons, strengths, and blind spots
@@ -124,34 +130,36 @@ const GroupSessions = () => {
                 </li>
               </ul>
             </div>
-            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div
+              className="col-lg-6 col-md-6 col-sm-12 col-12"
+              data-aos="fade-left">
               <ul className="group-sessions-core-elements-list">
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-up" data-aos-delay="150">
                   <img src="/sita-points1.webp" alt="bullet" />
                   <span>
                     Tools for communication, compassion, and attunement
                   </span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="450">
+                <li data-aos="fade-up" data-aos-delay="200">
                   <img src="/sita-points1.webp" alt="bullet" />
                   <span>
                     Eastern frameworks for understanding conflict and growth
                   </span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="500">
+                <li data-aos="fade-up" data-aos-delay="250">
                   <img src="/sita-points1.webp" alt="bullet" />
                   <span>
                     Somatic and yogic practices for nervous system cohesion
                   </span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="550">
+                <li data-aos="fade-up" data-aos-delay="300">
                   <img src="/sita-points1.webp" alt="bullet" />
                   <span>Facilitated dialogue and integration</span>
                 </li>
               </ul>
             </div>
           </div>
-          <p className="mb-0" data-aos="fade-up" data-aos-delay="600">
+          <p className="mb-0" data-aos="fade-up" data-aos-delay="350">
             Group sessions are tailored to the needs of the system. Sita listens
             deeply and responds intuitively to the field of the group.
           </p>
@@ -160,48 +168,52 @@ const GroupSessions = () => {
       {/* --------------------- GROUP FORMATS SECTION ---------------------- */}
       <section className="group-formats-core-elements">
         <div className="container">
-          <h4 data-aos="fade-up">Group Formats May Include</h4>
+          <h4 data-aos="fade-down">Group Formats May Include</h4>
           <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div
+              className="col-lg-6 col-md-6 col-sm-12 col-12"
+              data-aos="fade-right">
               <ul className="group-formats-core-elements-list">
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-up" data-aos-delay="150">
                   <span className="point-num">01</span>
                   <span>
                     Facilitated relational work (any type of relationship)
                   </span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-up" data-aos-delay="200">
                   <span className="point-num">02</span>
                   <span>Family soul curriculum sessions</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="450">
+                <li data-aos="fade-up" data-aos-delay="250">
                   <span className="point-num">03</span>
                   <span>Leadership and executive team alignment</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="500">
+                <li data-aos="fade-up" data-aos-delay="300">
                   <span className="point-num">04</span>
                   <span>Organizational or community purpose alignment</span>
                 </li>
               </ul>
             </div>
-            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div
+              className="col-lg-6 col-md-6 col-sm-12 col-12"
+              data-aos="fade-left">
               <ul className="group-formats-core-elements-list">
-                <li data-aos="fade-up" data-aos-delay="550">
+                <li data-aos="fade-up" data-aos-delay="150">
                   <span className="point-num">05</span>
                   <span>Friend group spiritual intensives or retreats</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-up" data-aos-delay="200">
                   <span className="point-num">06</span>
                   <span>Speaking engagements on specific topics</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="450">
+                <li data-aos="fade-up" data-aos-delay="250">
                   <span className="point-num">07</span>
                   <span>Ceremony, ritual, and guided practice</span>
                 </li>
               </ul>
             </div>
           </div>
-          <p className="mb-0" data-aos="fade-up" data-aos-delay="600">
+          <p className="mb-0" data-aos="fade-up" data-aos-delay="300">
             Topics may include karma and dharma, nervous system literacy,
             Kundalini, Ayurveda, sacred relationships, planetary cycles, yoga
             therapy, and spiritual awakening.
@@ -225,17 +237,17 @@ const GroupSessions = () => {
           <div className="row">
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <ul className="what-makes-this-work-unique-list">
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-right" data-aos-delay="150">
                   <img src="/sita-points.webp" alt="bullet" />
                   <span>Understand each person’s role in the system</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-left" data-aos-delay="200">
                   <img src="/sita-points.webp" alt="bullet" />
                   <span>
                     Recognize karmic agreements and relational patterns
                   </span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="450">
+                <li data-aos="fade-right" data-aos-delay="250">
                   <img src="/sita-points.webp" alt="bullet" />
                   <span>Strengthen communication and emotional attunement</span>
                 </li>
@@ -243,15 +255,15 @@ const GroupSessions = () => {
             </div>
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <ul className="what-makes-this-work-unique-list">
-                <li data-aos="fade-up" data-aos-delay="550">
+                <li data-aos="fade-right" data-aos-delay="150">
                   <img src="/sita-points.webp" alt="bullet" />
                   <span>Build intuitive trust and shared purpose</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-left" data-aos-delay="200">
                   <img src="/sita-points.webp" alt="bullet" />
                   <span>Create spiritual and nervous system literacy</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="450">
+                <li data-aos="fade-right" data-aos-delay="250">
                   <img src="/sita-points.webp" alt="bullet" />
                   <span>
                     Honor individuality while supporting the collective
@@ -260,7 +272,7 @@ const GroupSessions = () => {
               </ul>
             </div>
           </div>
-          <p className="mb-0" data-aos="fade-up" data-aos-delay="600">
+          <p className="mb-0" data-aos="fade-up" data-aos-delay="300">
             Whether the group is a family, a leadership team, or a circle of
             friends, the intention is to create coherence, clarity, and
             connection at the soul level.
@@ -270,13 +282,21 @@ const GroupSessions = () => {
       {/* ---------------- SESSIONS SECTION ---------------- */}
       <section className="sita-masterclass sessions-section">
         <div className="container text-center">
-          <h2 data-aos="fade-up">Sessions</h2>
-          <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
+          <h2 data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
+            Sessions
+          </h2>
+          <img
+            src="sita-motif.webp"
+            alt="Sita Motif"
+            className="motif"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          />
           <div className="row">
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="100">
+              data-aos-delay="250">
               <div className="masterclass-card">
                 <img
                   src="masterclass-1.webp"
@@ -294,7 +314,7 @@ const GroupSessions = () => {
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="200">
+              data-aos-delay="400">
               <div className="masterclass-card">
                 <img
                   src="masterclass-2.webp"
@@ -314,7 +334,7 @@ const GroupSessions = () => {
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="300">
+              data-aos-delay="550">
               <div className="masterclass-card">
                 <img
                   src="masterclass-3.webp"

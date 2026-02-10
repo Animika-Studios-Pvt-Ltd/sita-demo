@@ -10,15 +10,23 @@ const TeacherTraining = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 900,
-      easing: "ease-in-out",
-      once: true,
-      offset: 80,
+      duration: 1000,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 120,
+      debounceDelay: 50,
     });
+
+    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
 
   const toggleAccordion = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
+
+    setTimeout(() => {
+      AOS.refreshHard();
+    }, 100);
   };
 
   return (
@@ -72,8 +80,10 @@ const TeacherTraining = () => {
                 className="sita-inner-content-intro sita-workshops-content"
                 data-aos="fade-up"
                 data-aos-delay="300">
-                <h4>Teacher Trainings and Continuing Education</h4>
-                <p>
+                <h4 data-aos="fade-up" data-aos-delay="350">
+                  Teacher Trainings and Continuing Education
+                </h4>
+                <p data-aos="fade-up" data-aos-delay="400">
                   For over two decades, Sita has taught the inner sciences of
                   Yoga to dedicated practitioners, teachers, healers, and
                   lifelong students of consciousness. Her personal practice
@@ -99,7 +109,7 @@ const TeacherTraining = () => {
           <a
             href="/booking"
             className="sita-workshops-btn"
-            data-aos="zoom-in"
+            data-aos="zoom-in-up"
             data-aos-delay="500">
             Enquiry Now
           </a>
@@ -108,52 +118,56 @@ const TeacherTraining = () => {
       {/* --------------------- SITA SPECIALIZES IN TEACHINGS SECTION ---------------------- */}
       <section className="group-formats-core-elements sita-specializes-in-teachings">
         <div className="container">
-          <h4 data-aos="fade-up">
+          <h4 data-aos="fade-down">
             Sita specializes in teachings that bring the inner Yoga alive:
           </h4>
           <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div
+              className="col-lg-6 col-md-6 col-sm-12 col-12"
+              data-aos="fade-right">
               <ul className="group-formats-core-elements-list">
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-left" data-aos-delay="150">
                   <span className="point-num">01</span>
                   <span>
                     Kundalini Tantra with an emphasis on traditional forms of
                     awakening
                   </span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-right" data-aos-delay="200">
                   <span className="point-num">02</span>
                   <span>
                     Kundalini Yoga practitioner training rooted in classical
                     foundations
                   </span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="450">
+                <li data-aos="fade-left" data-aos-delay="250">
                   <span className="point-num">03</span>
                   <span>
                     Kosha-related yogic tools for healing and self-realization
                   </span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="500">
+                <li data-aos="fade-right" data-aos-delay="300">
                   <span className="point-num">04</span>
                   <span>Energy psychology through the yogic lens</span>
                 </li>
               </ul>
             </div>
-            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div
+              className="col-lg-6 col-md-6 col-sm-12 col-12"
+              data-aos="fade-left">
               <ul className="group-formats-core-elements-list">
-                <li data-aos="fade-up" data-aos-delay="550">
+                <li data-aos="fade-left" data-aos-delay="150">
                   <span className="point-num">05</span>
                   <span>
                     Subtle anatomy including nadis, chakras, vayus, bindu and
                     pranic pathways
                   </span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="400">
+                <li data-aos="fade-right" data-aos-delay="200">
                   <span className="point-num">06</span>
                   <span>Trauma-informed yoga therapy frameworks</span>
                 </li>
-                <li data-aos="fade-up" data-aos-delay="450">
+                <li data-aos="fade-left" data-aos-delay="250">
                   <span className="point-num">07</span>
                   <span>
                     Integrative teaching skills for private sessions and group
@@ -168,7 +182,7 @@ const TeacherTraining = () => {
       {/* --------------------- TEACHER TRANING ACCORDION SECTION ---------------------- */}
       <section className="accordion-section">
         <div className="container">
-          <p data-aos="fade-up" data-aos-delay="100">
+          <p data-aos="fade-left" data-aos-delay="100">
             These are not surface-level trainings. They are built from lived
             experience, long-term practice, and direct study. Students learn not
             only the philosophy but the embodiment and application that brings
@@ -186,34 +200,34 @@ const TeacherTraining = () => {
             {activeIndex === 0 && (
               <div className="accordion-content">
                 <ul className="accordion-section-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Yoga teachers seeking Continuing Education and
                       specialization
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="450">
+                  <li data-aos="fade-up" data-aos-delay="200">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Practitioners who want to build a private therapeutic or
                       spiritual practice
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li data-aos="fade-up" data-aos-delay="250">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Lifelong learners devoted to the path of awakening
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="300">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Energy healers and somatic practitioners seeking depth and
                       structure
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="350">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       The spiritually curious and dedicated who want authentic
@@ -244,36 +258,36 @@ const TeacherTraining = () => {
             {activeIndex === 1 && (
               <div className="accordion-content">
                 <ul className="accordion-section-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Yoga Alliance Continuing Education credits</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="450">
+                  <li data-aos="fade-up" data-aos-delay="200">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Handouts you may use in your own teaching and practice
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li data-aos="fade-up" data-aos-delay="250">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Ready-to-use class plans for private clients or group
                       classes
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="300">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Live and virtual instruction for accessible learning
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="350">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Recordings available for continued study and review
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="400">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Some programs available as recording-only with full
@@ -303,50 +317,53 @@ const TeacherTraining = () => {
             </h4>
             {activeIndex === 2 && (
               <div className="accordion-content">
-                <p data-aos="fade-up" data-aos-delay="100">
+                <p data-aos="fade-left" data-aos-delay="100">
                   Sita teaches in a way that honors the tradition and honors the
                   individual. She translates subtle concepts into embodied
                   knowledge without losing the depth of the teachings. Students
                   leave prepared to guide others responsibly, ethically, and
                   with clarity.
                 </p>
-                <p className="heading" data-aos="fade-up" data-aos-delay="200">
+                <p
+                  className="heading"
+                  data-aos="fade-right"
+                  data-aos-delay="200">
                   You will learn how to:
                 </p>
                 <ul className="accordion-section-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Teach from understanding rather than memorization
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="450">
+                  <li data-aos="fade-up" data-aos-delay="200">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Work with private clients as well as groups</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li data-aos="fade-up" data-aos-delay="250">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Integrate subtle body literacy into physical practice
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="300">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Support students through transformational process safely
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="350">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Use tools that match the person, not the trend</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="400">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Bridge classical knowledge with contemporary application
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="450">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Cultivate personal sadhana as the foundation of all
@@ -354,7 +371,7 @@ const TeacherTraining = () => {
                     </span>
                   </li>
                 </ul>
-                <p data-aos="fade-up" data-aos-delay="200">
+                <p data-aos="fade-left" data-aos-delay="200">
                   This path is for those who know that Yoga is not performance.
                   It is inner alchemy and the steady maturation of awareness and
                   capacity.
@@ -382,43 +399,43 @@ const TeacherTraining = () => {
             {activeIndex === 3 && (
               <div className="accordion-content">
                 <ul className="accordion-section-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Live online classes with Q and A, practice, and
                       integration
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="450">
+                  <li data-aos="fade-up" data-aos-delay="200">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Recordings provided for all live attendees</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li data-aos="fade-up" data-aos-delay="250">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Recording-only courses available for self-paced study
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="300">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Support materials and class plans included</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="350">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Small group learning for relational depth</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="400">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Optional private mentoring available</span>
                   </li>
                 </ul>
-                <p data-aos="fade-up" data-aos-delay="100">
+                <p data-aos="fade-left" data-aos-delay="200">
                   Sita teaches with clarity and experience. Students often speak
                   of her guidance as the missing link between classical Yoga
                   theory and practical application in modern practice and
                   teaching.
                 </p>
-                <p data-aos="fade-up" data-aos-delay="200">
+                <p data-aos="fade-right" data-aos-delay="300">
                   If you are called to deepen, to mature your teaching, and to
                   work from the subtle body instead of the surface, this is the
                   right place
@@ -439,13 +456,21 @@ const TeacherTraining = () => {
       {/* ---------------- SESSIONS SECTION ---------------- */}
       <section className="sita-masterclass sessions-section">
         <div className="container text-center">
-          <h2 data-aos="fade-up">Sessions</h2>
-          <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
+          <h2 data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
+            Sessions
+          </h2>
+          <img
+            src="sita-motif.webp"
+            alt="Sita Motif"
+            className="motif"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          />
           <div className="row">
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="100">
+              data-aos-delay="250">
               <div className="masterclass-card">
                 <img
                   src="masterclass-1.webp"
@@ -463,7 +488,7 @@ const TeacherTraining = () => {
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="200">
+              data-aos-delay="400">
               <div className="masterclass-card">
                 <img
                   src="masterclass-2.webp"
@@ -483,7 +508,7 @@ const TeacherTraining = () => {
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="300">
+              data-aos-delay="550">
               <div className="masterclass-card">
                 <img
                   src="masterclass-3.webp"
