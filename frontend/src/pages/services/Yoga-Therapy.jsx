@@ -9,11 +9,15 @@ import Testimonials from "../testimonials/Testimonials";
 const YogaTherapy = () => {
   useEffect(() => {
     AOS.init({
-      duration: 900,
-      easing: "ease-in-out",
-      once: true,
-      offset: 80,
+      duration: 1000,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 120,
+      debounceDelay: 50,
     });
+
+    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
 
   return (
@@ -37,7 +41,6 @@ const YogaTherapy = () => {
           <img src="/yoga-therapy-image.webp" alt="Yoga Therapy Image" />
         </div>
       </section>
-
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
       <SitaBreadcrumb
         items={[
@@ -46,7 +49,6 @@ const YogaTherapy = () => {
           { label: "Yoga Therapy" },
         ]}
       />
-
       {/* -------------------- INNER PAGE CONTENT -------------------- */}
       <section className="sita-inner-section yoga-therapy-bg-image">
         <div className="container position-relative">
@@ -68,24 +70,24 @@ const YogaTherapy = () => {
               <div
                 className="sita-inner-content-intro yoga-therapy-section"
                 data-aos="fade-up"
-                data-aos-delay="300">
+                data-aos-delay="250">
                 <p
                   className="sita-quote"
                   data-aos="fade-right"
-                  data-aos-delay="400">
+                  data-aos-delay="300"
+                  data-aos-duration="1200">
                   “The true measure of Yoga is not how far the body moves but
                   how quietly the mind sits.”
                 </p>
-
                 <img
                   src="/sita.webp"
                   alt="Sita"
                   className="sita"
                   data-aos="fade-left"
-                  data-aos-delay="500"
+                  data-aos-delay="350"
+                  data-aos-duration="1200"
                 />
               </div>
-
               <div className="sita-inner-full-content">
                 <p data-aos="fade-up" data-aos-delay="100">
                   Yoga Therapy is a holistic, personalized approach to health
@@ -95,8 +97,7 @@ const YogaTherapy = () => {
                   lifestyles, it recognizes that each individual is unique and
                   therefore requires a tailored therapeutic approach.
                 </p>
-
-                <p data-aos="fade-up" data-aos-delay="200">
+                <p data-aos="fade-left" data-aos-delay="200">
                   A key strength of Yoga Therapy lies in its effectiveness for
                   stress-related conditions, chronic pain, hormonal imbalances,
                   digestive issues, fatigue, anxiety, and sleep disturbances.
@@ -107,8 +108,7 @@ const YogaTherapy = () => {
                   meditation, and lifestyle guidance—it supports the body’s
                   innate ability to heal and self-regulate.
                 </p>
-
-                <p className="mb-0" data-aos="fade-up" data-aos-delay="300">
+                <p className="mb-0" data-aos="fade-right" data-aos-delay="300">
                   Your Yoga Therapy program is one of the best ways to start
                   integrating new life practices into your daily life. Sita will
                   carefully craft a Yoga Therapy plan that will include many of
@@ -122,18 +122,19 @@ const YogaTherapy = () => {
               </div>
             </div>
           </div>
-          <a href="/booking" className="sita-workshops-btn mt-2">
+          <a
+            href="/booking"
+            className="sita-workshops-btn mt-2"
+            data-aos="fade-up"
+            data-aos-delay="350">
             Start Yoga Therapy
           </a>
         </div>
       </section>
-
       {/* ---------------- WORKSHOP CALENDAR SECTION ---------------- */}
       <WorkShopCalendar />
-
       {/* ---------------- TESTIMONIALS SECTION ---------------- */}
       <Testimonials />
-
       {/* ---------------- CTA STRIP SECTION ---------------- */}
       <div className="sita-cta-wrapper" data-aos="zoom-in">
         <span className="cta-border">

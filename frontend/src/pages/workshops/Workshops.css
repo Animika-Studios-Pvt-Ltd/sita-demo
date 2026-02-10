@@ -18,18 +18,17 @@
   padding: 10px 24px;
   font-family: "Montserrat-Medium";
   font-size: 18px;
+  margin-bottom: 20px;
   text-decoration: none;
   line-height: 1;
   clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
-  transition: background-color 0.3s ease;
-  margin-bottom: 20px;
-  transition: transform 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease ;
 }
 
 .sita-workshops-btn:hover {
   background-color: #8b171b;
   color: #ffffff;
-  transform: scale(1.05);
+  transform: scale(1.09) !important;
 }
 
 @media (max-width: 1200px) {

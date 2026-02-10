@@ -9,17 +9,26 @@ import "../workshops/Workshops.css";
 
 const ReleaseKarmicPatterns = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+
   useEffect(() => {
     AOS.init({
-      duration: 900,
-      easing: "ease-in-out",
-      once: true,
-      offset: 80,
+      duration: 1000,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 120,
+      debounceDelay: 50,
     });
+
+    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
 
   const toggleAccordion = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
+
+    setTimeout(() => {
+      AOS.refreshHard();
+    }, 100);
   };
 
   return (
@@ -27,7 +36,6 @@ const ReleaseKarmicPatterns = () => {
       {/* -------------------- HERO SECTION -------------------- */}
       <section className="sita-inner-hero">
         <div className="sita-hero-inner-bg" data-aos="fade-in"></div>
-
         <div className="sita-inner-hero-image">
           <div
             className="sita-inner-hero-image-banner"
@@ -49,7 +57,6 @@ const ReleaseKarmicPatterns = () => {
           />
         </div>
       </section>
-
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
       <SitaBreadcrumb
         items={[
@@ -58,7 +65,6 @@ const ReleaseKarmicPatterns = () => {
           { label: "Release Karmic Patterns" },
         ]}
       />
-
       {/* --------------------- INNER PAGE CONTENT ---------------------- */}
       <section className="sita-inner-section release-karmic-patterns-bg-image">
         <div className="container position-relative">
@@ -68,7 +74,6 @@ const ReleaseKarmicPatterns = () => {
                 <h2 data-aos="fade-up" data-aos-delay="100">
                   Release Karmic Patterns
                 </h2>
-
                 <img
                   src="/sita-motif.webp"
                   className="motif mb-4"
@@ -80,7 +85,7 @@ const ReleaseKarmicPatterns = () => {
               <div
                 className="sita-inner-content-intro"
                 data-aos="fade-up"
-                data-aos-delay="300">
+                data-aos-delay="250">
                 <p data-aos="fade-up" data-aos-delay="100">
                   When we work with karma, we are not forcing change. We are
                   inviting release. Karma is unfinished energy, an imprint that
@@ -91,9 +96,8 @@ const ReleaseKarmicPatterns = () => {
                   not consciously choose.
                 </p>
               </div>
-
               <div className="sita-inner-full-content">
-                <p data-aos="fade-up" data-aos-delay="100">
+                <p data-aos="fade-left" data-aos-delay="100">
                   Sita works and supports individuals in recognizing and
                   releasing deep-seated karmic patterns that shape their
                   experiences, choices, and emotional responses. These patterns
@@ -101,40 +105,40 @@ const ReleaseKarmicPatterns = () => {
                   to shift through conscious effort alone, including:
                 </p>
                 <ul className="soul-curriculum-list">
-                  <li data-aos="fade-up" data-aos-delay="350">
+                  <li data-aos="fade-left" data-aos-delay="350">
                     <img src="/sita-points.webp" alt="bullet" />
                     <span>
                       Relationship dynamics that repeat with different people
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="350">
+                  <li data-aos="fade-right" data-aos-delay="350">
                     <img src="/sita-points.webp" alt="bullet" />
                     <span>
                       Health challenges that mirror emotional or spiritual
                       tension
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="350">
+                  <li data-aos="fade-left" data-aos-delay="350">
                     <img src="/sita-points.webp" alt="bullet" />
                     <span>
                       Deep questions of worthiness, belonging, or visibility
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="350">
+                  <li data-aos="fade-right" data-aos-delay="350">
                     <img src="/sita-points.webp" alt="bullet" />
                     <span>
                       Ongoing confusion about direction, calling, or purpose
                     </span>
                   </li>
                 </ul>
-                <p data-aos="fade-up" data-aos-delay="400">
+                <p data-aos="fade-left" data-aos-delay="400">
                   In this journey, Sita enables a deep level of awareness to
                   unconscious imprints carried through personal history and
                   karmic memory. By uncovering these patterns, she helps
                   individuals understand their realities, marking the first step
                   toward meaningful and lasting change.
                 </p>
-                <p data-aos="fade-up" data-aos-delay="450">
+                <p data-aos="fade-right" data-aos-delay="450">
                   From there, she supports the release of karmic patterns by
                   helping you develop and implement specific spiritual sadhanas
                   and practices. These are not generic prescriptions. They are
@@ -145,12 +149,15 @@ const ReleaseKarmicPatterns = () => {
               </div>
             </div>
           </div>
-          <a href="/booking" className="sita-workshops-btn mt-2">
+          <a
+            href="/booking"
+            className="sita-workshops-btn mt-2"
+            data-aos="fade-up"
+            data-aos-delay="350">
             Release Karma
           </a>
         </div>
       </section>
-
       {/* --------------------- RELEASE KARMIC PATTERNS ACCORDION SECTION ---------------------- */}
       <section className="accordion-section soul-curriculum-accordion">
         <div className="container">
@@ -167,36 +174,36 @@ const ReleaseKarmicPatterns = () => {
             {activeIndex === 0 && (
               <div className="accordion-content">
                 <ul className="accordion-section-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="100">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Mantra and japa</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="450">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Meditation and guided inner journeys</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li data-aos="fade-up" data-aos-delay="200">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Mudra and subtle body practices</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="250">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Pranayama and conscious breathwork</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="600">
+                  <li data-aos="fade-up" data-aos-delay="300">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Planetary remedies and altar work</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="650">
+                  <li data-aos="fade-up" data-aos-delay="350">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Simple puja and devotional practices</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="700">
+                  <li data-aos="fade-up" data-aos-delay="400">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>Ayurvedic lifestyle and ritual supports</span>
                   </li>
                 </ul>
-                <p data-aos="fade-up" data-aos-delay="750">
+                <p data-aos="fade-left" data-aos-delay="450">
                   No matter the tool, you are met where you are and only given
                   what is best for you. In this work we honor the Divine plan.
                   We do not try to interfere with the soul’s own timing or
@@ -208,7 +215,7 @@ const ReleaseKarmicPatterns = () => {
                 <div
                   className="accordion-read-less"
                   data-aos="fade-up"
-                  data-aos-delay="650"
+                  data-aos-delay="500"
                   onClick={() => toggleAccordion(0)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -227,32 +234,32 @@ const ReleaseKarmicPatterns = () => {
             </h4>
             {activeIndex === 1 && (
               <div className="accordion-content">
-                <p data-aos="fade-up" data-aos-delay="100">
+                <p data-aos="fade-left" data-aos-delay="100">
                   It is used to help Sita receive the information she needs to
                   support your karmic releasing. Through Jyotish she can see:
                 </p>
                 <ul className="accordion-section-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       The karmic themes and soul lessons at the center of your
                       life
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="450">
+                  <li data-aos="fade-up" data-aos-delay="200">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       The planetary teachers that govern your growth and timing
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li data-aos="fade-up" data-aos-delay="250">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       The nakshatras that hold your deeper memories and
                       tendencies
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="300">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       The periods of life that are ripe for healing, clearing,
@@ -260,7 +267,7 @@ const ReleaseKarmicPatterns = () => {
                     </span>
                   </li>
                 </ul>
-                <p data-aos="fade-up" data-aos-delay="200">
+                <p data-aos="fade-right" data-aos-delay="350">
                   The release of karmic patterns often leads to greater clarity,
                   emotional freedom, improved well-being, and a renewed sense of
                   purpose. You begin to feel less bound to old stories and more
@@ -272,7 +279,7 @@ const ReleaseKarmicPatterns = () => {
                 <div
                   className="accordion-read-less"
                   data-aos="fade-up"
-                  data-aos-delay="650"
+                  data-aos-delay="400"
                   onClick={() => toggleAccordion(1)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -282,7 +289,6 @@ const ReleaseKarmicPatterns = () => {
           </div>
         </div>
       </section>
-
       {/* --------------------- RELEASE KARMIC PATTERNS HOW IT WORKS SECTION ---------------------- */}
       <section className="group-sessions-core-elements soul-curriculum-how-it-works">
         <div className="container">
@@ -301,13 +307,10 @@ const ReleaseKarmicPatterns = () => {
           </div>
         </div>
       </section>
-
       {/* ---------------- WORKSHOP CALENDAR SECTION ---------------- */}
       <WorkShopCalendar />
-
       {/* ---------------- TESTIMONIALS SECTION ---------------- */}
       <Testimonials />
-
       {/* ---------------- CTA STRIP SECTION ---------------- */}
       <div className="sita-cta-wrapper" data-aos="zoom-in">
         <span className="cta-border">

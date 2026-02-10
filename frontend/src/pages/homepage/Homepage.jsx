@@ -36,16 +36,18 @@ const HomePage = () => {
   useEffect(() => {
     fetchBlogs();
   }, []);
+
   useEffect(() => {
     AOS.init({
       duration: 1000,
       easing: "ease-out-cubic",
       once: false,
       mirror: true,
-      offset: 100,
+      offset: 120,
+      debounceDelay: 50,
     });
 
-    setTimeout(() => AOS.refresh(), 200);
+    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
 
   /* Animations and Transitions */
@@ -96,7 +98,6 @@ const HomePage = () => {
     updateTargets();
     animate();
 
-    // ✅ Cleanup (VERY IMPORTANT)
     return () => {
       window.removeEventListener("scroll", updateTargets);
       window.removeEventListener("resize", updateTargets);
@@ -144,7 +145,6 @@ const HomePage = () => {
       {/* ---------------- HERO SECTION ---------------- */}
       <section className="sita-hero">
         <div className="sita-hero-bg"></div>
-
         <div className="sita-hero-image">
           <div
             className="sita-hero-image-inner"
@@ -154,7 +154,6 @@ const HomePage = () => {
             <img src="sita-banner.webp" alt="Sita Hero" />
           </div>
         </div>
-
         <div className="container">
           <div className="row">
             <div
@@ -171,7 +170,6 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-
       {/* ---------------- ABOUT SECTION ---------------- */}
       <section className="sita-about">
         <div className="container">
@@ -183,7 +181,6 @@ const HomePage = () => {
               <h2>Sita</h2>
               <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
             </div>
-
             <div
               className="col-lg-9 col-md-12 col-sm-12 col-12"
               data-aos="fade-left"
@@ -200,7 +197,6 @@ const HomePage = () => {
                 intimate group journeys, she creates transformative frameworks
                 that support conscious awakening and soul-aligned living.
               </p>
-
               <a href="/about" className="sita-btn">
                 Her Journey
               </a>
@@ -208,7 +204,6 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-
       {/* ---------------- THE SITA FACTOR SECTION ---------------- */}
       <section className="sita-factor-section">
         <img
@@ -217,21 +212,18 @@ const HomePage = () => {
           className="sita-decor decor-lotus"
           aria-hidden="true"
         />
-
         {/* <img
           src="s.webp"
           alt=""
           className="sita-decor decor-s"
           aria-hidden="true"
         /> */}
-
         <div
           className="container text-center sita-factor-content"
           data-aos="fade-up"
           data-aos-duration="1100"
           data-aos-delay="150">
           <h2>The Sita Factor</h2>
-
           <img
             src="sita-motif.webp"
             alt="Sita Motif"
@@ -239,11 +231,9 @@ const HomePage = () => {
             data-aos="fade-up"
             data-aos-delay="200"
           />
-
           <p className="sita-factor-heading">
             A Conscious Path to Spiritual Evolution
           </p>
-
           <p className="sita-factor-text">
             Sita engenders inner transformation with illuminating guidance for
             spiritual development, holistic healing, and inner alignment. Rooted
@@ -251,13 +241,11 @@ const HomePage = () => {
             offers deeply personalized mentorship, advanced teacher trainings,
             and curated group journeys for conscious awakening.
           </p>
-
           <p className="sita-factor-highlight">
             Spiritual Counselor · Vedic & Ayurvedic Practitioner · Healer ·
             Author
           </p>
         </div>
-
         <div className="container sita-factor-services">
           <div className="row g-0 justify-content-center">
             <div
@@ -276,7 +264,6 @@ const HomePage = () => {
                 </span>
               </a>
             </div>
-
             <div
               className="sita-service-col"
               data-aos="zoom-in"
@@ -295,7 +282,6 @@ const HomePage = () => {
                 </span>
               </a>
             </div>
-
             <div
               className="sita-service-col"
               data-aos="zoom-in"
@@ -315,14 +301,12 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-
       {/* ---------------- MASTERCLASS SECTION ---------------- */}
       <section className="sita-masterclass">
         <div className="container text-center">
           <h2 data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
             Masterclass
           </h2>
-
           <img
             src="sita-motif.webp"
             alt="Sita Motif"
@@ -330,7 +314,6 @@ const HomePage = () => {
             data-aos="fade-up"
             data-aos-delay="200"
           />
-
           <p className="sita-masterclass-text">
             Sita Severson is devoted to empowering individuals on the path of
             self-development—supporting lives of balance, vitality, and
@@ -338,7 +321,6 @@ const HomePage = () => {
             true purpose. Her work is grounded in deep expertise across the many
             dimensions of personal and spiritual transformation.
           </p>
-
           <div className="row">
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
@@ -358,7 +340,6 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
@@ -379,7 +360,6 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
@@ -403,10 +383,8 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-
       {/* ---------------- WORKSHOP CALENDAR SECTION ---------------- */}
       <WorkShopCalendar />
-
       {/* ---------------- SITA VERSES SECTION ---------------- */}
       <section className="sita-verses">
         <div className="sita-verses-overlay">
@@ -415,7 +393,6 @@ const HomePage = () => {
             data-aos="fade-up"
             data-aos-duration="1100">
             <h2 data-aos="fade-up">Sita Verses</h2>
-
             <img
               src="sita-motif.webp"
               alt="Sita Motif"
@@ -423,7 +400,6 @@ const HomePage = () => {
               data-aos="fade-up"
               data-aos-delay="200"
             />
-
             <div
               id="sitaVersesCarousel"
               className="carousel slide carousel-fade"
@@ -436,20 +412,17 @@ const HomePage = () => {
                     lotus, rooted in the mud, blossoming toward the sun.”
                   </blockquote>
                 </div>
-
                 <div className="carousel-item">
                   <blockquote>
                     “Stillness is not empty. It is full of answers.”
                   </blockquote>
                 </div>
-
                 <div className="carousel-item">
                   <blockquote>
                     “Your soul already knows the way. Trust it.”
                   </blockquote>
                 </div>
               </div>
-
               <div className="sita-verses-arrows">
                 <button
                   className="sita-verses-arrow"
@@ -458,7 +431,6 @@ const HomePage = () => {
                   aria-label="Previous">
                   <i className="fa-solid fa-arrow-left"></i>
                 </button>
-
                 <button
                   className="sita-verses-arrow"
                   data-bs-target="#sitaVersesCarousel"
@@ -479,13 +451,11 @@ const HomePage = () => {
           className="sita-publications-decor sita-decor"
           aria-hidden="true"
         />
-
         <div
           className="container text-center"
           data-aos="fade-up"
           data-aos-duration="1200">
           <h2 data-aos="fade-up">Enduring Lights of Transformation</h2>
-
           <img
             src="sita-motif.webp"
             alt="Sita Motif"
@@ -493,7 +463,6 @@ const HomePage = () => {
             data-aos="fade-up"
             data-aos-delay="200"
           />
-
           <img
             src="sita-publication.webp"
             className="img-fluid sita-publications-img"
@@ -576,7 +545,6 @@ const HomePage = () => {
       <section className="sita-recent-blogs">
         <div className="container text-center">
           <h2 data-aos="fade-up">Recent Blogs</h2>
-
           <img
             src="sita-motif.webp"
             alt="Sita Motif"
@@ -584,13 +552,11 @@ const HomePage = () => {
             data-aos="fade-up"
             data-aos-delay="200"
           />
-
           <div className="row">
             {currentBlogs.length > 0 ? (
               currentBlogs.map((blog, index) => {
                 const btnColors = ["pink", "peach", "rose"];
                 const btnColor = btnColors[index % btnColors.length]; // Cycle colors
-
                 return (
                   <div
                     key={blog._id}
@@ -620,9 +586,7 @@ const HomePage = () => {
                           )}
                         </p>
                       </div>
-
                       <h4>{blog.title}</h4>
-
                       <div className="blog-description-wrapper">
                         <p
                           dangerouslySetInnerHTML={{
@@ -634,11 +598,9 @@ const HomePage = () => {
                           }}
                         />
                       </div>
-
                       <span className="blog-author mb-3">
                         - {blog.author || "Sita Severson"}
                       </span>
-
                       <Link
                         to={`/blogs/${blog.slug || blog._id}`}
                         className={`sita-blog-btn ${btnColor}`}

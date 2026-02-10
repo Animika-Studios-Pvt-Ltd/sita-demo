@@ -9,11 +9,15 @@ import "../about/About.css";
 const AyurvedaNutrition = () => {
   useEffect(() => {
     AOS.init({
-      duration: 900,
-      easing: "ease-in-out",
-      once: true,
-      offset: 80,
+      duration: 1000,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 120,
+      debounceDelay: 50,
     });
+
+    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
 
   return (
@@ -43,7 +47,6 @@ const AyurvedaNutrition = () => {
           />
         </div>
       </section>
-
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
       <SitaBreadcrumb
         items={[
@@ -52,7 +55,6 @@ const AyurvedaNutrition = () => {
           { label: "Ayurveda Nutrition & Integration" },
         ]}
       />
-
       {/* --------------------- INNER PAGE CONTENT ---------------------- */}
       <section className="sita-inner-section ayurveda-nutrition-bg-image">
         <div className="container position-relative">
@@ -62,7 +64,6 @@ const AyurvedaNutrition = () => {
                 <h2 data-aos="fade-up" data-aos-delay="100">
                   Ayurveda - Nutrition & Lifestyle Integration
                 </h2>
-
                 <img
                   src="/sita-motif.webp"
                   className="motif mb-4"
@@ -74,8 +75,8 @@ const AyurvedaNutrition = () => {
               <div
                 className="sita-inner-content-intro"
                 data-aos="fade-up"
-                data-aos-delay="300">
-                <p>
+                data-aos-delay="250">
+                <p data-aos="fade-up" data-aos-delay="100">
                   Ayurveda integration brings the timeless wisdom of Ayurveda
                   into modern life in a practical, personalized, and sustainable
                   way. Ayurveda integration focuses on identifying the root
@@ -93,8 +94,7 @@ const AyurvedaNutrition = () => {
                   thoughtfully and conservatively, always respecting modern
                   medical boundaries.
                 </p>
-
-                <p data-aos="fade-up" data-aos-delay="200">
+                <p data-aos="fade-left" data-aos-delay="200">
                   Ayurveda integration works particularly well alongside Yoga
                   Therapy, lifestyle coaching, and preventive health care,
                   offering a holistic framework that supports long-term
@@ -103,8 +103,7 @@ const AyurvedaNutrition = () => {
                   hormonal imbalance, inflammatory conditions, and recurring
                   lifestyle-related concerns.
                 </p>
-
-                <p data-aos="fade-up" data-aos-delay="300">
+                <p data-aos="fade-right" data-aos-delay="300">
                   Ayurveda – Nutrition & Lifestyle Integration is a
                   personalized, holistic approach to health that aligns daily
                   food choices and lifestyle practices with an individual’s
@@ -113,26 +112,26 @@ const AyurvedaNutrition = () => {
                   that what we eat, how we live, and when we do things are as
                   important as treatment itself.
                 </p>
-
-                <p className="mb-0" data-aos="fade-up" data-aos-delay="400">
+                <p className="mb-0" data-aos="fade-left" data-aos-delay="400">
                   SITA guides the seeker in this seamless integration to enable
                   the necessary transformation.
                 </p>
               </div>
             </div>
           </div>
-          <a href="/booking" className="sita-workshops-btn mt-2">
+          <a
+            href="/booking"
+            className="sita-workshops-btn mt-2"
+            data-aos="fade-up"
+            data-aos-delay="350">
             Ayurveda Guidance
           </a>
         </div>
       </section>
-
       {/* ---------------- WORKSHOP CALENDAR SECTION ---------------- */}
       <WorkShopCalendar />
-
       {/* ---------------- TESTIMONIALS SECTION ---------------- */}
       <Testimonials />
-
       {/* ---------------- CTA STRIP SECTION ---------------- */}
       <div className="sita-cta-wrapper" data-aos="zoom-in">
         <span className="cta-border">

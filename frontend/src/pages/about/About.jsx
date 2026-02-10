@@ -34,6 +34,7 @@ const About = () => {
   useEffect(() => {
     fetchBlogs();
   }, []);
+
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -52,7 +53,6 @@ const About = () => {
       {/* -------------------- ABOUT PAGE HERO SECTION -------------------- */}
       <section className="sita-inner-hero">
         <div className="sita-hero-inner-bg" data-aos="fade-in"></div>
-
         <div className="sita-inner-hero-image">
           <div
             className="sita-inner-hero-image-banner"
@@ -69,12 +69,10 @@ const About = () => {
           data-aos-duration="2000"
         />
       </section>
-
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
       <SitaBreadcrumb
         items={[{ label: "Home", path: "/" }, { label: "About" }]}
       />
-
       {/* -------------------- ABOUT PAGE SECTION -------------------- */}
       <section className="sita-inner-section sita-about-page">
         <div className="container position-relative">
@@ -119,7 +117,6 @@ const About = () => {
               </div>
               <div className="sita-inner-full-content about-content">
                 <h2 data-aos="fade-up">Detailed Bio</h2>
-
                 <p data-aos="fade-up" data-aos-delay="100">
                   Sita Severson is the Director of Advanced Studies at the Soul
                   of Yoga Institute, a yoga therapist, Ayurvedic practitioner,
@@ -314,7 +311,6 @@ const About = () => {
                         </p>
                       </div>
                       <h4>{blog.title}</h4>
-
                       <div className="blog-description-wrapper">
                         <p
                           dangerouslySetInnerHTML={{

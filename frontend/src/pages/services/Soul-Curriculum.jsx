@@ -12,15 +12,23 @@ const SoulCurriculum = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 900,
-      easing: "ease-in-out",
-      once: true,
-      offset: 80,
+      duration: 1000,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 120,
+      debounceDelay: 50,
     });
+
+    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
 
   const toggleAccordion = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
+
+    setTimeout(() => {
+      AOS.refreshHard();
+    }, 100);
   };
 
   return (
@@ -28,7 +36,6 @@ const SoulCurriculum = () => {
       {/* -------------------- HERO SECTION -------------------- */}
       <section className="sita-inner-hero">
         <div className="sita-hero-inner-bg" data-aos="fade-in"></div>
-
         <div className="sita-inner-hero-image">
           <div
             className="sita-inner-hero-image-banner"
@@ -44,7 +51,6 @@ const SoulCurriculum = () => {
           <img src="/soul-curriculum-image.webp" alt="Soul Curriculum Image" />
         </div>
       </section>
-
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
       <SitaBreadcrumb
         items={[
@@ -53,7 +59,6 @@ const SoulCurriculum = () => {
           { label: "Soul Curriculum" },
         ]}
       />
-
       {/* --------------------- INNER PAGE CONTENT ---------------------- */}
       <section className="sita-inner-section soul-curriculum-bg-image">
         <div className="container position-relative">
@@ -63,7 +68,6 @@ const SoulCurriculum = () => {
                 <h2 data-aos="fade-up" data-aos-delay="100">
                   Soul Curriculum
                 </h2>
-
                 <img
                   src="/sita-motif.webp"
                   className="motif mb-4"
@@ -75,8 +79,8 @@ const SoulCurriculum = () => {
               <div
                 className="sita-inner-content-intro"
                 data-aos="fade-up"
-                data-aos-delay="300">
-                <p>
+                data-aos-delay="250">
+                <p data-aos="fade-up" data-aos-delay="100">
                   Jyotish is the ancient science of light, rooted in the Vedic
                   tradition. It arose from seers who watched the sky to
                   understand the soul’s long journey through many lives. In the
@@ -85,16 +89,15 @@ const SoulCurriculum = () => {
                   often focuses on personality and psychological themes.
                 </p>
               </div>
-
               <div className="sita-inner-full-content">
-                <p data-aos="fade-up" data-aos-delay="100">
+                <p data-aos="fade-left" data-aos-delay="100">
                   Jyotish uses the sidereal zodiac, which is anchored to the
                   fixed stars. It is less about "who you are" in this moment and
                   more about "why you are here" and what your soul is learning
                   across lifetimes. It looks at destiny, dharma, karma, and the
                   living intelligence of time itself.
                 </p>
-                <p data-aos="fade-up" data-aos-delay="200">
+                <p data-aos="fade-right" data-aos-delay="200">
                   Your Jyotish chart is a sacred map that I call your “Soul’s
                   Curriculum”. Sita sits with it as if she is sitting with your
                   soul. She is not only analyzing or intellectualizing, She is
@@ -104,12 +107,15 @@ const SoulCurriculum = () => {
               </div>
             </div>
           </div>
-          <a href="/booking" className="sita-workshops-btn mt-2">
+          <a
+            href="/booking"
+            className="sita-workshops-btn mt-2"
+            data-aos="fade-up"
+            data-aos-delay="350">
             Life Guidance
           </a>
         </div>
       </section>
-
       {/* --------------------- SOUL CURRICULUM ACCORDION SECTION ---------------------- */}
       <section className="accordion-section soul-curriculum-accordion">
         <div className="container">
@@ -125,60 +131,60 @@ const SoulCurriculum = () => {
             {activeIndex === 0 && (
               <div className="accordion-content">
                 <ul className="accordion-section-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="100">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Karmic patterns you are unwinding in this lifetime
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="450">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Gifts that are ripe and ripening, ready to be claimed
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li data-aos="fade-up" data-aos-delay="200">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Relationship patterns and how they are asking you to grow
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="250">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Family of origin themes and what you came in to master
                       through them
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="600">
+                  <li data-aos="fade-up" data-aos-delay="300">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Archetypes you carry, how to activate their strengths, and
                       how they challenge you into your mastery
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="650">
+                  <li data-aos="fade-up" data-aos-delay="350">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Career pathways that align with your values and natural
                       way of serving
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="700">
+                  <li data-aos="fade-up" data-aos-delay="400">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Dharma, or the deeper purpose underneath what you "do" in
                       the world
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="750">
+                  <li data-aos="fade-up" data-aos-delay="450">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Spiritual sadhana that fits your constitution and your
                       stage of life
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="800">
+                  <li data-aos="fade-up" data-aos-delay="500">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Health patterns, including where there may be
@@ -186,14 +192,14 @@ const SoulCurriculum = () => {
                       body mirrors your soul lessons
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="850">
+                  <li data-aos="fade-up" data-aos-delay="550">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Timing windows that support healing, creation, rest, and
                       courageous change
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="900">
+                  <li data-aos="fade-up" data-aos-delay="600">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Karmic and dharmic alignments, patterns, and activation
@@ -204,7 +210,7 @@ const SoulCurriculum = () => {
                 <div
                   className="accordion-read-less"
                   data-aos="fade-up"
-                  data-aos-delay="650"
+                  data-aos-delay="700"
                   onClick={() => toggleAccordion(0)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -224,27 +230,27 @@ const SoulCurriculum = () => {
             {activeIndex === 1 && (
               <div className="accordion-content">
                 <ul className="accordion-section-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="100">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Individuals, for personal insights, healing, and dharma
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="450">
+                  <li data-aos="fade-up" data-aos-delay="150">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Couples and families, to understand shared karmas,
                       relational patterns, and soul agreements
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li data-aos="fade-up" data-aos-delay="200">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Groups and communities, to see the larger field of purpose
                       and healing
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="250">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       Businesses and projects, to align vision, leadership,
@@ -253,7 +259,7 @@ const SoulCurriculum = () => {
                     </span>
                   </li>
                 </ul>
-                <p data-aos="fade-up" data-aos-delay="200">
+                <p data-aos="fade-up" data-aos-delay="300">
                   These readings are living transmissions, not just information.
                   The chart gives me a structure, and then I channel what wants
                   to come through for you. I speak to the way your chart sings,
@@ -263,7 +269,7 @@ const SoulCurriculum = () => {
                 <div
                   className="accordion-read-less"
                   data-aos="fade-up"
-                  data-aos-delay="650"
+                  data-aos-delay="350"
                   onClick={() => toggleAccordion(1)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -283,35 +289,35 @@ const SoulCurriculum = () => {
             {activeIndex === 2 && (
               <div className="accordion-content">
                 <ul className="accordion-section-list">
-                  <li data-aos="fade-up" data-aos-delay="400">
+                  <li data-aos="fade-up" data-aos-delay="100">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       That you feel profoundly seen and understood at the level
                       of your soul
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="450">
+                  <li data-aos="fade-up" data-aos-delay="250">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       That you receive language for what you have always sensed
                       about yourself
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li data-aos="fade-up" data-aos-delay="300">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       That your challenges are reframed as initiations into
                       greater mastery
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="550">
+                  <li data-aos="fade-up" data-aos-delay="350">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       That you walk away with practical insight for
                       relationships, work, health, and spiritual practice
                     </span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="600">
+                  <li data-aos="fade-up" data-aos-delay="400">
                     <img src="/sita-points1.webp" alt="bullet" />
                     <span>
                       That your nervous system feels more at ease, because
@@ -319,7 +325,7 @@ const SoulCurriculum = () => {
                     </span>
                   </li>
                 </ul>
-                <p data-aos="fade-up" data-aos-delay="200">
+                <p data-aos="fade-up" data-aos-delay="450">
                   You can imagine this work as a love letter from your highest
                   self or from the Cosmic Mother. A reminder of why you came,
                   what you carry, and how deeply you are held as you walk your
@@ -328,7 +334,7 @@ const SoulCurriculum = () => {
                 <div
                   className="accordion-read-less"
                   data-aos="fade-up"
-                  data-aos-delay="650"
+                  data-aos-delay="500"
                   onClick={() => toggleAccordion(2)}>
                   Read Less{" "}
                   <i className="fa-solid fa-angle-up accordion-read-less-icon"></i>
@@ -338,7 +344,6 @@ const SoulCurriculum = () => {
           </div>
         </div>
       </section>
-
       {/* --------------------- SOUL CURRICULUM HOW IT WORKS SECTION ---------------------- */}
       <section className="group-sessions-core-elements soul-curriculum-how-it-works">
         <div className="container">
@@ -350,13 +355,13 @@ const SoulCurriculum = () => {
                 you don’t have your exact time of birth, Sita will still do your
                 reading, just know it may not be as specific.
               </p>
-              <p data-aos="fade-up" data-aos-delay="200">
+              <p data-aos="fade-left" data-aos-delay="200">
                 You are welcomed, and encouraged to, share your questions being
                 as specific as you’d like. You can also ask to focus on certain
                 areas of your life. You can also just get a general reading and
                 you won’t be disappointed.
               </p>
-              <p className="mb-0" data-aos="fade-up" data-aos-delay="300">
+              <p className="mb-0" data-aos="fade-right" data-aos-delay="300">
                 Once Sita receives your information, she will take this
                 information, sit with it and begin writing. You will receive a
                 typed curriculum. Some people choose to have a session after for
@@ -370,13 +375,10 @@ const SoulCurriculum = () => {
           </div>
         </div>
       </section>
-
       {/* ---------------- WORKSHOP CALENDAR SECTION ---------------- */}
       <WorkShopCalendar />
-
       {/* ---------------- TESTIMONIALS SECTION ---------------- */}
       <Testimonials />
-
       {/* ---------------- CTA STRIP SECTION ---------------- */}
       <div className="sita-cta-wrapper" data-aos="zoom-in">
         <span className="cta-border">
