@@ -55,21 +55,30 @@ const formatTimeRange = (start, end) => {
 
 /* ================= UPCOMING EVENT CHECK ================= */
 const isUpcomingEvent = (event) => {
+  if (!event || !event.date) return false;
+
   const now = new Date();
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
+  // Parse event date (YYYY-MM-DD)
   const [y, m, d] = event.date.split("-").map(Number);
   const eventDate = new Date(y, m - 1, d);
   eventDate.setHours(0, 0, 0, 0);
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // If date is in future, it's upcoming
   if (eventDate > today) return true;
+
+  // If date is in past, it's not upcoming
   if (eventDate < today) return false;
 
-  const [eh, em] = event.endTime.split(":").map(Number);
+  // If date is today, check end time
+  const endTimeStr = event.endTime || "23:59";
+  const [eh, em] = endTimeStr.split(":").map(Number);
+
   const eventEnd = new Date();
-  eventEnd.setHours(eh, em, 0, 0);
+  eventEnd.setHours(eh, em, 0, 0); // Set end time on today's date
 
   return eventEnd > now;
 };
