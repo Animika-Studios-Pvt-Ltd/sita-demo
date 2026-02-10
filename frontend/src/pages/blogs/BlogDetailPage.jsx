@@ -32,10 +32,15 @@ const BlogDetailPage = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 1200,
-      easing: "ease-in-out",
-      once: true,
+      duration: 1000,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 120,
+      debounceDelay: 50,
     });
+
+    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
 
   useEffect(() => {
@@ -127,7 +132,6 @@ const BlogDetailPage = () => {
           />
         </div>
       </section>
-
       <SitaBreadcrumb
         items={[
           { label: "Home", path: "/" },
@@ -138,25 +142,22 @@ const BlogDetailPage = () => {
           { label: blog.title },
         ]}
       />
-
       <div className="container" data-aos="fade-up" data-aos-duration="1000">
         <div className="max-w-8xl mx-auto py-0 text-center flex flex-col justify-center items-center px-4">
           <div className="max-w-6xl mx-auto px-4 text-center mt-4">
             <h1
               className="font-pt-serif text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] text-center"
-              data-aos="zoom-in"
-              data-aos-duration="1300"
-            >
+              data-aos="fade-up">
               {blog.title}
             </h1>
-
             <img
               src="/sita-motif.webp"
               alt="Sita Motif"
-              className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+              className="mx-auto mt-1 w-40 sm:w-48 mb-8 motif"
+              data-aos="fade-up"
+              data-aos-delay="200"
             />
           </div>
-
           <div
             className="max-w-8xl mx-auto px-0 py-2 grid gap-10 lg:grid-cols-1 xl:grid-cols-4"
             data-aos="fade-up"
@@ -177,7 +178,6 @@ const BlogDetailPage = () => {
                 }}
               />
             </div>
-
             {window.innerWidth >= 1280 && (
               <aside
                 className="col-span-1"
@@ -213,7 +213,6 @@ const BlogDetailPage = () => {
                           </Link>
                         </>
                       </div>
-
                       <div className="flex items-center justify-center gap-6 mt-auto relative z-10">
                         <button
                           onClick={handlePrev}
@@ -248,18 +247,17 @@ const BlogDetailPage = () => {
             <div className="sita-recent-blogs">
               <div className="container text-center">
                 <h2>Latest Blogs</h2>
-                <img src="/sita-motif.webp" alt="Sita Motif" className="motif" />
+                <img
+                  src="/sita-motif.webp"
+                  alt="Sita Motif"
+                  className="motif"
+                />
               </div>
             </div>
-
             {/* BLOG GRID */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentBlogs.map((blog, index) => {
-                const btnColors = [
-                  "pink",
-                  "peach",
-                  "rose",
-                ];
+                const btnColors = ["pink", "peach", "rose"];
                 const btnColor = btnColors[index % btnColors.length];
                 return (
                   <div
@@ -289,7 +287,6 @@ const BlogDetailPage = () => {
                           )}
                         </p>
                       </div>
-
                       <h4>{blog.title}</h4>
 
                       <div className="blog-description-wrapper">
@@ -303,15 +300,18 @@ const BlogDetailPage = () => {
                           }}
                         />
                       </div>
-
                       <span className="blog-author mb-3">
                         - {blog.author || "Sita Severson"}
                       </span>
-
                       <Link
                         to={`/blogs/${blog.slug || blog._id}`}
                         className={`sita-blog-btn ${btnColor}`}
-                        style={{ minWidth: "150px", display: "inline-flex", justifyContent: "center", alignItems: "center" }}>
+                        style={{
+                          minWidth: "150px",
+                          display: "inline-flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}>
                         {blog.readMoreText || "Read More"}
                       </Link>
                     </div>
@@ -319,7 +319,6 @@ const BlogDetailPage = () => {
                 );
               })}
             </div>
-
             <div
               className="flex justify-center items-center gap-2 sm:gap-3 mt-10 mb-20 flex-wrap"
               data-aos="fade-up"
@@ -330,11 +329,9 @@ const BlogDetailPage = () => {
                 className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition">
                 <ArrowLeft size={20} strokeWidth={2} />
               </button>
-
               {currentPage > 3 && (
                 <span className="text-gray-400 select-none">...</span>
               )}
-
               {Array.from({ length: totalPages }, (_, i) => i + 1)
                 .filter((num) => {
                   if (currentPage <= 2) {
@@ -354,10 +351,11 @@ const BlogDetailPage = () => {
                     key={num}
                     onClick={() => setCurrentPage(num)}
                     className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
-          ${currentPage === num
-                        ? "bg-[#993333] text-white"
-                        : "border border-transparent text-black hover:border-black hover:bg-gray-100"
-                      }`}>
+          ${
+            currentPage === num
+              ? "bg-[#993333] text-white"
+              : "border border-transparent text-black hover:border-black hover:bg-gray-100"
+          }`}>
                     {num}
                   </button>
                 ))}
@@ -365,7 +363,6 @@ const BlogDetailPage = () => {
               {currentPage < totalPages - 2 && (
                 <span className="text-gray-400 select-none">...</span>
               )}
-
               <button
                 onClick={() =>
                   setCurrentPage((prev) => Math.min(prev + 1, totalPages))

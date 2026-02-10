@@ -7,12 +7,17 @@ import "./SitaFactor.css";
 const StudyWithSita = () => {
   useEffect(() => {
     AOS.init({
-      duration: 900,
-      easing: "ease-in-out",
-      once: true,
-      offset: 80,
+      duration: 1000,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 120,
+      debounceDelay: 50,
     });
+
+    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
+
   return (
     <>
       {/* --------------------  HERO SECTION -------------------- */}

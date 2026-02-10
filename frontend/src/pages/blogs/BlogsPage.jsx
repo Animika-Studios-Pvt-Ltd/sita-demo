@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight } from "lucide-react"; // Restored for pagination
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -28,12 +27,26 @@ const BlogsPage = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 1200,
-      once: true,
-      easing: "ease-in-out",
+      duration: 1000,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 120,
+      debounceDelay: 50,
     });
+
+    setTimeout(() => AOS.refreshHard(), 400);
+  }, []);
+
+  useEffect(() => {
     fetchBlogs();
   }, []);
+
+  useEffect(() => {
+    if (blogs?.length) {
+      setTimeout(() => AOS.refreshHard(), 200);
+    }
+  }, [blogs]);
 
   const fetchBlogs = async () => {
     try {
@@ -70,27 +83,26 @@ const BlogsPage = () => {
       <SitaBreadcrumb
         items={[{ label: "Home", path: "/" }, { label: "Blogs" }]}
       />
-
+      {/* ---------------- BLOGS SECTION ---------------- */}
       <section className="sita-recent-blogs">
         <div className="container text-center">
-          <h2>Blogs By Sita</h2>
-
-          <img src="/sita-motif.webp" alt="Sita Motif" className="motif" />
-
+          <h2 data-aos="fade-up">Blogs By Sita</h2>
+          <img
+            src="sita-motif.webp"
+            alt="Sita Motif"
+            className="motif"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          />
           <div className="row">
             {currentBlogs.length > 0 ? (
               currentBlogs.map((blog, index) => {
-                const btnColors = [
-                  "pink",
-                  "peach",
-                  "rose",
-                ];
+                const btnColors = ["pink", "peach", "rose"];
                 const btnColor = btnColors[index % btnColors.length]; // Cycle colors
-
                 return (
                   <div
                     key={blog._id}
-                    className="col-lg-4 col-md-4 col-sm-12 col-12 mb-8"
+                    className="col-lg-4 col-md-4 col-sm-12 col-12"
                     data-aos="fade-up"
                     data-aos-delay={(index + 1) * 100}>
                     <div className="sita-blog-card">
@@ -116,9 +128,7 @@ const BlogsPage = () => {
                           )}
                         </p>
                       </div>
-
                       <h4>{blog.title}</h4>
-
                       <div className="blog-description-wrapper">
                         <p
                           dangerouslySetInnerHTML={{
@@ -130,15 +140,18 @@ const BlogsPage = () => {
                           }}
                         />
                       </div>
-
                       <span className="blog-author mb-3">
                         - {blog.author || "Sita Severson"}
                       </span>
-
                       <Link
                         to={`/blogs/${blog.slug || blog._id}`}
                         className={`sita-blog-btn ${btnColor}`}
-                        style={{ minWidth: "150px", display: "inline-flex", justifyContent: "center", alignItems: "center" }}>
+                        style={{
+                          minWidth: "150px",
+                          display: "inline-flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}>
                         {blog.readMoreText || "Read More"}
                       </Link>
                     </div>
@@ -149,66 +162,6 @@ const BlogsPage = () => {
               <p>No blogs found.</p>
             )}
           </div>
-
-          {/* PAGINATION */}
-          {totalPages > 1 && (
-            <div
-              className="flex justify-center items-center gap-2 sm:gap-2 lg:gap-3 mt-10 mb-20 flex-wrap"
-              data-aos="fade-up"
-              data-aos-duration="1500">
-              <button
-                onClick={() =>
-                  setCurrentPage((prev) => Math.max(prev - 1, 1))
-                }
-                disabled={currentPage === 1}
-                className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition">
-                <ArrowLeft size={18} strokeWidth={2} />
-              </button>
-
-              {currentPage > 3 && (
-                <span className="text-gray-400 select-none">...</span>
-              )}
-              {Array.from({ length: totalPages }, (_, i) => i + 1)
-                .filter((num) => {
-                  if (currentPage <= 2) {
-                    return num <= 3;
-                  } else if (currentPage >= totalPages - 1) {
-                    return num >= totalPages - 2;
-                  } else {
-                    return (
-                      num === currentPage - 1 ||
-                      num === currentPage ||
-                      num === currentPage + 1
-                    );
-                  }
-                })
-                .map((num) => (
-                  <button
-                    key={num}
-                    onClick={() => setCurrentPage(num)}
-                    className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
-            ${currentPage === num
-                        ? "bg-[#993333] text-white"
-                        : "border border-transparent text-black hover:border-black hover:bg-gray-100"
-                      }`}>
-                    {num}
-                  </button>
-                ))}
-
-              {currentPage < totalPages - 2 && (
-                <span className="text-gray-400 select-none">...</span>
-              )}
-
-              <button
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
-                disabled={currentPage === totalPages}
-                className="w-8 h-8 flex items-center justify-center border border-black rounded-full disabled:opacity-30 hover:bg-gray-100 transition">
-                <ArrowRight size={18} strokeWidth={2} />
-              </button>
-            </div>
-          )}
         </div>
       </section>
     </>
@@ -216,4 +169,3 @@ const BlogsPage = () => {
 };
 
 export default BlogsPage;
-
