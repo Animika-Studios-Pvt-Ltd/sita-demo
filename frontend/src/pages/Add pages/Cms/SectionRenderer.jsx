@@ -6,7 +6,7 @@ import BookingModal from "../../../components/BookingModal";
 import SitaBreadcrumb from "../../breadcrumbs/SitaBreadcrumb";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
+import { ChevronDown, ChevronUp, ExternalLink, Mic } from "lucide-react";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
@@ -184,28 +184,28 @@ function HeroSection({ content, createdFrom, pageSlug }) {
 
   const breadcrumbItems = isBookingPage
     ? [
-        { label: "Home", path: "/" },
-        { label: "Workshops", path: "/events" }, // Or just path: null if no events page
-        {
-          label: pageSlug
-            ? pageSlug
-                .replace(/-/g, " ")
-                .replace(/\b\w/g, (c) => c.toUpperCase())
-            : displayTitle || "Workshop",
-          path: null,
-        },
-      ]
+      { label: "Home", path: "/" },
+      { label: "Workshops", path: "/events" }, // Or just path: null if no events page
+      {
+        label: pageSlug
+          ? pageSlug
+            .replace(/-/g, " ")
+            .replace(/\b\w/g, (c) => c.toUpperCase())
+          : displayTitle || "Workshop",
+        path: null,
+      },
+    ]
     : [
-        { label: "Home", path: "/" },
-        {
-          label: pageSlug
-            ? pageSlug
-                .replace(/-/g, " ")
-                .replace(/\b\w/g, (c) => c.toUpperCase())
-            : displayTitle || "Page",
-          path: null,
-        },
-      ];
+      { label: "Home", path: "/" },
+      {
+        label: pageSlug
+          ? pageSlug
+            .replace(/-/g, " ")
+            .replace(/\b\w/g, (c) => c.toUpperCase())
+          : displayTitle || "Page",
+        path: null,
+      },
+    ];
 
   const handleCtaClick = () => {
     if (eventStatus.ended || eventStatus.soldOut) return;
@@ -924,9 +924,9 @@ function BooksSection({ content }) {
   // Memoize latestBooks to prevent re-renders ideally, but inside render is fine for now
   const latestBooks = Array.isArray(books)
     ? [...books]
-        .filter((b) => !b.suspended && b._id !== id && b.slug !== id) // Exclude current
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        .slice(0, count)
+      .filter((b) => !b.suspended && b._id !== id && b.slug !== id) // Exclude current
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .slice(0, count)
     : [];
 
   const handleAddToCart = (book) => {
