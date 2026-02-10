@@ -53,10 +53,10 @@ const BlogDetailPage = () => {
     setFade(false);
     setTimeout(() => {
       setCurrentIndex((prev) =>
-        prev === 0 ? activeBooks.length - 1 : prev - 1,
+        prev === 0 ? activeBooks.length - 1 : prev - 1
       );
       setFade(true);
-    }, 300);
+    }, 400);
   };
 
   const handleNext = () => {
@@ -64,8 +64,9 @@ const BlogDetailPage = () => {
     setTimeout(() => {
       setCurrentIndex((prev) => (prev + 1) % activeBooks.length);
       setFade(true);
-    }, 300);
+    }, 400);
   };
+
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -188,51 +189,60 @@ const BlogDetailPage = () => {
                     Featured Books
                   </h3>
                   {activeBooks.length > 0 && (
-                    <div className="flex flex-col items-center text-center rounded-lg overflow-hidden relative flex-grow">
-                      <div
-                        className={`flex flex-col items-center absolute transition-all duration-700 ease-in-out transform will-change-transform ${fade ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
-                        <>
+                    <div className="relative w-full h-[420px] flex flex-col items-center justify-between overflow-hidden">
+
+                      {/* FADE BOOK */}
+                      <div className="relative w-full flex-1 flex items-center justify-center">
+                        <div
+                          key={activeBooks[currentIndex]?._id}
+                          className={`absolute inset-0 flex flex-col items-center justify-center
+        transition-opacity duration-700 ease-in-out
+        ${fade ? "opacity-100" : "opacity-0"}`}
+                        >
                           <Link
                             to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`}
-                            className="no-underline">
+                            className="no-underline"
+                          >
                             <img
                               src={
                                 activeBooks[currentIndex]?.coverImage ||
                                 "/placeholder-book.jpg"
                               }
                               alt={activeBooks[currentIndex]?.title}
-                              className="w-40 h-58 object-cover mb-4 cursor-pointer hover:scale-105 transition-transform duration-500"
+                              className="w-40 h-58 object-cover mb-4"
                             />
                           </Link>
+
                           <Link
                             to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`}
-                            className="no-underline">
-                            <h4 className="text-[16px] sm:text-[18px] md:text-[20px] text-black font-Figtree mb-3 hover:text-[#993333] transition-colors duration-300 cursor-pointer">
+                            className="no-underline"
+                          >
+                            <h4 className="text-[16px] sm:text-[18px] md:text-[20px] text-black font-Figtree mb-3">
                               {activeBooks[currentIndex]?.title}
                             </h4>
                           </Link>
-                        </>
+                        </div>
                       </div>
-                      <div className="flex items-center justify-center gap-6 mt-auto relative z-10">
+
+                      {/* ARROWS */}
+                      <div className="flex items-center justify-center gap-6 pb-2">
                         <button
                           onClick={handlePrev}
-                          className="w-8 h-8 flex items-center justify-center border border-black rounded-full group hover:bg-gray-100">
-                          <ArrowLeft
-                            size={20}
-                            strokeWidth={2}
-                            className="text-black transition-colors duration-300 group-hover:text-red-500"
-                          />
+                          className="w-8 h-8 flex items-center justify-center border border-black rounded-full hover:bg-gray-100 transition"
+                          aria-label="Previous book"
+                        >
+                          <ArrowLeft size={18} strokeWidth={2} />
                         </button>
+
                         <button
                           onClick={handleNext}
-                          className="w-8 h-8 flex items-center justify-center border border-black rounded-full group hover:bg-gray-100">
-                          <ArrowRight
-                            size={20}
-                            strokeWidth={2}
-                            className="text-black transition-colors duration-300 group-hover:text-red-500"
-                          />
+                          className="w-8 h-8 flex items-center justify-center border border-black rounded-full hover:bg-gray-100 transition"
+                          aria-label="Next book"
+                        >
+                          <ArrowRight size={18} strokeWidth={2} />
                         </button>
                       </div>
+
                     </div>
                   )}
                 </div>
@@ -351,11 +361,10 @@ const BlogDetailPage = () => {
                     key={num}
                     onClick={() => setCurrentPage(num)}
                     className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
-          ${
-            currentPage === num
-              ? "bg-[#993333] text-white"
-              : "border border-transparent text-black hover:border-black hover:bg-gray-100"
-          }`}>
+          ${currentPage === num
+                        ? "bg-[#993333] text-white"
+                        : "border border-transparent text-black hover:border-black hover:bg-gray-100"
+                      }`}>
                     {num}
                   </button>
                 ))}
