@@ -50,7 +50,6 @@ export default function CmsPage({ slug: propSlug }) {
       setCms(data);
       if (data) {
         // ✅ REDIRECT TO EVENT PAGE if converted
-        // ✅ REDIRECT TO EVENT PAGE if converted
         if (data.createdFrom === "manage-events" && !window.location.pathname.startsWith("/booking/")) {
           navigate(`/booking/${data.slug}`, { replace: true });
         }
