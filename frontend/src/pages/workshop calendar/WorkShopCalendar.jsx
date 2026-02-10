@@ -7,11 +7,14 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 const WorkShopCalendar = () => {
   useEffect(() => {
     AOS.init({
-      duration: 900,
-      easing: "ease-in-out",
+      duration: 1000,
+      easing: "ease-out-cubic",
       once: true,
-      offset: 80,
+      offset: 100,
+      mirror: false,
     });
+
+    AOS.refresh();
   }, []);
 
   /* Workshop Calendar */
@@ -119,16 +122,27 @@ const WorkShopCalendar = () => {
       {/* ---------------- WORKSHOP CALENDAR SECTION ---------------- */}
       <section className="sita-workshop-calendar">
         <div className="container">
-          <h2 className="text-center" data-aos="fade-up">
+          <h2
+            className="text-center"
+            data-aos="fade-up"
+            data-aos-duration="900"
+            data-aos-delay="100">
             WORKSHOP CALENDAR
           </h2>
 
-          <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
+          <img
+            src="sita-motif.webp"
+            alt="Sita Motif"
+            className="motif"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          />
 
           <div
             className="table-responsive"
             data-aos="fade-up"
-            data-aos-delay="150">
+            data-aos-delay="350"
+            data-aos-duration="1100">
             <table className="table sita-table">
               <thead>
                 <tr>

@@ -6,10 +6,11 @@ import "aos/dist/aos.css";
 const Testimonials = () => {
   useEffect(() => {
     AOS.init({
-      duration: 900,
+      duration: 1000,
       easing: "ease-in-out",
       once: true,
-      offset: 80,
+      offset: 100,
+      mirror: false,
     });
   }, []);
   const location = useLocation();
@@ -53,13 +54,28 @@ const Testimonials = () => {
         )}
 
         <div className="container">
-          <h2 data-aos="fade-up">Testimonials</h2>
+          <h2 data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
+            Testimonials
+          </h2>
 
-          <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
+          <img
+            src="sita-motif.webp"
+            alt="Sita Motif"
+            className="motif"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          />
 
-          <div className="sita-testimonial-wrapper" data-aos="zoom-in">
+          <div
+            className="sita-testimonial-wrapper"
+            data-aos="fade-up"
+            data-aos-delay="300"
+            data-aos-duration="1000">
             <div className="row">
-              <div className="col-lg-2 col-md-12 col-sm-12 col-12 text-center">
+              <div
+                className="col-lg-2 col-md-12 col-sm-12 col-12 text-center"
+                data-aos="fade-right"
+                data-aos-delay="400">
                 <img
                   src="testimonial-quote.webp"
                   className="sita-testimonial-quote"
@@ -68,7 +84,10 @@ const Testimonials = () => {
                 <span className="sita-testimonial-name"></span>
               </div>
 
-              <div className="col-lg-8 col-md-12 col-sm-12 col-12">
+              <div
+                className="col-lg-8 col-md-12 col-sm-12 col-12"
+                data-aos="fade-left"
+                data-aos-delay="450">
                 <div
                   id="testimonialCarousel"
                   className="carousel slide carousel-fade"

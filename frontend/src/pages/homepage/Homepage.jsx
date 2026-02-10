@@ -38,11 +38,14 @@ const HomePage = () => {
   }, []);
   useEffect(() => {
     AOS.init({
-      duration: 900,
-      easing: "ease-in-out",
-      once: true,
-      offset: 80,
+      duration: 1000,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 100,
     });
+
+    setTimeout(() => AOS.refresh(), 200);
   }, []);
 
   /* Animations and Transitions */
@@ -143,7 +146,11 @@ const HomePage = () => {
         <div className="sita-hero-bg"></div>
 
         <div className="sita-hero-image">
-          <div className="sita-hero-image-inner" data-aos="fade-right">
+          <div
+            className="sita-hero-image-inner"
+            data-aos="fade-right"
+            data-aos-duration="1200"
+            data-aos-delay="200">
             <img src="sita-banner.webp" alt="Sita Hero" />
           </div>
         </div>
@@ -152,7 +159,9 @@ const HomePage = () => {
           <div className="row">
             <div
               className="col-lg-6 col-md-6 col-sm-6 col-6 offset-6 sita-hero-content"
-              data-aos="fade-left">
+              data-aos="fade-left"
+              data-aos-duration="1200"
+              data-aos-delay="400">
               <h1>SITA GUIDES</h1>
               <p>Spiritual Mentor, Author, Healer.</p>
               <a href="/about" className="sita-btn">
@@ -169,15 +178,17 @@ const HomePage = () => {
           <div className="row">
             <div
               className="col-lg-3 col-md-12 col-sm-12 col-12 text-center"
-              data-aos="fade-up">
+              data-aos="fade-right"
+              data-aos-delay="150">
               <h2>Sita</h2>
               <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
             </div>
 
             <div
               className="col-lg-9 col-md-12 col-sm-12 col-12"
-              data-aos="fade-up"
-              data-aos-delay="150">
+              data-aos="fade-left"
+              data-aos-delay="300"
+              data-aos-duration="1000">
               <p>
                 A guide for the modern spiritual seeker, Sita Severson blends
                 ancient Vedic wisdom with contemporary insight. Rooted in
@@ -216,10 +227,18 @@ const HomePage = () => {
 
         <div
           className="container text-center sita-factor-content"
-          data-aos="fade-up">
+          data-aos="fade-up"
+          data-aos-duration="1100"
+          data-aos-delay="150">
           <h2>The Sita Factor</h2>
 
-          <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
+          <img
+            src="sita-motif.webp"
+            alt="Sita Motif"
+            className="motif"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          />
 
           <p className="sita-factor-heading">
             A Conscious Path to Spiritual Evolution
@@ -244,7 +263,7 @@ const HomePage = () => {
             <div
               className="sita-service-col"
               data-aos="zoom-in"
-              data-aos-delay="100">
+              data-aos-delay="200">
               <a href="/study-with-sita" className="sita-service-card study">
                 <img
                   src="study-with-sita.webp"
@@ -261,7 +280,7 @@ const HomePage = () => {
             <div
               className="sita-service-col"
               data-aos="zoom-in"
-              data-aos-delay="200">
+              data-aos-delay="350">
               <a
                 href="/consult-sita"
                 className="sita-service-card consult active">
@@ -280,7 +299,7 @@ const HomePage = () => {
             <div
               className="sita-service-col"
               data-aos="zoom-in"
-              data-aos-delay="300">
+              data-aos-delay="500">
               <a href="/engage-sita" className="sita-service-card engage">
                 <img
                   src="engage-sita.webp"
@@ -300,9 +319,17 @@ const HomePage = () => {
       {/* ---------------- MASTERCLASS SECTION ---------------- */}
       <section className="sita-masterclass">
         <div className="container text-center">
-          <h2 data-aos="fade-up">Masterclass</h2>
+          <h2 data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
+            Masterclass
+          </h2>
 
-          <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
+          <img
+            src="sita-motif.webp"
+            alt="Sita Motif"
+            className="motif"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          />
 
           <p className="sita-masterclass-text">
             Sita Severson is devoted to empowering individuals on the path of
@@ -316,7 +343,7 @@ const HomePage = () => {
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="100">
+              data-aos-delay="250">
               <div className="masterclass-card">
                 <img
                   src="masterclass-1.webp"
@@ -335,7 +362,7 @@ const HomePage = () => {
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="200">
+              data-aos-delay="400">
               <div className="masterclass-card">
                 <img
                   src="masterclass-2.webp"
@@ -356,7 +383,7 @@ const HomePage = () => {
             <div
               className="col-lg-4 col-md-4 col-sm-12 col-12"
               data-aos="fade-up"
-              data-aos-delay="300">
+              data-aos-delay="550">
               <div className="masterclass-card">
                 <img
                   src="masterclass-3.webp"
@@ -383,10 +410,19 @@ const HomePage = () => {
       {/* ---------------- SITA VERSES SECTION ---------------- */}
       <section className="sita-verses">
         <div className="sita-verses-overlay">
-          <div className="container text-center" data-aos="fade-up">
-            <h2>Sita Verses</h2>
+          <div
+            className="container text-center"
+            data-aos="fade-up"
+            data-aos-duration="1100">
+            <h2 data-aos="fade-up">Sita Verses</h2>
 
-            <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
+            <img
+              src="sita-motif.webp"
+              alt="Sita Motif"
+              className="motif"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            />
 
             <div
               id="sitaVersesCarousel"
@@ -444,10 +480,19 @@ const HomePage = () => {
           aria-hidden="true"
         />
 
-        <div className="container text-center" data-aos="zoom-in">
-          <h2>Enduring Lights of Transformation</h2>
+        <div
+          className="container text-center"
+          data-aos="fade-up"
+          data-aos-duration="1200">
+          <h2 data-aos="fade-up">Enduring Lights of Transformation</h2>
 
-          <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
+          <img
+            src="sita-motif.webp"
+            alt="Sita Motif"
+            className="motif"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          />
 
           <img
             src="sita-publication.webp"
@@ -465,7 +510,13 @@ const HomePage = () => {
         />
         <div className="container">
           <h2 className="text-center">Publications</h2>
-          <img src="sita-motif.webp" alt="Motif" className="motif" />
+          <img
+            src="sita-motif.webp"
+            alt="Motif"
+            className="motif"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          />
           <div className="row align-items-center sita-publications-wrapper">
             <div className="col-lg-7 col-md-12 col-sm-12 col-12 order-lg-1 order-2">
               <div
@@ -524,9 +575,15 @@ const HomePage = () => {
       {/* ---------------- RECENT BLOGS SECTION ---------------- */}
       <section className="sita-recent-blogs">
         <div className="container text-center">
-          <h2>Recent Blogs</h2>
+          <h2 data-aos="fade-up">Recent Blogs</h2>
 
-          <img src="sita-motif.webp" alt="Sita Motif" className="motif" />
+          <img
+            src="sita-motif.webp"
+            alt="Sita Motif"
+            className="motif"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          />
 
           <div className="row">
             {currentBlogs.length > 0 ? (
@@ -606,7 +663,11 @@ const HomePage = () => {
       {/* ---------------- TESTIMONIALS SECTION ---------------- */}
       <Testimonials />
       {/* ---------------- CTA STRIP SECTION ---------------- */}
-      <div className="sita-cta-wrapper" data-aos="zoom-in">
+      <div
+        className="sita-cta-wrapper"
+        data-aos="zoom-in"
+        data-aos-duration="1000"
+        data-aos-delay="150">
         <span className="cta-border">
           <a href="/booking" className="sita-cta-btn">
             Book a Meeting with Sita
