@@ -36,11 +36,15 @@ const About = () => {
   }, []);
   useEffect(() => {
     AOS.init({
-      duration: 900,
-      easing: "ease-in-out",
-      once: true,
-      offset: 80,
+      duration: 1000,
+      easing: "ease-out-cubic",
+      once: false,
+      mirror: true,
+      offset: 120,
+      debounceDelay: 50,
     });
+
+    setTimeout(() => AOS.refreshHard(), 400);
   }, []);
 
   return (
@@ -76,17 +80,16 @@ const About = () => {
         <div className="container position-relative">
           <div className="row">
             <div className="col-lg-12 col-md-12 col-sm-12 col-12">
-              <div className="sita-inner-content" data-aos="fade-up">
-                <h2 data-aos="fade-up" data-aos-delay="100">
+              <div className="sita-inner-content">
+                <h2 data-aos="fade-up" data-aos-delay="150">
                   About Sita
                 </h2>
-
                 <img
                   src="/sita-motif.webp"
                   className="motif mb-4"
                   alt="Decorative Motif"
                   data-aos="zoom-in"
-                  data-aos-delay="200"
+                  data-aos-delay="250"
                 />
               </div>
               <div className="sita-about-content">
@@ -96,12 +99,13 @@ const About = () => {
                     className="sita-side-img"
                     alt="Sita Image"
                     data-aos="fade-left"
-                    data-aos-duration="2000"
+                    data-aos-duration="1200"
+                    data-aos-delay="200"
                   />
                 </div>
                 <div
                   className="sita-inner-content-intro about-intro-content"
-                  data-aos="fade-up"
+                  data-aos="fade-right"
                   data-aos-delay="300">
                   <p>
                     Sita Severson is a Spiritual Counselor and Mentor, offering
@@ -113,7 +117,6 @@ const About = () => {
                   </p>
                 </div>
               </div>
-
               <div className="sita-inner-full-content about-content">
                 <h2 data-aos="fade-up">Detailed Bio</h2>
 
@@ -125,8 +128,7 @@ const About = () => {
                   and breathwork and has worked across clinics, campuses, and
                   companies since 2007.
                 </p>
-
-                <p data-aos="fade-up" data-aos-delay="200">
+                <p data-aos="fade-left" data-aos-delay="200">
                   She taught mindfulness and yoga at Johns Hopkins University
                   and in the Oncology unit at Johns Hopkins Hospital, and
                   created countywide curricula for the Baltimore County
@@ -135,16 +137,14 @@ const About = () => {
                   Neuroscience and co-founded Lead with the Lights On with her
                   husband, bringing Ayurveda into team development.
                 </p>
-
-                <p data-aos="fade-up" data-aos-delay="300">
+                <p data-aos="fade-right" data-aos-delay="300">
                   She has taught on The Shift Network and Wisdom From North and
                   has shared platforms with James Nestor, Michael B. Beckwith,
                   Barbara De Angelis, PhD, and Dr. Sue Morter. Her clients
                   include leaders from The Shift Network, Gaia, Kripalu, and Hay
                   House.
                 </p>
-
-                <p data-aos="fade-up" data-aos-delay="400">
+                <p data-aos="fade-left" data-aos-delay="400">
                   Sita reads the subtle with precision and translates it into
                   grounded steps that regulate the nervous system and clarify
                   direction. She uses Jyotish to speak in the voice of a
@@ -153,7 +153,6 @@ const About = () => {
                   remedies like japa, breath protocols, food and rhythm
                   medicine, altar practices, and seva minded action.
                 </p>
-
                 <p data-aos="fade-up" data-aos-delay="500">
                   She is C IAYT, an Ayurvedic plant-based culinarian, a member
                   of IAYT and AAPNA, a four belt Nia mover, a lifelong animal
@@ -166,39 +165,37 @@ const About = () => {
           </div>
         </div>
       </section>
-
       {/* -------------------- CERTIFICATIONS SECTION -------------------- */}
       <section className="sita-certifications">
         <div className="container">
           <h2 data-aos="fade-up">Certifications / Training</h2>
-
           <div className="row align-items-center">
-            <div
-              className="col-lg-4 col-md-12 col-sm-12 col-12 text-center"
-              data-aos="fade-right">
-              <img src="/certificate.webp" alt="Certification" />
+            <div className="col-lg-4 col-md-12 col-sm-12 col-12 text-center">
+              <img
+                src="/certificate.webp"
+                alt="Certification"
+                data-aos="zoom-in"
+                data-aos-delay="200"
+              />
             </div>
-
             <div
               className="col-lg-8 col-md-12 col-sm-12 col-12"
               data-aos="fade-left">
-              <p>
+              <p data-aos="fade-left" data-aos-delay="100">
                 Sita brings in nearly two decades in the personal evolution and
                 spiritual transformation experience. She aids in personal
                 wellbeing, health resolution and spiritual development. She is a
                 Certified Yoga Therapist (C-IAYT), an Ayurvedic Practitioner,
                 Jyotish Astrologer, and an Ayurvedic plant-based culinarian.
               </p>
-
-              <p>
+              <p data-aos="fade-left" data-aos-delay="200">
                 An accomplished Vedic Counselor, Yoga Therapist, Ayurvedic
                 Health Practitioner, Certified Kundalini Yoga Instructor, and
                 Nia Technique Brown Belt with over 20 years of experience.
               </p>
             </div>
-
             <div className="col-lg-12 col-md-12 col-sm-12 col-12">
-              <p className="mb-0">
+              <p className="mb-0" data-aos="fade-up" data-aos-delay="300">
                 She is an active member of the International Association of Yoga
                 Therapists and the Association of Ayurvedic Professionals of
                 North America.
@@ -207,23 +204,20 @@ const About = () => {
           </div>
         </div>
       </section>
-
       {/* -------------------- VISION & PHILOSOPHY -------------------- */}
       <section className="sita-vision-philosophy">
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-10 col-md-12 col-sm-12 col-12 text-white">
               <h2 data-aos="fade-up">Vision & Philosophy</h2>
-
-              <p data-aos="fade-up" data-aos-delay="100">
+              <p data-aos="fade-up" data-aos-delay="150">
                 Sita Severson envisions a world where people are empowered
                 through the transformative practice of Spiritual Development,
                 Therapeutic Yoga, and Healing — cultivating holistic health,
                 lasting well-being, and a deeper alignment with their life’s
                 true purpose.
               </p>
-
-              <p data-aos="fade-up" data-aos-delay="200">
+              <p data-aos="fade-up" data-aos-delay="250">
                 Her purpose is to guide individuals toward inner clarity,
                 emotional resilience, and conscious living. Sita honours each
                 person’s unique journey, creating a safe, compassionate space
@@ -234,39 +228,39 @@ const About = () => {
           </div>
         </div>
       </section>
-
       {/* -------------------- VALUE PROPOSITION -------------------- */}
       <section className="sita-value-proposition">
         <div className="container">
           <div className="row align-items-center">
-            <div
-              className="col-lg-6 col-md-12 col-sm-12 col-12 ord-lg-1 order-2 text-center"
-              data-aos="fade-right">
+            <div className="col-12 d-lg-none text-center">
+              <h2 data-aos="fade-up">Value Proposition</h2>
+            </div>
+            <div className="col-lg-6 col-md-12 col-sm-12 col-12 order-lg-1 order-2 text-center">
               <img
                 src="/value-proposition.webp"
                 className="img-fluid"
                 alt="Value Proposition"
+                data-aos="zoom-in"
+                data-aos-delay="200"
               />
             </div>
-
             <div
-              className="col-lg-6 col-md-12 col-sm-12 col-12 order-lg-2 order-1"
+              className="col-lg-6 col-md-12 col-sm-12 col-12 order-lg-2 order-3"
               data-aos="fade-left">
-              <h2 data-aos="fade-up">Value Proposition</h2>
-
-              <p>
+              <h2 className="d-none d-lg-block" data-aos="fade-up">
+                Value Proposition
+              </h2>
+              <p data-aos="fade-left" data-aos-delay="100">
                 Sita and her work embody integrity, empathy, and a deeply
                 intuitive presence. Every interaction is rooted in deep
                 listening, embodied wisdom, and grounded spirituality.
               </p>
-
-              <p>
+              <p data-aos="fade-left" data-aos-delay="200">
                 She blends ancient practices with modern insight, offering
                 tangible tools for clarity, purpose, healing, and personal
                 empowerment.
               </p>
-
-              <p>
+              <p data-aos="fade-left" data-aos-delay="300">
                 Her work does not offer shortcuts — it offers truth, presence,
                 and the space for deep inner transformation.
               </p>
@@ -277,20 +271,19 @@ const About = () => {
       {/* ---------------- RECENT BLOGS SECTION ---------------- */}
       <section className="sita-recent-blogs">
         <div className="container text-center">
-          <h2>Recent Blogs</h2>
-
-          <img src="/sita-motif.webp" alt="Sita Motif" className="motif" />
-
+          <h2 data-aos="fade-up">Recent Blogs</h2>
+          <img
+            src="sita-motif.webp"
+            alt="Sita Motif"
+            className="motif"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          />
           <div className="row">
             {currentBlogs.length > 0 ? (
               currentBlogs.map((blog, index) => {
-                const btnColors = [
-                  "pink",
-                  "peach",
-                  "rose",
-                ];
+                const btnColors = ["pink", "peach", "rose"];
                 const btnColor = btnColors[index % btnColors.length]; // Cycle colors
-
                 return (
                   <div
                     key={blog._id}
@@ -320,7 +313,6 @@ const About = () => {
                           )}
                         </p>
                       </div>
-
                       <h4>{blog.title}</h4>
 
                       <div className="blog-description-wrapper">
@@ -334,15 +326,18 @@ const About = () => {
                           }}
                         />
                       </div>
-
                       <span className="blog-author mb-3">
                         - {blog.author || "Sita Severson"}
                       </span>
-
                       <Link
                         to={`/blogs/${blog.slug || blog._id}`}
                         className={`sita-blog-btn ${btnColor}`}
-                        style={{ minWidth: "150px", display: "inline-flex", justifyContent: "center", alignItems: "center" }}>
+                        style={{
+                          minWidth: "150px",
+                          display: "inline-flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}>
                         {blog.readMoreText || "Read More"}
                       </Link>
                     </div>

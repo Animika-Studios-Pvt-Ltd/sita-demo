@@ -1102,6 +1102,7 @@ li {
 
   .sita-certifications p {
     margin-bottom: 10px;
+    text-align: justify;
   }
 
   .sita-certifications img {
@@ -1143,6 +1144,7 @@ li {
 
   .sita-vision-philosophy p {
     margin-bottom: 10px;
+    text-align: justify;
   }
 }
 
@@ -1183,12 +1185,13 @@ li {
   .sita-value-proposition img {
     width: 70%;
     display: block;
-    margin: 0 auto;
+    margin: 0 auto 20px;
   }
 
   .sita-value-proposition p {
     line-height: 1.8;
     margin-bottom: 20px;
+    text-align: justify;
   }
 }
 
@@ -1196,10 +1199,18 @@ li {
   .sita-value-proposition {
     padding: 20px 0;
   }
+
+   .sita-value-proposition img {
+    margin: 0 auto 15px;
+  }
 }
 
 @media (max-width: 575px) {
   .sita-value-proposition {
     padding: 15px 0;
+  }
+
+   .sita-value-proposition img {
+    margin: 0 auto 10px;
   }
 }
