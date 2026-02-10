@@ -249,7 +249,7 @@ const PodcastsPage = () => {
       />
 
       <div className="container py-4">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4  mb-10">
           <div className="text-center mb-8" data-aos="fade-up">
             <h2 className="font-serifSita text-[#8b171b] text-3xl md:text-4xl lg:text-5xl leading-tight mb-3">
               Podcats by Sita
@@ -295,11 +295,10 @@ const PodcastsPage = () => {
                   <button
                     key={num}
                     onClick={() => setCurrentPage(num)}
-                    className={`w-10 h-10 flex items-center justify-center rounded-full text-sm font-medium transition-all ${
-                      currentPage === num
+                    className={`w-10 h-10 flex items-center justify-center rounded-full text-sm font-medium transition-all ${currentPage === num
                         ? "bg-[#8b171b] text-white shadow-lg shadow-[#8b171b]/30"
                         : "text-slate-600 hover:bg-slate-100"
-                    }`}>
+                      }`}>
                     {num}
                   </button>
                 ),

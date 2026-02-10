@@ -83,8 +83,8 @@ const ArticlesPage = () => {
       <SitaBreadcrumb
         items={[{ label: "Home", path: "/" }, { label: "Articles" }]}
       />
-      <div className="container" data-aos="fade-up">
-        <div className="max-w-6xl mx-auto px-4 text-center">
+      <div className="container mb-10" data-aos="fade-up">
+        <div className="max-w-6xl mx-auto px-4 text-center ">
           {/* HEADER */}
           <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
             ARTICLES BY SITA
@@ -205,11 +205,10 @@ const ArticlesPage = () => {
                     key={num}
                     onClick={() => setCurrentPage(num)}
                     className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
-            ${
-              currentPage === num
-                ? "bg-[#993333] text-white"
-                : "border border-transparent text-black hover:border-black hover:bg-gray-100"
-            }`}>
+            ${currentPage === num
+                        ? "bg-[#993333] text-white"
+                        : "border border-transparent text-black hover:border-black hover:bg-gray-100"
+                      }`}>
                     {num}
                   </button>
                 ))}
