@@ -78,7 +78,7 @@ const Publications = () => {
             className="sita-inner-hero-image-banner"
             data-aos="zoom-out"
             data-aos-duration="1500">
-            <img src="about-banner.webp" alt="About Banner" />
+            <img src="/about-banner.webp" alt="About Banner" />
           </div>
         </div>
       </section>
@@ -120,9 +120,8 @@ const Publications = () => {
                       style={{ perspective: "1200px" }}>
                       <div className="book-flip-inner">
                         <div
-                          className={`book-flip-front ${
-                            isSuspended ? "opacity-60 grayscale" : ""
-                          }`}>
+                          className={`book-flip-front ${isSuspended ? "opacity-60 grayscale" : ""
+                            }`}>
                           <img
                             src={book?.coverImage || "/placeholder-book.jpg"}
                             alt={book?.title}
@@ -185,7 +184,7 @@ const Publications = () => {
                             {Math.round(
                               ((book.oldPrice - book.newPrice) /
                                 book.oldPrice) *
-                                100,
+                              100,
                             )}
                             % off
                           </span>

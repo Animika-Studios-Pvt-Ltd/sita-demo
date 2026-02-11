@@ -75,7 +75,7 @@ const ArticlesPage = () => {
             className="sita-inner-hero-image-banner"
             data-aos="zoom-out"
             data-aos-duration="1500">
-            <img src="about-banner.webp" alt="About Banner" />
+            <img src="/about-banner.webp" alt="About Banner" />
           </div>
         </div>
       </section>
@@ -205,11 +205,10 @@ const ArticlesPage = () => {
                     key={num}
                     onClick={() => setCurrentPage(num)}
                     className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
-            ${
-              currentPage === num
-                ? "bg-[#993333] text-white"
-                : "border border-transparent text-black hover:border-black hover:bg-gray-100"
-            }`}>
+            ${currentPage === num
+                        ? "bg-[#993333] text-white"
+                        : "border border-transparent text-black hover:border-black hover:bg-gray-100"
+                      }`}>
                     {num}
                   </button>
                 ))}
