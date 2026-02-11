@@ -29,14 +29,17 @@ const PrivateSessions = () => {
             className="sita-inner-hero-image-banner"
             data-aos="zoom-out"
             data-aos-duration="1500">
-            <img src="group-sessions-banner.webp" alt="Group Sessions Banner" />
+            <img
+              src="private-seessions-banner.webp"
+              alt="Group Sessions Banner"
+            />
           </div>
         </div>
         <div
           className="sita-inner-side-img"
           data-aos="fade-left"
           data-aos-duration="2000">
-          <img src="group-sessions-image.webp" alt="Private Sessions Image" />
+          <img src="private-sessions-image.webp" alt="Private Sessions Image" />
         </div>
       </section>
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
