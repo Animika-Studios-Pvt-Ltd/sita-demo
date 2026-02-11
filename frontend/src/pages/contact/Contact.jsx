@@ -3,6 +3,7 @@ import "aos/dist/aos.css";
 import AOS from "aos";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 import "./Contact.css";
+import getBaseUrl from "../../utils/baseURL";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -39,7 +40,7 @@ const Contact = () => {
     setError(false);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/contact`, {
+      const response = await fetch(`${getBaseUrl()}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
