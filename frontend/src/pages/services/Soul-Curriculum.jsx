@@ -48,7 +48,7 @@ const SoulCurriculum = () => {
           className="sita-inner-side-img"
           data-aos="fade-left"
           data-aos-duration="2000">
-          <img src="/soul-curriculum-image.webp" alt="Soul Curriculum Image" />
+          <img src="soul-curriculum-image.webp" alt="Soul Curriculum Image" />
         </div>
       </section>
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
@@ -132,60 +132,60 @@ const SoulCurriculum = () => {
               <div className="accordion-content">
                 <ul className="accordion-section-list">
                   <li data-aos="fade-up" data-aos-delay="100">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       Karmic patterns you are unwinding in this lifetime
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="150">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       Gifts that are ripe and ripening, ready to be claimed
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="200">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       Relationship patterns and how they are asking you to grow
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="250">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       Family of origin themes and what you came in to master
                       through them
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="300">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       Archetypes you carry, how to activate their strengths, and
                       how they challenge you into your mastery
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="350">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       Career pathways that align with your values and natural
                       way of serving
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="400">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       Dharma, or the deeper purpose underneath what you "do" in
                       the world
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="450">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       Spiritual sadhana that fits your constitution and your
                       stage of life
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="500">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       Health patterns, including where there may be
                       vulnerability, where there is resilience, and how your
@@ -193,14 +193,14 @@ const SoulCurriculum = () => {
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="550">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       Timing windows that support healing, creation, rest, and
                       courageous change
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="600">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       Karmic and dharmic alignments, patterns, and activation
                       points for key areas of your life
@@ -231,27 +231,27 @@ const SoulCurriculum = () => {
               <div className="accordion-content">
                 <ul className="accordion-section-list">
                   <li data-aos="fade-up" data-aos-delay="100">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       Individuals, for personal insights, healing, and dharma
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="150">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       Couples and families, to understand shared karmas,
                       relational patterns, and soul agreements
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="200">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       Groups and communities, to see the larger field of purpose
                       and healing
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="250">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       Businesses and projects, to align vision, leadership,
                       timing, and decision making with the chart of the
@@ -290,35 +290,35 @@ const SoulCurriculum = () => {
               <div className="accordion-content">
                 <ul className="accordion-section-list">
                   <li data-aos="fade-up" data-aos-delay="100">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       That you feel profoundly seen and understood at the level
                       of your soul
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="250">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       That you receive language for what you have always sensed
                       about yourself
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="300">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       That your challenges are reframed as initiations into
                       greater mastery
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="350">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       That you walk away with practical insight for
                       relationships, work, health, and spiritual practice
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="400">
-                    <img src="/sita-points2.webp" alt="bullet" />
+                    <img src="sita-points2.webp" alt="bullet" />
                     <span>
                       That your nervous system feels more at ease, because
                       something deep inside finally "clicks"

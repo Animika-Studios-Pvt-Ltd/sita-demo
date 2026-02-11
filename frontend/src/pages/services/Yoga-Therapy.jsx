@@ -31,14 +31,14 @@ const YogaTherapy = () => {
             className="sita-inner-hero-image-banner"
             data-aos="zoom-out"
             data-aos-duration="1500">
-            <img src="/yoga-therapy-banner.webp" alt="Yoga Therapy Banner" />
+            <img src="yoga-therapy-banner.webp" alt="Yoga Therapy Banner" />
           </div>
         </div>
         <div
           className="sita-inner-side-img"
           data-aos="fade-left"
           data-aos-duration="2000">
-          <img src="/yoga-therapy-image.webp" alt="Yoga Therapy Image" />
+          <img src="yoga-therapy-image.webp" alt="Yoga Therapy Image" />
         </div>
       </section>
       {/* -------------------- BREADCRUMB SECTION -------------------- */}

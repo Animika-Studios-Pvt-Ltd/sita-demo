@@ -78,7 +78,7 @@ const Publications = () => {
             className="sita-inner-hero-image-banner"
             data-aos="zoom-out"
             data-aos-duration="1500">
-            <img src="/about-banner.webp" alt="About Banner" />
+            <img src="about-banner.webp" alt="About Banner" />
           </div>
         </div>
       </section>

@@ -81,23 +81,23 @@ const KoshaCounseling = () => {
                 </p>
                 <ul className="kosha-list">
                   <li data-aos="fade-right" data-aos-delay="300">
-                    <img src="/sita-points.webp" alt="bullet" />
+                    <img src="sita-points.webp" alt="bullet" />
                     <span>The Physical sheath</span>
                   </li>
                   <li data-aos="fade-left" data-aos-delay="350">
-                    <img src="/sita-points.webp" alt="bullet" />
+                    <img src="sita-points.webp" alt="bullet" />
                     <span>The Wisdom sheath</span>
                   </li>
                   <li data-aos="fade-right" data-aos-delay="400">
-                    <img src="/sita-points.webp" alt="bullet" />
+                    <img src="sita-points.webp" alt="bullet" />
                     <span>The Energy sheath</span>
                   </li>
                   <li data-aos="fade-left" data-aos-delay="450">
-                    <img src="/sita-points.webp" alt="bullet" />
+                    <img src="sita-points.webp" alt="bullet" />
                     <span>The Bliss sheath</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="500">
-                    <img src="/sita-points.webp" alt="bullet" />
+                    <img src="sita-points.webp" alt="bullet" />
                     <span>The Mental sheath</span>
                   </li>
                 </ul>

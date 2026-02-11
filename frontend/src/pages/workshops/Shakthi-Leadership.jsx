@@ -205,25 +205,25 @@ const ShakthiLeadership = () => {
                 </p>
                 <ul className="accordion-section-list">
                   <li data-aos="fade-up" data-aos-delay="150">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Creative and cooperative capacities such as curiosity,
                       empathy, collaboration, and listening
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="200">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Decisiveness, accountability, structure, and strategic
                       clarity
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="250">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Emotional regulation in dynamic environments</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="300">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Whole-system thinking that honors context, relationships,
                       and long-term outcomes
@@ -264,7 +264,7 @@ const ShakthiLeadership = () => {
                 </p>
                 <ul className="accordion-section-list">
                   <li data-aos="fade-up" data-aos-delay="150">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <div className="points-text">
                       <p className="points-heading">
                         One-on-One Coaching and Mentoring
@@ -277,7 +277,7 @@ const ShakthiLeadership = () => {
                     </div>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="200">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
 
                     <div className="points-text">
                       <p className="points-heading">Group Mentoring Circles</p>
@@ -289,7 +289,7 @@ const ShakthiLeadership = () => {
                     </div>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="250">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <div className="points-text">
                       <p className="points-heading">
                         Workshops for Teams and Organizations
@@ -302,7 +302,7 @@ const ShakthiLeadership = () => {
                     </div>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="300">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <div className="points-text">
                       <p className="points-heading">Virtual and Live Formats</p>
                       <span>
@@ -346,21 +346,21 @@ const ShakthiLeadership = () => {
                 </p>
                 <ul className="accordion-section-list">
                   <li data-aos="fade-up" data-aos-delay="150">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Lead with strength and empathy simultaneously</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="200">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Align strategy with human experience</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="250">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Build cultures that support contribution over compliance
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="300">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Navigate change with presence, clarity, and steadiness
                     </span>
@@ -400,23 +400,23 @@ const ShakthiLeadership = () => {
                 </p>
                 <ul className="accordion-section-list">
                   <li data-aos="fade-up" data-aos-delay="150">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Greater clarity in purpose and decision-making</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="200">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Enhanced emotional self-regulation</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="300">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Stronger collaboration and trust in teams</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="350">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Increased resilience under pressure</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="400">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       More confidence in leading with integrity and inclusivity
                     </span>

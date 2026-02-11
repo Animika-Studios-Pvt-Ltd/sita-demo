@@ -41,9 +41,9 @@ const Contact = () => {
 
     try {
       const response = await fetch(`${getBaseUrl()}/api/contact`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -73,7 +73,7 @@ const Contact = () => {
             className="sita-inner-hero-image-banner"
             data-aos="zoom-out"
             data-aos-duration="1500">
-            <img src="/about-banner.webp" alt="About Banner" />
+            <img src="about-banner.webp" alt="About Banner" />
           </div>
         </div>
       </section>
@@ -168,8 +168,14 @@ const Contact = () => {
                     required></textarea>
                 </div>
 
-                <button type="submit" className="btn mx-auto" id="submitBtn" disabled={loading}>
-                  <span className="btn-text">{loading ? "Sending..." : "Submit"}</span>
+                <button
+                  type="submit"
+                  className="btn mx-auto"
+                  id="submitBtn"
+                  disabled={loading}>
+                  <span className="btn-text">
+                    {loading ? "Sending..." : "Submit"}
+                  </span>
                   {loading && (
                     <span
                       className="spinner-border spinner-border-sm ms-2"
@@ -179,9 +185,7 @@ const Contact = () => {
                 </button>
 
                 {success && (
-                  <div
-                    className="alert alert-success mt-3"
-                    id="successAlert">
+                  <div className="alert alert-success mt-3" id="successAlert">
                     <i className="fas fa-check-circle"></i> Thank you! Your
                     message has been sent successfully.
                   </div>

@@ -36,7 +36,7 @@ const PrivateSessions = () => {
           className="sita-inner-side-img"
           data-aos="fade-left"
           data-aos-duration="2000">
-          <img src="/group-sessions-image.webp" alt="Private Sessions Image" />
+          <img src="group-sessions-image.webp" alt="Private Sessions Image" />
         </div>
       </section>
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
@@ -113,29 +113,29 @@ const PrivateSessions = () => {
               data-aos="fade-right">
               <ul className="group-sessions-core-elements-list">
                 <li data-aos="fade-left" data-aos-delay="150">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <img src="sita-points1.webp" alt="bullet" />
                   <span>Understanding your Soul’s Curriculum</span>
                 </li>
                 <li data-aos="fade-right" data-aos-delay="200">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <img src="sita-points1.webp" alt="bullet" />
                   <span>
                     Releasing karmic patterns that create repeating challenges
                   </span>
                 </li>
                 <li data-aos="fade-left" data-aos-delay="250">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <img src="sita-points1.webp" alt="bullet" />
                   <span>
                     Rekindling health through Ayurvedic protocols and rhythm
                   </span>
                 </li>
                 <li data-aos="fade-right" data-aos-delay="300">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <img src="sita-points1.webp" alt="bullet" />
                   <span>
                     Nervous system regulation through yogic and somatic tools
                   </span>
                 </li>
                 <li data-aos="fade-left" data-aos-delay="350">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <img src="sita-points1.webp" alt="bullet" />
                   <span>Aligning with career and dharma without force</span>
                 </li>
               </ul>
@@ -145,19 +145,19 @@ const PrivateSessions = () => {
               data-aos="fade-left">
               <ul className="group-sessions-core-elements-list">
                 <li data-aos="fade-left" data-aos-delay="150">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <img src="sita-points1.webp" alt="bullet" />
                   <span>Emotional healing and relational clarity</span>
                 </li>
                 <li data-aos="fade-right" data-aos-delay="200">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <img src="sita-points1.webp" alt="bullet" />
                   <span>Spiritual practice and sadhana development</span>
                 </li>
                 <li data-aos="fade-left" data-aos-delay="250">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <img src="sita-points1.webp" alt="bullet" />
                   <span>Trauma-informed integration and embodiment</span>
                 </li>
                 <li data-aos="fade-right" data-aos-delay="300">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <img src="sita-points1.webp" alt="bullet" />
                   <span>Reconnecting to meaning, dignity, and direction</span>
                 </li>
               </ul>
@@ -190,15 +190,15 @@ const PrivateSessions = () => {
               data-aos="fade-right">
               <ul className="what-makes-this-work-unique-list">
                 <li data-aos="fade-left" data-aos-delay="150">
-                  <img src="/sita-points2.webp" alt="bullet" />
+                  <img src="sita-points2.webp" alt="bullet" />
                   <span>Shared soul themes and karmic agreements</span>
                 </li>
                 <li data-aos="fade-right" data-aos-delay="200">
-                  <img src="/sita-points2.webp" alt="bullet" />
+                  <img src="sita-points2.webp" alt="bullet" />
                   <span>Emotional and attachment patterns</span>
                 </li>
                 <li data-aos="fade-left" data-aos-delay="250">
-                  <img src="/sita-points2.webp" alt="bullet" />
+                  <img src="sita-points2.webp" alt="bullet" />
                   <span>
                     Intimacy, communication, and nervous system compatibility
                   </span>
@@ -210,11 +210,11 @@ const PrivateSessions = () => {
               data-aos="fade-left">
               <ul className="what-makes-this-work-unique-list">
                 <li data-aos="fade-left" data-aos-delay="150">
-                  <img src="/sita-points2.webp" alt="bullet" />
+                  <img src="sita-points2.webp" alt="bullet" />
                   <span>Dharma of the partnership and where it is growing</span>
                 </li>
                 <li data-aos="fade-right" data-aos-delay="200">
-                  <img src="/sita-points2.webp" alt="bullet" />
+                  <img src="sita-points2.webp" alt="bullet" />
                   <span>
                     How to strengthen the relationship through aligned practice
                     and truth

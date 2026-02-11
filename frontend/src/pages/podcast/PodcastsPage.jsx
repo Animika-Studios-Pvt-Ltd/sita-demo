@@ -239,7 +239,7 @@ const PodcastsPage = () => {
             className="sita-inner-hero-image-banner"
             data-aos="zoom-out"
             data-aos-duration="1500">
-            <img src="/about-banner.webp" alt="About Banner" />
+            <img src="about-banner.webp" alt="About Banner" />
           </div>
         </div>
       </section>
@@ -295,10 +295,11 @@ const PodcastsPage = () => {
                   <button
                     key={num}
                     onClick={() => setCurrentPage(num)}
-                    className={`w-10 h-10 flex items-center justify-center rounded-full text-sm font-medium transition-all ${currentPage === num
-                      ? "bg-[#8b171b] text-white shadow-lg shadow-[#8b171b]/30"
-                      : "text-slate-600 hover:bg-slate-100"
-                      }`}>
+                    className={`w-10 h-10 flex items-center justify-center rounded-full text-sm font-medium transition-all ${
+                      currentPage === num
+                        ? "bg-[#8b171b] text-white shadow-lg shadow-[#8b171b]/30"
+                        : "text-slate-600 hover:bg-slate-100"
+                    }`}>
                     {num}
                   </button>
                 ),

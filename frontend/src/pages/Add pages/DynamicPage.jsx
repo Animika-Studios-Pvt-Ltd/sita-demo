@@ -50,17 +50,18 @@ const DynamicPage = ({ page: propPage }) => {
   }, [slug, propPage]);
 
   if (loading) return <div className="text-center mt-10">Loading...</div>;
-  if (error) return <div className="text-center mt-10 text-red-500">{error}</div>;
+  if (error)
+    return <div className="text-center mt-10 text-red-500">{error}</div>;
   if (!page) return null;
 
   const renderBanner = () => {
     if (!page.bannerImage || page.bannerPosition === "hide") return null;
     return (
       <div
-        className={`w-full overflow-hidden rounded-lg mb-8 ${page.bannerPosition === "top" ? "mt-0" : "mt-10"
-          }`}
-        style={{ height: "400px" }}
-      >
+        className={`w-full overflow-hidden rounded-lg mb-8 ${
+          page.bannerPosition === "top" ? "mt-0" : "mt-10"
+        }`}
+        style={{ height: "400px" }}>
         <img
           src={page.bannerImage.src}
           alt={page.bannerImage.alt}
@@ -92,13 +93,13 @@ const DynamicPage = ({ page: propPage }) => {
   };
 
   const renderTopBannerWithContent = () => {
-    if (!page.bannerImage || ["bottom", "hide"].includes(page.bannerPosition)) return null;
+    if (!page.bannerImage || ["bottom", "hide"].includes(page.bannerPosition))
+      return null;
     const isRight = page.bannerPosition === "top-right";
 
     return (
       <div
-        className={`flex flex-col md:flex-row ${isRight ? "md:flex-row-reverse" : ""} gap-4 md:gap-6 mb-8`}
-      >
+        className={`flex flex-col md:flex-row ${isRight ? "md:flex-row-reverse" : ""} gap-4 md:gap-6 mb-8`}>
         <div className="flex-1 w-full md:w-1/2 h-[200px] xs:h-[180px] sm:h-[250px] md:h-[400px] overflow-hidden rounded-lg">
           <img
             src={page.bannerImage.src}
@@ -106,7 +107,9 @@ const DynamicPage = ({ page: propPage }) => {
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="flex-1 w-full md:w-1/2 min-w-0">{renderMainContent()}</div>
+        <div className="flex-1 w-full md:w-1/2 min-w-0">
+          {renderMainContent()}
+        </div>
       </div>
     );
   };
@@ -118,15 +121,16 @@ const DynamicPage = ({ page: propPage }) => {
       const key = (sec.key || "").toLowerCase();
 
       // 1. BOOKING SECTION
-      if (key === 'booking' && sec.content) {
-        const alignClass = `text-${sec.content.alignment || 'center'}`;
+      if (key === "booking" && sec.content) {
+        const alignClass = `text-${sec.content.alignment || "center"}`;
 
         return (
-          <div key={idx} className={`max-w-7xl mx-auto mb-10 p-4 ${alignClass}`}>
+          <div
+            key={idx}
+            className={`max-w-7xl mx-auto mb-10 p-4 ${alignClass}`}>
             <button
               onClick={() => openBooking(sec.content.eventId)}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1"
-            >
+              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1">
               {sec.content.buttonText || "Book Now"}
             </button>
           </div>
@@ -134,8 +138,9 @@ const DynamicPage = ({ page: propPage }) => {
       }
 
       // 2. HERO SECTION
-      if (key === 'hero' && sec.content) {
-        const bgImage = sec.content.backgroundImage || "/images/about-banner.webp";
+      if (key === "hero" && sec.content) {
+        const bgImage =
+          sec.content.backgroundImage || "/images/about-banner.webp";
         const cta = sec.content.primaryCta || {};
         const ctaStyle = {
           backgroundColor: cta.bgColor || "#3b82f6",
@@ -144,7 +149,7 @@ const DynamicPage = ({ page: propPage }) => {
 
         const breadcrumbItems = [
           { label: "Home", path: "/" },
-          { label: page.title || "Page", path: null }
+          { label: page.title || "Page", path: null },
         ];
 
         return (
@@ -158,13 +163,24 @@ const DynamicPage = ({ page: propPage }) => {
 
             <SitaBreadcrumb items={breadcrumbItems} />
 
-            <section className="sita-workshop-section" style={{ padding: '40px 0' }}>
+            <section
+              className="sita-workshop-section"
+              style={{ padding: "40px 0" }}>
               <div className="container">
-                {sec.content.title && <h2 className="text-center">{sec.content.title}</h2>}
-                <img src="/images/sita-motif.webp" alt="Sita Motif" className="motif mx-auto my-3 block" style={{ width: 'auto', height: 'auto' }} />
+                {sec.content.title && (
+                  <h2 className="text-center">{sec.content.title}</h2>
+                )}
+                <img
+                  src="images/sita-motif.webp"
+                  alt="Sita Motif"
+                  className="motif mx-auto my-3 block"
+                  style={{ width: "auto", height: "auto" }}
+                />
                 <div className="row justify-content-center text-center">
                   <div className="col-lg-8">
-                    {sec.content.subtitle && <p className="mb-4">{sec.content.subtitle}</p>}
+                    {sec.content.subtitle && (
+                      <p className="mb-4">{sec.content.subtitle}</p>
+                    )}
 
                     {cta.label && (
                       <div className="mt-4">
@@ -172,16 +188,14 @@ const DynamicPage = ({ page: propPage }) => {
                           <button
                             onClick={() => openBooking(cta.eventId)}
                             className="px-6 py-3 rounded-full font-bold shadow-md transition hover:-translate-y-1 inline-block"
-                            style={ctaStyle}
-                          >
+                            style={ctaStyle}>
                             {cta.label}
                           </button>
                         ) : (
                           <a
                             href={cta.href || "#"}
                             className="px-6 py-3 rounded-full font-bold shadow-md transition hover:-translate-y-1 inline-block"
-                            style={ctaStyle}
-                          >
+                            style={ctaStyle}>
                             {cta.label}
                           </a>
                         )}
@@ -200,8 +214,7 @@ const DynamicPage = ({ page: propPage }) => {
         <div
           key={idx}
           className="max-w-8xl mx-auto mb-10 mt-0 p-4 sm:p-6 rounded-lg"
-          style={{ backgroundColor: sec.backgroundColor || "#fff" }}
-        >
+          style={{ backgroundColor: sec.backgroundColor || "#fff" }}>
           {sec.title?.trim() && (
             <div className="text-center mb-2 mt-4 relative inline-block w-full">
               <h1 className="text-[28px] xs:text-[26px] sm:text-[30px] md:text-[36px] lg:text-[50px] font-playfair font-light text-black leading-snug mb-2 break-words">
@@ -217,23 +230,23 @@ const DynamicPage = ({ page: propPage }) => {
           )}
 
           <div
-            className={`flex flex-col gap-6 md:gap-8 items-center md:items-stretch md:flex-row md:justify-between flex-wrap ${sec.layout === "image-left"
-              ? "md:flex-row"
-              : sec.layout === "image-right"
-                ? "md:flex-row-reverse"
-                : ""
-              }`}
-          >
+            className={`flex flex-col gap-6 md:gap-8 items-center md:items-stretch md:flex-row md:justify-between flex-wrap ${
+              sec.layout === "image-left"
+                ? "md:flex-row"
+                : sec.layout === "image-right"
+                  ? "md:flex-row-reverse"
+                  : ""
+            }`}>
             {sec.images?.map((img, i) => (
               <div
                 key={i}
-                className={`flex-shrink-0 w-full md:w-auto ${img.alignment === "left"
-                  ? "self-start"
-                  : img.alignment === "right"
-                    ? "self-end"
-                    : "self-center"
-                  }`}
-              >
+                className={`flex-shrink-0 w-full md:w-auto ${
+                  img.alignment === "left"
+                    ? "self-start"
+                    : img.alignment === "right"
+                      ? "self-end"
+                      : "self-center"
+                }`}>
                 <img
                   src={img.src}
                   alt={img.alt}
@@ -249,8 +262,7 @@ const DynamicPage = ({ page: propPage }) => {
                   style={{
                     textAlign: sec.contentBlocks[0].alignment || "left",
                     backgroundColor: sec.backgroundColor || "transparent",
-                  }}
-                >
+                  }}>
                   {parse(sec.contentBlocks[0].text || "", {
                     replace: (domNode) => {
                       if (domNode.attribs?.style) {
@@ -276,8 +288,7 @@ const DynamicPage = ({ page: propPage }) => {
                   style={{
                     textAlign: cb.alignment || "left",
                     backgroundColor: sec.backgroundColor || "transparent",
-                  }}
-                >
+                  }}>
                   {parse(cb.text || "", {
                     replace: (domNode) => {
                       if (domNode.attribs?.style) {
