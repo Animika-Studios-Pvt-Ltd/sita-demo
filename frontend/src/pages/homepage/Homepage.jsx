@@ -478,7 +478,9 @@ const HomePage = () => {
           aria-hidden="true"
         />
         <div className="container">
-          <h2 className="text-center">Publications</h2>
+          <h2 className="text-center" data-aos="fade-up">
+            Publications
+          </h2>
           <img
             src="sita-motif.webp"
             alt="Motif"
@@ -487,21 +489,30 @@ const HomePage = () => {
             data-aos-delay="200"
           />
           <div className="sita-publications-wrapper">
-            <div className="publications-left">
+            <div
+              className="publications-left"
+              data-aos="fade-right"
+              data-aos-delay="300">
               <div
                 id="publicationsCarousel"
                 className="carousel slide carousel-fade">
                 <div className="carousel-inner">
                   <div className="carousel-item active">
                     <div className="publication-flex">
-                      <div className="publication-book-wrap">
+                      <div
+                        className="publication-book-wrap"
+                        data-aos="zoom-in"
+                        data-aos-delay="400">
                         <img
                           src="anaya-book.webp"
                           className="publication-book"
                           alt="Book"
                         />
                       </div>
-                      <div className="publication-content">
+                      <div
+                        className="publication-content"
+                        data-aos="fade-up"
+                        data-aos-delay="500">
                         <h3>Anaya</h3>
                         <h5>A Devotee’s Journey Home</h5>
                         <p>Written with love & devotion by Sita Severson.</p>
@@ -510,14 +521,20 @@ const HomePage = () => {
                   </div>
                   <div className="carousel-item">
                     <div className="publication-flex">
-                      <div className="publication-book-wrap">
+                      <div
+                        className="publication-book-wrap"
+                        data-aos="zoom-in"
+                        data-aos-delay="400">
                         <img
                           src="anaya-book.webp"
                           className="publication-book"
                           alt="Book"
                         />
                       </div>
-                      <div className="publication-content">
+                      <div
+                        className="publication-content"
+                        data-aos="fade-up"
+                        data-aos-delay="500">
                         <h3>Second Book</h3>
                         <h5>Subtitle Here</h5>
                         <p>Add another publication description here.</p>
@@ -527,7 +544,10 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-            <div className="publications-right">
+            <div
+              className="publications-right"
+              data-aos="fade-left"
+              data-aos-delay="400">
               <img
                 src="sita-author.webp"
                 alt="Sita"
