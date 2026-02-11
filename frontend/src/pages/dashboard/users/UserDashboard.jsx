@@ -359,7 +359,7 @@ const UserDashboard = () => {
           <img
             src="/sita-motif.webp"
             alt="Sita Motif"
-            className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+            className="mx-auto mb-8 motif"
           />
         </div>
         <div className="max-w-8xl mx-auto p-4 mt-8 border-[#C76F3B] rounded-xl border-1 mb-8">
@@ -511,7 +511,7 @@ const UserDashboard = () => {
                 <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
                   <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4">Quick Actions</h3>
                   <div className="space-y-3">
-                    <Link to="/orders" className="w-full flex items-center gap-3 px-3 no-underline sm:px-4 py-2 sm:py-3 bg-gray-50 hover:bg-orange-50 rounded-lg transition-colors text-left group">
+                    <Link to="/my-orders" className="w-full flex items-center gap-3 px-3 no-underline sm:px-4 py-2 sm:py-3 bg-gray-50 hover:bg-orange-50 rounded-lg transition-colors text-left group">
                       <FaShoppingBag className="text-[#bc6430] text-base sm:text-lg group-hover:scale-110 transition-transform" />
                       <span className="font-medium text-gray-700 text-sm sm:text-base">View Orders</span>
                     </Link>

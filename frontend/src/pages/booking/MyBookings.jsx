@@ -107,7 +107,7 @@ const MyBookings = () => {
           <img
             src="/sita-motif.webp"
             alt="Sita Motif"
-            className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+            className="mx-auto mb-8 motif"
           />
         </div>
 
