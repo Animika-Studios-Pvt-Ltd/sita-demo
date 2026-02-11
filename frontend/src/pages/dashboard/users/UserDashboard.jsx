@@ -353,7 +353,7 @@ const UserDashboard = () => {
     <div className="container">
       <div className="w-full max-w-[1200px] mx-auto px-4">
         <div className="mt-10">
-          <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+          <h2 className="sita-main-heading text-center">
             Profile Overview
           </h2>
           <img
@@ -398,88 +398,88 @@ const UserDashboard = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
               <div className="lg:col-span-2">
                 <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
-                  <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6 flex items-center gap-2">
+                  <h4 className="sita-sub-heading flex items-center gap-2 mb-4 sm:mb-6">
                     <FaUser className="text-[#bc6430] text-lg sm:text-xl" />Profile Information
-                  </h2>
+                  </h4>
                   <div className="space-y-4 sm:space-y-5">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                      <label className="block sita-label-text text-gray-700 mb-2 flex items-center gap-2">
                         <FaEnvelope className="text-gray-500 text-xs sm:text-sm" />Email Address
                       </label>
-                      <input type="email" value={profile?.email || currentUser?.email || ""} disabled className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-200 rounded-lg bg-gray-50 text-gray-600 cursor-not-allowed text-sm sm:text-base" />
+                      <input type="email" value={profile?.email || currentUser?.email || ""} disabled className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-200 rounded-lg bg-gray-50 text-gray-600 cursor-not-allowed sita-body-text" />
                       <p className="text-xs text-gray-500 mt-1">Email cannot be changed</p>
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                      <label className="block sita-label-text text-gray-700 mb-2 flex items-center gap-2">
                         <FaUser className="text-gray-500 text-xs sm:text-sm" />First Name
                       </label>
                       {isEditing ? (
-                        <input type="text" name="firstName" value={formData.name.firstName} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent text-sm sm:text-base" placeholder="Enter your first name" />
+                        <input type="text" name="firstName" value={formData.name.firstName} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="Enter your first name" />
                       ) : (
-                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium text-sm sm:text-base">{profile?.name?.firstName || "Not provided"}</div>
+                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium sita-body-text">{profile?.name?.firstName || "Not provided"}</div>
                       )}
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                      <label className="block sita-label-text text-gray-700 mb-2 flex items-center gap-2">
                         <FaUser className="text-gray-500 text-xs sm:text-sm" />Last Name
                       </label>
                       {isEditing ? (
-                        <input type="text" name="lastName" value={formData.name.lastName} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent text-sm sm:text-base" placeholder="Enter your last name" />
+                        <input type="text" name="lastName" value={formData.name.lastName} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="Enter your last name" />
                       ) : (
-                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium text-sm sm:text-base">{profile?.name?.lastName || "Not provided"}</div>
+                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium sita-body-text">{profile?.name?.lastName || "Not provided"}</div>
                       )}
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                      <label className="block sita-label-text text-gray-700 mb-2 flex items-center gap-2">
                         <FaUser className="text-gray-500 text-xs sm:text-sm" />Username
                       </label>
                       {isEditing ? (
-                        <input type="text" name="username" value={formData.username} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent text-sm sm:text-base" placeholder="Enter your username" />
+                        <input type="text" name="username" value={formData.username} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="Enter your username" />
                       ) : (
-                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium text-sm sm:text-base">{profile?.username || "Not provided"}</div>
+                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium sita-body-text">{profile?.username || "Not provided"}</div>
                       )}
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                      <label className="block sita-label-text text-gray-700 mb-2 flex items-center gap-2">
                         <MdPhone className="text-gray-500 text-xs sm:text-sm" />Primary Phone Number
                       </label>
                       {isEditing ? (
-                        <input type="tel" name="primaryPhone" value={formData.phone.primary} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent text-sm sm:text-base" placeholder="Enter your primary phone number" />
+                        <input type="tel" name="primaryPhone" value={formData.phone.primary} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="Enter your primary phone number" />
                       ) : (
-                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium text-sm sm:text-base">{profile?.phone?.primary || "Not provided"}</div>
+                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium sita-body-text">{profile?.phone?.primary || "Not provided"}</div>
                       )}
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                      <label className="block sita-label-text text-gray-700 mb-2 flex items-center gap-2">
                         <MdPhone className="text-gray-500 text-xs sm:text-sm" />Secondary Phone Number (Optional)
                       </label>
                       {isEditing ? (
-                        <input type="tel" name="secondaryPhone" value={formData.phone.secondary} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent text-sm sm:text-base" placeholder="Enter your secondary phone number" />
+                        <input type="tel" name="secondaryPhone" value={formData.phone.secondary} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="Enter your secondary phone number" />
                       ) : (
-                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium text-sm sm:text-base">{profile?.phone?.secondary || "Not provided"}</div>
+                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium sita-body-text">{profile?.phone?.secondary || "Not provided"}</div>
                       )}
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Date of Birth</label>
+                      <label className="block sita-label-text text-gray-700 mb-2">Date of Birth</label>
                       {isEditing ? (
-                        <input type="date" name="dateOfBirth" value={formData.demographics.dateOfBirth} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent text-sm sm:text-base" />
+                        <input type="date" name="dateOfBirth" value={formData.demographics.dateOfBirth} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" />
                       ) : (
-                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium text-sm sm:text-base">
+                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium sita-body-text">
                           {profile?.demographics?.dateOfBirth ? new Date(profile.demographics.dateOfBirth).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }) : "Not provided"}
                         </div>
                       )}
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Gender</label>
+                      <label className="block sita-label-text text-gray-700 mb-2">Gender</label>
                       {isEditing ? (
-                        <select name="gender" value={formData.demographics.gender} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent text-sm sm:text-base">
+                        <select name="gender" value={formData.demographics.gender} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text">
                           <option value="prefer-not-to-say">Prefer not to say</option>
                           <option value="male">Male</option>
                           <option value="female">Female</option>
                           <option value="other">Other</option>
                         </select>
                       ) : (
-                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium capitalize text-sm sm:text-base">
+                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium capitalize sita-body-text">
                           {profile?.demographics?.gender?.replace(/-/g, ' ') || "Not provided"}
                         </div>
                       )}
@@ -527,10 +527,10 @@ const UserDashboard = () => {
             <div className="w-full">
               <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl sm:text-2xl font-bold text-gray-800 flex items-center gap-2">
+                  <h4 className="sita-sub-heading flex items-center gap-2">
                     <FaMapMarkerAlt className="text-[#bc6430] text-lg sm:text-xl" />
                     Saved Addresses
-                  </h2>
+                  </h4>
                   <button onClick={() => openAddressModal()} className="flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] text-white px-4 sm:px-5 py-2.5 rounded-lg transition-colors duration-200 font-medium text-sm shadow-sm hover:shadow-md">
                     <FaPlus className="text-xs" /> Add Address
                   </button>
@@ -630,56 +630,56 @@ const UserDashboard = () => {
             <div className="p-4 sm:p-6">
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Address Type</label>
-                  <select name="type" value={addressFormData.type} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent">
+                  <label className="block sita-label-text text-gray-700 mb-2">Address Type</label>
+                  <select name="type" value={addressFormData.type} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text">
                     <option value="home">Home</option>
                     <option value="work">Work</option>
                     <option value="other">Other</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
-                  <input type="text" name="fullName" value={addressFormData.fullName} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent" placeholder="Enter full name" required />
+                  <label className="block sita-label-text text-gray-700 mb-2">Full Name</label>
+                  <input type="text" name="fullName" value={addressFormData.fullName} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="Enter full name" required />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
-                  <input type="tel" name="phone" value={addressFormData.phone} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent" placeholder="Enter phone number" required />
+                  <label className="block sita-label-text text-gray-700 mb-2">Phone Number</label>
+                  <input type="tel" name="phone" value={addressFormData.phone} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="Enter phone number" required />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Address Line 1</label>
-                  <input type="text" name="addressLine1" value={addressFormData.addressLine1} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent" placeholder="House No., Building Name" required />
+                  <label className="block sita-label-text text-gray-700 mb-2">Address Line 1</label>
+                  <input type="text" name="addressLine1" value={addressFormData.addressLine1} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="House No., Building Name" required />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Address Line 2 (Optional)</label>
-                  <input type="text" name="addressLine2" value={addressFormData.addressLine2} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent" placeholder="Road Name, Area, Colony" />
+                  <label className="block sita-label-text text-gray-700 mb-2">Address Line 2 (Optional)</label>
+                  <input type="text" name="addressLine2" value={addressFormData.addressLine2} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="Road Name, Area, Colony" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Landmark (Optional)</label>
-                  <input type="text" name="landmark" value={addressFormData.landmark} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent" placeholder="Near famous place" />
+                  <label className="block sita-label-text text-gray-700 mb-2">Landmark (Optional)</label>
+                  <input type="text" name="landmark" value={addressFormData.landmark} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="Near famous place" />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">City</label>
-                    <input type="text" name="city" value={addressFormData.city} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent" placeholder="City" required />
+                    <label className="block sita-label-text text-gray-700 mb-2">City</label>
+                    <input type="text" name="city" value={addressFormData.city} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="City" required />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">State</label>
-                    <input type="text" name="state" value={addressFormData.state} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent" placeholder="State" required />
+                    <label className="block sita-label-text text-gray-700 mb-2">State</label>
+                    <input type="text" name="state" value={addressFormData.state} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="State" required />
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Postal Code</label>
-                    <input type="text" name="postalCode" value={addressFormData.postalCode} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent" placeholder="PIN Code" required />
+                    <label className="block sita-label-text text-gray-700 mb-2">Postal Code</label>
+                    <input type="text" name="postalCode" value={addressFormData.postalCode} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="PIN Code" required />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Country</label>
-                    <input type="text" name="country" value={addressFormData.country} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent" placeholder="Country" required />
+                    <label className="block sita-label-text text-gray-700 mb-2">Country</label>
+                    <input type="text" name="country" value={addressFormData.country} onChange={handleAddressInputChange} className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="Country" required />
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <input type="checkbox" name="isDefault" checked={addressFormData.isDefault} onChange={handleAddressInputChange} className="w-5 h-5 text-[#bc6430] focus:ring-[#bc6430] rounded" />
-                  <label className="text-sm font-medium text-gray-700">Set as default address</label>
+                  <label className="sita-body-text font-medium text-gray-700">Set as default address</label>
                 </div>
               </div>
               <div className="flex gap-3 mt-6">

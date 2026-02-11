@@ -373,3 +373,97 @@ button {
 .admin-scope[data-admin-theme="dark"] .shadow-\[0_12px_30px_-24px_rgba\(15\,23\,42\,0\.45\)\] {
   box-shadow: 0 20px 45px -30px rgba(0, 0, 0, 0.65) !important;
 }
+
+/* ------------------------------------------------- GLOBAL TYPOGRAPHY ------------------------------------------------- */
+
+.sita-main-heading {
+  font-family: "PT Serif", serif;
+  color: #8b171b;
+  font-size: 48px;
+  text-transform: uppercase;
+  margin-bottom: 0px;
+  line-height: 1.2;
+}
+
+.sita-sub-heading {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600; /* SemiBold */
+  color: #8b171b;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.sita-body-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300; /* Light */
+  font-size: 18px;
+  color: black;
+  line-height: 1.6;
+}
+
+.sita-label-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600; /* SemiBold */
+  font-size: 18px;
+  color: black;
+  line-height: 1.6;
+}
+
+/* Responsive Rules matching Homepage.css */
+
+@media (max-width: 1200px) {
+  .sita-main-heading {
+    font-size: 42px !important;
+  }
+  .sita-sub-heading {
+    font-size: 26px !important;
+  }
+  .sita-body-text, .sita-label-text {
+    font-size: 17px !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .sita-main-heading {
+    font-size: 40px !important;
+  }
+  .sita-sub-heading {
+    font-size: 24px !important;
+  }
+  .sita-body-text, .sita-label-text {
+    font-size: 16px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .sita-main-heading {
+    font-size: 36px !important;
+  }
+  .sita-sub-heading {
+    font-size: 22px !important;
+  }
+  .sita-body-text, .sita-label-text {
+    font-size: 15px !important;
+  }
+}
+
+@media (max-width: 575px) {
+  .sita-main-heading {
+    font-size: 28px !important;
+  }
+  .sita-sub-heading {
+    font-size: 20px !important;
+  }
+  .sita-body-text, .sita-label-text {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .sita-main-heading {
+    font-size: 24px !important;
+  }
+  .sita-body-text, .sita-label-text {
+    font-size: 13px !important;
+  }
+}

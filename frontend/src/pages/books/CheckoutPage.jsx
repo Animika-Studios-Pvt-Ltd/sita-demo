@@ -200,7 +200,7 @@ const CheckoutPage = () => {
     setValue(
       `${prefix}street`,
       address.addressLine1 +
-        (address.addressLine2 ? `, ${address.addressLine2}` : ""),
+      (address.addressLine2 ? `, ${address.addressLine2}` : ""),
     );
     setValue(`${prefix}city`, address.city);
     setValue(`${prefix}state`, address.state);
@@ -459,12 +459,12 @@ const CheckoutPage = () => {
         giftAddress:
           isGift && !sameAsDeliveryAddress
             ? {
-                street: formData.gift_street,
-                city: formData.gift_city,
-                country: formData.gift_country || "India",
-                state: formData.gift_state,
-                zipcode: formData.gift_zipcode,
-              }
+              street: formData.gift_street,
+              city: formData.gift_city,
+              country: formData.gift_country || "India",
+              state: formData.gift_state,
+              zipcode: formData.gift_zipcode,
+            }
             : null,
         paymentId: paymentId,
         cashfreeOrderId: razorpayOrderId, // Reusing field
@@ -505,10 +505,9 @@ const CheckoutPage = () => {
       Swal.fire({
         title: "Order Creation Failed",
         html: `
-          <p>${
-            error.response?.data?.message ||
-            error.message ||
-            "Failed to create order"
+          <p>${error.response?.data?.message ||
+          error.message ||
+          "Failed to create order"
           }</p>
           <p class="text-sm text-gray-600 mt-2">Payment ID: ${paymentId}</p>
           <p class="text-sm text-gray-600">Order ID: ${razorpayOrderId}</p>
@@ -589,11 +588,10 @@ const CheckoutPage = () => {
 
           setValue(
             "name",
-            `${response.data.name?.firstName || ""} ${
-              response.data.name?.lastName || ""
-            }`.trim() ||
-              response.data.username ||
-              "",
+            `${response.data.name?.firstName || ""} ${response.data.name?.lastName || ""
+              }`.trim() ||
+            response.data.username ||
+            "",
           );
           setValue("email", response.data.email || "");
           setValue("phone", response.data.phone?.primary || "");
@@ -677,13 +675,13 @@ const CheckoutPage = () => {
       <div className="container">
         <div className="max-w-9xl mx-auto py-0 flex flex-col justify-center items-center px-0 mb-20">
           <div className="mt-10" data-aos="zoom-in" data-aos-duration="1000">
-            <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
+            <h2 className="sita-main-heading text-center">
               Checkout
             </h2>
             <img
               src="/sita-motif.webp"
               alt="Sita Motif"
-              className="mx-auto mt-1 w-40 sm:w-48 mb-8"
+              className="mx-auto mb-8 motif"
             />
           </div>
 
@@ -728,7 +726,7 @@ const CheckoutPage = () => {
                     <div className="space-y-4">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          <label className="block sita-label-text text-gray-700 mb-2">
                             Recipient Name{" "}
                             <span className="text-red-500">*</span>
                           </label>
@@ -737,12 +735,12 @@ const CheckoutPage = () => {
                             value={giftToName}
                             onChange={(e) => setGiftToName(e.target.value)}
                             placeholder="e.g., John Doe"
-                            className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
+                            className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all sita-body-text"
                             required={isGift}
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          <label className="block sita-label-text text-gray-700 mb-2">
                             Your Name <span className="text-red-500">*</span>
                           </label>
                           <input
@@ -750,13 +748,13 @@ const CheckoutPage = () => {
                             value={giftFromName}
                             onChange={(e) => setGiftFromName(e.target.value)}
                             placeholder="e.g., Jane Smith"
-                            className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
+                            className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all sita-body-text"
                             required={isGift}
                           />
                         </div>
                       </div>
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        <label className="block sita-label-text text-gray-700 mb-2">
                           Gift Message{" "}
                           <span className="text-gray-500 text-xs">
                             (Optional)
@@ -768,7 +766,7 @@ const CheckoutPage = () => {
                           placeholder="Write a heartfelt message for your gift recipient..."
                           rows="3"
                           maxLength="200"
-                          className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all resize-none"
+                          className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all resize-none sita-body-text"
                         />
                         <p className="text-xs text-gray-500 mt-1 text-right">
                           {giftMessage.length}/200 characters
@@ -779,21 +777,21 @@ const CheckoutPage = () => {
                 )}
 
                 <div className="bg-white p-6 rounded-xl shadow-sm">
-                  <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                  <h4 className="sita-sub-heading flex items-center gap-2 mb-4">
                     <FaUser className="text-[#C76F3B]" />
                     Personal Details
-                  </h2>
+                  </h4>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-montserrat ">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      <label className="block sita-label-text text-gray-700 mb-2">
                         Full Name <span className="text-red-500">*</span>
                       </label>
                       <input
                         {...register("name", { required: "Name is required" })}
                         type="text"
                         placeholder="Enter your full name"
-                        className="font-montserrat w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
+                        className="font-montserrat w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all sita-body-text"
                       />
                       {errors.name && (
                         <p className="text-red-500 text-sm mt-1">
@@ -803,7 +801,7 @@ const CheckoutPage = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      <label className="block sita-label-text text-gray-700 mb-2">
                         Email Address <span className="text-red-500">*</span>
                       </label>
                       <input
@@ -816,7 +814,7 @@ const CheckoutPage = () => {
                         })}
                         type="email"
                         placeholder="your@email.com"
-                        className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all sita-body-text"
                       />
                       {errors.email && (
                         <p className="text-red-500 text-sm mt-1">
@@ -826,7 +824,7 @@ const CheckoutPage = () => {
                     </div>
 
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      <label className="block sita-label-text text-gray-700 mb-2">
                         Phone Number <span className="text-red-500">*</span>
                       </label>
                       <input
@@ -840,7 +838,7 @@ const CheckoutPage = () => {
                         type="tel"
                         placeholder="9876543210"
                         maxLength="10"
-                        className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all sita-body-text"
                       />
                       {errors.phone && (
                         <p className="text-red-500 text-sm mt-1">
@@ -852,15 +850,15 @@ const CheckoutPage = () => {
                 </div>
 
                 {isAuthenticated &&
-                userProfile &&
-                userProfile.addresses?.length > 0 &&
-                !useManualAddress ? (
+                  userProfile &&
+                  userProfile.addresses?.length > 0 &&
+                  !useManualAddress ? (
                   <div className="bg-white p-6 rounded-xl shadow-sm">
                     <div className="flex items-center justify-between mb-4">
-                      <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+                      <h4 className="sita-sub-heading flex items-center gap-2">
                         <FaMapMarkerAlt className="text-[#C76F3B]" />
                         Delivery Address
-                      </h2>
+                      </h4>
                       <button
                         type="button"
                         onClick={() => setUseManualAddress(true)}
@@ -874,11 +872,10 @@ const CheckoutPage = () => {
                         <div
                           key={address._id}
                           onClick={() => handleAddressSelect(address._id)}
-                          className={`border-1 rounded-xl p-4 cursor-pointer transition-all ${
-                            selectedAddressId === address._id
-                              ? "border-[#C76F3B] bg-orange-50 shadow-md"
-                              : "border-gray-200 hover:border-[#C76F3B] hover:shadow-sm"
-                          }`}>
+                          className={`border-1 rounded-xl p-4 cursor-pointer transition-all ${selectedAddressId === address._id
+                            ? "border-[#C76F3B] bg-orange-50 shadow-md"
+                            : "border-gray-200 hover:border-[#C76F3B] hover:shadow-sm"
+                            }`}>
                           <div className="flex items-start gap-3 font-montserrat">
                             <div className="mt-1">
                               <input
@@ -967,10 +964,10 @@ const CheckoutPage = () => {
                   <div className="bg-white p-6 rounded-xl shadow-sm">
                     {useManualAddress && (
                       <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+                        <h4 className="sita-sub-heading flex items-center gap-2">
                           <FaMapMarkerAlt className="text-[#C76F3B]" />
                           Delivery Address
-                        </h2>
+                        </h4>
                         {isAuthenticated &&
                           userProfile?.addresses?.length > 0 && (
                             <button
@@ -984,15 +981,15 @@ const CheckoutPage = () => {
                     )}
 
                     {!useManualAddress && (
-                      <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                      <h4 className="sita-sub-heading flex items-center gap-2 mb-4">
                         <FaMapMarkerAlt className="text-[#C76F3B]" />
                         Delivery Address
-                      </h2>
+                      </h4>
                     )}
 
                     <div className="space-y-4 font-montserrat">
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        <label className="block sita-label-text text-gray-700 mb-2">
                           Street Address <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -1001,7 +998,7 @@ const CheckoutPage = () => {
                           })}
                           type="text"
                           placeholder="House No., Building Name, Street"
-                          className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
+                          className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all sita-body-text"
                         />
                         {errors.street && (
                           <p className="text-red-500 text-sm mt-1">
@@ -1012,7 +1009,7 @@ const CheckoutPage = () => {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          <label className="block sita-label-text text-gray-700 mb-2">
                             PIN Code <span className="text-red-500">*</span>
                           </label>
                           <input
@@ -1032,7 +1029,7 @@ const CheckoutPage = () => {
                               setValue("zipcode", value);
                               setPincode(value);
                             }}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] transition"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] transition sita-body-text"
                           />
 
                           {loadingPincode && (
@@ -1048,7 +1045,7 @@ const CheckoutPage = () => {
                         </div>
 
                         <div>
-                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          <label className="block sita-label-text text-gray-700 mb-2">
                             City <span className="text-red-500">*</span>
                           </label>
                           <input
@@ -1057,7 +1054,7 @@ const CheckoutPage = () => {
                             })}
                             type="text"
                             placeholder="Bangalore"
-                            className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
+                            className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all sita-body-text"
                           />
                           {errors.city && (
                             <p className="text-red-500 text-sm mt-1">
@@ -1067,7 +1064,7 @@ const CheckoutPage = () => {
                         </div>
 
                         <div>
-                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          <label className="block sita-label-text text-gray-700 mb-2">
                             State <span className="text-red-500">*</span>
                           </label>
                           <input
@@ -1076,7 +1073,7 @@ const CheckoutPage = () => {
                             })}
                             type="text"
                             placeholder="Karnataka"
-                            className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
+                            className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all sita-body-text"
                           />
                           {errors.state && (
                             <p className="text-red-500 text-sm mt-1">
@@ -1086,7 +1083,7 @@ const CheckoutPage = () => {
                         </div>
 
                         <div>
-                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          <label className="block sita-label-text text-gray-700 mb-2">
                             Country <span className="text-red-500">*</span>
                           </label>
                           <input
@@ -1095,7 +1092,7 @@ const CheckoutPage = () => {
                             })}
                             type="text"
                             placeholder="India"
-                            className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
+                            className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all sita-body-text"
                           />
                           {errors.country && (
                             <p className="text-red-500 text-sm mt-1">
@@ -1118,11 +1115,10 @@ const CheckoutPage = () => {
                       <button
                         type="button"
                         onClick={handleSameAsDeliveryToggle}
-                        className={`text-sm font-medium px-4 py-2 rounded-lg transition-all ${
-                          sameAsDeliveryAddress
-                            ? "bg-[#C76F3B] text-white"
-                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                        }`}>
+                        className={`text-sm font-medium px-4 py-2 rounded-lg transition-all ${sameAsDeliveryAddress
+                          ? "bg-[#C76F3B] text-white"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                          }`}>
                         {sameAsDeliveryAddress
                           ? "Different Address"
                           : "✓ Same as Above"}
@@ -1150,11 +1146,10 @@ const CheckoutPage = () => {
                                   onClick={() =>
                                     handleGiftAddressSelect(address._id)
                                   }
-                                  className={`border-1 rounded-xl p-4 cursor-pointer transition-all ${
-                                    selectedGiftAddressId === address._id
-                                      ? "border-[#C76F3B] bg-orange-50 shadow-md"
-                                      : "border-gray-200 hover:border-[#C76F3B]"
-                                  }`}>
+                                  className={`border-1 rounded-xl p-4 cursor-pointer transition-all ${selectedGiftAddressId === address._id
+                                    ? "border-[#C76F3B] bg-orange-50 shadow-md"
+                                    : "border-gray-200 hover:border-[#C76F3B]"
+                                    }`}>
                                   <div className="flex items-start gap-3">
                                     <input
                                       type="radio"
@@ -1187,122 +1182,122 @@ const CheckoutPage = () => {
                         {(!isAuthenticated ||
                           useManualGiftAddress ||
                           !userProfile?.addresses?.length) && (
-                          <div className="space-y-4">
-                            <div>
-                              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                Street Address{" "}
-                                <span className="text-red-500">*</span>
-                              </label>
-                              <input
-                                {...register("gift_street", {
-                                  required:
-                                    isGift && !sameAsDeliveryAddress
-                                      ? "Gift street address is required"
-                                      : false,
-                                })}
-                                type="text"
-                                placeholder="House No., Building Name, Street"
-                                className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
-                              />
-                              {errors.gift_street && (
-                                <p className="text-red-500 text-sm mt-1">
-                                  {errors.gift_street.message}
-                                </p>
-                              )}
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-4">
                               <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                  PIN Code{" "}
+                                <label className="block sita-label-text text-gray-700 mb-2">
+                                  Street Address{" "}
                                   <span className="text-red-500">*</span>
                                 </label>
                                 <input
-                                  {...register("gift_zipcode", {
+                                  {...register("gift_street", {
                                     required:
                                       isGift && !sameAsDeliveryAddress
-                                        ? "PIN code is required"
+                                        ? "Gift street address is required"
                                         : false,
-                                    pattern: {
-                                      value: /^[0-9]{6}$/,
-                                      message: "Enter valid 6-digit PIN code",
-                                    },
                                   })}
                                   type="text"
-                                  placeholder="560001"
-                                  maxLength="6"
-                                  value={giftPincode}
-                                  onChange={(e) => {
-                                    const value = e.target.value.replace(
-                                      /\D/g,
-                                      "",
-                                    );
-                                    setGiftPincode(value);
-                                    setValue("gift_zipcode", value);
-                                  }}
-                                  className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
+                                  placeholder="House No., Building Name, Street"
+                                  className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all sita-body-text"
                                 />
-                                {loadingGiftPincode && (
-                                  <p className="text-sm text-blue-600 mt-1">
-                                    📍 Fetching location...
+                                {errors.gift_street && (
+                                  <p className="text-red-500 text-sm mt-1">
+                                    {errors.gift_street.message}
                                   </p>
                                 )}
                               </div>
 
-                              <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                  City <span className="text-red-500">*</span>
-                                </label>
-                                <input
-                                  {...register("gift_city", {
-                                    required:
-                                      isGift && !sameAsDeliveryAddress
-                                        ? "City is required"
-                                        : false,
-                                  })}
-                                  type="text"
-                                  placeholder="Bangalore"
-                                  className="w-full px-4 py-3 1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
-                                />
-                              </div>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                  <label className="block sita-label-text text-gray-700 mb-2">
+                                    PIN Code{" "}
+                                    <span className="text-red-500">*</span>
+                                  </label>
+                                  <input
+                                    {...register("gift_zipcode", {
+                                      required:
+                                        isGift && !sameAsDeliveryAddress
+                                          ? "PIN code is required"
+                                          : false,
+                                      pattern: {
+                                        value: /^[0-9]{6}$/,
+                                        message: "Enter valid 6-digit PIN code",
+                                      },
+                                    })}
+                                    type="text"
+                                    placeholder="560001"
+                                    maxLength="6"
+                                    value={giftPincode}
+                                    onChange={(e) => {
+                                      const value = e.target.value.replace(
+                                        /\D/g,
+                                        "",
+                                      );
+                                      setGiftPincode(value);
+                                      setValue("gift_zipcode", value);
+                                    }}
+                                    className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all sita-body-text"
+                                  />
+                                  {loadingGiftPincode && (
+                                    <p className="text-sm text-blue-600 mt-1">
+                                      📍 Fetching location...
+                                    </p>
+                                  )}
+                                </div>
 
-                              <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                  State <span className="text-red-500">*</span>
-                                </label>
-                                <input
-                                  {...register("gift_state", {
-                                    required:
-                                      isGift && !sameAsDeliveryAddress
-                                        ? "State is required"
-                                        : false,
-                                  })}
-                                  type="text"
-                                  placeholder="Karnataka"
-                                  className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
-                                />
-                              </div>
+                                <div>
+                                  <label className="block sita-label-text text-gray-700 mb-2">
+                                    City <span className="text-red-500">*</span>
+                                  </label>
+                                  <input
+                                    {...register("gift_city", {
+                                      required:
+                                        isGift && !sameAsDeliveryAddress
+                                          ? "City is required"
+                                          : false,
+                                    })}
+                                    type="text"
+                                    placeholder="Bangalore"
+                                    className="w-full px-4 py-3 1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all sita-body-text"
+                                  />
+                                </div>
 
-                              <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                  Country{" "}
-                                  <span className="text-red-500">*</span>
-                                </label>
-                                <input
-                                  {...register("gift_country", {
-                                    required:
-                                      isGift && !sameAsDeliveryAddress
-                                        ? "Country is required"
-                                        : false,
-                                  })}
-                                  type="text"
-                                  placeholder="India"
-                                  className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all"
-                                />
+                                <div>
+                                  <label className="block sita-label-text text-gray-700 mb-2">
+                                    State <span className="text-red-500">*</span>
+                                  </label>
+                                  <input
+                                    {...register("gift_state", {
+                                      required:
+                                        isGift && !sameAsDeliveryAddress
+                                          ? "State is required"
+                                          : false,
+                                    })}
+                                    type="text"
+                                    placeholder="Karnataka"
+                                    className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all sita-body-text"
+                                  />
+                                </div>
+
+                                <div>
+                                  <label className="block sita-label-text text-gray-700 mb-2">
+                                    Country{" "}
+                                    <span className="text-red-500">*</span>
+                                  </label>
+                                  <input
+                                    {...register("gift_country", {
+                                      required:
+                                        isGift && !sameAsDeliveryAddress
+                                          ? "Country is required"
+                                          : false,
+                                    })}
+                                    type="text"
+                                    placeholder="India"
+                                    className="w-full px-4 py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#C76F3B] focus:border-transparent transition-all sita-body-text"
+                                  />
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        )}
+                          )}
 
                         {isAuthenticated &&
                           !useManualGiftAddress &&
@@ -1381,9 +1376,9 @@ const CheckoutPage = () => {
             <div className="lg:col-span-1">
               <div className="bg-white p-6 rounded-xl shadow-lg sticky top-4">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-bold text-gray-800">
+                  <h4 className="sita-sub-heading">
                     Order Summary
-                  </h2>
+                  </h4>
                   <div className="bg-[#C76F3B] text-white px-3 py-1 rounded-full text-sm font-montserrat font-semibold">
                     {cartItems.reduce((a, b) => a + b.qty, 0)}{" "}
                     {cartItems.length === 1 ? "items" : "items"}
