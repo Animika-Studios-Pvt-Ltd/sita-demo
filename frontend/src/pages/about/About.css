@@ -76,7 +76,7 @@ li {
 }
 
 .sita-inner-hero-image img {
-   width: 100%;
+  width: 100%;
   height: auto;
   aspect-ratio: 15 / 3;
   object-position: center;
@@ -240,7 +240,7 @@ li {
 }
 
 .kosha-list li img {
-  width: 22px;
+  width: 20px;
   height: auto;
   flex-shrink: 0;
 }
@@ -249,14 +249,45 @@ li {
   text-transform: capitalize;
 }
 
-/* ----------------- SOUL CURRICULUM PAGE ----------------- */
-.soul-curriculum-list {
+@media (max-width: 991px) {
+  .kosha-list {
+    margin-bottom: 20px;
+  }
+
+  .kosha-list li {
+    margin-bottom: 10px;
+  }
+
+  .kosha-list li img {
+    width: 19px;
+  }
+}
+
+@media (max-width: 767px) {
+  .kosha-list {
+    margin-bottom: 15px;
+  }
+
+  .kosha-list li img {
+    width: 18px;
+  }
+}
+
+@media (max-width: 575px) {
+  .kosha-list {
+    column-count: 1;
+    margin-bottom: 0px;
+  }
+}
+
+/* ----------------- RELEASE KARMIC PATTERNS PAGE ----------------- */
+.release-karmic-patterns-list {
   list-style: none;
   padding: 0;
   margin-bottom: 30px;
 }
 
-.soul-curriculum-list li {
+.release-karmic-patterns-list li {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -265,10 +296,40 @@ li {
   color: black;
 }
 
-.soul-curriculum-list li img {
-  width: 22px;
+.release-karmic-patterns-list li img {
+  width: 20px;
   height: auto;
   flex-shrink: 0;
+}
+
+@media (max-width: 991px) {
+  .release-karmic-patterns-list {
+    margin-bottom: 20px;
+  }
+
+  .release-karmic-patterns-list li {
+    margin-bottom: 10px;
+  }
+
+  .release-karmic-patterns-list li img {
+    width: 19px;
+  }
+}
+
+@media (max-width: 767px) {
+  .release-karmic-patterns-list {
+    margin-bottom: 15px;
+  }
+
+  .release-karmic-patterns-list li img {
+    width: 18px;
+  }
+}
+
+@media (max-width: 575px) {
+  .release-karmic-patterns-list {
+    margin-bottom: 10px;
+  }
 }
 
 /* ------------------------------------------------- ABOUT PAGE SECTION ------------------------------------------------- */
@@ -499,7 +560,7 @@ li {
     height: 150px;
   }
 
-   .sita-inner-hero-image {
+  .sita-inner-hero-image {
     width: 92vw;
   }
 
@@ -721,7 +782,6 @@ li {
 
   .ayurveda-nutrition-bg-image {
     --service-watermark-img: url("/ayurveda-nutrition-image.webp");
-
   }
 
   .kosha-counseling-bg-image {
@@ -1202,7 +1262,7 @@ li {
     padding: 20px 0;
   }
 
-   .sita-value-proposition img {
+  .sita-value-proposition img {
     margin: 0 auto 15px;
   }
 }
@@ -1212,7 +1272,7 @@ li {
     padding: 15px 0;
   }
 
-   .sita-value-proposition img {
+  .sita-value-proposition img {
     margin: 0 auto 10px;
   }
 }

@@ -96,7 +96,7 @@ const KoshaCounseling = () => {
                     <img src="sita-points.webp" alt="bullet" />
                     <span>The Bliss sheath</span>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="500">
+                  <li className="mb-0" data-aos="fade-up" data-aos-delay="500">
                     <img src="sita-points.webp" alt="bullet" />
                     <span>The Mental sheath</span>
                   </li>

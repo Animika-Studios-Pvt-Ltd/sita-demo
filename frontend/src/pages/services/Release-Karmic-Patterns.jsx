@@ -104,7 +104,7 @@ const ReleaseKarmicPatterns = () => {
                   often manifest as recurring challenges that can feel difficult
                   to shift through conscious effort alone, including:
                 </p>
-                <ul className="soul-curriculum-list">
+                <ul className="release-karmic-patterns-list">
                   <li data-aos="fade-left" data-aos-delay="350">
                     <img src="sita-points.webp" alt="bullet" />
                     <span>
