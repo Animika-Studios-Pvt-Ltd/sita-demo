@@ -185,7 +185,7 @@ const Footer = () => {
               href="https://sitaseverson.substack.com/"
               target="_blank"
               rel="noopener noreferrer">
-              <img src="substack.png" alt="Substack Icon" />
+              <img src="/substack.png" alt="Substack Icon" />
             </a>
             <a href="https://www.instagram.com/sitapk_1/">
               <i className="fa-brands fa-instagram"></i>
