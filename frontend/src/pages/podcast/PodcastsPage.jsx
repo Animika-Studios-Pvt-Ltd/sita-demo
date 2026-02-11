@@ -257,7 +257,7 @@ const PodcastsPage = () => {
             <img
               src="/sita-motif.webp"
               alt="Sita Motif"
-              className="mx-auto mt-1 w-40 sm:w-48 mb-6"
+              className="mx-auto mb-8 motif"
             />
           </div>
 
@@ -296,8 +296,8 @@ const PodcastsPage = () => {
                     key={num}
                     onClick={() => setCurrentPage(num)}
                     className={`w-10 h-10 flex items-center justify-center rounded-full text-sm font-medium transition-all ${currentPage === num
-                        ? "bg-[#8b171b] text-white shadow-lg shadow-[#8b171b]/30"
-                        : "text-slate-600 hover:bg-slate-100"
+                      ? "bg-[#8b171b] text-white shadow-lg shadow-[#8b171b]/30"
+                      : "text-slate-600 hover:bg-slate-100"
                       }`}>
                     {num}
                   </button>

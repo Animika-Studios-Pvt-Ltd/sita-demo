@@ -158,7 +158,7 @@ const BlogDetailPage = () => {
             <img
               src="/sita-motif.webp"
               alt="Sita Motif"
-              className="mx-auto mt-1 w-40 sm:w-48 mb-8 motif"
+              className="mx-auto mb-8 motif"
               data-aos="fade-up"
               data-aos-delay="200"
             />
@@ -358,11 +358,10 @@ const BlogDetailPage = () => {
                     key={num}
                     onClick={() => setCurrentPage(num)}
                     className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
-          ${
-            currentPage === num
-              ? "bg-[#993333] text-white"
-              : "border border-transparent text-black hover:border-black hover:bg-gray-100"
-          }`}>
+          ${currentPage === num
+                        ? "bg-[#993333] text-white"
+                        : "border border-transparent text-black hover:border-black hover:bg-gray-100"
+                      }`}>
                     {num}
                   </button>
                 ))}

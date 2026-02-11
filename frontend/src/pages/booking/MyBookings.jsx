@@ -70,7 +70,7 @@ const MyBookings = () => {
           <img
             src="/sita-motif.webp"
             alt="Sita Motif"
-            className="mx-auto mt-1 w-40 sm:w-48 mb-6"
+            className="mx-auto mb-8 motif"
           />
           <p className="text-gray-600 text-center mb-6">
             Please sign in to view your bookings.

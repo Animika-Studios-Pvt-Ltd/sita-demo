@@ -166,7 +166,7 @@ const ArticleDetailPage = () => {
             <img
               src="/sita-motif.webp"
               alt="Sita Motif"
-              className="mx-auto mt-1 mb-8"
+              className="mx-auto mb-8 motif"
             />
           </div>
 
