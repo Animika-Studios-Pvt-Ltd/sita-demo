@@ -248,6 +248,7 @@ const articleRoutes = require("./src/articles/article.route");
 const podcastRoutes = require("./src/podcasts/podcast.route");
 app.use("/api/blocked-dates", require("./src/blockedDates/blockedDate.routes"));
 app.use("/api/bookings", require("./src//booking/booking.routes"));
+app.use("/api/contact", require("./src/contact/contact.routes"));
 
 app.use('/api/shipping', shippingRoutes)
 

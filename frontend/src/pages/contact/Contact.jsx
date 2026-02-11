@@ -1,10 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
 import AOS from "aos";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 import "./Contact.css";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -17,6 +27,39 @@ const Contact = () => {
 
     setTimeout(() => AOS.refreshHard(), 400);
   }, []);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setSuccess(false);
+    setError(false);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSuccess(true);
+        setFormData({ name: "", email: "", mobile: "", message: "" });
+      } else {
+        setError(true);
+      }
+    } catch (err) {
+      console.error("Error sending message:", err);
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -58,6 +101,7 @@ const Contact = () => {
               <form
                 className="contact-form mx-auto"
                 id="contactForm"
+                onSubmit={handleSubmit}
                 noValidate>
                 <div className="mb-3" data-aos="fade-up" data-aos-delay="200">
                   <label htmlFor="name" className="form-label">
@@ -68,12 +112,11 @@ const Contact = () => {
                     className="form-control"
                     id="name"
                     name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     placeholder="Enter your name"
                     required
                   />
-                  <div className="invalid-feedback">
-                    Please enter your name.
-                  </div>
                 </div>
 
                 <div className="mb-3" data-aos="fade-up" data-aos-delay="300">
@@ -85,12 +128,11 @@ const Contact = () => {
                     className="form-control"
                     id="email"
                     name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     placeholder="Enter your email"
                     required
                   />
-                  <div className="invalid-feedback">
-                    Please enter a valid email address.
-                  </div>
                 </div>
 
                 <div className="mb-3" data-aos="fade-up" data-aos-delay="400">
@@ -102,13 +144,12 @@ const Contact = () => {
                     className="form-control"
                     id="mobile"
                     name="mobile"
+                    value={formData.mobile}
+                    onChange={handleChange}
                     placeholder="Enter your 10-digit mobile number (optional)"
                     pattern="[0-9]{10}"
                     maxLength={10}
                   />
-                  <div className="invalid-feedback">
-                    Please enter a valid 10-digit mobile number.
-                  </div>
                 </div>
 
                 <div className="mb-3" data-aos="fade-up" data-aos-delay="500">
@@ -120,29 +161,37 @@ const Contact = () => {
                     id="message"
                     name="message"
                     rows={4}
+                    value={formData.message}
+                    onChange={handleChange}
                     placeholder="Write your message (optional)"
                     required></textarea>
                 </div>
 
-                <button type="submit" className="btn mx-auto" id="submitBtn">
-                  <span className="btn-text">Submit</span>
-                  <span
-                    className="spinner-border spinner-border-sm d-none"
-                    role="status"
-                    aria-hidden="true"></span>
+                <button type="submit" className="btn mx-auto" id="submitBtn" disabled={loading}>
+                  <span className="btn-text">{loading ? "Sending..." : "Submit"}</span>
+                  {loading && (
+                    <span
+                      className="spinner-border spinner-border-sm ms-2"
+                      role="status"
+                      aria-hidden="true"></span>
+                  )}
                 </button>
 
-                <div
-                  className="alert alert-success d-none mt-3"
-                  id="successAlert">
-                  <i className="fas fa-check-circle"></i> Thank you! Your
-                  message has been sent successfully.
-                </div>
+                {success && (
+                  <div
+                    className="alert alert-success mt-3"
+                    id="successAlert">
+                    <i className="fas fa-check-circle"></i> Thank you! Your
+                    message has been sent successfully.
+                  </div>
+                )}
 
-                <div className="alert alert-danger d-none mt-3" id="errorAlert">
-                  <i className="fas fa-exclamation-circle"></i> Something went
-                  wrong. Please try again.
-                </div>
+                {error && (
+                  <div className="alert alert-danger mt-3" id="errorAlert">
+                    <i className="fas fa-exclamation-circle"></i> Something went
+                    wrong. Please try again.
+                  </div>
+                )}
               </form>
             </div>
           </div>
