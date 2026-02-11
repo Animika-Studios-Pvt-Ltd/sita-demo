@@ -13,6 +13,7 @@ const Navbar = () => {
   // State
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [imgError, setImgError] = useState(false);
 
   const navRef = useRef(null);
 
@@ -63,6 +64,10 @@ const Navbar = () => {
   }, [location]);
 
   useEffect(() => {
+    setImgError(false);
+  }, [currentUser?.picture]);
+
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (navRef.current && !navRef.current.contains(event.target)) {
         setActiveDropdown(null);
@@ -107,14 +112,21 @@ const Navbar = () => {
                     href="#"
                     role="button"
                     onClick={(e) => toggleDropdown("userMobile", e)}>
-                    {currentUser?.picture ? (
+                    {currentUser?.picture && !imgError ? (
                       <img
                         src={currentUser.picture}
                         alt="User"
                         className="user-avatar-img"
+                        onError={() => setImgError(true)}
                       />
                     ) : (
-                      <UserIcon size={20} />
+                      <div className="user-avatar-initials">
+                        {currentUser?.name
+                          ? currentUser.name.charAt(0).toUpperCase()
+                          : currentUser?.email
+                            ? currentUser.email.charAt(0).toUpperCase()
+                            : "U"}
+                      </div>
                     )}
                   </a>
                   <ul
@@ -204,14 +216,21 @@ const Navbar = () => {
                         href="#"
                         role="button"
                         onClick={(e) => toggleDropdown("userDesktop", e)}>
-                        {currentUser?.picture ? (
+                        {currentUser?.picture && !imgError ? (
                           <img
                             src={currentUser.picture}
                             alt="User"
                             className="user-avatar-img"
+                            onError={() => setImgError(true)}
                           />
                         ) : (
-                          <UserIcon size={20} />
+                          <div className="user-avatar-initials">
+                            {currentUser?.name
+                              ? currentUser.name.charAt(0).toUpperCase()
+                              : currentUser?.email
+                                ? currentUser.email.charAt(0).toUpperCase()
+                                : "U"}
+                          </div>
                         )}
                       </a>
                       <ul

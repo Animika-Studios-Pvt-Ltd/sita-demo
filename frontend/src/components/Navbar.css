@@ -100,11 +100,26 @@ li {
 } */
 
 .user-avatar-img {
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid #8b171b;
+}
+
+.user-avatar-initials {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #8b171b;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  border: 1px solid #8b171b;
+  text-transform: uppercase;
 }
 
 .cart-link-container {
