@@ -371,21 +371,13 @@ function HtmlSection({ content }) {
     return `col-span-12 ${sizeMap[size] || "md:col-span-6"}`;
   };
 
-  // Parser options to inject classes
+  // Parser options to force all headings to h4 and inject classes
   const parserOptions = {
     replace: (domNode) => {
       if (domNode.type === "tag") {
-        if (domNode.name === "h1") {
-          // Add sita-factor-heading class to h1 and increase size by 5px (30px + 5px = 35px)
-          const existingClass = domNode.attribs.class || "";
-          domNode.attribs.class = `${existingClass} sita-factor-heading`.trim();
-          domNode.attribs.style = `${domNode.attribs.style || ""}; font-size: 35px;`;
-        }
-        if (domNode.name === "h2") {
-          // Add sita-factor-highlight class to h2
-          const existingClass = domNode.attribs.class || "";
-          domNode.attribs.class =
-            `${existingClass} sita-factor-highlight`.trim();
+        // Force all headings to h4
+        if (["h1", "h2", "h3", "h5", "h6"].includes(domNode.name)) {
+          domNode.name = "h4";
         }
       }
     },
@@ -393,7 +385,7 @@ function HtmlSection({ content }) {
 
   return (
     <section
-      className={`${padding} container sita-inner-section `}
+      className={`${padding} container sita-inner-section sita-responsive-content`}
       style={{ backgroundColor }}>
       {/* Inject custom CSS if provided */}
       {content.css && (
@@ -496,7 +488,7 @@ function FaqSection({ content }) {
       style={{ backgroundColor }}>
       <div className="container mx-auto px-4">
         {title && (
-          <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center mb-12">
+          <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center mb-4 pb-2">
             {title}
           </h2>
         )}
@@ -508,14 +500,12 @@ function FaqSection({ content }) {
               className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
               style={{
                 borderColor: accentColor + "30",
-                fontFamily: "Montserrat-Regular",
               }}>
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors"
-                style={{ fontFamily: "Montserrat-Regular" }}>
+                className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors sita-faq-question">
                 <span
-                  className="font-semibold pr-4"
+                  className="pr-4"
                   style={{ color: questionColor }}>
                   {item.q}
                 </span>
@@ -542,9 +532,9 @@ function FaqSection({ content }) {
                         : backgroundColor,
                   }}>
                   <p
+                    className="sita-faq-answer"
                     style={{
                       color: answerColor,
-                      fontFamily: "Montserrat-Light",
                     }}>
                     {item.a}
                   </p>

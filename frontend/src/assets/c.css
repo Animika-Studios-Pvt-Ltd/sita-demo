@@ -889,3 +889,137 @@ li {
     padding: 5px 14px;
   }
 }
+
+/* ----------------- HTML SECTION RESPONSIVE CONTENT ----------------- */
+.sita-responsive-content {
+  color: #333;
+  font-family: "Montserrat-Light", sans-serif;
+}
+
+.sita-responsive-content h1,
+.sita-responsive-content h2,
+.sita-responsive-content h3,
+.sita-responsive-content h4,
+.sita-responsive-content h5,
+.sita-responsive-content h6 {
+  font-family: "Montserrat";
+  color: #8b171b !important;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.sita-responsive-content h1 { font-size: 36px; }
+.sita-responsive-content h2 { font-size: 32px; }
+.sita-responsive-content h3 { font-size: 28px; }
+.sita-responsive-content h4 { font-size: 28px; }
+.sita-responsive-content h5 { font-size: 20px; }
+.sita-responsive-content h6 { font-size: 18px; }
+
+.sita-responsive-content p {
+  font-size: 18px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.sita-responsive-content ul,
+.sita-responsive-content ol {
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+.sita-responsive-content li {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Responsive Typography */
+@media (max-width: 1200px) {
+  .sita-responsive-content h1 { font-size: 32px; }
+  .sita-responsive-content h2 { font-size: 28px; }
+  .sita-responsive-content h3 { font-size: 24px; }
+  .sita-responsive-content h4 { font-size: 24px; }
+  .sita-responsive-content h5 { font-size: 19px; }
+  .sita-responsive-content h6 { font-size: 17px; }
+}
+
+@media (max-width: 991px) {
+  .sita-responsive-content h1 { font-size: 28px; }
+  .sita-responsive-content h2 { font-size: 26px; }
+  .sita-responsive-content h3 { font-size: 22px; }
+  .sita-responsive-content h4 { font-size: 24px; margin-bottom: 10px; }
+  .sita-responsive-content h5 { font-size: 18px; }
+  .sita-responsive-content h6 { font-size: 16px; }
+  
+  .sita-responsive-content p,
+  .sita-responsive-content li {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 767px) {
+  .sita-responsive-content h1 { font-size: 26px; }
+  .sita-responsive-content h2 { font-size: 24px; }
+  .sita-responsive-content h3 { font-size: 20px; }
+  .sita-responsive-content h4 { font-size: 22px; margin-bottom: 5px; }
+  .sita-responsive-content h5 { font-size: 17px; }
+  .sita-responsive-content h6 { font-size: 16px; }
+}
+
+@media (max-width: 575px) {
+  .sita-responsive-content h1 { font-size: 24px; }
+  .sita-responsive-content h2 { font-size: 22px; }
+  .sita-responsive-content h3 { font-size: 19px; }
+  .sita-responsive-content h4 { font-size: 18px; margin-bottom: 0px; }
+  
+  .sita-responsive-content li {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+/* ----------------- FAQ SECTION RESPONSIVE CONTENT ----------------- */
+/* Matching BlogsSection (.sita-blog-card) typography */
+
+.sita-faq-question {
+  font-family: "Montserrat-Regular", sans-serif;
+  font-size: 18px;
+  color: #1f2937; /* Default question color */
+}
+
+.sita-faq-answer {
+  font-family: "Montserrat-Light", sans-serif;
+  font-size: 16px;
+  color: #6b7280; /* Default answer color */
+  line-height: 1.6;
+}
+
+@media (max-width: 1200px) {
+  .sita-faq-question {
+    font-size: 18px;
+  }
+  .sita-faq-answer {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 991px) {
+  .sita-faq-question {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+  .sita-faq-answer {
+    font-size: 14px; /* Slightly larger than 12px for better readability in accordion */
+  }
+}
+
+@media (max-width: 575px) {
+  .sita-faq-question {
+    font-size: 16px; /* Matches masterclass/blog mobile sizes closer */
+  }
+  .sita-faq-answer {
+    font-size: 14px;
+  }
+}
