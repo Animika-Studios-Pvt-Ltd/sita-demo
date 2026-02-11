@@ -86,20 +86,17 @@ const WorkShopCalendar = () => {
               <td>${e.availability ?? "-"}</td>
               <td>${e.ageGroup || "-"}</td>
               <td>
-                ${
-                  Number(e.availability) === 0
-                    ? `<span class="sita-booking-closed">Booking Closed</span>`
-                    : e.bookingUrl
-                      ? `<a href="${BOOKING_BASE_URL}/${e.bookingUrl || e._id}" 
-                         class="sita-book-now" 
-                         target="_blank"
-                         rel="noopener noreferrer">
+                ${Number(e.availability) === 0
+              ? `<span class="sita-booking-closed">Booking Closed</span>`
+              : e.bookingUrl
+                ? `<a href="${BOOKING_BASE_URL}/${e.bookingUrl || e._id}" 
+                         class="sita-book-now">
                          Book Now
                        </a>`
-                      : `<button disabled class="sita-book-now disabled">
+                : `<button disabled class="sita-book-now disabled">
                          Coming Soon
                        </button>`
-                }
+            }
               </td>
             </tr>
           `;
