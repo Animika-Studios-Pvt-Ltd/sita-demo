@@ -577,11 +577,6 @@ const DynamicSectionLayout = ({
           <h2 className="font-serifSita text-[#8b171b] text-3xl md:text-4xl leading-tight mb-2">
             {title.toUpperCase()}
           </h2>
-          <img
-            src="/sita-motif.webp"
-            alt="Motif"
-            className="mx-auto w-32 md:w-40"
-          />
         </div>
       )}
 
@@ -818,15 +813,10 @@ function BlogsSection({ content }) {
   return (
     <DynamicSectionLayout title={null}>
       {/* HEADER */}
-      <div className="" data-aos="fade-up" data-aos-duration="1200">
+      <div className="py-10" data-aos="fade-up" data-aos-duration="1200">
         <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
           {content.title || "Latest Blogs"}
         </h2>
-        <img
-          src="/sita-motif.webp"
-          alt="Sita Motif"
-          className="mx-auto mt-1 w-40 sm:w-48 mb-8"
-        />
       </div>
 
       {/* BLOG GRID */}
@@ -1127,15 +1117,10 @@ function ArticlesSection({ content }) {
   return (
     <DynamicSectionLayout title={null}>
       {/* HEADER */}
-      <div className="" data-aos="fade-up" data-aos-duration="1200">
+      <div className="py-10" data-aos="fade-up" data-aos-duration="1200">
         <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
           {content.title || "Latest Articles"}
         </h2>
-        <img
-          src="/sita-motif.webp"
-          alt="Sita Motif"
-          className="mx-auto mt-1 w-40 sm:w-48 mb-8"
-        />
       </div>
 
       {/* ARTICLE GRID */}
@@ -1446,15 +1431,10 @@ function PodcastsSection({ content }) {
   return (
     <DynamicSectionLayout>
       {/* HEADER */}
-      <div className="" data-aos="fade-up" data-aos-duration="1200">
+      <div className="py-10" data-aos="fade-up" data-aos-duration="1200">
         <h2 className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center">
           {content.title || "Latest Podcasts"}
         </h2>
-        <img
-          src="/sita-motif.webp"
-          alt="Sita Motif"
-          className="mx-auto mt-1 w-40 sm:w-48 mb-8"
-        />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
