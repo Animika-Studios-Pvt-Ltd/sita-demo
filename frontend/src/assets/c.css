@@ -9,6 +9,16 @@
 }
 
 @font-face {
+  font-family: "PTSerif-Italic";
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local("PTSerif-Italic"),
+    local("PTSerif-Italic"),
+    url("fonts/PTSerif-Italic.ttf") format("truetype");
+}
+
+@font-face {
   font-family: "Montserrat-Regular";
   font-style: normal;
   font-weight: 400;
@@ -47,6 +57,25 @@
     local("Montserrat-SemiBold"),
     url("fonts/Montserrat-SemiBold.ttf") format("truetype");
 }
+
+@font-face {
+  font-family: "StorefrontPro";
+  font-style: normal;
+  src:
+    local("StorefrontPro"),
+    local("StorefrontPro"),
+    url("fonts/StorefrontPro.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Garamond-Premier-Pro-Italic";
+  font-style: normal;
+  src:
+    local("Garamond-Premier-Pro-Italic"),
+    local("Garamond-Premier-Pro-Italic"),
+    url("fonts/Garamond-Premier-Pro-Italic.ttf") format("truetype");
+}
+
 
 html,
 body {
