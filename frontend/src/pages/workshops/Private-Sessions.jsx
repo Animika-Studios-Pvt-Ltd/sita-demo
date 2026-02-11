@@ -190,15 +190,15 @@ const PrivateSessions = () => {
               data-aos="fade-right">
               <ul className="what-makes-this-work-unique-list">
                 <li data-aos="fade-left" data-aos-delay="150">
-                  <img src="/sita-points.webp" alt="bullet" />
+                  <img src="/sita-points2.webp" alt="bullet" />
                   <span>Shared soul themes and karmic agreements</span>
                 </li>
                 <li data-aos="fade-right" data-aos-delay="200">
-                  <img src="/sita-points.webp" alt="bullet" />
+                  <img src="/sita-points2.webp" alt="bullet" />
                   <span>Emotional and attachment patterns</span>
                 </li>
                 <li data-aos="fade-left" data-aos-delay="250">
-                  <img src="/sita-points.webp" alt="bullet" />
+                  <img src="/sita-points2.webp" alt="bullet" />
                   <span>
                     Intimacy, communication, and nervous system compatibility
                   </span>
@@ -210,11 +210,11 @@ const PrivateSessions = () => {
               data-aos="fade-left">
               <ul className="what-makes-this-work-unique-list">
                 <li data-aos="fade-left" data-aos-delay="150">
-                  <img src="/sita-points.webp" alt="bullet" />
+                  <img src="/sita-points2.webp" alt="bullet" />
                   <span>Dharma of the partnership and where it is growing</span>
                 </li>
                 <li data-aos="fade-right" data-aos-delay="200">
-                  <img src="/sita-points.webp" alt="bullet" />
+                  <img src="/sita-points2.webp" alt="bullet" />
                   <span>
                     How to strengthen the relationship through aligned practice
                     and truth

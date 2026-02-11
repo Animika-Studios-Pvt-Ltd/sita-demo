@@ -175,31 +175,31 @@ const ReleaseKarmicPatterns = () => {
               <div className="accordion-content">
                 <ul className="accordion-section-list">
                   <li data-aos="fade-up" data-aos-delay="100">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="/sita-points2.webp" alt="bullet" />
                     <span>Mantra and japa</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="150">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="/sita-points2.webp" alt="bullet" />
                     <span>Meditation and guided inner journeys</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="200">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="/sita-points2.webp" alt="bullet" />
                     <span>Mudra and subtle body practices</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="250">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="/sita-points2.webp" alt="bullet" />
                     <span>Pranayama and conscious breathwork</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="300">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="/sita-points2.webp" alt="bullet" />
                     <span>Planetary remedies and altar work</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="350">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="/sita-points2.webp" alt="bullet" />
                     <span>Simple puja and devotional practices</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="400">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="/sita-points2.webp" alt="bullet" />
                     <span>Ayurvedic lifestyle and ritual supports</span>
                   </li>
                 </ul>
@@ -240,27 +240,27 @@ const ReleaseKarmicPatterns = () => {
                 </p>
                 <ul className="accordion-section-list">
                   <li data-aos="fade-up" data-aos-delay="150">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="/sita-points2.webp" alt="bullet" />
                     <span>
                       The karmic themes and soul lessons at the center of your
                       life
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="200">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="/sita-points2.webp" alt="bullet" />
                     <span>
                       The planetary teachers that govern your growth and timing
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="250">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="/sita-points2.webp" alt="bullet" />
                     <span>
                       The nakshatras that hold your deeper memories and
                       tendencies
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="300">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="/sita-points2.webp" alt="bullet" />
                     <span>
                       The periods of life that are ripe for healing, clearing,
                       and initiation
