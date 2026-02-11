@@ -85,7 +85,8 @@ export default function SectionRenderer({ section, createdFrom, pageSlug }) {
   useEffect(() => {
     AOS.init({
       duration: 1000,
-      once: true,
+      once: false,
+      mirror: true,
     });
   }, []);
 
@@ -379,6 +380,12 @@ function HtmlSection({ content }) {
         if (["h1", "h2", "h3", "h5", "h6"].includes(domNode.name)) {
           domNode.name = "h4";
         }
+
+        // Add AOS fade-up to all block-level elements
+        const blockTags = ["h1", "h2", "h3", "h4", "h5", "h6", "p", "ul", "ol", "li", "div", "img", "blockquote", "section", "article"];
+        if (blockTags.includes(domNode.name)) {
+          domNode.attribs["data-aos"] = "fade-up";
+        }
       }
     },
   };
@@ -498,6 +505,7 @@ function FaqSection({ content }) {
             <div
               key={i}
               className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+              data-aos="fade-up"
               style={{
                 borderColor: accentColor + "30",
               }}>
@@ -679,7 +687,9 @@ function EventsSection({ content }) {
     const eventImage = event.imageUrl || getCategoryImage(event.category);
 
     return (
-      <div className="group rounded-2xl overflow-hidden bg-white shadow-md flex flex-col border-1 border-transparent transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:border-[#8b171b] h-full">
+      <div
+        className="group rounded-2xl overflow-hidden bg-white shadow-md flex flex-col border-1 border-transparent transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:border-[#8b171b] h-full"
+        data-aos="fade-up">
         {/* IMAGE */}
         <div className="relative w-full aspect-[16/9] overflow-hidden shrink-0">
           <div
@@ -934,7 +944,9 @@ function BooksSection({ content }) {
     const isOutOfStock = book.stock <= 0;
 
     return (
-      <div className="group relative bg-white mb-0 overflow-hidden transition-all duration-500 h-full flex flex-col items-center">
+      <div
+        className="group relative bg-white mb-0 overflow-hidden transition-all duration-500 h-full flex flex-col items-center"
+        data-aos="fade-up">
         <Link to={`/books/${book.slug || book._id}`} className="block w-full">
           <div
             className="relative w-full aspect-[2/3] max-w-[280px] mx-auto overflow-hidden group book-flip"
