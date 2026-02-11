@@ -46,7 +46,7 @@ const TeacherTraining = () => {
           className="sita-inner-side-img"
           data-aos="fade-left"
           data-aos-duration="2000">
-          <img src="/group-sessions-image.webp" alt="Teacher Training Image" />
+          <img src="group-sessions-image.webp" alt="Teacher Training Image" />
         </div>
       </section>
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
@@ -201,34 +201,34 @@ const TeacherTraining = () => {
               <div className="accordion-content">
                 <ul className="accordion-section-list">
                   <li data-aos="fade-up" data-aos-delay="150">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Yoga teachers seeking Continuing Education and
                       specialization
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="200">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Practitioners who want to build a private therapeutic or
                       spiritual practice
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="250">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Lifelong learners devoted to the path of awakening
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="300">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Energy healers and somatic practitioners seeking depth and
                       structure
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="350">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       The spiritually curious and dedicated who want authentic
                       teachings
@@ -259,36 +259,36 @@ const TeacherTraining = () => {
               <div className="accordion-content">
                 <ul className="accordion-section-list">
                   <li data-aos="fade-up" data-aos-delay="150">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Yoga Alliance Continuing Education credits</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="200">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Handouts you may use in your own teaching and practice
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="250">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Ready-to-use class plans for private clients or group
                       classes
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="300">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Live and virtual instruction for accessible learning
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="350">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Recordings available for continued study and review
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="400">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Some programs available as recording-only with full
                       support materials
@@ -332,39 +332,39 @@ const TeacherTraining = () => {
                 </p>
                 <ul className="accordion-section-list">
                   <li data-aos="fade-up" data-aos-delay="150">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Teach from understanding rather than memorization
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="200">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Work with private clients as well as groups</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="250">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Integrate subtle body literacy into physical practice
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="300">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Support students through transformational process safely
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="350">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Use tools that match the person, not the trend</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="400">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Bridge classical knowledge with contemporary application
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="450">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Cultivate personal sadhana as the foundation of all
                       teaching
@@ -400,32 +400,32 @@ const TeacherTraining = () => {
               <div className="accordion-content">
                 <ul className="accordion-section-list">
                   <li data-aos="fade-up" data-aos-delay="150">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Live online classes with Q and A, practice, and
                       integration
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="200">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Recordings provided for all live attendees</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="250">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>
                       Recording-only courses available for self-paced study
                     </span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="300">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Support materials and class plans included</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="350">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Small group learning for relational depth</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="400">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Optional private mentoring available</span>
                   </li>
                 </ul>

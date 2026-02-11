@@ -36,7 +36,7 @@ const GroupSessions = () => {
           className="sita-inner-side-img"
           data-aos="fade-left"
           data-aos-duration="2000">
-          <img src="/group-sessions-image.webp" alt="Group Sessions Image" />
+          <img src="group-sessions-image.webp" alt="Group Sessions Image" />
         </div>
       </section>
       {/* -------------------- BREADCRUMB SECTION -------------------- */}
@@ -111,19 +111,19 @@ const GroupSessions = () => {
               data-aos="fade-right">
               <ul className="group-sessions-core-elements-list">
                 <li data-aos="fade-up" data-aos-delay="150">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <img src="sita-points1.webp" alt="bullet" />
                   <span>Soul Curriculum mapping for the group or system</span>
                 </li>
                 <li data-aos="fade-up" data-aos-delay="200">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <img src="sita-points1.webp" alt="bullet" />
                   <span>Relationship and compatibility dynamics</span>
                 </li>
                 <li data-aos="fade-up" data-aos-delay="250">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <img src="sita-points1.webp" alt="bullet" />
                   <span>Karmic and dharmic agreements within the group</span>
                 </li>
                 <li data-aos="fade-up" data-aos-delay="300">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <img src="sita-points1.webp" alt="bullet" />
                   <span>
                     Identifying shared lessons, strengths, and blind spots
                   </span>
@@ -135,25 +135,25 @@ const GroupSessions = () => {
               data-aos="fade-left">
               <ul className="group-sessions-core-elements-list">
                 <li data-aos="fade-up" data-aos-delay="150">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <img src="sita-points1.webp" alt="bullet" />
                   <span>
                     Tools for communication, compassion, and attunement
                   </span>
                 </li>
                 <li data-aos="fade-up" data-aos-delay="200">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <img src="sita-points1.webp" alt="bullet" />
                   <span>
                     Eastern frameworks for understanding conflict and growth
                   </span>
                 </li>
                 <li data-aos="fade-up" data-aos-delay="250">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <img src="sita-points1.webp" alt="bullet" />
                   <span>
                     Somatic and yogic practices for nervous system cohesion
                   </span>
                 </li>
                 <li data-aos="fade-up" data-aos-delay="300">
-                  <img src="/sita-points1.webp" alt="bullet" />
+                  <img src="sita-points1.webp" alt="bullet" />
                   <span>Facilitated dialogue and integration</span>
                 </li>
               </ul>
@@ -238,17 +238,17 @@ const GroupSessions = () => {
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <ul className="what-makes-this-work-unique-list">
                 <li data-aos="fade-right" data-aos-delay="150">
-                  <img src="/sita-points.webp" alt="bullet" />
+                  <img src="sita-points.webp" alt="bullet" />
                   <span>Understand each person’s role in the system</span>
                 </li>
                 <li data-aos="fade-left" data-aos-delay="200">
-                  <img src="/sita-points.webp" alt="bullet" />
+                  <img src="sita-points.webp" alt="bullet" />
                   <span>
                     Recognize karmic agreements and relational patterns
                   </span>
                 </li>
                 <li data-aos="fade-right" data-aos-delay="250">
-                  <img src="/sita-points.webp" alt="bullet" />
+                  <img src="sita-points.webp" alt="bullet" />
                   <span>Strengthen communication and emotional attunement</span>
                 </li>
               </ul>
@@ -256,15 +256,15 @@ const GroupSessions = () => {
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <ul className="what-makes-this-work-unique-list">
                 <li data-aos="fade-right" data-aos-delay="150">
-                  <img src="/sita-points.webp" alt="bullet" />
+                  <img src="sita-points.webp" alt="bullet" />
                   <span>Build intuitive trust and shared purpose</span>
                 </li>
                 <li data-aos="fade-left" data-aos-delay="200">
-                  <img src="/sita-points.webp" alt="bullet" />
+                  <img src="sita-points.webp" alt="bullet" />
                   <span>Create spiritual and nervous system literacy</span>
                 </li>
                 <li data-aos="fade-right" data-aos-delay="250">
-                  <img src="/sita-points.webp" alt="bullet" />
+                  <img src="sita-points.webp" alt="bullet" />
                   <span>
                     Honor individuality while supporting the collective
                   </span>

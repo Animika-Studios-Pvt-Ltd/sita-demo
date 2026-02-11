@@ -202,7 +202,7 @@ const CorporateTraining = () => {
                 </p>
                 <ul className="accordion-section-list">
                   <li data-aos="fade-up" data-aos-delay="150">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <div className="points-text">
                       <p className="points-heading">Resilience</p>
                       <span>
@@ -212,7 +212,7 @@ const CorporateTraining = () => {
                     </div>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="200">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <div className="points-text">
                       <p className="points-heading">Attunement</p>
                       <span>
@@ -222,7 +222,7 @@ const CorporateTraining = () => {
                     </div>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="250">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <div className="points-text">
                       <p className="points-heading">Communication</p>
                       <span>
@@ -232,7 +232,7 @@ const CorporateTraining = () => {
                     </div>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="300">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <div className="points-text">
                       <p className="points-heading">Systems Awareness</p>
                       <span>
@@ -242,7 +242,7 @@ const CorporateTraining = () => {
                     </div>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="350">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <div className="points-text">
                       <p className="points-heading">Compassion Literacy</p>
                       <span>
@@ -302,25 +302,25 @@ const CorporateTraining = () => {
                   </p>
                   <ul className="accordion-section-list">
                     <li data-aos="fade-up" data-aos-delay="150">
-                      <img src="/sita-points1.webp" alt="bullet" />
+                      <img src="sita-points1.webp" alt="bullet" />
                       <span>Stress physiology and regulation</span>
                     </li>
                     <li data-aos="fade-up" data-aos-delay="200">
-                      <img src="/sita-points1.webp" alt="bullet" />
+                      <img src="sita-points1.webp" alt="bullet" />
                       <span>Cognitive clarity and focus</span>
                     </li>
                     <li data-aos="fade-up" data-aos-delay="250">
-                      <img src="/sita-points1.webp" alt="bullet" />
+                      <img src="sita-points1.webp" alt="bullet" />
                       <span>Decision-making under pressure</span>
                     </li>
                     <li data-aos="fade-up" data-aos-delay="300">
-                      <img src="/sita-points1.webp" alt="bullet" />
+                      <img src="sita-points1.webp" alt="bullet" />
                       <span>
                         Emotional steadiness in challenging environments
                       </span>
                     </li>
                     <li data-aos="fade-up" data-aos-delay="350">
-                      <img src="/sita-points1.webp" alt="bullet" />
+                      <img src="sita-points1.webp" alt="bullet" />
                       <span>Energy management throughout the workday</span>
                     </li>
                   </ul>
@@ -342,23 +342,23 @@ const CorporateTraining = () => {
                   </p>
                   <ul className="accordion-section-list">
                     <li data-aos="fade-up" data-aos-delay="150">
-                      <img src="/sita-points1.webp" alt="bullet" />
+                      <img src="sita-points1.webp" alt="bullet" />
                       <span>Content and information</span>
                     </li>
                     <li data-aos="fade-up" data-aos-delay="200">
-                      <img src="/sita-points1.webp" alt="bullet" />
+                      <img src="sita-points1.webp" alt="bullet" />
                       <span>Digital stimulus</span>
                     </li>
                     <li data-aos="fade-up" data-aos-delay="250">
-                      <img src="/sita-points1.webp" alt="bullet" />
+                      <img src="sita-points1.webp" alt="bullet" />
                       <span>Self-talk and internal narrative</span>
                     </li>
                     <li data-aos="fade-up" data-aos-delay="300">
-                      <img src="/sita-points1.webp" alt="bullet" />
+                      <img src="sita-points1.webp" alt="bullet" />
                       <span>Organizational communication</span>
                     </li>
                     <li data-aos="fade-up" data-aos-delay="350">
-                      <img src="/sita-points1.webp" alt="bullet" />
+                      <img src="sita-points1.webp" alt="bullet" />
                       <span>Attention patterns</span>
                     </li>
                   </ul>
@@ -396,27 +396,27 @@ const CorporateTraining = () => {
                 </p>
                 <ul className="accordion-section-list">
                   <li data-aos="fade-up" data-aos-delay="150">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>60 to 90 minute sessions</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="200">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Half-day workshops</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="250">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Multi-day trainings</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="300">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Executive intensives</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="350">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Hybrid or virtual delivery</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="400">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Ongoing curriculum and coaching</span>
                   </li>
                 </ul>
@@ -451,27 +451,27 @@ const CorporateTraining = () => {
                 </p>
                 <ul className="accordion-section-list">
                   <li data-aos="fade-up" data-aos-delay="150">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Corporate and executive teams</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="200">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Healthcare providers</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="250">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Education and academic institutions</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="300">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Startups and mission-driven organizations</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="350">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Clinical and wellness programs</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="400">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Nonprofits and social impact groups</span>
                   </li>
                 </ul>
@@ -503,31 +503,31 @@ const CorporateTraining = () => {
               <div className="accordion-content">
                 <ul className="accordion-section-list">
                   <li data-aos="fade-up" data-aos-delay="150">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Decreased workplace stress and burnout</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="200">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Improved communication and collaboration</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="250">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Stronger emotional intelligence and attunement</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="300">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Better conflict navigation and problem-solving</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="350">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Increased morale and team cohesion</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="400">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Healthier culture and reduced turnover</span>
                   </li>
                   <li data-aos="fade-up" data-aos-delay="450">
-                    <img src="/sita-points1.webp" alt="bullet" />
+                    <img src="sita-points1.webp" alt="bullet" />
                     <span>Renewed clarity of mission and purpose</span>
                   </li>
                 </ul>
