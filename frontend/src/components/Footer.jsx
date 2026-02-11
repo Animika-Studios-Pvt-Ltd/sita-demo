@@ -3,6 +3,7 @@ import { useFetchAllBooksQuery } from "../redux/features/books/booksApi";
 
 import "./Footer.css";
 import { useEffect, useState } from "react";
+import { getSecureImageUrl } from "../utils/imageUtils";
 
 const BACKEND_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -98,7 +99,7 @@ const Footer = () => {
                         className={`publication-slide ${index === activeSlide ? "active" : ""}`}>
                         <Link to={linkPath}>
                           <img
-                            src={book.coverImage || "/images/anaya-book.webp"}
+                            src={getSecureImageUrl(book.coverImage) || "/images/anaya-book.webp"}
                             alt={book.title}
                           />
                         </Link>
@@ -133,11 +134,7 @@ const Footer = () => {
                     className="blog-item"
                     style={{ textDecoration: "none" }}>
                     <img
-                      src={
-                        blog.image?.startsWith("http")
-                          ? blog.image
-                          : `${BACKEND_BASE_URL}${blog.image}`
-                      }
+                      src={getSecureImageUrl(blog.image)}
                       alt={blog.title}
                     />
                     <div className="blog-overlay">

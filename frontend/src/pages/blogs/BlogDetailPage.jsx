@@ -8,6 +8,7 @@ import "aos/dist/aos.css";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 import "../../assets/herosection.css";
 import "../homepage/Homepage.css";
+import { getSecureImageUrl } from "../../utils/imageUtils";
 
 const BACKEND_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -127,11 +128,7 @@ const BlogDetailPage = () => {
             data-aos="zoom-out"
             data-aos-duration="1500">
             <img
-              src={
-                blog.image?.startsWith("http")
-                  ? blog.image
-                  : `${BACKEND_BASE_URL}${blog.image}`
-              }
+              src={getSecureImageUrl(blog.image)}
               alt={blog.title}
             />
           </div>
@@ -205,10 +202,7 @@ const BlogDetailPage = () => {
                             to={`/books/${activeBooks[currentIndex]?.slug || activeBooks[currentIndex]?._id}`}
                             className="no-underline">
                             <img
-                              src={
-                                activeBooks[currentIndex]?.coverImage ||
-                                "/placeholder-book.jpg"
-                              }
+                              src={getSecureImageUrl(activeBooks[currentIndex]?.coverImage) || "/placeholder-book.jpg"}
                               alt={activeBooks[currentIndex]?.title}
                               className="w-40 h-58 object-cover mb-4"
                             />
@@ -274,11 +268,7 @@ const BlogDetailPage = () => {
                     <div className="sita-blog-card">
                       <div className="sita-blog-image">
                         <img
-                          src={
-                            blog.image?.startsWith("http")
-                              ? blog.image
-                              : `${BACKEND_BASE_URL}${blog.image}`
-                          }
+                          src={getSecureImageUrl(blog.image)}
                           className="img-fluid w-100"
                           alt={blog.title}
                           style={{ height: "250px", objectFit: "cover" }}

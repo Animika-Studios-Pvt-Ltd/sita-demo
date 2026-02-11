@@ -8,6 +8,7 @@ import "../../assets/herosection.css";
 import "../about/About.css";
 import "../homepage/Homepage.css";
 import { FileText } from "lucide-react";
+import { getSecureImageUrl } from "../../utils/imageUtils";
 
 const BACKEND_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -110,11 +111,7 @@ const ArticlesPage = () => {
                   <div className="sita-blog-card">
                     <div className="sita-blog-image">
                       <img
-                        src={
-                          article.image?.startsWith("http")
-                            ? article.image
-                            : `${BACKEND_BASE_URL}${article.image}`
-                        }
+                        src={getSecureImageUrl(article.image)}
                         className="img-fluid w-100"
                         alt={article.title}
                         style={{ height: "250px", objectFit: "cover" }}

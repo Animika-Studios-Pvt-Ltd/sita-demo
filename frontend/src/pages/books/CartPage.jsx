@@ -23,6 +23,7 @@ import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import { useFetchAllBooksQuery } from "../../redux/features/books/booksApi";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { getSecureImageUrl } from "../../utils/imageUtils";
 
 const CartPage = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -162,7 +163,7 @@ const CartPage = () => {
                     data-aos-delay={index * 100 + 200}
                     data-aos-duration="1600">
                     <img
-                      src={product?.coverImage || "/placeholder-book.jpg"}
+                      src={getSecureImageUrl(product?.coverImage) || "/placeholder-book.jpg"}
                       alt={product.title}
                       data-aos="zoom-in"
                       data-aos-duration="1600"
@@ -182,32 +183,31 @@ const CartPage = () => {
                         <div className="inline-flex justify-center sm:justify-start items-center gap-2 w-full flex-wrap md:flex-nowrap">
                           {Number(product?.oldPrice) >
                             Number(product?.newPrice) && (
-                            <span className="text-gray-500 line-through text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px] font-Figtree font-regular">
-                              ₹{product?.oldPrice}
-                            </span>
-                          )}
+                              <span className="text-gray-500 line-through text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px] font-Figtree font-regular">
+                                ₹{product?.oldPrice}
+                              </span>
+                            )}
                           <span className="text-black font-Figtree font-bold text-[14px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[18px] flex items-center">
                             ₹{product?.newPrice}
                           </span>
                           {Number(product?.oldPrice) >
                             Number(product?.newPrice) && (
-                            <span className="text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px] text-green-600 font-Figtree font-bold">
-                              {Math.round(
-                                ((product.oldPrice - product.newPrice) /
-                                  product.oldPrice) *
+                              <span className="text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px] text-green-600 font-Figtree font-bold">
+                                {Math.round(
+                                  ((product.oldPrice - product.newPrice) /
+                                    product.oldPrice) *
                                   100,
-                              )}
-                              % off
-                            </span>
-                          )}
+                                )}
+                                % off
+                              </span>
+                            )}
                         </div>
                       </div>
                       <p
-                        className={`mt-1 text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px] font-Figtree font-regular ${
-                          product.stock <= 10
+                        className={`mt-1 text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px] font-Figtree font-regular ${product.stock <= 10
                             ? "text-[#993333]"
                             : "text-green-600"
-                        }`}>
+                          }`}>
                         {product.stock <= 10
                           ? `In Stock - Only ${product.stock} left`
                           : "In Stock"}
@@ -242,11 +242,10 @@ const CartPage = () => {
                             size="small"
                             onClick={() => handleQtyChange(product, "increase")}
                             disabled={product.qty >= product.stock}
-                            className={`text-gray-700 transition p-1 ${
-                              product.qty >= product.stock
+                            className={`text-gray-700 transition p-1 ${product.qty >= product.stock
                                 ? "opacity-50"
                                 : "hover:bg-gray-200"
-                            }`}>
+                              }`}>
                             <AddOutlinedIcon fontSize="small" />
                           </IconButton>
                         </div>

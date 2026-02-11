@@ -124,6 +124,14 @@ const LetterFromLangshott = () => {
                     downloadUrl,
                     fileName,
                   }) => {
+                    // Force HTTPS for fileUrl and downloadUrl
+                    if (fileUrl && fileUrl.startsWith("http:")) {
+                      fileUrl = fileUrl.replace("http:", "https:");
+                    }
+                    if (downloadUrl && downloadUrl.startsWith("http:")) {
+                      downloadUrl = downloadUrl.replace("http:", "https:");
+                    }
+
                     const downloadFileName = fileName
                       ?.toLowerCase()
                       .endsWith(".pdf")
@@ -178,11 +186,10 @@ const LetterFromLangshott = () => {
                               </a>
                               <button
                                 onClick={() => handleCopyLink(fileUrl, _id)}
-                                className={`flex flex-col items-center no-underline ${
-                                  copiedId === _id
-                                    ? "text-gray-700"
-                                    : "text-gray-700 hover:text-[#2563eb]"
-                                } text-[11px] sm:text-sm md:text-base font-medium px-2`}>
+                                className={`flex flex-col items-center no-underline ${copiedId === _id
+                                  ? "text-gray-700"
+                                  : "text-gray-700 hover:text-[#2563eb]"
+                                  } text-[11px] sm:text-sm md:text-base font-medium px-2`}>
                                 <LinkIcon className="!text-[18px] sm:!text-[20px] md:!text-[22px] mb-[4px]" />
                                 {copiedId === _id ? "Copied!" : "Copy Link"}
                               </button>
@@ -230,11 +237,10 @@ const LetterFromLangshott = () => {
                       key={num}
                       onClick={() => setCurrentPage(num)}
                       className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
-          ${
-            currentPage === num
-              ? "bg-[#993333] text-white"
-              : "border border-transparent text-black hover:border-black hover:bg-gray-100"
-          }`}>
+          ${currentPage === num
+                          ? "bg-[#993333] text-white"
+                          : "border border-transparent text-black hover:border-black hover:bg-gray-100"
+                        }`}>
                       {num}
                     </button>
                   ))}

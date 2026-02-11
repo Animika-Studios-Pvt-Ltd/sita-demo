@@ -8,6 +8,7 @@ import "aos/dist/aos.css";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 import "../../assets/herosection.css";
 import "../homepage/Homepage.css";
+import { getSecureImageUrl } from "../../utils/imageUtils";
 
 const BACKEND_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -130,13 +131,7 @@ const ArticleDetailPage = () => {
             data-aos="zoom-out"
             data-aos-duration="1500">
             <img
-              src={
-                article.image
-                  ? article.image.startsWith("http")
-                    ? article.image
-                    : `${BACKEND_BASE_URL}${article.image}`
-                  : "/about-banner.webp"
-              }
+              src={getSecureImageUrl(article.image) || "/about-banner.webp"}
               alt={article.title}
             />
           </div>

@@ -19,6 +19,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 import { useFetchAllBooksQuery } from "../../../redux/features/books/booksApi";
+import { getSecureImageUrl } from "../../../utils/imageUtils";
 
 // Import Swiper styles
 import "swiper/css";
@@ -261,7 +262,7 @@ function HeroSection({ content, createdFrom, pageSlug }) {
               data-aos-duration="1500"
               style={{ height: "100%" }}>
               <img
-                src={backgroundImage || "/about-banner.webp"}
+                src={getSecureImageUrl(backgroundImage) || "/about-banner.webp"}
                 alt="Hero Banner"
                 style={{
                   width: "100%",
@@ -282,7 +283,7 @@ function HeroSection({ content, createdFrom, pageSlug }) {
               data-aos="zoom-out"
               data-aos-duration="1500">
               <img
-                src={backgroundImage || "/images/about-banner.webp"}
+                src={getSecureImageUrl(backgroundImage) || "/images/about-banner.webp"}
                 alt="Hero Banner"
               />
             </div>
@@ -684,7 +685,7 @@ function EventsSection({ content }) {
     const dateObj = new Date(event.date);
     const day = dateObj.getDate();
     const month = dateObj.toLocaleString("en-US", { month: "short" });
-    const eventImage = event.imageUrl || getCategoryImage(event.category);
+    const eventImage = getSecureImageUrl(event.imageUrl || getCategoryImage(event.category));
 
     return (
       <div
@@ -695,7 +696,7 @@ function EventsSection({ content }) {
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
             style={{
-              backgroundImage: `url(${eventImage?.startsWith("http") ? eventImage : `${BACKEND_BASE_URL}${eventImage}`})`,
+              backgroundImage: `url(${eventImage})`,
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
@@ -834,11 +835,7 @@ function BlogsSection({ content }) {
               <div className="sita-blog-card">
                 <div className="sita-blog-image">
                   <img
-                    src={
-                      blog.image?.startsWith("http")
-                        ? blog.image
-                        : `${BACKEND_BASE_URL}${blog.image}`
-                    }
+                    src={getSecureImageUrl(blog.image)}
                     className="img-fluid w-100"
                     alt={blog.title}
                     style={{ height: "250px", objectFit: "cover" }}
@@ -955,16 +952,14 @@ function BooksSection({ content }) {
               <div
                 className={`book-flip-front absolute w-full h-full backface-hidden ${isSuspended ? "opacity-60 grayscale" : ""}`}>
                 <img
-                  src={book?.coverImage || "/placeholder-book.jpg"}
+                  src={getSecureImageUrl(book?.coverImage) || "/placeholder-book.jpg"}
                   alt={book?.title}
                   className="w-full h-full object-cover rounded-md shadow-md"
                 />
               </div>
               <div className="book-flip-back absolute w-full h-full backface-hidden rotate-y-180 rounded-md flex flex-col items-center justify-center">
                 <img
-                  src={
-                    book?.backImage || book?.coverImage || "/default-back.webp"
-                  }
+                  src={getSecureImageUrl(book?.backImage || book?.coverImage) || "/default-back.webp"}
                   alt={`${book?.title} back`}
                   className="w-full h-full object-cover"
                 />
@@ -1140,11 +1135,7 @@ function ArticlesSection({ content }) {
               <div className="sita-blog-card">
                 <div className="sita-blog-image">
                   <img
-                    src={
-                      article.image?.startsWith("http")
-                        ? article.image
-                        : `${BACKEND_BASE_URL}${article.image}`
-                    }
+                    src={getSecureImageUrl(article.image)}
                     className="img-fluid w-100"
                     alt={article.title}
                     style={{ height: "250px", objectFit: "cover" }}
@@ -1255,11 +1246,7 @@ function PodcastsSection({ content }) {
     // Import icons locally for this component scope or ensure they are in main imports
     // Assuming Play, Calendar, User, ArrowRight are imported at top level
 
-    const thumbnailSrc = podcast.thumbnail
-      ? podcast.thumbnail.startsWith("http")
-        ? podcast.thumbnail
-        : `${BACKEND_BASE_URL}${podcast.thumbnail}`
-      : "/placeholder.jpg";
+    const thumbnailSrc = getSecureImageUrl(podcast.thumbnail) || "/placeholder.jpg";
 
     return (
       <div

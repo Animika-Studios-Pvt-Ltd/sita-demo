@@ -7,6 +7,8 @@ import "./Homepage.css";
 import WorkShopCalendar from "../workshop calendar/WorkShopCalendar";
 import Testimonials from "../testimonials/Testimonials";
 
+import { getSecureImageUrl } from "../../utils/imageUtils";
+
 const BACKEND_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -589,11 +591,7 @@ const HomePage = () => {
                     <div className="sita-blog-card">
                       <div className="sita-blog-image">
                         <img
-                          src={
-                            blog.image?.startsWith("http")
-                              ? blog.image
-                              : `${BACKEND_BASE_URL}${blog.image}`
-                          }
+                          src={getSecureImageUrl(blog.image)}
                           className="img-fluid w-100"
                           alt={blog.title}
                           style={{ height: "250px", objectFit: "cover" }}

@@ -12,6 +12,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 import "../../assets/herosection.css";
+import { getSecureImageUrl } from "../../utils/imageUtils";
 
 const Publications = () => {
   const { data: books = [] } = useFetchAllBooksQuery();
@@ -123,7 +124,7 @@ const Publications = () => {
                           className={`book-flip-front ${isSuspended ? "opacity-60 grayscale" : ""
                             }`}>
                           <img
-                            src={book?.coverImage || "/placeholder-book.jpg"}
+                            src={getSecureImageUrl(book?.coverImage) || "/placeholder-book.jpg"}
                             alt={book?.title}
                             className="w-full h-full"
                           />
@@ -131,8 +132,8 @@ const Publications = () => {
                         <div className="book-flip-back">
                           <img
                             src={
-                              book?.backImage ||
-                              book?.coverImage ||
+                              getSecureImageUrl(book?.backImage) ||
+                              getSecureImageUrl(book?.coverImage) ||
                               "/default-back.webp"
                             }
                             alt={`${book?.title || "Book"} back cover`}

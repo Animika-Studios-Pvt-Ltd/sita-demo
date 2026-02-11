@@ -5,6 +5,8 @@ import "aos/dist/aos.css";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 import "../../assets/herosection.css";
 
+import { getSecureImageUrl } from "../../utils/imageUtils";
+
 const BACKEND_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -48,11 +50,7 @@ const PodcastCard = ({ podcast, index }) => {
   const isUpcoming = new Date(podcast.releaseDate) > new Date();
 
   // Determine proper thumbnail: Custom upload > Fallback placeholder
-  const thumbnailSrc = podcast.thumbnail
-    ? podcast.thumbnail.startsWith("http")
-      ? podcast.thumbnail
-      : `${BACKEND_BASE_URL}${podcast.thumbnail}`
-    : "/placeholder.jpg"; // You might want a better default
+  const thumbnailSrc = getSecureImageUrl(podcast.thumbnail) || "/placeholder.jpg";
 
   return (
     <div
@@ -296,8 +294,8 @@ const PodcastsPage = () => {
                     key={num}
                     onClick={() => setCurrentPage(num)}
                     className={`w-10 h-10 flex items-center justify-center rounded-full text-sm font-medium transition-all ${currentPage === num
-                        ? "bg-[#8b171b] text-white shadow-lg shadow-[#8b171b]/30"
-                        : "text-slate-600 hover:bg-slate-100"
+                      ? "bg-[#8b171b] text-white shadow-lg shadow-[#8b171b]/30"
+                      : "text-slate-600 hover:bg-slate-100"
                       }`}>
                     {num}
                   </button>
