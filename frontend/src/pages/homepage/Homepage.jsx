@@ -35,7 +35,20 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchBlogs();
+    fetchBooks();
   }, []);
+
+  const [books, setBooks] = useState([]);
+
+  const fetchBooks = async () => {
+    try {
+      const res = await fetch(`${BACKEND_BASE_URL}/api/books/user`);
+      const data = await res.json();
+      setBooks(data);
+    } catch (err) {
+      console.error("Failed to fetch books", err);
+    }
+  };
 
   useEffect(() => {
     AOS.init({
@@ -495,52 +508,46 @@ const HomePage = () => {
               data-aos-delay="300">
               <div
                 id="publicationsCarousel"
-                className="carousel slide carousel-fade">
+                className="carousel slide carousel-fade"
+                data-bs-ride="carousel"
+                data-bs-interval="3000">
                 <div className="carousel-inner">
-                  <div className="carousel-item active">
-                    <div className="publication-flex">
+                  {books.length > 0 ? (
+                    books.map((book, index) => (
                       <div
-                        className="publication-book-wrap"
-                        data-aos="zoom-in"
-                        data-aos-delay="400">
-                        <img
-                          src="anaya-book.webp"
-                          className="publication-book"
-                          alt="Book"
-                        />
+                        key={book._id}
+                        className={`carousel-item ${index === 0 ? "active" : ""}`}>
+                        <div className="publication-flex">
+                          <div
+                            className="publication-book-wrap"
+                            data-aos="zoom-in"
+                            data-aos-delay="400">
+                            <img
+                              src={book.coverImage}
+                              className="publication-book"
+                              alt={book.title}
+                            />
+                          </div>
+                          <div
+                            className="publication-content"
+                            data-aos="fade-up"
+                            data-aos-delay="500">
+                            <h3>{book.title}</h3>
+                            <h5>{book.subtitle}</h5>
+                            <p>{book.aboutBook}</p>
+                          </div>
+                        </div>
                       </div>
-                      <div
-                        className="publication-content"
-                        data-aos="fade-up"
-                        data-aos-delay="500">
-                        <h3>Anaya</h3>
-                        <h5>A Devotee’s Journey Home</h5>
-                        <p>Written with love & devotion by Sita Severson.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="carousel-item">
-                    <div className="publication-flex">
-                      <div
-                        className="publication-book-wrap"
-                        data-aos="zoom-in"
-                        data-aos-delay="400">
-                        <img
-                          src="anaya-book.webp"
-                          className="publication-book"
-                          alt="Book"
-                        />
-                      </div>
-                      <div
-                        className="publication-content"
-                        data-aos="fade-up"
-                        data-aos-delay="500">
-                        <h3>Second Book</h3>
-                        <h5>Subtitle Here</h5>
-                        <p>Add another publication description here.</p>
+                    ))
+                  ) : (
+                    <div className="carousel-item active">
+                      <div className="publication-flex">
+                        <div className="publication-content text-center w-100">
+                          <p>No publications available at the moment.</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>

@@ -678,12 +678,36 @@ li {
   margin-bottom: 30px;
 }
 
+
 .publication-content p {
   font-family: "Garamond-Premier-Pro-Italic";
   font-size: 26px;
   color: #6d4231;
   line-height: 1;
   margin-bottom: 0;
+}
+
+/* ----------------- PUBLICATIONS FADE TRANSITIONS ----------------- */
+.sita-publications .carousel-item {
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.sita-publications .carousel-item.active {
+  opacity: 1;
+}
+
+.sita-publications .carousel-fade .active.carousel-item-start,
+.sita-publications .carousel-fade .active.carousel-item-end {
+  transition: opacity 0.4s ease-out;
+  opacity: 0;
+}
+
+.sita-publications .carousel-fade .carousel-item-next.carousel-item-start,
+.sita-publications .carousel-fade .carousel-item-prev.carousel-item-end {
+  transition: opacity 0.4s ease-in 0.4s;
+  opacity: 1;
 }
 
 /* ----------------- RECENT BLOGS SECTION ----------------- */
