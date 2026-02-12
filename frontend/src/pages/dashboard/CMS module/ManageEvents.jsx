@@ -241,6 +241,19 @@ const ManageEvents = () => {
     fetchAll();
   }, []);
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkScreen = () => {
+      setIsMobile(window.innerWidth < 768); // 768px = tablet breakpoint
+    };
+
+    checkScreen(); // run once
+    window.addEventListener("resize", checkScreen);
+
+    return () => window.removeEventListener("resize", checkScreen);
+  }, []);
+
   /* ================= SLOT CHECK ================= */
   const isSlotDisabled = (date, start, duration, ignoreId) => {
     const s1 = toMinutes(start);
@@ -617,27 +630,43 @@ const ManageEvents = () => {
   };
 
   /* ================= UI ================= */
+
   return (
-    <div className="max-w-7xl mx-auto p-4 pt-0 mt-10 font-montserrat text-slate-700">
-      <div className="relative flex items-center justify-center mb-6">
-        {/* BACK BUTTON */}
-        <button
-          onClick={() => navigate(-1)}
-          className={`absolute left-0 ${glassBtn}`}
-        >
-          <ArrowBackIcon fontSize="small" />
-          Back
-        </button>
+    <div className="container mx-auto mt-10 px-4 font-montserrat text-slate-700">
+      <button
+        onClick={() => navigate(-1)}
+        className="flex items-center gap-2 justify-center rounded-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 text-slate-700 hover:bg-white/90 transition-colors duration-200 px-3 py-1.5 text-sm font-medium"
+      >
+        <ArrowBackIcon className="w-4 h-4" />
+        Back
+      </button>
+      <h2 className="text-3xl md:text-4xl font-bold text-center text-[#7A1F2B] mb-10">
+        Admin Event & Availability Manager
+      </h2>
 
-        {/* TITLE */}
-        <h1 className="text-2xl md:text-3xl font-semibold text-[#7A1F2B] text-center">
-          Admin Event & Availability Manager
-        </h1>
-      </div>
+      {/* MOBILE RESTRICTION MESSAGE */}
+      {isMobile ? (
+        <div className="flex items-center justify-center mt-20">
+          <div className={`${glassPanel} p-8 max-w-md w-full text-center`}>
+            <h2 className="text-xl font-semibold text-[#7A1F2B] mb-4">
+              Desktop View Required
+            </h2>
 
-      {/* TOGGLE */}
+            <p className="text-slate-600 text-sm mb-4">
+              This Admin Event & Availability Manager is optimized for
+              Desktop or Tablet devices.
+            </p>
 
-      {/* <div className="relative flex justify-center mb-8 bg-white/60 backdrop-blur-xl border border-[#7A1F2B] ring-1 ring-white/70 rounded-full p-1.5 max-w-md mx-auto shadow-sm overflow-hidden">
+            <p className="text-xs text-slate-400">
+              Please switch to a larger screen to continue.
+            </p>
+          </div>
+        </div>
+      ) : (
+        <>
+          {/* TOGGLE */}
+
+          {/* <div className="relative flex justify-center mb-8 bg-white/60 backdrop-blur-xl border border-[#7A1F2B] ring-1 ring-white/70 rounded-full p-1.5 max-w-md mx-auto shadow-sm overflow-hidden">
         <div className={`absolute top-1.5 left-1.5 w-[calc(50%-0.375rem)] h-10 bg-gradient-to-br from-[#7A1F2B]/10 via-white/90 to-white/80 rounded-full border border-[#7A1F2B] ring-1 ring-black/5 shadow-[0_8px_18px_-12px_rgba(122,31,43,0.45)] transform transition-transform duration-300 ${activeTab === "blocked" ? "translate-x-full" : ""}`}></div>
         <button
           className={`relative flex-1 py-2 flex items-center justify-center gap-2 rounded-full font-semibold text-md transition-colors duration-200 ${activeTab === "events" ? "text-[#7A1F2B]" : "text-slate-500 hover:text-slate-800"}`}
@@ -653,777 +682,780 @@ const ManageEvents = () => {
         </button>
       </div> */}
 
-      {/* ================= EVENTS ================= */}
-      {activeTab === "events" && (
-        <>
+          {/* ================= EVENTS ================= */}
+          {activeTab === "events" && (
+            <>
 
-          <div className="flex justify-end mb-4">
-            <button
-              onClick={() => setShowEventForm((v) => !v)}
-              className={glassBtnPrimarySoft}
-            >
-              {showEventForm ? "Close Event Form" : "Create Event"}
-            </button>
-          </div>
-
-          {/* FORM */}
-          {showEventForm && (
-            <div ref={eventFormRef} className={`${glassPanel} p-6 mb-8`}>
-              <h2 className="text-xl font-semibold text-[#7A1F2B] mb-4">
-                {editingEventId ? "Edit Event" : "Create New Event"}
-              </h2>
-
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-                {[
-                  { label: "Title*", value: eventForm.title, key: "title" },
-                  { label: "Price (USD)", value: eventForm.price, key: "price" },
-                  { label: "Capacity", value: eventForm.capacity, key: "capacity" },
-                  { label: "Age Group", value: eventForm.ageGroup, key: "ageGroup" },
-                ].map((f) => (
-                  <input
-                    key={f.key}
-                    placeholder={f.label}
-                    className={glassInput}
-                    value={f.value}
-                    onChange={(e) =>
-                      setEventForm({ ...eventForm, [f.key]: e.target.value })
-                    }
-                  />
-                ))}
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                {/* LOCATION */}
-                <input
-                  placeholder="Workshop Location"
-                  className={glassInput}
-                  value={eventForm.location}
-                  onChange={(e) =>
-                    setEventForm({ ...eventForm, location: e.target.value })
-                  }
-                />
-
-                {/* MODE */}
-                <select
-                  className={glassSelect}
-                  value={eventForm.mode}
-                  onChange={(e) =>
-                    setEventForm({ ...eventForm, mode: e.target.value })
-                  }
-                ><option value="">Select mode *</option>
-                  <option value="Online">Online</option>
-                  <option value="In Person">In Person</option>
-                  <option value="Hybrid">Hybrid</option>
-                </select>
-
-                <select
-                  className={glassSelect}
-                  value={eventForm.category}
-                  onChange={(e) =>
-                    setEventForm({ ...eventForm, category: e.target.value })
-                  }
+              <div className="flex justify-end mb-4">
+                <button
+                  onClick={() => setShowEventForm((v) => !v)}
+                  className={glassBtnPrimarySoft}
                 >
-                  <option value="">Select Category *</option>
-                  <option value="Yoga Therapy">Yoga Therapy</option>
-                  <option value="Ayurveda – Nutrition & Integration">Ayurveda – Nutrition & Integration</option>
-                  <option value="Kosha Counseling">Kosha Counseling</option>
-                  <option value="Soul Curriculum">Soul Curriculum</option>
-                  <option value="Release Karmic Patterns">Release Karmic Patterns</option>
-                  <option value="Others">Others</option>
-                </select>
+                  {showEventForm ? "Close Event Form" : "Create Event"}
+                </button>
               </div>
 
-              <div className="mb-4">
-                <div className="relative">
-                  <input
-                    placeholder="Booking URL (example: Yoga-Therapy)"
-                    className={`${glassInput} ${urlStatus === "taken"
-                      ? "border-red-400 focus:ring-red-200"
-                      : urlStatus === "available"
-                        ? "border-emerald-400 focus:ring-emerald-200"
-                        : "border-white/70"
-                      }`}
-                    value={eventForm.bookingUrl}
-                    onChange={(e) =>
-                      setEventForm({ ...eventForm, bookingUrl: e.target.value.toLowerCase().replace(/\s+/g, "-") })
-                    }
-                  />
-                  {/* STATUS INDICATOR */}
-                  {eventForm.bookingUrl && (
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold">
-                      {urlStatus === "checking" && (
-                        <span className="text-slate-400">Checking...</span>
-                      )}
-                      {urlStatus === "available" && (
-                        <span className="text-emerald-600 flex items-center gap-1">Available</span>
-                      )}
-                      {urlStatus === "taken" && (
-                        <span className="text-red-500 flex items-center gap-1">Taken</span>
+              {/* FORM */}
+              {showEventForm && (
+                <div ref={eventFormRef} className={`${glassPanel} p-6 mb-8`}>
+                  <h2 className="text-xl font-semibold text-[#7A1F2B] mb-4">
+                    {editingEventId ? "Edit Event" : "Create New Event"}
+                  </h2>
+
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                    {[
+                      { label: "Title*", value: eventForm.title, key: "title" },
+                      { label: "Price (USD)", value: eventForm.price, key: "price" },
+                      { label: "Capacity", value: eventForm.capacity, key: "capacity" },
+                      { label: "Age Group", value: eventForm.ageGroup, key: "ageGroup" },
+                    ].map((f) => (
+                      <input
+                        key={f.key}
+                        placeholder={f.label}
+                        className={glassInput}
+                        value={f.value}
+                        onChange={(e) =>
+                          setEventForm({ ...eventForm, [f.key]: e.target.value })
+                        }
+                      />
+                    ))}
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    {/* LOCATION */}
+                    <input
+                      placeholder="Workshop Location"
+                      className={glassInput}
+                      value={eventForm.location}
+                      onChange={(e) =>
+                        setEventForm({ ...eventForm, location: e.target.value })
+                      }
+                    />
+
+                    {/* MODE */}
+                    <select
+                      className={glassSelect}
+                      value={eventForm.mode}
+                      onChange={(e) =>
+                        setEventForm({ ...eventForm, mode: e.target.value })
+                      }
+                    ><option value="">Select mode *</option>
+                      <option value="Online">Online</option>
+                      <option value="In Person">In Person</option>
+                      <option value="Hybrid">Hybrid</option>
+                    </select>
+
+                    <select
+                      className={glassSelect}
+                      value={eventForm.category}
+                      onChange={(e) =>
+                        setEventForm({ ...eventForm, category: e.target.value })
+                      }
+                    >
+                      <option value="">Select Category *</option>
+                      <option value="Yoga Therapy">Yoga Therapy</option>
+                      <option value="Ayurveda – Nutrition & Integration">Ayurveda – Nutrition & Integration</option>
+                      <option value="Kosha Counseling">Kosha Counseling</option>
+                      <option value="Soul Curriculum">Soul Curriculum</option>
+                      <option value="Release Karmic Patterns">Release Karmic Patterns</option>
+                      <option value="Others">Others</option>
+                    </select>
+                  </div>
+
+                  <div className="mb-4">
+                    <div className="relative">
+                      <input
+                        placeholder="Booking URL (example: Yoga-Therapy)"
+                        className={`${glassInput} ${urlStatus === "taken"
+                          ? "border-red-400 focus:ring-red-200"
+                          : urlStatus === "available"
+                            ? "border-emerald-400 focus:ring-emerald-200"
+                            : "border-white/70"
+                          }`}
+                        value={eventForm.bookingUrl}
+                        onChange={(e) =>
+                          setEventForm({ ...eventForm, bookingUrl: e.target.value.toLowerCase().replace(/\s+/g, "-") })
+                        }
+                      />
+                      {/* STATUS INDICATOR */}
+                      {eventForm.bookingUrl && (
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold">
+                          {urlStatus === "checking" && (
+                            <span className="text-slate-400">Checking...</span>
+                          )}
+                          {urlStatus === "available" && (
+                            <span className="text-emerald-600 flex items-center gap-1">Available</span>
+                          )}
+                          {urlStatus === "taken" && (
+                            <span className="text-red-500 flex items-center gap-1">Taken</span>
+                          )}
+                        </div>
                       )}
                     </div>
-                  )}
-                </div>
-                {urlStatus === "taken" && (
-                  <p className="text-xs text-red-500 mt-1 ml-1">
-                    This URL is already used by another event.
-                  </p>
-                )}
-              </div>
-
-              <textarea
-                placeholder="Description"
-                className={`${glassInput} mb-6 resize-y`}
-                value={eventForm.description}
-                onChange={(e) =>
-                  setEventForm({ ...eventForm, description: e.target.value })
-                }
-              />
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className={`${glassPanel} p-3`}>
-                  <DayPicker
-                    mode="single"
-                    selected={eventForm.date}
-                    onSelect={(d) => setEventForm({ ...eventForm, date: d })}
-                    disabled={{ before: new Date() }}
-                  />
-                </div>
-                <div>
-                  <label className="flex items-center gap-2 mb-3 font-medium text-slate-700">
-                    <input
-                      type="checkbox"
-                      checked={manualEvent}
-                      disabled={isPastDate(eventForm.date)}
-                      onChange={() => setManualEvent(!manualEvent)}
-                      className="accent-[#7A1F2B]"
-                    />
-
-                    Manual Time Selection
-                  </label>
-
-                  {!manualEvent ? (
-                    <>
-                      <select
-                        className={`${glassSelect} mb-3`}
-                        value={eventDuration}
-                        onChange={(e) => setEventDuration(Number(e.target.value))}
-                      >
-                        {[15, 30, 45, 60, 90, 120].map((d) => (
-                          <option key={d} value={d}>
-                            {d} minutes
-                          </option>
-                        ))}
-                      </select>
-
-                      <div className="grid grid-cols-3 gap-2 max-h-56 overflow-y-auto pr-1">
-                        {eventForm.date &&
-                          generateSlots(eventDuration).map((slot) => {
-                            const end = toTime(toMinutes(slot) + eventDuration);
-                            const status = getSlotStatus(
-                              toDateStr(eventForm.date),
-                              slot,
-                              eventDuration,
-                              events,
-                              blocked,
-                              editingEventId
-                            );
-
-                            const past = isPastSlot(eventForm.date, slot);
-                            const disabled = status !== "available" || past;
-
-                            let slotClass =
-                              "border-white/70 bg-white/70 text-slate-700 hover:bg-white/90";
-
-                            if (status === "blocked") {
-                              slotClass =
-                                "border-[#7A1F2B]/60 bg-[#7A1F2B]/15 text-[#7A1F2B] cursor-not-allowed";
-                            } else if (status === "event") {
-                              slotClass =
-                                "border-slate-300 bg-slate-100 text-slate-500 cursor-not-allowed";
-                            } else if (past) {
-                              slotClass =
-                                "border-slate-200 bg-slate-100 text-slate-400 cursor-not-allowed";
-                            } else if (eventForm.startTime === slot) {
-                              slotClass = "border-[#7A1F2B] bg-[#7A1F2B] text-white";
-                            }
-
-                            return (
-                              <button
-                                key={slot}
-                                disabled={disabled}
-                                onClick={() =>
-                                  setEventForm({
-                                    ...eventForm,
-                                    startTime: slot,
-                                    endTime: end,
-                                  })
-                                }
-                                className={`py-2 text-xs rounded-lg border-2 transition ${slotClass}`}>
-                                {format12Hour(slot)} – {format12Hour(end)}
-                              </button>
-                            );
-                          })}
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <input
-                        type="time"
-                        disabled={isPastDate(eventForm.date)}
-                        className={`${glassInput} mb-2 disabled:opacity-70 disabled:cursor-not-allowed`}
-                        value={eventForm.startTime}
-                        onChange={(e) =>
-                          setEventForm({ ...eventForm, startTime: e.target.value })
-                        }
-                      />
-
-                      <input
-                        type="time"
-                        disabled={isPastDate(eventForm.date)}
-                        className={`${glassInput} disabled:opacity-70 disabled:cursor-not-allowed`}
-                        value={eventForm.endTime}
-                        onChange={(e) =>
-                          setEventForm({ ...eventForm, endTime: e.target.value })
-                        }
-                      />
-
-                    </>
-                  )}
-                </div>
-              </div>
-
-              <div className="flex gap-3 mt-6">
-                <button
-                  onClick={submitEvent}
-                  disabled={eventSubmitting}
-                  className={`px-6 py-2 rounded-full text-sm font-semibold border border-[#7A1F2B] ring-1 ring-black/5 transition
-                    ${eventSubmitting
-                      ? "bg-white/70 text-slate-400 cursor-not-allowed"
-                      : "bg-[#7A1F2B] text-white hover:bg-[#651823]"
-                    }`}
-                >
-                  {eventSubmitting
-                    ? "Saving..."
-                    : editingEventId
-                      ? "Update Event"
-                      : "Add Event"}
-                </button>
-                {editingEventId && (
-                  <button
-                    onClick={resetEvent}
-                    className={`${glassBtnMuted} px-6`}
-                  >
-                    Cancel
-                  </button>
-                )}
-              </div>
-            </div>
-          )}
-
-          {/* LIST */}
-          <div className="flex justify-center">
-            <div className={`${glassTableWrap} w-full max-w-7xl`}>
-              <div className="px-4 pt-4">
-                <div className="mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                  <div className="w-full md:w-auto">
-                    <input
-                      type="text"
-                      value={eventSearch}
-                      onChange={(e) => setEventSearch(e.target.value)}
-                      placeholder="Search events..."
-                      className="w-full sm:w-64 bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-full px-4 py-2 text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
-                    />
+                    {urlStatus === "taken" && (
+                      <p className="text-xs text-red-500 mt-1 ml-1">
+                        This URL is already used by another event.
+                      </p>
+                    )}
                   </div>
-                  <div className="w-full md:w-auto flex md:justify-end">
-                    <select
-                      value={eventFilter}
-                      onChange={(e) => setEventFilter(e.target.value)}
-                      className="w-full md:w-auto bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-full px-4 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
-                    >
-                      <option value="upcoming">Upcoming</option>
-                      <option value="all">All</option>
-                      <option value="past">Completed</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <table className="w-full table-auto border-collapse text-sm">
-                <thead>
-                  <tr className={glassTableHead}>
-                    {[
-                      "Title",
-                      "Schedule",
-                      "Mode",
-                      "Price & Slots",
-                      "Age",
-                      "Actions",
-                    ].map((h) => (
-                      <th
-                        key={h}
-                        className="px-6 py-3 text-center tracking-wide"
-                      >
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
 
-                <tbody>
-                  {paginatedEvents.map((e) => (
-                    <tr
-                      key={e._id}
-                      className="border-b border-slate-200/80 hover:bg-white/70 transition-colors duration-200"
-                    >
-                      {/* TITLE */}
-                      <td className="p-3 text-center font-medium text-sm text-slate-700">
-                        <div className="flex flex-col gap-1">
-                          <span>{e.title}</span>
-                          <span className="text-sm text-[#7A1F2B] font-semibold">
-                            {e.code || "-"}
-                          </span>
-                        </div>
-                      </td>
-
-                      {/* SCHEDULE */}
-                      <td className="p-3 text-center text-sm">
-                        <div className="flex flex-col gap-0.5">
-                          <span className="font-medium text-slate-700">{e.date}</span>
-                          <span className="text-slate-600">
-                            {format12Hour(e.startTime)} – {format12Hour(e.endTime)}
-                          </span>
-                          <span className="text-xs text-slate-500 truncate">
-                            {e.location || "Location N/A"}
-                          </span>
-                        </div>
-                      </td>
-
-                      {/* MODE */}
-                      <td className="p-3 text-center">
-                        <span className="px-2 py-0.5 rounded-md text-xs font-medium bg-[#7A1F2B]/10 text-[#7A1F2B] border border-[#7A1F2B]/20">
-                          {e.mode || "-"}
-                        </span>
-                      </td>
-
-                      {/* PRICING + SLOTS */}
-                      <td className="p-3 text-center text-sm">
-                        <div className="flex flex-col gap-0.5">
-                          <span className="text-slate-700 font-semibold">
-                            ${e.price || 0}
-                          </span>
-
-                          <span className="text-slate-600 text-xs">
-                            Cap: {e.capacity || "-"}
-                          </span>
-
-                          <span
-                            className={`text-xs font-semibold ${e.availability === 0
-                              ? "text-rose-600"
-                              : e.availability < 5
-                                ? "text-amber-600"
-                                : "text-emerald-600"
-                              }`}
-                          >
-                            Avl: {e.availability ?? "-"}
-                          </span>
-                        </div>
-                      </td>
-
-                      {/* AGE */}
-                      <td className="p-3 text-center text-sm">
-                        {e.ageGroup || "-"}
-                      </td>
-
-                      {/* ACTIONS */}
-                      <td className="p-3">
-                        <div className="grid grid-cols-2 gap-2 justify-center">
-                          <button
-                            onClick={() => navigate(`/dashboard/manage-events/${e._id}/bookings`)}
-                            className="px-2 py-1 text-[11px] rounded-full bg-white/70 border border-slate-200 ring-1 ring-black/5 text-slate-600 hover:bg-white/90"
-                          >
-                            Bookings
-                          </button>
-
-                          <button
-                            onClick={() => editEvent(e)}
-                            className="px-2 py-1 text-[11px] rounded-full bg-white/70 border border-[#7A1F2B]/40 ring-1 ring-black/5 text-[#7A1F2B] hover:bg-white/90"
-                          >
-                            Edit Event
-                          </button>
-
-                          <button
-                            onClick={() => {
-                              if (e.bookingUrl) {
-                                navigate(`/dashboard/cms/edit/${e.bookingUrl}`);
-                              } else {
-                                Swal.fire("No Page Linked", "This event does not have a Booking URL set.", "info");
-                              }
-                            }}
-                            className="px-2 py-1 text-[11px] rounded-full bg-white/70 border border-amber-200 ring-1 ring-black/5 text-amber-700 hover:bg-white/90"
-                          >
-                            Edit Page
-                          </button>
-
-                          <button
-                            onClick={async () => {
-                              const res = await Swal.fire({
-                                title: "Delete Event?",
-                                text: "This event will be permanently deleted",
-                                icon: "warning",
-                                showCancelButton: true,
-                                confirmButtonColor: "#dc2626",
-                              });
-
-                              if (res.isConfirmed) {
-                                await axios.delete(`${API}/events/${e._id}`);
-                                fetchAll();
-                                Swal.fire("Deleted!", "Event removed", "success");
-                              }
-                            }}
-                            className="px-2 py-1 text-[11px] rounded-full bg-white/70 border border-rose-200 ring-1 ring-black/5 text-rose-600 hover:bg-white/90"
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div className="container mx-auto px-4 mt-6 mb-12 flex items-center justify-center">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => {
-                  if (eventPage > 1) setEventPage((p) => p - 1);
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-                disabled={eventPage <= 1}
-                className={`px-4 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 ${eventPage <= 1
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-white/90"
-                  }`}
-              >
-                Prev
-              </button>
-
-              <div className="px-3 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 text-slate-700">
-                Page {eventPage} of {Math.max(1, Math.ceil(eventTotal / EVENT_LIMIT))}
-              </div>
-
-              <button
-                onClick={() => {
-                  const totalPages = Math.max(1, Math.ceil(eventTotal / EVENT_LIMIT));
-                  if (eventPage < totalPages) setEventPage((p) => p + 1);
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-                disabled={eventPage >= Math.ceil(eventTotal / EVENT_LIMIT)}
-                className={`px-4 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 ${eventPage >= Math.ceil(eventTotal / EVENT_LIMIT)
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-white/90"
-                  }`}
-              >
-                Next
-              </button>
-            </div>
-          </div>
-        </>
-      )}
-
-      {/* ================= BLOCKED ================= */}
-      {activeTab === "blocked" && (
-        <>
-
-          <div className="flex justify-end mb-4">
-            <button
-              onClick={() => setShowBlockForm((v) => !v)}
-              className={glassBtnPrimarySoft}
-            >
-              {showBlockForm ? "Close Block Form" : "Block Time Slot"}
-            </button>
-          </div>
-
-          {/* FORM */}
-          {showBlockForm && (
-            <div ref={blockFormRef} className={`${glassPanel} p-6 mb-8`}>
-              <h2 className="text-xl font-semibold text-[#7A1F2B] mb-4">
-                {editingBlockId ? "Edit Blocked Slot" : "Block Time Slot"}
-              </h2>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className={`${glassPanel} p-3`}>
-                  <DayPicker
-                    mode="single"
-                    selected={blockForm.date}
-                    onSelect={(d) => setBlockForm({ ...blockForm, date: d })}
-                    disabled={{ before: new Date() }}
-                  />
-                </div>
-
-                <div>
-                  <input
-                    placeholder="Reason (optional)"
-                    className={`${glassInput} mb-3`}
-                    value={blockForm.reason}
+                  <textarea
+                    placeholder="Description"
+                    className={`${glassInput} mb-6 resize-y`}
+                    value={eventForm.description}
                     onChange={(e) =>
-                      setBlockForm({ ...blockForm, reason: e.target.value })
+                      setEventForm({ ...eventForm, description: e.target.value })
                     }
                   />
 
-                  <label className="flex items-center gap-2 mb-3 font-medium text-slate-700">
-                    <input
-                      type="checkbox"
-                      checked={manualBlock}
-                      disabled={isPastDate(blockForm.date)}
-                      onChange={() => setManualBlock(!manualBlock)}
-                      className="accent-[#7A1F2B]"
-                    />
-                    Manual Time Selection
-                  </label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className={`${glassPanel} p-3`}>
+                      <DayPicker
+                        mode="single"
+                        selected={eventForm.date}
+                        onSelect={(d) => setEventForm({ ...eventForm, date: d })}
+                        disabled={{ before: new Date() }}
+                      />
+                    </div>
+                    <div>
+                      <label className="flex items-center gap-2 mb-3 font-medium text-slate-700">
+                        <input
+                          type="checkbox"
+                          checked={manualEvent}
+                          disabled={isPastDate(eventForm.date)}
+                          onChange={() => setManualEvent(!manualEvent)}
+                          className="accent-[#7A1F2B]"
+                        />
 
-                  {!manualBlock ? (
-                    <>
-                      <select
-                        className={`${glassSelect} mb-3`}
-                        value={blockDuration}
-                        onChange={(e) => setBlockDuration(Number(e.target.value))}
-                      >
-                        {[15, 30, 45, 60, 90, 120].map((d) => (
-                          <option key={d} value={d}>
-                            {d} minutes
-                          </option>
-                        ))}
-                      </select>
+                        Manual Time Selection
+                      </label>
 
-                      <div className="grid grid-cols-3 gap-2 max-h-56 overflow-y-auto pr-1">
-                        {blockForm.date &&
-                          generateSlots(blockDuration).map((slot) => {
-                            const end = toTime(toMinutes(slot) + blockDuration);
-                            const status = getSlotStatus(
-                              toDateStr(blockForm.date),
-                              slot,
-                              blockDuration,
-                              events,
-                              blocked,
-                              editingBlockId
-                            );
+                      {!manualEvent ? (
+                        <>
+                          <select
+                            className={`${glassSelect} mb-3`}
+                            value={eventDuration}
+                            onChange={(e) => setEventDuration(Number(e.target.value))}
+                          >
+                            {[15, 30, 45, 60, 90, 120].map((d) => (
+                              <option key={d} value={d}>
+                                {d} minutes
+                              </option>
+                            ))}
+                          </select>
 
-                            const past = isPastSlot(blockForm.date, slot);
-                            const disabled = status !== "available" || past;
+                          <div className="grid grid-cols-3 gap-2 max-h-56 overflow-y-auto pr-1">
+                            {eventForm.date &&
+                              generateSlots(eventDuration).map((slot) => {
+                                const end = toTime(toMinutes(slot) + eventDuration);
+                                const status = getSlotStatus(
+                                  toDateStr(eventForm.date),
+                                  slot,
+                                  eventDuration,
+                                  events,
+                                  blocked,
+                                  editingEventId
+                                );
 
-                            // ✅ ADD THIS BLOCK
-                            let slotClass =
-                              "border-white/70 bg-white/70 text-slate-700 hover:bg-white/90";
-                            if (status === "blocked") {
-                              slotClass =
-                                "border-[#7A1F2B]/60 bg-[#7A1F2B]/15 text-[#7A1F2B] cursor-not-allowed";
-                            } else if (status === "event") {
-                              slotClass =
-                                "border-slate-300 bg-slate-100 text-slate-500 cursor-not-allowed";
-                            } else if (past) {
-                              slotClass =
-                                "border-slate-200 bg-slate-100 text-slate-400 cursor-not-allowed";
-                            } else if (blockForm.startTime === slot) {
-                              slotClass = "border-[#7A1F2B] bg-[#7A1F2B] text-white";
-                            }
+                                const past = isPastSlot(eventForm.date, slot);
+                                const disabled = status !== "available" || past;
 
-                            return (
-                              <button
-                                key={slot}
-                                disabled={disabled}
-                                onClick={() =>
-                                  setBlockForm({
-                                    ...blockForm,
-                                    startTime: slot,
-                                    endTime: end,
-                                  })
+                                let slotClass =
+                                  "border-white/70 bg-white/70 text-slate-700 hover:bg-white/90";
+
+                                if (status === "blocked") {
+                                  slotClass =
+                                    "border-[#7A1F2B]/60 bg-[#7A1F2B]/15 text-[#7A1F2B] cursor-not-allowed";
+                                } else if (status === "event") {
+                                  slotClass =
+                                    "border-slate-300 bg-slate-100 text-slate-500 cursor-not-allowed";
+                                } else if (past) {
+                                  slotClass =
+                                    "border-slate-200 bg-slate-100 text-slate-400 cursor-not-allowed";
+                                } else if (eventForm.startTime === slot) {
+                                  slotClass = "border-[#7A1F2B] bg-[#7A1F2B] text-white";
                                 }
-                                className={`py-2 text-xs rounded-lg border-2 transition ${slotClass}`}>
-                                {format12Hour(slot)} – {format12Hour(end)}
-                              </button>
-                            );
-                          })}
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <input
-                        type="time"
-                        disabled={isPastDate(blockForm.date)}
-                        className={`${glassInput} mb-2 disabled:opacity-70 disabled:cursor-not-allowed`}
-                        value={blockForm.startTime}
-                        onChange={(e) =>
-                          setBlockForm({ ...blockForm, startTime: e.target.value })
-                        }
-                      />
-                      <input
-                        type="time"
-                        disabled={isPastDate(blockForm.date)}
-                        className={`${glassInput} disabled:opacity-70 disabled:cursor-not-allowed`}
-                        value={blockForm.endTime}
-                        onChange={(e) =>
-                          setBlockForm({ ...blockForm, endTime: e.target.value })
-                        }
-                      />
-                    </>
-                  )}
+
+                                return (
+                                  <button
+                                    key={slot}
+                                    disabled={disabled}
+                                    onClick={() =>
+                                      setEventForm({
+                                        ...eventForm,
+                                        startTime: slot,
+                                        endTime: end,
+                                      })
+                                    }
+                                    className={`py-2 text-xs rounded-lg border-2 transition ${slotClass}`}>
+                                    {format12Hour(slot)} – {format12Hour(end)}
+                                  </button>
+                                );
+                              })}
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <input
+                            type="time"
+                            disabled={isPastDate(eventForm.date)}
+                            className={`${glassInput} mb-2 disabled:opacity-70 disabled:cursor-not-allowed`}
+                            value={eventForm.startTime}
+                            onChange={(e) =>
+                              setEventForm({ ...eventForm, startTime: e.target.value })
+                            }
+                          />
+
+                          <input
+                            type="time"
+                            disabled={isPastDate(eventForm.date)}
+                            className={`${glassInput} disabled:opacity-70 disabled:cursor-not-allowed`}
+                            value={eventForm.endTime}
+                            onChange={(e) =>
+                              setEventForm({ ...eventForm, endTime: e.target.value })
+                            }
+                          />
+
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3 mt-6">
+                    <button
+                      onClick={submitEvent}
+                      disabled={eventSubmitting}
+                      className={`px-6 py-2 rounded-full text-sm font-semibold border border-[#7A1F2B] ring-1 ring-black/5 transition
+                    ${eventSubmitting
+                          ? "bg-white/70 text-slate-400 cursor-not-allowed"
+                          : "bg-[#7A1F2B] text-white hover:bg-[#651823]"
+                        }`}
+                    >
+                      {eventSubmitting
+                        ? "Saving..."
+                        : editingEventId
+                          ? "Update Event"
+                          : "Add Event"}
+                    </button>
+                    {editingEventId && (
+                      <button
+                        onClick={resetEvent}
+                        className={`${glassBtnMuted} px-6`}
+                      >
+                        Cancel
+                      </button>
+                    )}
+                  </div>
                 </div>
-                <div className="flex gap-3 mt-6">
+              )}
+
+              {/* LIST */}
+              <div className="flex justify-center">
+                <div className={`${glassTableWrap} w-full max-w-7xl`}>
+                  <div className="px-4 pt-4">
+                    <div className="mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                      <div className="w-full md:w-auto">
+                        <input
+                          type="text"
+                          value={eventSearch}
+                          onChange={(e) => setEventSearch(e.target.value)}
+                          placeholder="Search events..."
+                          className="w-full sm:w-64 bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-full px-4 py-2 text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
+                        />
+                      </div>
+                      <div className="w-full md:w-auto flex md:justify-end">
+                        <select
+                          value={eventFilter}
+                          onChange={(e) => setEventFilter(e.target.value)}
+                          className="w-full md:w-auto bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-full px-4 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
+                        >
+                          <option value="upcoming">Upcoming</option>
+                          <option value="all">All</option>
+                          <option value="past">Completed</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <table className="w-full table-auto border-collapse text-sm">
+                    <thead>
+                      <tr className={glassTableHead}>
+                        {[
+                          "Title",
+                          "Schedule",
+                          "Mode",
+                          "Price & Slots",
+                          "Age",
+                          "Actions",
+                        ].map((h) => (
+                          <th
+                            key={h}
+                            className="px-6 py-3 text-center tracking-wide"
+                          >
+                            {h}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {paginatedEvents.map((e) => (
+                        <tr
+                          key={e._id}
+                          className="border-b border-slate-200/80 hover:bg-white/70 transition-colors duration-200"
+                        >
+                          {/* TITLE */}
+                          <td className="p-3 text-center font-medium text-sm text-slate-700">
+                            <div className="flex flex-col gap-1">
+                              <span>{e.title}</span>
+                              <span className="text-sm text-[#7A1F2B] font-semibold">
+                                {e.code || "-"}
+                              </span>
+                            </div>
+                          </td>
+
+                          {/* SCHEDULE */}
+                          <td className="p-3 text-center text-sm">
+                            <div className="flex flex-col gap-0.5">
+                              <span className="font-medium text-slate-700">{e.date}</span>
+                              <span className="text-slate-600">
+                                {format12Hour(e.startTime)} – {format12Hour(e.endTime)}
+                              </span>
+                              <span className="text-xs text-slate-500 truncate">
+                                {e.location || "Location N/A"}
+                              </span>
+                            </div>
+                          </td>
+
+                          {/* MODE */}
+                          <td className="p-3 text-center">
+                            <span className="px-2 py-0.5 rounded-md text-xs font-medium bg-[#7A1F2B]/10 text-[#7A1F2B] border border-[#7A1F2B]/20">
+                              {e.mode || "-"}
+                            </span>
+                          </td>
+
+                          {/* PRICING + SLOTS */}
+                          <td className="p-3 text-center text-sm">
+                            <div className="flex flex-col gap-0.5">
+                              <span className="text-slate-700 font-semibold">
+                                ${e.price || 0}
+                              </span>
+
+                              <span className="text-slate-600 text-xs">
+                                Cap: {e.capacity || "-"}
+                              </span>
+
+                              <span
+                                className={`text-xs font-semibold ${e.availability === 0
+                                  ? "text-rose-600"
+                                  : e.availability < 5
+                                    ? "text-amber-600"
+                                    : "text-emerald-600"
+                                  }`}
+                              >
+                                Avl: {e.availability ?? "-"}
+                              </span>
+                            </div>
+                          </td>
+
+                          {/* AGE */}
+                          <td className="p-3 text-center text-sm">
+                            {e.ageGroup || "-"}
+                          </td>
+
+                          {/* ACTIONS */}
+                          <td className="p-3">
+                            <div className="grid grid-cols-2 gap-2 justify-center">
+                              <button
+                                onClick={() => navigate(`/dashboard/manage-events/${e._id}/bookings`)}
+                                className="px-2 py-1 text-[11px] rounded-full bg-white/70 border border-slate-200 ring-1 ring-black/5 text-slate-600 hover:bg-white/90"
+                              >
+                                Bookings
+                              </button>
+
+                              <button
+                                onClick={() => editEvent(e)}
+                                className="px-2 py-1 text-[11px] rounded-full bg-white/70 border border-[#7A1F2B]/40 ring-1 ring-black/5 text-[#7A1F2B] hover:bg-white/90"
+                              >
+                                Edit Event
+                              </button>
+
+                              <button
+                                onClick={() => {
+                                  if (e.bookingUrl) {
+                                    navigate(`/dashboard/cms/edit/${e.bookingUrl}`);
+                                  } else {
+                                    Swal.fire("No Page Linked", "This event does not have a Booking URL set.", "info");
+                                  }
+                                }}
+                                className="px-2 py-1 text-[11px] rounded-full bg-white/70 border border-amber-200 ring-1 ring-black/5 text-amber-700 hover:bg-white/90"
+                              >
+                                Edit Page
+                              </button>
+
+                              <button
+                                onClick={async () => {
+                                  const res = await Swal.fire({
+                                    title: "Delete Event?",
+                                    text: "This event will be permanently deleted",
+                                    icon: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#dc2626",
+                                  });
+
+                                  if (res.isConfirmed) {
+                                    await axios.delete(`${API}/events/${e._id}`);
+                                    fetchAll();
+                                    Swal.fire("Deleted!", "Event removed", "success");
+                                  }
+                                }}
+                                className="px-2 py-1 text-[11px] rounded-full bg-white/70 border border-rose-200 ring-1 ring-black/5 text-rose-600 hover:bg-white/90"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div className="container mx-auto px-4 mt-6 mb-12 flex items-center justify-center">
+                <div className="flex items-center gap-3">
                   <button
-                    onClick={submitBlock}
-                    disabled={blockSubmitting}
-                    className={`px-6 py-2 rounded-full text-sm font-semibold border border-[#7A1F2B] ring-1 ring-black/5 transition
-                      ${blockSubmitting
-                        ? "bg-white/70 text-slate-400 cursor-not-allowed"
-                        : "bg-[#7A1F2B] text-white hover:bg-[#651823]"
+                    onClick={() => {
+                      if (eventPage > 1) setEventPage((p) => p - 1);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    disabled={eventPage <= 1}
+                    className={`px-4 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 ${eventPage <= 1
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-white/90"
                       }`}
                   >
-                    {blockSubmitting
-                      ? "Saving..."
-                      : editingBlockId
-                        ? "Update Block"
-                        : "Block Slot"}
+                    Prev
                   </button>
-                  {editingBlockId && (
-                    <button
-                      onClick={resetBlock}
-                      className={`${glassBtnMuted} px-6`}
-                    >
-                      Cancel
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-          {/* LIST */}
-          <div className="flex justify-center">
-            <div className={`${glassTableWrap} w-full max-w-5xl`}>
-              <div className="px-4 pt-4">
-                <div className="mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                  <div className="w-full md:w-auto">
-                    <input
-                      type="text"
-                      value={blockSearch}
-                      onChange={(e) => setBlockSearch(e.target.value)}
-                      placeholder="Search blocked slots..."
-                      className="w-full sm:w-64 bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-full px-4 py-2 text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
-                    />
-                  </div>
-                  <div className="w-full md:w-auto flex md:justify-end">
-                    <select
-                      value={blockFilter}
-                      onChange={(e) => setBlockFilter(e.target.value)}
-                      className="w-full md:w-auto bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-full px-4 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
-                    >
-                      <option value="upcoming">Upcoming</option>
-                      <option value="all">All</option>
-                      <option value="past">Completed</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <table className="w-full table-auto border-collapse text-sm">
-                <thead>
-                  <tr className={glassTableHead}>
-                    {["Date", "Time", "Reason", "Actions"].map((h) => (
-                      <th
-                        key={h}
-                        className="px-6 py-3 text-center"
-                      >
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {paginatedBlocked.map((b) => (
-                    <tr
-                      key={b._id}
-                      className="border-b border-slate-200/80 hover:bg-white/70 transition-colors duration-200"
-                    >
-                      <td className="p-3 text-center font-medium">{b.date}</td>
-                      <td className="text-center">
-                        {format12Hour(b.startTime)} – {format12Hour(b.endTime)}
-                      </td>
-                      <td className="text-center">{b.reason || "-"}</td>
-                      <td className="flex gap-2 justify-center p-2">
-                        <button
-                          onClick={() => editBlock(b)}
-                          className="px-3 py-1 text-xs rounded-full bg-white/70 border border-white/70 ring-1 ring-black/5 text-slate-700 hover:bg-white/90"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={async () => {
-                            const res = await Swal.fire({
-                              title: "Remove blocked slot?",
-                              text: "This blocked slot will be removed",
-                              icon: "warning",
-                              showCancelButton: true,
-                              confirmButtonColor: "#dc2626",
-                            });
-                            if (res.isConfirmed) {
-                              await axios.delete(`${API}/blocked-dates/${b._id}`);
-                              fetchAll();
-                              Swal.fire("Removed!", "Blocked slot removed", "success");
-                            }
-                          }}
-                          className="px-3 py-1 text-xs rounded-full bg-white/70 border border-rose-200 ring-1 ring-black/5 text-rose-600 hover:bg-white/90"
-                        >
-                          Remove
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
 
-                  {blocked.length === 0 && (
-                    <tr>
-                      <td colSpan="4" className="text-center p-6 text-slate-500">
-                        No blocked slots found
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div className="container mx-auto px-4 mt-6 mb-12 flex items-center justify-center">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => {
-                  if (blockPage > 1) setBlockPage((p) => p - 1);
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-                disabled={blockPage <= 1}
-                className={`px-4 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 ${blockPage <= 1
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-white/90"
-                  }`}
-              >
-                Prev
-              </button>
-              <div className="px-3 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 text-slate-700">
-                Page {blockPage} of {Math.max(1, Math.ceil(blockTotal / BLOCK_LIMIT))}
+                  <div className="px-3 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 text-slate-700">
+                    Page {eventPage} of {Math.max(1, Math.ceil(eventTotal / EVENT_LIMIT))}
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      const totalPages = Math.max(1, Math.ceil(eventTotal / EVENT_LIMIT));
+                      if (eventPage < totalPages) setEventPage((p) => p + 1);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    disabled={eventPage >= Math.ceil(eventTotal / EVENT_LIMIT)}
+                    className={`px-4 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 ${eventPage >= Math.ceil(eventTotal / EVENT_LIMIT)
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-white/90"
+                      }`}
+                  >
+                    Next
+                  </button>
+                </div>
               </div>
-              <button
-                onClick={() => {
-                  const totalPages = Math.max(1, Math.ceil(blockTotal / BLOCK_LIMIT));
-                  if (blockPage < totalPages) setBlockPage((p) => p + 1);
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-                disabled={blockPage >= Math.ceil(blockTotal / BLOCK_LIMIT)}
-                className={`px-4 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 ${blockPage >= Math.ceil(blockTotal / BLOCK_LIMIT)
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-white/90"
-                  }`}
-              >
-                Next
-              </button>
-            </div>
-          </div>
+            </>
+          )}
+
+          {/* ================= BLOCKED ================= */}
+          {activeTab === "blocked" && (
+            <>
+
+              <div className="flex justify-end mb-4">
+                <button
+                  onClick={() => setShowBlockForm((v) => !v)}
+                  className={glassBtnPrimarySoft}
+                >
+                  {showBlockForm ? "Close Block Form" : "Block Time Slot"}
+                </button>
+              </div>
+
+              {/* FORM */}
+              {showBlockForm && (
+                <div ref={blockFormRef} className={`${glassPanel} p-6 mb-8`}>
+                  <h2 className="text-xl font-semibold text-[#7A1F2B] mb-4">
+                    {editingBlockId ? "Edit Blocked Slot" : "Block Time Slot"}
+                  </h2>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className={`${glassPanel} p-3`}>
+                      <DayPicker
+                        mode="single"
+                        selected={blockForm.date}
+                        onSelect={(d) => setBlockForm({ ...blockForm, date: d })}
+                        disabled={{ before: new Date() }}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        placeholder="Reason (optional)"
+                        className={`${glassInput} mb-3`}
+                        value={blockForm.reason}
+                        onChange={(e) =>
+                          setBlockForm({ ...blockForm, reason: e.target.value })
+                        }
+                      />
+
+                      <label className="flex items-center gap-2 mb-3 font-medium text-slate-700">
+                        <input
+                          type="checkbox"
+                          checked={manualBlock}
+                          disabled={isPastDate(blockForm.date)}
+                          onChange={() => setManualBlock(!manualBlock)}
+                          className="accent-[#7A1F2B]"
+                        />
+                        Manual Time Selection
+                      </label>
+
+                      {!manualBlock ? (
+                        <>
+                          <select
+                            className={`${glassSelect} mb-3`}
+                            value={blockDuration}
+                            onChange={(e) => setBlockDuration(Number(e.target.value))}
+                          >
+                            {[15, 30, 45, 60, 90, 120].map((d) => (
+                              <option key={d} value={d}>
+                                {d} minutes
+                              </option>
+                            ))}
+                          </select>
+
+                          <div className="grid grid-cols-3 gap-2 max-h-56 overflow-y-auto pr-1">
+                            {blockForm.date &&
+                              generateSlots(blockDuration).map((slot) => {
+                                const end = toTime(toMinutes(slot) + blockDuration);
+                                const status = getSlotStatus(
+                                  toDateStr(blockForm.date),
+                                  slot,
+                                  blockDuration,
+                                  events,
+                                  blocked,
+                                  editingBlockId
+                                );
+
+                                const past = isPastSlot(blockForm.date, slot);
+                                const disabled = status !== "available" || past;
+
+                                // ✅ ADD THIS BLOCK
+                                let slotClass =
+                                  "border-white/70 bg-white/70 text-slate-700 hover:bg-white/90";
+                                if (status === "blocked") {
+                                  slotClass =
+                                    "border-[#7A1F2B]/60 bg-[#7A1F2B]/15 text-[#7A1F2B] cursor-not-allowed";
+                                } else if (status === "event") {
+                                  slotClass =
+                                    "border-slate-300 bg-slate-100 text-slate-500 cursor-not-allowed";
+                                } else if (past) {
+                                  slotClass =
+                                    "border-slate-200 bg-slate-100 text-slate-400 cursor-not-allowed";
+                                } else if (blockForm.startTime === slot) {
+                                  slotClass = "border-[#7A1F2B] bg-[#7A1F2B] text-white";
+                                }
+
+                                return (
+                                  <button
+                                    key={slot}
+                                    disabled={disabled}
+                                    onClick={() =>
+                                      setBlockForm({
+                                        ...blockForm,
+                                        startTime: slot,
+                                        endTime: end,
+                                      })
+                                    }
+                                    className={`py-2 text-xs rounded-lg border-2 transition ${slotClass}`}>
+                                    {format12Hour(slot)} – {format12Hour(end)}
+                                  </button>
+                                );
+                              })}
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <input
+                            type="time"
+                            disabled={isPastDate(blockForm.date)}
+                            className={`${glassInput} mb-2 disabled:opacity-70 disabled:cursor-not-allowed`}
+                            value={blockForm.startTime}
+                            onChange={(e) =>
+                              setBlockForm({ ...blockForm, startTime: e.target.value })
+                            }
+                          />
+                          <input
+                            type="time"
+                            disabled={isPastDate(blockForm.date)}
+                            className={`${glassInput} disabled:opacity-70 disabled:cursor-not-allowed`}
+                            value={blockForm.endTime}
+                            onChange={(e) =>
+                              setBlockForm({ ...blockForm, endTime: e.target.value })
+                            }
+                          />
+                        </>
+                      )}
+                    </div>
+                    <div className="flex gap-3 mt-6">
+                      <button
+                        onClick={submitBlock}
+                        disabled={blockSubmitting}
+                        className={`px-6 py-2 rounded-full text-sm font-semibold border border-[#7A1F2B] ring-1 ring-black/5 transition
+                      ${blockSubmitting
+                            ? "bg-white/70 text-slate-400 cursor-not-allowed"
+                            : "bg-[#7A1F2B] text-white hover:bg-[#651823]"
+                          }`}
+                      >
+                        {blockSubmitting
+                          ? "Saving..."
+                          : editingBlockId
+                            ? "Update Block"
+                            : "Block Slot"}
+                      </button>
+                      {editingBlockId && (
+                        <button
+                          onClick={resetBlock}
+                          className={`${glassBtnMuted} px-6`}
+                        >
+                          Cancel
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+              {/* LIST */}
+              <div className="flex justify-center">
+                <div className={`${glassTableWrap} w-full max-w-5xl`}>
+                  <div className="px-4 pt-4">
+                    <div className="mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                      <div className="w-full md:w-auto">
+                        <input
+                          type="text"
+                          value={blockSearch}
+                          onChange={(e) => setBlockSearch(e.target.value)}
+                          placeholder="Search blocked slots..."
+                          className="w-full sm:w-64 bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-full px-4 py-2 text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
+                        />
+                      </div>
+                      <div className="w-full md:w-auto flex md:justify-end">
+                        <select
+                          value={blockFilter}
+                          onChange={(e) => setBlockFilter(e.target.value)}
+                          className="w-full md:w-auto bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-full px-4 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
+                        >
+                          <option value="upcoming">Upcoming</option>
+                          <option value="all">All</option>
+                          <option value="past">Completed</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <table className="w-full table-auto border-collapse text-sm">
+                    <thead>
+                      <tr className={glassTableHead}>
+                        {["Date", "Time", "Reason", "Actions"].map((h) => (
+                          <th
+                            key={h}
+                            className="px-6 py-3 text-center"
+                          >
+                            {h}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {paginatedBlocked.map((b) => (
+                        <tr
+                          key={b._id}
+                          className="border-b border-slate-200/80 hover:bg-white/70 transition-colors duration-200"
+                        >
+                          <td className="p-3 text-center font-medium">{b.date}</td>
+                          <td className="text-center">
+                            {format12Hour(b.startTime)} – {format12Hour(b.endTime)}
+                          </td>
+                          <td className="text-center">{b.reason || "-"}</td>
+                          <td className="flex gap-2 justify-center p-2">
+                            <button
+                              onClick={() => editBlock(b)}
+                              className="px-3 py-1 text-xs rounded-full bg-white/70 border border-white/70 ring-1 ring-black/5 text-slate-700 hover:bg-white/90"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={async () => {
+                                const res = await Swal.fire({
+                                  title: "Remove blocked slot?",
+                                  text: "This blocked slot will be removed",
+                                  icon: "warning",
+                                  showCancelButton: true,
+                                  confirmButtonColor: "#dc2626",
+                                });
+                                if (res.isConfirmed) {
+                                  await axios.delete(`${API}/blocked-dates/${b._id}`);
+                                  fetchAll();
+                                  Swal.fire("Removed!", "Blocked slot removed", "success");
+                                }
+                              }}
+                              className="px-3 py-1 text-xs rounded-full bg-white/70 border border-rose-200 ring-1 ring-black/5 text-rose-600 hover:bg-white/90"
+                            >
+                              Remove
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+
+                      {blocked.length === 0 && (
+                        <tr>
+                          <td colSpan="4" className="text-center p-6 text-slate-500">
+                            No blocked slots found
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div className="container mx-auto px-4 mt-6 mb-12 flex items-center justify-center">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => {
+                      if (blockPage > 1) setBlockPage((p) => p - 1);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    disabled={blockPage <= 1}
+                    className={`px-4 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 ${blockPage <= 1
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-white/90"
+                      }`}
+                  >
+                    Prev
+                  </button>
+                  <div className="px-3 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 text-slate-700">
+                    Page {blockPage} of {Math.max(1, Math.ceil(blockTotal / BLOCK_LIMIT))}
+                  </div>
+                  <button
+                    onClick={() => {
+                      const totalPages = Math.max(1, Math.ceil(blockTotal / BLOCK_LIMIT));
+                      if (blockPage < totalPages) setBlockPage((p) => p + 1);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    disabled={blockPage >= Math.ceil(blockTotal / BLOCK_LIMIT)}
+                    className={`px-4 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 ${blockPage >= Math.ceil(blockTotal / BLOCK_LIMIT)
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-white/90"
+                      }`}
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
         </>
       )}
+
     </div>
   );
 };
