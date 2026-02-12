@@ -167,7 +167,7 @@ const CartPage = () => {
                       alt={product.title}
                       data-aos="zoom-in"
                       data-aos-duration="1600"
-                      className="w-34 sm:w-34 md:w-34 lg:w-34 h-44 object-cover rounded-md border shadow-sm transition-transform duration-300 hover:scale-105 mx-auto sm:mx-0"
+                      className="w-34 sm:w-34 md:w-34 lg:w-34 h-44 object-cover rounded-md transition-transform duration-300 hover:scale-105 mx-auto sm:mx-0"
                     />
                     <div
                       className="flex-1 flex flex-col items-center sm:items-start text-center sm:text-left"
@@ -205,8 +205,8 @@ const CartPage = () => {
                       </div>
                       <p
                         className={`mt-1 text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px] font-Figtree font-regular ${product.stock <= 10
-                            ? "text-[#993333]"
-                            : "text-green-600"
+                          ? "text-[#993333]"
+                          : "text-green-600"
                           }`}>
                         {product.stock <= 10
                           ? `In Stock - Only ${product.stock} left`
@@ -243,8 +243,8 @@ const CartPage = () => {
                             onClick={() => handleQtyChange(product, "increase")}
                             disabled={product.qty >= product.stock}
                             className={`text-gray-700 transition p-1 ${product.qty >= product.stock
-                                ? "opacity-50"
-                                : "hover:bg-gray-200"
+                              ? "opacity-50"
+                              : "hover:bg-gray-200"
                               }`}>
                             <AddOutlinedIcon fontSize="small" />
                           </IconButton>
