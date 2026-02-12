@@ -8,7 +8,9 @@ const {
   disableMFA,
   getMFAStatus,
   verifyToken,
-  logout
+  logout,
+  getLoginHistory,
+  protect
 } = require('./auth.controller');
 
 // Admin login route
@@ -17,6 +19,9 @@ router.post('/logout', logout);
 
 // ✅ ADD THIS ROUTE - This is what's missing!
 router.get('/verify', verifyToken);
+
+// Login History Route
+router.get('/login-history', protect, getLoginHistory);
 
 // MFA routes
 router.post('/setup-mfa', setupMFA);

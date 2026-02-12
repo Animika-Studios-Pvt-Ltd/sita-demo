@@ -14,6 +14,7 @@ import LightModeIcon from "@mui/icons-material/LightMode"
 import DarkModeIcon from "@mui/icons-material/DarkMode"
 import useIdleTimeout from "../../hooks/useIdleTimeout"
 import Swal from "sweetalert2"
+import { FaHistory } from "react-icons/fa";
 
 const DashboardLayout = () => {
   const navigate = useNavigate()

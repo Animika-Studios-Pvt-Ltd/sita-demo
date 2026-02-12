@@ -2,6 +2,27 @@ const jwt = require('jsonwebtoken');
 const User = require('./user.model');
 const speakeasy = require('speakeasy');
 const QRCode = require('qrcode');
+const LoginHistory = require('./loginHistory.model');
+
+// Helper to parse User-Agent
+const parseUserAgent = (ua) => {
+  const device = /Mobile|Android|iPhone/i.test(ua) ? 'Mobile' : 'Desktop';
+
+  let os = 'Unknown OS';
+  if (/Windows/i.test(ua)) os = 'Windows';
+  else if (/Mac/i.test(ua)) os = 'macOS';
+  else if (/Linux/i.test(ua)) os = 'Linux';
+  else if (/Android/i.test(ua)) os = 'Android';
+  else if (/iOS|iPhone|iPad/i.test(ua)) os = 'iOS';
+
+  let browser = 'Unknown Browser';
+  if (/Chrome/i.test(ua)) browser = 'Chrome';
+  else if (/Firefox/i.test(ua)) browser = 'Firefox';
+  else if (/Safari/i.test(ua)) browser = 'Safari';
+  else if (/Edge/i.test(ua)) browser = 'Edge';
+
+  return { device, os, browser };
+};
 
 // ==================== LOGIN ====================
 exports.login = async (req, res) => {
@@ -18,6 +39,19 @@ exports.login = async (req, res) => {
 
     const isMatch = await adminUser.comparePassword(password);
     if (!isMatch) {
+      // Log Failed Login (Password Mismatch)
+      const ua = req.headers['user-agent'] || '';
+      const { device, os, browser } = parseUserAgent(ua);
+      const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+      await LoginHistory.create({
+        userId: adminUser._id,
+        ip,
+        device,
+        os,
+        browser,
+        status: 'Failed'
+      });
       return res.status(401).json({ message: 'Invalid username or password' });
     }
 
@@ -53,6 +87,28 @@ exports.login = async (req, res) => {
       domain: process.env.COOKIE_DOMAIN && isProduction ? process.env.COOKIE_DOMAIN : undefined,
       maxAge: 3600000 // 1 hour
     });
+
+
+    // Log Successful Login
+    const ua = req.headers['user-agent'] || '';
+    const { device, os, browser } = parseUserAgent(ua);
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+    console.log('Attempting to create LoginHistory:', { userId: adminUser._id, ip, device, os, browser, status: 'Success' });
+
+    try {
+      await LoginHistory.create({
+        userId: adminUser._id,
+        ip: ip || '0.0.0.0', // Ensure IP is not null
+        device,
+        os,
+        browser,
+        status: 'Success'
+      });
+      console.log('✅ LoginHistory created successfully');
+    } catch (historyError) {
+      console.error('❌ Failed to create LoginHistory:', historyError);
+    }
 
     res.status(200).json({
       message: 'Authentication successful',
@@ -130,6 +186,36 @@ exports.verifyToken = async (req, res) => {
       valid: false,
       message: 'Server error during token verification'
     });
+  }
+};
+
+// ==================== PROTECT MIDDLEWARE (For Routes) ====================
+exports.protect = async (req, res, next) => {
+  try {
+    let token;
+
+    if (req.cookies && req.cookies.adminToken) {
+      token = req.cookies.adminToken;
+    } else if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
+
+    if (!token) {
+      return res.status(401).json({ message: 'Not authorized, no token' });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const user = await User.findById(decoded.id);
+
+    if (!user || user.role !== 'admin') {
+      return res.status(401).json({ message: 'Not authorized' });
+    }
+
+    req.user = user;
+    next();
+  } catch (error) {
+    console.error('❌ Protect middleware error:', error.message);
+    res.status(401).json({ message: 'Not authorized, token failed' });
   }
 };
 
@@ -330,6 +416,24 @@ exports.verifyMFALogin = async (req, res) => {
 
     console.log('✅ MFA login successful for:', adminUser.username);
 
+    // Log Successful MFA Login
+    try {
+      const ua = req.headers['user-agent'] || '';
+      const { device, os, browser } = parseUserAgent(ua);
+      const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+      await LoginHistory.create({
+        userId: adminUser._id,
+        ip: ip || '0.0.0.0',
+        device,
+        os,
+        browser,
+        status: 'Success'
+      });
+    } catch (historyError) {
+      console.error('❌ Failed to create MFA LoginHistory:', historyError);
+    }
+
     // Set cookie
     const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('adminToken', token, {
@@ -414,6 +518,20 @@ exports.logout = async (req, res) => {
     res.status(200).json({ message: 'Logged out successfully' });
   } catch (error) {
     console.error('❌ Logout error:', error);
+  }
+};
+
+// ==================== GET LOGIN HISTORY ====================
+exports.getLoginHistory = async (req, res) => {
+  try {
+    const history = await LoginHistory.find()
+      .populate('userId', 'username email name')
+      .sort({ timestamp: -1 })
+      .limit(100);
+
+    res.status(200).json(history);
+  } catch (error) {
+    console.error('❌ Get login history error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };

@@ -19,6 +19,7 @@ import ManageEvents from "../../pages/dashboard/CMS module/ManageEvents";
 import EventBookings from "../../pages/dashboard/CMS module/EventBookings";
 import Podcasts from "../../pages/dashboard/CMS module/Podcasts";
 import Articles from "../../pages/dashboard/CMS module/Articles";
+import LoginHistory from "../../pages/dashboard/users/LoginHistory";
 import PageNotFound from "../PageNotFound";
 
 export const adminRoutes = [
@@ -48,6 +49,7 @@ export const adminRoutes = [
             { path: "certificates/trust-certificate", element: <TrustCertificate /> },
             { path: "manage-pages", element: <AdminManagePages /> },
             { path: "settings/mfa", element: <SetupMFA /> },
+            { path: "login-history", element: <LoginHistory /> },
             { path: "sales", element: <SalesPage /> },
             { path: "manage-events", element: <ManageEvents /> },
             { path: "manage-events/:id/bookings", element: <EventBookings /> },
