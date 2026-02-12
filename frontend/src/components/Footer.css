@@ -122,7 +122,7 @@ li {
 }
 
 .footer-publication p {
-  font-size: 16px;
+  font-size: 16px !important;
   line-height: 1.4;
   margin-bottom: 0px;
 }
@@ -266,12 +266,16 @@ li {
   margin-top: -5px;
   display: inline-block;
   vertical-align: middle;
-  filter: brightness(0) saturate(100%) invert(22%) sepia(14%) saturate(1015%) hue-rotate(343deg) brightness(95%) contrast(90%);
-  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: brightness(0) saturate(100%) invert(22%) sepia(14%) saturate(1015%)
+    hue-rotate(343deg) brightness(95%) contrast(90%);
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
 }
 
 .footer-socials a:hover img {
-  filter: brightness(0) saturate(100%) invert(16%) sepia(65%) saturate(1776%) hue-rotate(340deg) brightness(95%) contrast(95%);
+  filter: brightness(0) saturate(100%) invert(16%) sepia(65%) saturate(1776%)
+    hue-rotate(340deg) brightness(95%) contrast(95%);
   transform: scale(1.2);
 }
 
@@ -353,7 +357,6 @@ li {
 
 /* FOOTER SECTION */
 @media (max-width: 1200px) {
-
   /* Footer Top */
   .footer-col-factor {
     width: 26%;
@@ -390,6 +393,9 @@ li {
 }
 
 @media (max-width: 991px) {
+  .sita-site-footer {
+    padding: 40px 0 0;
+  }
 
   /* Footer Top */
   .footer-top-flex {
@@ -427,6 +433,10 @@ li {
 
   .footer-publication img {
     width: 35%;
+  }
+
+  .footer-publication p {
+    font-size: 15px !important;
   }
 
   .footer-blogs .footer-title {
@@ -473,7 +483,7 @@ li {
   .footer-bottom-flex {
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 0px;
   }
 
   .footer-bottom {
@@ -488,7 +498,7 @@ li {
 
 @media (max-width: 767px) {
   .sita-site-footer {
-    padding: 40px 0 0;
+    padding: 30px 0 0;
   }
 
   /* Footer Top */
@@ -514,12 +524,20 @@ li {
     width: 30%;
   }
 
+  .footer-publication .footer-title {
+    margin-bottom: 10px;
+  }
+
   .pub-prev {
     left: 20%;
   }
 
   .pub-next {
     right: 20%;
+  }
+
+  .footer-blogs .footer-title {
+    margin-bottom: 15px;
   }
 
   .footer-blogs .blog-item {
@@ -573,28 +591,42 @@ li {
 
 @media (max-width: 575px) {
   .sita-site-footer {
-    padding: 30px 0 0;
+    padding: 25px 0 0;
   }
 
   /* Footer Titles & Links */
   .footer-title {
     font-size: 16px;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
   }
 
   .footer-links a {
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.5;
+    margin-bottom: 2px;
   }
 
   /* Publications */
+  .footer-publication .footer-title {
+    margin-bottom: 8px;
+  }
+
   .footer-publication img {
     width: 20%;
   }
 
+  .footer-publication p {
+    font-size: 14px !important;
+  }
+
   /* Blogs */
+  .footer-blogs .footer-title {
+    margin-bottom: 10px;
+  }
+
   .footer-blogs .blog-item {
-    max-width: 150px;
+    max-width: 130px;
+    margin: 0 auto 10px;
   }
 
   .blog-overlay span {
@@ -607,7 +639,7 @@ li {
 
   /* Footer Middle */
   .footer-middle-flex {
-    margin-top: 15px;
+    margin-top: 8px;
     gap: 10px;
   }
 
@@ -632,7 +664,7 @@ li {
 
   /* Footer Bottom */
   .footer-bottom {
-    margin-top: 10px;
+    margin-top: 5px;
   }
 
   .footer-bottom p {
