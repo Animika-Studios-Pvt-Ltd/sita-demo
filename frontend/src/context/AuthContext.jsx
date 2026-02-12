@@ -3,6 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 
 import { getRootDomain } from '../utils/subdomain';
+import getBaseUrl from '../utils/baseURL';
 
 const AuthContext = createContext();
 
@@ -15,16 +16,6 @@ export const useAuth = () => {
     throw new Error('useAuth must be used within AuthProvider');
   }
   return context;
-};
-
-/* ================================
-   API Base URL
-================================ */
-const getBaseUrl = () => {
-  if (import.meta.env.MODE === 'development') {
-    return 'http://localhost:5000';
-  }
-  return 'http://localhost:5000'; // replace with prod if needed
 };
 
 const API_BASE_URL = getBaseUrl();
