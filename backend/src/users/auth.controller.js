@@ -420,11 +420,19 @@ exports.verifyMFALogin = async (req, res) => {
     try {
       const ua = req.headers['user-agent'] || '';
       const { device, os, browser } = parseUserAgent(ua);
-      const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+      // IP Extraction Logic
+      const forwardedFor = req.headers['x-forwarded-for'];
+      const socketIp = req.socket.remoteAddress;
+      const clientIp = forwardedFor ? forwardedFor.split(',')[0].trim() : socketIp;
+      const displayIp = clientIp || '0.0.0.0';
 
       await LoginHistory.create({
         userId: adminUser._id,
-        ip: ip || '0.0.0.0',
+        ip: displayIp,
+        clientIp: displayIp,
+        serverIp: socketIp || 'Unknown',
+        forwardedFor: forwardedFor || null,
         device,
         os,
         browser,

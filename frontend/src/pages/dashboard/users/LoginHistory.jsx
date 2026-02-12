@@ -70,7 +70,14 @@ const LoginHistory = () => {
                                             <span className="text-[#8b949e] ml-2">&lt;{log.userId?.email}&gt;</span>
                                         </td>
                                         <td className="p-3 border-r border-[#30363d] text-[#a5d6ff]">
-                                            {log.ip}
+                                            <div className="flex flex-col">
+                                                <span>{log.clientIp || log.ip}</span>
+                                                {log.serverIp && log.serverIp !== 'Unknown' && log.serverIp !== (log.clientIp || log.ip) && (
+                                                    <span className="text-[10px] text-[#8b949e] mt-0.5">
+                                                        Srvr: {log.serverIp}
+                                                    </span>
+                                                )}
+                                            </div>
                                         </td>
                                         <td className="p-3 text-[#8b949e]">
                                             <span className="bg-[#21262d] px-1.5 py-0.5 rounded border border-[#30363d] mr-1">{log.device}</span>
