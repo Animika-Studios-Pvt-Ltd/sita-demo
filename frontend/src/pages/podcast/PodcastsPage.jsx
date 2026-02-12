@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { ArrowLeft, ArrowRight, Play, Mic, Calendar, User } from "lucide-react";
+import { FaSpotify, FaApple } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 import "../../assets/herosection.css";
 
 import { getSecureImageUrl } from "../../utils/imageUtils";
+import { usePodcastThumbnail, SPOTIFY_FALLBACK, APPLE_FALLBACK } from "../../hooks/usePodcastThumbnail";
 
 const BACKEND_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -49,8 +51,36 @@ const PodcastCard = ({ podcast, index }) => {
   const embedUrl = getEmbedUrl(podcast.podcastLink);
   const isUpcoming = new Date(podcast.releaseDate) > new Date();
 
-  // Determine proper thumbnail: Custom upload > Fallback placeholder
-  const thumbnailSrc = getSecureImageUrl(podcast.thumbnail) || "/placeholder.jpg";
+  // Custom Hook for Thumbnail Logic
+  const thumbnailUrl = usePodcastThumbnail(podcast, BACKEND_BASE_URL);
+
+  const getThumbnailContent = () => {
+    if (thumbnailUrl === SPOTIFY_FALLBACK) {
+      return (
+        <div className="w-full h-full flex flex-col items-center justify-center bg-[#1DB954] text-white">
+          <FaSpotify size={64} />
+          <span className="mt-2 font-bold text-lg tracking-wide">Spotify</span>
+        </div>
+      );
+    }
+    if (thumbnailUrl === APPLE_FALLBACK) {
+      return (
+        <div className="w-full h-full flex flex-col items-center justify-center bg-[#872ec4] text-white">
+          <FaApple size={64} />
+          <span className="mt-2 font-bold text-lg tracking-wide">Apple Podcasts</span>
+        </div>
+      );
+    }
+    // Default Image or Placeholder
+    const finalSrc = getSecureImageUrl(thumbnailUrl) || "/placeholder.jpg";
+    return (
+      <img
+        src={finalSrc}
+        alt={podcast.title}
+        className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+      />
+    );
+  };
 
   return (
     <div
@@ -78,13 +108,12 @@ const PodcastCard = ({ podcast, index }) => {
           />
         ) : (
           <div className="relative w-full h-full">
-            <img
-              src={thumbnailSrc}
-              alt={podcast.title}
-              className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
-            />
-            {/* Overlay Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
+            {getThumbnailContent()}
+
+            {/* Overlay Gradient (Only if image is present to avoid covering flat color backgrounds too much, or adjust opacity) */}
+            {(thumbnailUrl !== SPOTIFY_FALLBACK && thumbnailUrl !== APPLE_FALLBACK) && (
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
+            )}
 
             {/* Play Button - hide if upcoming */}
             {!isUpcoming && (

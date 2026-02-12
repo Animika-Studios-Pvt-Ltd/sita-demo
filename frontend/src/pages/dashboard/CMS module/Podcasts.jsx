@@ -9,6 +9,8 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MicIcon from "@mui/icons-material/Mic"; // Restoring MicIcon
 import { useNavigate } from "react-router-dom";
+import { FaSpotify, FaApple } from "react-icons/fa";
+import { usePodcastThumbnail, SPOTIFY_FALLBACK, APPLE_FALLBACK } from "../../../hooks/usePodcastThumbnail";
 
 const BACKEND_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -205,20 +207,52 @@ const Podcasts = () => {
     const [expanded, setExpanded] = useState(false);
     const isScheduled = new Date(podcast.releaseDate) > new Date();
 
+    // Use the custom hook
+    const thumbnailUrl = usePodcastThumbnail(podcast, BACKEND_BASE_URL);
+
+    const getThumbnailContent = () => {
+      if (thumbnailUrl === SPOTIFY_FALLBACK) {
+        return (
+          <div className="w-full h-full flex flex-col items-center justify-center bg-[#1DB954] text-white">
+            <FaSpotify size={32} />
+          </div>
+        );
+      }
+      if (thumbnailUrl === APPLE_FALLBACK) {
+        return (
+          <div className="w-full h-full flex flex-col items-center justify-center bg-[#872ec4] text-white">
+            <FaApple size={32} />
+          </div>
+        );
+      }
+
+      const uploadedThumbnail = podcast.thumbnail
+        ? (podcast.thumbnail.startsWith("http") ? podcast.thumbnail : `${BACKEND_BASE_URL}${podcast.thumbnail}`)
+        : null;
+
+      const displayThumbnail = uploadedThumbnail || (thumbnailUrl !== SPOTIFY_FALLBACK && thumbnailUrl !== APPLE_FALLBACK ? thumbnailUrl : null);
+
+      if (displayThumbnail) {
+        return (
+          <img
+            src={displayThumbnail}
+            alt={podcast.title}
+            className="w-full h-full object-cover"
+          />
+        );
+      }
+
+      return (
+        <div className="w-full h-full flex items-center justify-center text-slate-400">
+          <MicIcon style={{ fontSize: 48 }} />
+        </div>
+      );
+    };
+
     return (
       <div className={`${glassCard} flex flex-col md:flex-row gap-6`}>
         <div className="md:w-48 md:h-48 flex-shrink-0 bg-slate-100 rounded-xl overflow-hidden relative group border border-slate-200">
-          {podcast.thumbnail ? (
-            <img
-              src={podcast.thumbnail.startsWith("http") ? podcast.thumbnail : `${BACKEND_BASE_URL}${podcast.thumbnail}`}
-              alt={podcast.title}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-slate-400">
-              <MicIcon style={{ fontSize: 48 }} />
-            </div>
-          )}
+          {getThumbnailContent()}
           {isScheduled && (
             <div className="absolute top-2 left-2 bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded-md shadow-sm border border-amber-200">
               SCHEDULED
