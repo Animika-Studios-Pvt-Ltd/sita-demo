@@ -18,6 +18,16 @@ const sanitizeDescription = (html) => {
     .replace(/style="[^"]*"/g, "");
 };
 
+const heroSlides = [
+  {
+    image: "sita-banner.webp",
+    title: "SITA GUIDES",
+    subtitle: "Spiritual Mentor, Author, Healer.",
+    buttonText: "Explore Sita",
+    link: "/about",
+  },
+];
+
 const HomePage = () => {
   const [currentBlogs, setCurrentBlogs] = useState([]);
 
@@ -120,6 +130,31 @@ const HomePage = () => {
     };
   }, []);
 
+  /* Hero Section Carousel */
+  useEffect(() => {
+    const heroCarouselEl = document.getElementById("heroCarousel");
+    if (!heroCarouselEl) return;
+
+    // Initialize carousel only if more than one slide
+    if (heroSlides.length > 1) {
+      const heroCarousel = new Carousel(heroCarouselEl, {
+        interval: 6000,
+        ride: "carousel",
+        pause: false,
+        wrap: true,
+        touch: true,
+      });
+
+      const refreshAOS = () => AOS.refresh();
+      heroCarouselEl.addEventListener("slid.bs.carousel", refreshAOS);
+
+      return () => {
+        heroCarousel.dispose();
+        heroCarouselEl.removeEventListener("slid.bs.carousel", refreshAOS);
+      };
+    }
+  }, []);
+
   /* Sita Versus */
   useEffect(() => {
     const carouselEl = document.getElementById("sitaVersesCarousel");
@@ -160,28 +195,45 @@ const HomePage = () => {
       {/* ---------------- HERO SECTION ---------------- */}
       <section className="sita-hero">
         <div className="sita-hero-bg"></div>
-        <div className="sita-hero-image">
-          <div
-            className="sita-hero-image-inner"
-            data-aos="fade-right"
-            data-aos-duration="1200"
-            data-aos-delay="200">
-            <img src="sita-banner.webp" alt="Sita Hero" />
-          </div>
-        </div>
-        <div className="container">
-          <div className="row">
-            <div
-              className="col-lg-6 col-md-6 col-sm-6 col-6 offset-6 sita-hero-content"
-              data-aos="fade-left"
-              data-aos-duration="1200"
-              data-aos-delay="400">
-              <h1>SITA GUIDES</h1>
-              <p>Spiritual Mentor, Author, Healer.</p>
-              <a href="/about" className="sita-btn">
-                Explore Sita
-              </a>
-            </div>
+
+        <div
+          id="heroCarousel"
+          className="carousel slide"
+          data-bs-ride="carousel">
+          <div className="carousel-inner">
+            {heroSlides.map((slide, index) => (
+              <div
+                key={index}
+                className={`carousel-item ${index === 0 ? "active" : ""}`}>
+                {/* Hero Image */}
+                <div className="sita-hero-image">
+                  <div
+                    className="sita-hero-image-inner"
+                    data-aos="fade-right"
+                    data-aos-duration="1200"
+                    data-aos-delay="200">
+                    <img src={slide.image} alt={slide.title || "Hero banner"} />
+                  </div>
+                </div>
+
+                {/* Hero Content */}
+                <div className="container">
+                  <div className="row">
+                    <div
+                      className="col-lg-6 col-md-6 col-sm-6 col-6 offset-6 sita-hero-content"
+                      data-aos="fade-left"
+                      data-aos-duration="1200"
+                      data-aos-delay="400">
+                      <h1>{slide.title}</h1>
+                      <p>{slide.subtitle}</p>
+                      <Link to={slide.link} className="sita-btn">
+                        {slide.buttonText}
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -459,32 +511,6 @@ const HomePage = () => {
         </div>
       </section>
       {/* ---------------- PUBLICATIONS SECTION ---------------- */}
-      {/* <section className="sita-publications">
-        <img
-          src="flower.webp"
-          alt=""
-          className="sita-publications-decor sita-decor"
-          aria-hidden="true"
-        />
-        <div
-          className="container text-center"
-          data-aos="fade-up"
-          data-aos-duration="1200">
-          <h2 data-aos="fade-up">Enduring Lights of Transformation</h2>
-          <img
-            src="sita-motif.webp"
-            alt="Sita Motif"
-            className="motif"
-            data-aos="fade-up"
-            data-aos-delay="200"
-          />
-          <img
-            src="sita-publication.webp"
-            className="img-fluid sita-publications-img"
-            alt="Author"
-          />
-        </div>
-      </section> */}
       <section className="sita-publications">
         <img
           src="flower.webp"

@@ -60,7 +60,9 @@ li {
   text-decoration: none;
   line-height: 1;
   clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
 }
 
 .sita-btn:hover {
@@ -73,7 +75,8 @@ li {
 .sita-hero {
   position: relative;
   padding-bottom: 17vw;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 .sita-hero-bg {
@@ -86,7 +89,23 @@ li {
   z-index: 1;
 }
 
-.sita-hero-image {
+#heroCarousel,
+#heroCarousel .carousel-inner,
+#heroCarousel .carousel-item {
+  height: 100%;
+}
+
+#heroCarousel .carousel-inner {
+  overflow: visible !important;
+}
+
+#heroCarousel .carousel-item {
+  min-height: 17vw;
+  position: relative;
+  z-index: 2;
+}
+
+#heroCarousel .sita-hero-image {
   position: absolute;
   top: 0;
   left: 50%;
@@ -382,7 +401,9 @@ li {
   text-decoration: none;
   line-height: 1;
   clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
 }
 
 .masterclass-card-btn:hover {
@@ -557,42 +578,6 @@ li {
 }
 
 /* ----------------- PUBLICATIONS SECTION ----------------- */
-/* .sita-publications {
-  padding: 60px 0 30px;
-  position: relative;
-  overflow: visible;
-}
-
-.sita-publications-decor {
-  position: absolute;
-  right: -180px;
-  top: 72%;
-  width: 420px;
-  height: auto;
-  transform: translateY(-50%);
-  z-index: 1;
-  opacity: 0.5;
-  pointer-events: none;
-  will-change: transform;
-}
-
-.sita-publications .container,
-.sita-recent-blogs .container {
-  position: relative;
-  z-index: 5;
-}
-
-.sita-publications .motif {
-  display: block;
-  margin: 0 auto 20px;
-}
-
-.sita-publications-img {
-  display: block;
-  margin: 0 auto;
-  padding-top: 20px;
-} */
-
 .sita-publications {
   padding: 60px 0 30px;
   position: relative;
@@ -678,7 +663,6 @@ li {
   margin-bottom: 30px;
 }
 
-
 .publication-content p {
   font-family: "Garamond-Premier-Pro-Italic";
   font-size: 26px;
@@ -687,7 +671,6 @@ li {
   margin-bottom: 0;
 }
 
-/* ----------------- PUBLICATIONS FADE TRANSITIONS ----------------- */
 .sita-publications .carousel-item {
   width: 100%;
   opacity: 0;
@@ -790,7 +773,9 @@ li {
   text-decoration: none;
   line-height: 1;
   clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
 }
 
 .sita-blog-btn:hover {
@@ -1086,7 +1071,7 @@ li {
     height: 29vw;
   }
 
-  .sita-hero-image {
+  #heroCarousel .sita-hero-image {
     width: 90vw;
   }
 
@@ -1124,7 +1109,7 @@ li {
     height: 29vw;
   }
 
-  .sita-hero-image {
+  #heroCarousel .sita-hero-image {
     width: 88vw;
   }
 
@@ -1163,7 +1148,7 @@ li {
     height: 0vw;
   }
 
-  .sita-hero-image {
+  #heroCarousel .sita-hero-image {
     width: 100vw;
   }
 
@@ -1262,7 +1247,7 @@ li {
 
 @media (max-width: 400px) {
   .sita-hero {
-    padding-bottom: 15vw;
+    padding-bottom: 10vw;
   }
 
   .sita-hero-content h1 {
@@ -1632,7 +1617,7 @@ li {
     padding: 20px 0;
   }
 
-  .sita-masterclass .row>div {
+  .sita-masterclass .row > div {
     margin-bottom: 20px;
   }
 
@@ -1670,11 +1655,11 @@ li {
     margin-bottom: 10px;
   }
 
-  .sita-masterclass .row>div {
+  .sita-masterclass .row > div {
     margin-bottom: 20px;
   }
 
-  .sita-masterclass .row>div:last-child {
+  .sita-masterclass .row > div:last-child {
     margin-bottom: 0;
   }
 
@@ -1846,76 +1831,6 @@ li {
 }
 
 /* Sita Publications Section */
-/* @media (max-width: 1440px) {
-  .sita-publications-decor {
-    top: 80%;
-    right: -200px;
-    width: 380px;
-    height: 360px;
-  }
-}
-
-@media (max-width: 1336px) {
-  .sita-publications-decor {
-    top: 84%;
-    right: -215px;
-    width: 360px;
-    height: 350px;
-  }
-}
-
-@media (max-width: 1200px) {
-  .sita-publications-decor {
-    right: -190px;
-    width: 340px;
-    height: 320px;
-  }
-
-  .sita-publications {
-    padding: 40px 0 20px;
-  }
-}
-
-@media (max-width: 991px) {
-  .sita-publications-decor {
-    right: -110px;
-    width: 280px;
-    height: auto;
-  }
-}
-
-@media (max-width: 768px) {
-  .sita-publications-decor {
-    display: none;
-  }
-
-  .sita-publications {
-    padding: 30px 0 15px;
-  }
-
-  .sita-publications .motif {
-    margin-bottom: 20px;
-  }
-
-  .sita-publications-img {
-    margin-top: 15px;
-  }
-}
-
-@media (max-width: 575px) {
-  .sita-publications {
-    padding: 20px 0 10px;
-  }
-
-  .sita-publications .motif {
-    margin-top: 10px;
-  }
-
-  .sita-publications-img {
-    margin-top: 10px;
-  }
-} */
-
 @media (max-width: 1440px) {
   .sita-publications-decor {
     top: 80%;
