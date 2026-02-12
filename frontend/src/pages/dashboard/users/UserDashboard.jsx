@@ -350,43 +350,47 @@ const UserDashboard = () => {
   }
 
   return (
-    <div className="container">
-      <div className="w-full max-w-[1200px] mx-auto px-4">
-        <div className="mt-10">
-          <h2 className="sita-main-heading text-center">
-            Profile Overview
-          </h2>
-          <img
-            src="/sita-motif.webp"
-            alt="Sita Motif"
-            className="mx-auto mb-8 motif"
-          />
-        </div>
-        <div className="max-w-8xl mx-auto p-4 mt-8 border-[#C76F3B] rounded-xl border-1 mb-8">
-          <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto">
-                <AvatarWithInitials src={profile?.avatar || currentUser?.picture} firstName={profile?.name?.firstName || profile?.name || currentUser?.name} lastName={profile?.name?.lastName || ""} size={80} />
-                <div className="text-center sm:text-left w-full">
-                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 break-words">
-                    {profile?.name?.firstName || profile?.name || currentUser?.name || "User"} {profile?.name?.lastName || ""}
-                  </h1>
-                  <p className="text-sm sm:text-base text-gray-500 flex items-center justify-center sm:justify-start gap-2 mt-1 flex-wrap">
-                    <FaEnvelope className="text-xs sm:text-sm flex-shrink-0" />
-                    <span className="truncate sm:truncate-none break-words max-w-full">{profile?.email || currentUser?.email}</span>
-                  </p>
-                </div>
+    <div className="container mx-auto px-4 py-8 max-w-7xl">
+      <div className="mt-6 mb-12 text-center">
+        <h2 className="sita-main-heading">
+          Profile Overview
+        </h2>
+        <img
+          src="/sita-motif.webp"
+          alt="Sita Motif"
+          className="mx-auto mb-8 motif"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Sidebar */}
+        <div className="lg:col-span-4 xl:col-span-3 space-y-6 lg:sticky lg:top-24">
+          {/* Profile Card */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
+            <div className="h-28 bg-gradient-to-r from-[#bc6430] to-[#8B4513]"></div>
+            <div className="px-6 pb-6 text-center -mt-12 relative z-10">
+              <div className="inline-block rounded-full p-1 bg-white mb-3 shadow-md">
+                <AvatarWithInitials src={profile?.avatar || currentUser?.picture} firstName={profile?.name?.firstName || profile?.name || currentUser?.name} lastName={profile?.name?.lastName || ""} size={90} />
               </div>
+
+              <h3 className="text-xl font-bold text-gray-800 break-words mb-1">
+                {profile?.name?.firstName || profile?.name || currentUser?.name || "User"} {profile?.name?.lastName || ""}
+              </h3>
+              <p className="text-sm text-gray-500 flex items-center justify-center gap-2 mb-6">
+                <FaEnvelope className="text-[#bc6430] text-xs" />
+                <span className="truncate max-w-[200px]">{profile?.email || currentUser?.email}</span>
+              </p>
+
               {!isEditing ? (
-                <button onClick={() => setIsEditing(true)} className="flex items-center justify-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors duration-200 font-medium shadow-md w-full sm:w-auto text-sm sm:text-base">
+                <button onClick={() => setIsEditing(true)} className="w-full flex items-center justify-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] text-white py-2.5 rounded-xl transition-all duration-200 font-medium shadow-sm hover:shadow-md text-sm">
                   <FaEdit /> Edit Profile
                 </button>
               ) : (
-                <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
-                  <button onClick={handleSave} className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors duration-200 font-medium shadow-md text-sm sm:text-base">
+                <div className="flex gap-2">
+                  <button onClick={handleSave} className="flex-1 flex items-center justify-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] text-white py-2.5 rounded-xl transition-all duration-200 font-medium shadow-sm hover:shadow-md text-sm">
                     <FaSave /> Save
                   </button>
-                  <button onClick={handleCancel} className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-gray-500 hover:bg-gray-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors duration-200 font-medium shadow-md text-sm sm:text-base">
+                  <button onClick={handleCancel} className="flex-1 flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl transition-all duration-200 font-medium text-sm">
                     <FaTimes /> Cancel
                   </button>
                 </div>
@@ -394,226 +398,215 @@ const UserDashboard = () => {
             </div>
           </div>
 
-          <div className="space-y-4 sm:space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-              <div className="lg:col-span-2">
-                <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
-                  <h4 className="sita-sub-heading flex items-center gap-2 mb-4 sm:mb-6">
-                    <FaUser className="text-[#bc6430] text-lg sm:text-xl" />Profile Information
-                  </h4>
-                  <div className="space-y-4 sm:space-y-5">
-                    <div>
-                      <label className="block sita-label-text text-gray-700 mb-2 flex items-center gap-2">
-                        <FaEnvelope className="text-gray-500 text-xs sm:text-sm" />Email Address
-                      </label>
-                      <input type="email" value={profile?.email || currentUser?.email || ""} disabled className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-200 rounded-lg bg-gray-50 text-gray-600 cursor-not-allowed sita-body-text" />
-                      <p className="text-xs text-gray-500 mt-1">Email cannot be changed</p>
-                    </div>
-                    <div>
-                      <label className="block sita-label-text text-gray-700 mb-2 flex items-center gap-2">
-                        <FaUser className="text-gray-500 text-xs sm:text-sm" />First Name
-                      </label>
-                      {isEditing ? (
-                        <input type="text" name="firstName" value={formData.name.firstName} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="Enter your first name" />
-                      ) : (
-                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium sita-body-text">{profile?.name?.firstName || "Not provided"}</div>
-                      )}
-                    </div>
-                    <div>
-                      <label className="block sita-label-text text-gray-700 mb-2 flex items-center gap-2">
-                        <FaUser className="text-gray-500 text-xs sm:text-sm" />Last Name
-                      </label>
-                      {isEditing ? (
-                        <input type="text" name="lastName" value={formData.name.lastName} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="Enter your last name" />
-                      ) : (
-                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium sita-body-text">{profile?.name?.lastName || "Not provided"}</div>
-                      )}
-                    </div>
-                    <div>
-                      <label className="block sita-label-text text-gray-700 mb-2 flex items-center gap-2">
-                        <FaUser className="text-gray-500 text-xs sm:text-sm" />Username
-                      </label>
-                      {isEditing ? (
-                        <input type="text" name="username" value={formData.username} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="Enter your username" />
-                      ) : (
-                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium sita-body-text">{profile?.username || "Not provided"}</div>
-                      )}
-                    </div>
-                    <div>
-                      <label className="block sita-label-text text-gray-700 mb-2 flex items-center gap-2">
-                        <MdPhone className="text-gray-500 text-xs sm:text-sm" />Primary Phone Number
-                      </label>
-                      {isEditing ? (
-                        <input type="tel" name="primaryPhone" value={formData.phone.primary} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="Enter your primary phone number" />
-                      ) : (
-                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium sita-body-text">{profile?.phone?.primary || "Not provided"}</div>
-                      )}
-                    </div>
-                    <div>
-                      <label className="block sita-label-text text-gray-700 mb-2 flex items-center gap-2">
-                        <MdPhone className="text-gray-500 text-xs sm:text-sm" />Secondary Phone Number (Optional)
-                      </label>
-                      {isEditing ? (
-                        <input type="tel" name="secondaryPhone" value={formData.phone.secondary} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" placeholder="Enter your secondary phone number" />
-                      ) : (
-                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium sita-body-text">{profile?.phone?.secondary || "Not provided"}</div>
-                      )}
-                    </div>
-                    <div>
-                      <label className="block sita-label-text text-gray-700 mb-2">Date of Birth</label>
-                      {isEditing ? (
-                        <input type="date" name="dateOfBirth" value={formData.demographics.dateOfBirth} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text" />
-                      ) : (
-                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium sita-body-text">
-                          {profile?.demographics?.dateOfBirth ? new Date(profile.demographics.dateOfBirth).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }) : "Not provided"}
-                        </div>
-                      )}
-                    </div>
-                    <div>
-                      <label className="block sita-label-text text-gray-700 mb-2">Gender</label>
-                      {isEditing ? (
-                        <select name="gender" value={formData.demographics.gender} onChange={handleInputChange} className="w-full px-3 sm:px-4 py-2 sm:py-3 border-1 border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#bc6430] focus:border-transparent sita-body-text">
-                          <option value="prefer-not-to-say">Prefer not to say</option>
-                          <option value="male">Male</option>
-                          <option value="female">Female</option>
-                          <option value="other">Other</option>
-                        </select>
-                      ) : (
-                        <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-50 rounded-lg text-gray-700 font-medium capitalize sita-body-text">
-                          {profile?.demographics?.gender?.replace(/-/g, ' ') || "Not provided"}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
+          {/* Account Status */}
+          <div className="bg-gradient-to-br from-[#bc6430] to-[#a35528] rounded-2xl shadow-lg p-6 text-white relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-4 opacity-10">
+              <FaUser size={100} />
+            </div>
+            <h3 className="text-lg font-semibold mb-4 relative z-10">Account Status</h3>
+            <div className="space-y-4 relative z-10">
+              <div className="flex items-center justify-between bg-white/10 p-3 rounded-lg backdrop-blur-sm">
+                <span className="text-orange-100 text-sm">Account Type</span>
+                <span className="font-bold uppercase text-xs bg-white text-[#bc6430] px-2 py-1 rounded">{profile?.role || "User"}</span>
               </div>
-
-              {/* Sidebar - 1 column */}
-              <div className="lg:col-span-1 space-y-4 sm:space-y-6">
-                <div className="bg-gradient-to-br from-[#bc6430] to-[#a35528] rounded-xl shadow-lg p-4 sm:p-6 text-white">
-                  <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Account Status</h3>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-orange-100 text-sm sm:text-base">Account Type</span>
-                      <span className="font-bold uppercase text-xs sm:text-sm">{profile?.role || "User"}</span>
-                    </div>
-                    <div className="border-t border-orange-300 pt-3">
-                      <div className="flex items-center gap-2 text-orange-100 mb-1">
-                        <FaClock className="text-xs sm:text-sm" />
-                        <span className="text-xs sm:text-sm">Member Since</span>
-                      </div>
-                      <p className="font-semibold text-sm sm:text-base">
-                        {profile?.createdAt ? new Date(profile.createdAt).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }) : "Recently"}
-                      </p>
-                    </div>
-                  </div>
+              <div className="pt-2 border-t border-white/20">
+                <div className="flex items-center gap-2 text-orange-100 mb-1">
+                  <FaClock className="text-xs" />
+                  <span className="text-xs">Member Since</span>
                 </div>
-                <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
-                  <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4">Quick Actions</h3>
-                  <div className="space-y-3">
-                    <Link to="/my-orders" className="w-full flex items-center gap-3 px-3 no-underline sm:px-4 py-2 sm:py-3 bg-gray-50 hover:bg-orange-50 rounded-lg transition-colors text-left group">
-                      <FaShoppingBag className="text-[#bc6430] text-base sm:text-lg group-hover:scale-110 transition-transform" />
-                      <span className="font-medium text-gray-700 text-sm sm:text-base">View Orders</span>
-                    </Link>
-                    <Link to="/cart" className="w-full flex items-center gap-3 px-3 no-underline sm:px-4 py-2 sm:py-3 bg-gray-50 hover:bg-orange-50 rounded-lg transition-colors text-left group">
-                      <FaShoppingCart className="text-[#bc6430] text-base sm:text-lg group-hover:scale-110 transition-transform" />
-                      <span className="font-medium text-gray-700 text-sm sm:text-base">View Cart</span>
-                    </Link>
-                  </div>
-                </div>
+                <p className="text-white">
+                  {profile?.createdAt ? new Date(profile.createdAt).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }) : "Recently"}
+                </p>
               </div>
             </div>
+          </div>
 
-            <div className="w-full">
-              <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h4 className="sita-sub-heading flex items-center gap-2">
-                    <FaMapMarkerAlt className="text-[#bc6430] text-lg sm:text-xl" />
-                    Saved Addresses
-                  </h4>
-                  <button onClick={() => openAddressModal()} className="flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] text-white px-4 sm:px-5 py-2.5 rounded-lg transition-colors duration-200 font-medium text-sm shadow-sm hover:shadow-md">
-                    <FaPlus className="text-xs" /> Add Address
-                  </button>
+          {/* Quick Actions */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+              Quick Actions
+            </h3>
+            <div className="space-y-3">
+              <Link to="/my-orders" className="flex items-center gap-4 p-3 bg-gray-50 hover:bg-orange-50 rounded-xl transition-colors group no-underline">
+                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-[#bc6430] group-hover:scale-110 transition-transform">
+                  <FaShoppingBag />
                 </div>
-                {profile?.addresses && profile.addresses.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {profile.addresses.map((address) => (
-                      <div key={address._id} className="border-1 border-gray-200 rounded-xl p-5 hover:border-[#bc6430] hover:shadow-md transition-all relative bg-white">
-                        {address.isDefault && (
-                          <span className="absolute top-3 right-3 bg-[#C76F3B] text-white text-xs px-3 py-1 rounded-full font-medium">Default</span>
-                        )}
-                        <div className="mb-4 pr-20">
-                          <h3 className="font-bold text-gray-900 text-lg mb-1">{address.fullName}</h3>
-                          <p className="text-sm text-gray-600 capitalize flex items-center gap-1">
-                            <FaMapMarkerAlt className="text-[#bc6430] text-xs" />
-                            {address.type} Address
-                          </p>
-                        </div>
-                        <div className="space-y-2 mb-4">
-                          <div className="grid grid-cols-1 gap-1">
-                            <p className="text-sm text-gray-700 font-medium">{address.addressLine1}</p>
-                            {address.addressLine2 && (
-                              <p className="text-sm text-gray-700">{address.addressLine2}</p>
-                            )}
-                          </div>
-                          <div className="grid grid-cols-2 gap-3 pt-2">
-                            <div>
-                              <p className="text-xs text-gray-500 uppercase tracking-wide">City</p>
-                              <p className="text-sm text-gray-800 font-medium">{address.city}</p>
-                            </div>
-                            <div>
-                              <p className="text-xs text-gray-500 uppercase tracking-wide">State</p>
-                              <p className="text-sm text-gray-800 font-medium">{address.state}</p>
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-2 gap-3">
-                            <div>
-                              <p className="text-xs text-gray-500 uppercase tracking-wide">PIN Code</p>
-                              <p className="text-sm text-gray-800 font-medium">{address.postalCode}</p>
-                            </div>
-                            <div>
-                              <p className="text-xs text-gray-500 uppercase tracking-wide">Country</p>
-                              <p className="text-sm text-gray-800 font-medium">{address.country}</p>
-                            </div>
-                          </div>
-                          {address.landmark && (
-                            <div className="pt-2 border-t border-gray-100">
-                              <p className="text-xs text-gray-500 uppercase tracking-wide">Landmark</p>
-                              <p className="text-sm text-gray-700">{address.landmark}</p>
-                            </div>
-                          )}
-                          {address.phone && (
-                            <div className="pt-1">
-                              <p className="text-xs text-gray-500 uppercase tracking-wide">Contact</p>
-                              <p className="text-sm text-gray-800 font-medium flex items-center gap-1">
-                                <MdPhone className="text-[#bc6430]" />
-                                {address.phone}
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex gap-2 pt-3 border-t border-gray-100">
-                          <button onClick={() => openAddressModal(address)} className="flex-1 flex items-center justify-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] text-white px-4 py-2.5 rounded-lg transition-all duration-200 font-medium text-sm shadow-sm hover:shadow-md">
-                            <FaEdit className="text-sm" />
-                            <span>Edit</span>
-                          </button>
-                          <button onClick={() => handleDeleteAddress(address._id)} className="flex-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2.5 rounded-lg transition-all duration-200 font-medium text-sm shadow-sm hover:shadow-md">
-                            <FaTrash className="text-sm" />
-                            <span>Delete</span>
-                          </button>
-                        </div>
-                      </div>
-                    ))}
+                <span className="font-medium text-gray-700 group-hover:text-[#bc6430] transition-colors">View Orders</span>
+              </Link>
+              <Link to="/cart" className="flex items-center gap-4 p-3 bg-gray-50 hover:bg-orange-50 rounded-xl transition-colors group no-underline">
+                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-[#bc6430] group-hover:scale-110 transition-transform">
+                  <FaShoppingCart />
+                </div>
+                <span className="font-medium text-gray-700 group-hover:text-[#bc6430] transition-colors">View Cart</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="lg:col-span-8 xl:col-span-9 space-y-8">
+          {/* Personal Information */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8">
+            <h4 className="sita-sub-heading flex items-center gap-3 mb-8 border-b border-gray-100 pb-4">
+              <span className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-[#bc6430]">
+                <FaUser size={18} />
+              </span>
+              Personal Information
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="md:col-span-2">
+                <label className="block sita-label-text text-gray-700 mb-2">Email Address</label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                    <FaEnvelope />
                   </div>
+                  <input type="email" value={profile?.email || currentUser?.email || ""} disabled className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-500 cursor-not-allowed sita-body-text" />
+                </div>
+                <p className="text-xs text-gray-400 mt-2 ml-1">Email address cannot be changed for security reasons.</p>
+              </div>
+
+              <div>
+                <label className="block sita-label-text text-gray-700 mb-2">First Name</label>
+                {isEditing ? (
+                  <input type="text" name="firstName" value={formData.name.firstName} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-[#bc6430]/10 focus:border-[#bc6430] transition-all sita-body-text" placeholder="First Name" />
                 ) : (
-                  <div className="text-center py-12 text-gray-500 bg-gray-50 rounded-xl border-1 border-dashed border-gray-300">
-                    <FaMapMarkerAlt className="text-5xl mx-auto mb-3 opacity-30" />
-                    <p className="text-lg font-medium text-gray-600">No addresses saved yet</p>
-                    <p className="text-sm text-gray-500 mt-1">Click "Add Address" to get started</p>
+                  <div className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-gray-700 sita-body-text">{profile?.name?.firstName || "Not provided"}</div>
+                )}
+              </div>
+              <div>
+                <label className="block sita-label-text text-gray-700 mb-2">Last Name</label>
+                {isEditing ? (
+                  <input type="text" name="lastName" value={formData.name.lastName} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-[#bc6430]/10 focus:border-[#bc6430] transition-all sita-body-text" placeholder="Last Name" />
+                ) : (
+                  <div className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-gray-700 sita-body-text">{profile?.name?.lastName || "Not provided"}</div>
+                )}
+              </div>
+
+              <div>
+                <label className="block sita-label-text text-gray-700 mb-2">Username</label>
+                {isEditing ? (
+                  <input type="text" name="username" value={formData.username} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-[#bc6430]/10 focus:border-[#bc6430] transition-all sita-body-text" placeholder="Username" />
+                ) : (
+                  <div className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-gray-700 sita-body-text">{profile?.username || "Not provided"}</div>
+                )}
+              </div>
+
+              <div>
+                <label className="block sita-label-text text-gray-700 mb-2">Date of Birth</label>
+                {isEditing ? (
+                  <input type="date" name="dateOfBirth" value={formData.demographics.dateOfBirth} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-[#bc6430]/10 focus:border-[#bc6430] transition-all sita-body-text" />
+                ) : (
+                  <div className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-gray-700 sita-body-text">
+                    {profile?.demographics?.dateOfBirth ? new Date(profile.demographics.dateOfBirth).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }) : "Not provided"}
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <label className="block sita-label-text text-gray-700 mb-2">Primary Phone</label>
+                {isEditing ? (
+                  <input type="tel" name="primaryPhone" value={formData.phone.primary} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-[#bc6430]/10 focus:border-[#bc6430] transition-all sita-body-text" placeholder="Primary Phone" />
+                ) : (
+                  <div className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-gray-700 sita-body-text">{profile?.phone?.primary || "Not provided"}</div>
+                )}
+              </div>
+
+              <div>
+                <label className="block sita-label-text text-gray-700 mb-2">Secondary Phone</label>
+                {isEditing ? (
+                  <input type="tel" name="secondaryPhone" value={formData.phone.secondary} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-[#bc6430]/10 focus:border-[#bc6430] transition-all sita-body-text" placeholder="Secondary Phone (Optional)" />
+                ) : (
+                  <div className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-gray-700 sita-body-text">{profile?.phone?.secondary || "Not provided"}</div>
+                )}
+              </div>
+
+              <div>
+                <label className="block sita-label-text text-gray-700 mb-2">Gender</label>
+                {isEditing ? (
+                  <select name="gender" value={formData.demographics.gender} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-[#bc6430]/10 focus:border-[#bc6430] transition-all sita-body-text">
+                    <option value="prefer-not-to-say">Prefer not to say</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                ) : (
+                  <div className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl text-gray-700 capitalize sita-body-text">
+                    {profile?.demographics?.gender?.replace(/-/g, ' ') || "Not provided"}
                   </div>
                 )}
               </div>
             </div>
+          </div>
+
+          {/* Saved Addresses */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8">
+            <div className="flex items-center justify-between mb-8 border-b border-gray-100 pb-4">
+              <h4 className="sita-sub-heading flex items-center gap-3">
+                <span className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-[#bc6430]">
+                  <FaMapMarkerAlt size={18} />
+                </span>
+                Saved Addresses
+              </h4>
+              <button onClick={() => openAddressModal()} className="flex items-center gap-2 bg-[#C76F3B] hover:bg-[#A35427] text-white px-5 py-2.5 rounded-xl transition-all duration-200 font-medium text-sm shadow-sm hover:shadow-md hover:-translate-y-0.5">
+                <FaPlus className="text-xs" /> Add New
+              </button>
+            </div>
+
+            {profile?.addresses && profile.addresses.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {profile.addresses.map((address) => (
+                  <div key={address._id} className="group border border-gray-200 rounded-2xl p-6 hover:border-[#bc6430] hover:shadow-lg transition-all duration-300 relative bg-white flex flex-col h-full">
+                    {address.isDefault && (
+                      <span className="absolute top-4 right-4 bg-[#C76F3B] text-white text-[10px] uppercase font-bold px-3 py-1 rounded-full tracking-wider shadow-sm">Default</span>
+                    )}
+                    <div className="mb-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center text-[#bc6430] text-xs">
+                          <FaMapMarkerAlt />
+                        </span>
+                        <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">{address.type}</span>
+                      </div>
+                      <h3 className="font-bold text-gray-800 text-lg">{address.fullName}</h3>
+                    </div>
+
+                    <div className="space-y-1 mb-6 flex-grow">
+                      <p className="text-gray-600 leading-relaxed text-sm">{address.addressLine1}</p>
+                      {address.addressLine2 && <p className="text-gray-600 leading-relaxed text-sm">{address.addressLine2}</p>}
+                      <p className="text-gray-800 font-medium mt-2 text-sm">
+                        {address.city}, {address.state} - {address.postalCode}
+                      </p>
+                      <p className="text-gray-500 text-sm">{address.country}</p>
+
+                      {address.phone && (
+                        <div className="pt-3 mt-3 border-t border-gray-50 flex items-center gap-2 text-sm text-gray-600">
+                          <MdPhone className="text-[#bc6430]" /> {address.phone}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex gap-3 pt-4 border-t border-gray-100 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200">
+                      <button onClick={() => openAddressModal(address)} className="flex-1 flex items-center justify-center gap-2 bg-gray-50 hover:bg-[#C76F3B] text-gray-700 hover:text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium text-sm">
+                        <FaEdit /> Edit
+                      </button>
+                      <button onClick={() => handleDeleteAddress(address._id)} className="flex-1 flex items-center justify-center gap-2 bg-gray-50 hover:bg-red-50 text-gray-700 hover:text-red-600 px-4 py-2 rounded-lg transition-all duration-200 font-medium text-sm">
+                        <FaTrash /> Delete
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-16 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 group hover:border-[#bc6430]/30 transition-colors">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm text-gray-300 group-hover:text-[#bc6430] transition-colors">
+                  <FaMapMarkerAlt className="text-2xl" />
+                </div>
+                <h5 className="text-lg font-semibold text-gray-800 mb-1">No addresses saved yet</h5>
+                <p className="text-gray-500 text-sm mb-6 max-w-xs mx-auto">Add your delivery addresses here to make checkout faster and easier.</p>
+                <button onClick={() => openAddressModal()} className="inline-flex items-center gap-2 text-[#bc6430] font-semibold hover:underline">
+                  <FaPlus className="text-xs" /> Add your first address
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -693,8 +686,9 @@ const UserDashboard = () => {
             </div>
           </div>
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 };
 
