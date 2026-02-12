@@ -153,7 +153,7 @@ const ArticleDetailPage = () => {
         <div className="max-w-8xl mx-auto py-0 text-center flex flex-col justify-center items-center px-4">
           <div className="max-w-6xl mx-auto px-4 text-center">
             <h1
-              className="font-serifSita text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center"
+              className="font-pt-serif text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center"
               data-aos="zoom-in"
               data-aos-duration="1300">
               {article.title}
