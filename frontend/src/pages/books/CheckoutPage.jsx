@@ -1352,7 +1352,7 @@ const CheckoutPage = () => {
                         Processing Payment...
                       </span>
                     ) : (
-                      `Proceed to Payment • ₹${finalAmount.toFixed(2)}`
+                      `Proceed to Payment • $${finalAmount.toFixed(2)}`
                     )}
                   </button>
                 </div>
@@ -1409,12 +1409,12 @@ const CheckoutPage = () => {
                             </span>
                             <div className="text-right">
                               <p className="text-sm font-bold text-gray-800">
-                                ₹{(item.newPrice * item.qty).toFixed(2)}
+                                ${(item.newPrice * item.qty).toFixed(2)}
                               </p>
                               {item.oldPrice &&
                                 item.oldPrice > item.newPrice && (
                                   <p className="text-xs text-gray-500 line-through">
-                                    ₹{(item.oldPrice * item.qty).toFixed(2)}
+                                    ${(item.oldPrice * item.qty).toFixed(2)}
                                   </p>
                                 )}
                             </div>
@@ -1428,7 +1428,7 @@ const CheckoutPage = () => {
                   <div className="flex justify-between text-gray-600 font-montserrat">
                     <span>Subtotal</span>
                     <span className="font-medium">
-                      ₹{originalTotal.toFixed(2)}
+                      ${originalTotal.toFixed(2)}
                     </span>
                   </div>
                   {discount > 0 && (
@@ -1447,7 +1447,7 @@ const CheckoutPage = () => {
                         Discount
                       </span>
                       <span className="font-semibold">
-                        -₹{discount.toFixed(2)}
+                        -${discount.toFixed(2)}
                       </span>
                     </div>
                   )}
@@ -1463,7 +1463,7 @@ const CheckoutPage = () => {
                     <span className="font-semibold text-green-600">
                       {shippingCharge === 0
                         ? "Enter pincode"
-                        : `₹${(shippingCharge || 0).toFixed(2)}`}
+                        : `$${(shippingCharge || 0).toFixed(2)}`}
                     </span>
                   </div>
 
@@ -1481,14 +1481,14 @@ const CheckoutPage = () => {
                         Gift Wrapping
                       </span>
                       <span className="font-semibold text-orange-600">
-                        ₹{(giftWrapCharge || 0).toFixed(2)}
+                        ${(giftWrapCharge || 0).toFixed(2)}
                       </span>
                     </div>
                   )}
                   <div className="flex justify-between text-xl font-bold text-gray-900 pt-3 border-t-2 border-gray-300">
                     <span>Total</span>
                     <span className="text-[#C76F3B]">
-                      ₹{(finalAmount || 0).toFixed(2)}
+                      ${(finalAmount || 0).toFixed(2)}
                     </span>
                   </div>
                 </div>

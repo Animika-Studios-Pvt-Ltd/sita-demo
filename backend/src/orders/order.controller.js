@@ -359,8 +359,8 @@ const shippingInfo = await calculateShippingCharge(
     console.log('   Guest Order:', savedOrder.isGuestOrder);
     console.log('   Guest Code:', guestOrderCode);
     console.log('   Payment Status:', savedOrder.paymentStatus);
-    console.log('   Total:', '₹' + savedOrder.totalPrice);
-    console.log('   Shipping:', '₹' + savedOrder.shippingCharge);
+    console.log('   Total:', '$' + savedOrder.totalPrice);
+    console.log('   Shipping:', '$' + savedOrder.shippingCharge);
 
     // ✅ UPDATED: Create shipment with Nimbuspost after order is saved
     const shipmentInfo = await createShipmentWithNimbuspost(orderData, shippingInfo);

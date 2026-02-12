@@ -24,7 +24,7 @@ const BookCard = ({ book }) => {
                         <h3 className="text-xl font-semibold hover:text-blue-600 mb-3">{book?.title}</h3>
                     </Link>
                     <p className="text-gray-600 mb-5">{book?.description.length > 80 ? `${book.description.slice(0, 80)}...` : book?.description}</p>
-                    <p className="font-medium mb-5">₹{book?.newPrice} <span className="line-through font-normal ml-2">₹{book?.oldPrice}</span>{book?.oldPrice > book?.newPrice && (<span className="text-sm font-semibold text-red-500">({Math.round(((book.oldPrice - book.newPrice) / book.oldPrice) * 100)}% OFF)</span>)}</p>
+                    <p className="font-medium mb-5">${book?.newPrice} <span className="line-through font-normal ml-2">${book?.oldPrice}</span>{book?.oldPrice > book?.newPrice && (<span className="text-sm font-semibold text-red-500">({Math.round(((book.oldPrice - book.newPrice) / book.oldPrice) * 100)}% OFF)</span>)}</p>
                     <button onClick={() => handleAddToCart(book)} className="btn-primary px-6 space-x-1 flex items-center gap-1 "><FiShoppingCart className="" /><span>Add to Cart</span></button>
                 </div>
             </div>

@@ -184,11 +184,11 @@ const CartPage = () => {
                           {Number(product?.oldPrice) >
                             Number(product?.newPrice) && (
                               <span className="text-gray-500 line-through text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] xl:text-[16px] font-Figtree font-regular">
-                                ₹{product?.oldPrice}
+                                ${product?.oldPrice}
                               </span>
                             )}
                           <span className="text-black font-Figtree font-bold text-[14px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[18px] flex items-center">
-                            ₹{product?.newPrice}
+                            ${product?.newPrice}
                           </span>
                           {Number(product?.oldPrice) >
                             Number(product?.newPrice) && (
@@ -279,7 +279,7 @@ const CartPage = () => {
                         ? "s"
                         : ""}
                     </span>
-                    ): ₹<span className="font-bold">{subtotal.toFixed(2)}</span>
+                    ): $<span className="font-bold">{subtotal.toFixed(2)}</span>
                   </p>
                 </div>
               </ul>
@@ -382,19 +382,19 @@ const CartPage = () => {
                   <span>
                     Price ({cartItems.reduce((a, b) => a + b.qty, 0)} items)
                   </span>
-                  <span>₹ {originalTotal.toFixed(2)}</span>
+                  <span>$ {originalTotal.toFixed(2)}</span>
                 </div>
                 <div className="flex font-montserrat justify-between text-green-600 text-[14px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[18px]">
                   <span>Discount</span>
-                  <span>- ₹ {discount.toFixed(2)}</span>
+                  <span>- $ {discount.toFixed(2)}</span>
                 </div>
                 <hr />
                 <div className="flex font-montserrat font-medium justify-between font-semibold text-gray-900 text-[14px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[18px]">
                   <span>Total Amount</span>
-                  <span>₹ {finalAmount.toFixed(2)}</span>
+                  <span>$ {finalAmount.toFixed(2)}</span>
                 </div>
                 <p className="text-green-600 text-[14px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[18px]">
-                  You will save ₹ {discount.toFixed(2)} on this order
+                  You will save $ {discount.toFixed(2)} on this order
                 </p>
                 <Link
                   to="/checkout"

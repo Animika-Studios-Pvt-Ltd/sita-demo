@@ -172,12 +172,12 @@ const Publications = () => {
                       <div className="inline-flex justify-center items-center gap-2 w-full flex-wrap md:flex-nowrap mb-3">
                         {book?.oldPrice > book?.newPrice && (
                           <span className="text-gray-500 line-through text-base sm:text-lg md:text-lg lg:text-xl font-montserrat font-light">
-                            ₹{book?.oldPrice}
+                            ${book?.oldPrice}
                           </span>
                         )}
 
                         <span className="text-[#993333] font-montserrat font-light text-lg sm:text-xl md:text-xl lg:text-2xl font-semibold">
-                          ₹{book?.newPrice}
+                          ${book?.newPrice}
                         </span>
 
                         {book?.oldPrice > book?.newPrice && (

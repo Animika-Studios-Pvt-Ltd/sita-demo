@@ -985,11 +985,11 @@ function BooksSection({ content }) {
             <div className="inline-flex justify-center items-center gap-2 w-full flex-wrap md:flex-nowrap mb-3 mt-auto">
               {book?.oldPrice > book?.newPrice && (
                 <span className="text-gray-500 line-through text-base sm:text-lg font-figtree font-light">
-                  ₹{book?.oldPrice}
+                  ${book?.oldPrice}
                 </span>
               )}
               <span className="text-[#993333] font-figtree font-light text-lg sm:text-xl font-semibold">
-                ₹{book?.newPrice}
+                ${book?.newPrice}
               </span>
               {book?.oldPrice > book?.newPrice && (
                 <span className="text-xs sm:text-sm bg-[#993333] text-white px-1.5 py-0.5 font-figtree font-light rounded-sm">

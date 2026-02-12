@@ -72,8 +72,8 @@ async function sendOrderPlacedEmailCustomer(order) {
       <tr>
         <td style="padding: 12px; border-bottom: 1px solid #eee;">${item.title}</td>
         <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">${item.quantity}</td>
-        <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: right;">₹${item.price.toFixed(2)}</td>
-        <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: right;">₹${(item.quantity * item.price).toFixed(2)}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: right;">$${item.price.toFixed(2)}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: right;">$${(item.quantity * item.price).toFixed(2)}</td>
       </tr>
     `).join('');
 
@@ -130,7 +130,7 @@ async function sendOrderPlacedEmailCustomer(order) {
               </table>
               
               <div style="margin-top: 20px; padding-top: 15px; border-top: 2px solid #667eea; text-align: right;">
-                <p style="margin: 5px 0; font-size: 18px;"><strong>Total Amount:</strong> <span style="color: #667eea; font-size: 24px;">₹${order.totalPrice.toFixed(2)}</span></p>
+                <p style="margin: 5px 0; font-size: 18px;"><strong>Total Amount:</strong> <span style="color: #667eea; font-size: 24px;">$${order.totalPrice.toFixed(2)}</span></p>
               </div>
             </div>
 
@@ -195,7 +195,7 @@ async function sendOrderPlacedEmailAdmin(order) {
       <tr>
         <td style="padding: 12px; border-bottom: 1px solid #eee;">${item.title}</td>
         <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">${item.quantity}</td>
-        <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: right;">₹${(item.quantity * item.price).toFixed(2)}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: right;">$${(item.quantity * item.price).toFixed(2)}</td>
       </tr>
     `).join('');
 
@@ -242,7 +242,7 @@ async function sendOrderPlacedEmailAdmin(order) {
               </table>
               
               <div style="margin-top: 20px; padding-top: 15px; border-top: 2px solid #dc3545; text-align: right;">
-                <p style="margin: 5px 0; font-size: 18px;"><strong>Total Amount:</strong> <span style="color: #dc3545; font-size: 24px;">₹${order.totalPrice.toFixed(2)}</span></p>
+                <p style="margin: 5px 0; font-size: 18px;"><strong>Total Amount:</strong> <span style="color: #dc3545; font-size: 24px;">$${order.totalPrice.toFixed(2)}</span></p>
               </div>
             </div>
 
@@ -318,10 +318,10 @@ async function sendShippedEmail(order) {
           <div style="flex: 1;">
             <p style="margin: 0 0 5px 0; font-weight: bold; color: #333; font-size: 15px;">${title}</p>
             ${author ? `<p style="margin: 0 0 5px 0; font-size: 13px; color: #888; font-style: italic;">by ${author}</p>` : ''}
-            <p style="margin: 0; font-size: 14px; color: #666;">Qty: ${quantity} × ₹${price.toFixed(2)}</p>
+            <p style="margin: 0; font-size: 14px; color: #666;">Qty: ${quantity} × $${price.toFixed(2)}</p>
           </div>
           <div style="text-align: right; font-weight: bold; color: #28a745;">
-            ₹${(quantity * price).toFixed(2)}
+            $${(quantity * price).toFixed(2)}
           </div>
         </div>
       `;
@@ -396,7 +396,7 @@ async function sendShippedEmail(order) {
                 </tr>
                 <tr>
                   <td style="padding: 12px 0 0 0;"><strong>Total Amount:</strong></td>
-                  <td style="padding: 12px 0 0 0; text-align: right; font-size: 18px; font-weight: bold; color: #28a745;">₹${order.totalPrice.toFixed(2)}</td>
+                  <td style="padding: 12px 0 0 0; text-align: right; font-size: 18px; font-weight: bold; color: #28a745;">$${order.totalPrice.toFixed(2)}</td>
                 </tr>
               </table>
             </div>
@@ -515,7 +515,7 @@ async function sendDeliveredEmail(order) {
                 </tr>
                 <tr>
                   <td style="padding: 12px 0 0 0;"><strong>Total Amount:</strong></td>
-                  <td style="padding: 12px 0 0 0; text-align: right; font-size: 18px; font-weight: bold; color: #28a745;">₹${order.totalPrice.toFixed(2)}</td>
+                  <td style="padding: 12px 0 0 0; text-align: right; font-size: 18px; font-weight: bold; color: #28a745;">$${order.totalPrice.toFixed(2)}</td>
                 </tr>
               </table>
             </div>
@@ -600,7 +600,7 @@ async function sendCancelledEmail(order, reason) {
 
             <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
               <h3 style="margin: 0 0 15px 0; color: #333;">Refund Information</h3>
-              <p style="margin: 5px 0;"><strong>Order Amount:</strong> ₹${order.totalPrice.toFixed(2)}</p>
+              <p style="margin: 5px 0;"><strong>Order Amount:</strong> $${order.totalPrice.toFixed(2)}</p>
               <p style="margin: 5px 0;"><strong>Refund Status:</strong> <span style="color: #ffc107; font-weight: bold;">Processing</span></p>
               <p style="margin: 15px 0 0 0; font-size: 14px; color: #666;">
                 Your refund will be processed within 5-7 business days to your original payment method.
@@ -752,7 +752,7 @@ async function sendReturnRequestedEmail(order) {
                 <p style="margin: 5px 0;"><strong>Customer:</strong> ${order.name}</p>
                 <p style="margin: 5px 0;"><strong>Email:</strong> ${order.email}</p>
                 <p style="margin: 5px 0;"><strong>Phone:</strong> ${order.phone}</p>
-                <p style="margin: 5px 0;"><strong>Order Amount:</strong> ₹${order.totalPrice.toFixed(2)}</p>
+                <p style="margin: 5px 0;"><strong>Order Amount:</strong> $${order.totalPrice.toFixed(2)}</p>
               </div>
 
               <div style="background: #fff3cd; padding: 20px; border-radius: 8px; border-left: 4px solid #ff9800;">
@@ -831,7 +831,7 @@ async function sendReturnApprovedEmail(order) {
 
               <div style="background: #e3f2fd; padding: 20px; margin-top: 20px; border-radius: 8px; border-left: 4px solid #2196f3;">
                 <h3 style="margin: 0 0 10px 0; color: #1565c0;">💰 Refund Information</h3>
-                <p style="margin: 5px 0;"><strong>Refund Amount:</strong> ₹${order.totalPrice.toFixed(2)}</p>
+                <p style="margin: 5px 0;"><strong>Refund Amount:</strong> $${order.totalPrice.toFixed(2)}</p>
                 <p style="margin: 5px 0; font-size: 14px; color: #1565c0;">
                   Refund will be credited within 5-7 business days after return verification.
                 </p>
@@ -1342,7 +1342,7 @@ async function sendBookingConfirmationEmail(booking) {
                                               </div>
                                             ` : ''}
 
-                                            <p style="margin: 5px 0;"><strong>Amount Paid:</strong> <span style="color: #28a745; font-weight: bold;">₹${booking.totalAmount}</span></p>
+                                            <p style="margin: 5px 0;"><strong>Amount Paid:</strong> <span style="color: #28a745; font-weight: bold;">$${booking.totalAmount}</span></p>
                                             <p style="margin: 5px 0;"><strong>Booking ID:</strong> #${booking._id.toString().slice(-6).toUpperCase()}</p>
                                           </div>
 

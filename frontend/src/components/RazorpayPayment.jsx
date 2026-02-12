@@ -68,7 +68,7 @@ const RazorpayPayment = ({
       onClick={handlePayment}
       className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 font-semibold shadow-md transition-transform transform hover:-translate-y-0.5"
     >
-      Pay ₹{amount}
+      Pay ${amount}
     </button>
   );
 };

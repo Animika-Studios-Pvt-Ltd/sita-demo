@@ -298,7 +298,7 @@ const BookingEvent = () => {
             </button>
           </div>
           <span className="text-sm text-gray-500">
-            ({(event.fees && event.fees !== "Free") ? `Est. Total: ₹${(parseInt(event.fees) || 0) * seats}` : "Free Event"})
+            ({(event.fees && event.fees !== "Free") ? `Est. Total: $${(parseInt(event.fees) || 0) * seats}` : "Free Event"})
             <br />
             <span className="text-xs text-orange-500">
               Max slots: {event.availability} | Current: {seats}

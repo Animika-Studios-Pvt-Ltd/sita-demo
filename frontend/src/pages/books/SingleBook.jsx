@@ -580,10 +580,10 @@ const SingleBook = () => {
                 data-aos-duration="1200"
                 data-aos-delay="300">
                 {hasDiscount && (
-                  <span className="old-price">₹ {book.oldPrice}</span>
+                  <span className="old-price">$ {book.oldPrice}</span>
                 )}
 
-                <span className="current-price">₹ {book.newPrice}</span>
+                <span className="current-price">$ {book.newPrice}</span>
 
                 {hasDiscount && (
                   <span className="discount">
@@ -849,11 +849,11 @@ const SingleBook = () => {
                           <p>
                             {bookHasDiscount && (
                               <span className="old-price">
-                                ₹ {book.oldPrice}
+                                $ {book.oldPrice}
                               </span>
                             )}{" "}
                             <span className="current-price">
-                              ₹ {book.newPrice}
+                              $ {book.newPrice}
                             </span>{" "}
                             {bookHasDiscount && (
                               <span className="discount">

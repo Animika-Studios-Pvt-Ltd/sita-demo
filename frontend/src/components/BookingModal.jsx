@@ -260,7 +260,7 @@ const BookingModal = ({ isOpen, onClose, eventId }) => {
                                 <div className="text-center py-6">
                                     <div className="mb-6">
                                         <p className="text-gray-600 mb-2">Total Amount</p>
-                                        <p className="text-4xl font-extrabold text-indigo-900">₹{orderData?.amount}</p>
+                                        <p className="text-4xl font-extrabold text-indigo-900">${orderData?.amount}</p>
                                     </div>
 
                                     <p className="mb-8 text-gray-600 text-sm px-6">
@@ -313,7 +313,7 @@ const BookingModal = ({ isOpen, onClose, eventId }) => {
                                 <div className="flex items-center justify-between mb-3">
                                     <span className="text-sm font-medium text-gray-600">Total Amount</span>
                                     <span className="text-xl font-black text-indigo-700">
-                                        ₹{event.price * form.seats}
+                                        ${event.price * form.seats}
                                     </span>
                                 </div>
                                 <button

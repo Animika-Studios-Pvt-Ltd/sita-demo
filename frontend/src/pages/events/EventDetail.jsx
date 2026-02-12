@@ -126,7 +126,7 @@ const EventDetail = () => {
                         <div>
                             <h3 className="text-gray-500 uppercase text-xs font-bold tracking-wider mb-1">Price</h3>
                             <p className="text-2xl font-bold text-indigo-600">
-                                {event.price > 0 ? `₹${event.price}` : "Free"}
+                                {event.price > 0 ? `$${event.price}` : "Free"}
                             </p>
                         </div>
                         <div>
@@ -196,7 +196,7 @@ const EventDetail = () => {
                                         type="submit"
                                         className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg transition"
                                     >
-                                        Proceed to Payment (₹{event.price * bookingForm.seats})
+                                        Proceed to Payment (${event.price * bookingForm.seats})
                                     </button>
                                 </div>
                             </form>
@@ -206,7 +206,7 @@ const EventDetail = () => {
                             <div className="text-center py-6">
                                 <p className="mb-6 text-gray-600">
                                     Please complete your payment of
-                                    <span className="font-bold text-gray-900 mx-1">₹{orderData.amount}</span>
+                                    <span className="font-bold text-gray-900 mx-1">${orderData.amount}</span>
                                     to confirm your booking.
                                 </p>
                                 <RazorpayPayment

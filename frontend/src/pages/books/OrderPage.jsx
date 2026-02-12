@@ -316,7 +316,7 @@ const OrderPage = () => {
                       <span className="flex-1">
                         {item.title} -{" "}
                         <span className="font-semibold">
-                          ₹{item.price} × {item.quantity}
+                          ${item.price} × {item.quantity}
                         </span>
                       </span>
                     </div>
@@ -362,7 +362,7 @@ const OrderPage = () => {
                 className="flex items-center gap-2 text-lg sm:text-xl font-semibold text-gray-900 mt-0"
                 data-aos="fade-up"
                 data-aos-delay="400">
-                <PaymentOutlinedIcon fontSize="small" /> Total Price : ₹
+                <PaymentOutlinedIcon fontSize="small" /> Total Price : $
                 {order.totalPrice}
               </p>
 

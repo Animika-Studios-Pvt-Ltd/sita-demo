@@ -79,7 +79,7 @@ const EventList = () => {
                                     <div>
                                         <span className="block text-xs text-gray-500">Price</span>
                                         <span className="text-lg font-bold text-indigo-700">
-                                            {event.price > 0 ? `₹${event.price}` : "Free"}
+                                            {event.price > 0 ? `$${event.price}` : "Free"}
                                         </span>
                                     </div>
 

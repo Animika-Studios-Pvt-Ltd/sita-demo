@@ -17411,7 +17411,7 @@ var prefixes = {
   "฿": "baht",
   "₭": "kip",
   "₩": "won",
-  "₹": "rupees",
+  "$": "rupees",
   "₽": "ruble",
   "₺": "liras"
 };

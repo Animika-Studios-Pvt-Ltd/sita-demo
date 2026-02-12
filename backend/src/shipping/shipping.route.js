@@ -109,7 +109,7 @@ const getRealTimeShippingRates = async (origin, destination, weight, orderAmount
       availableCouriers.sort((a, b) => parseFloat(a.total_charges) - parseFloat(b.total_charges));
 
       console.log(`✅ Found ${availableCouriers.length} courier options (${ekartCouriers.length} Ekart)`);
-      console.log(`💰 Cheapest: ${availableCouriers[0]?.name} - ₹${availableCouriers[0]?.total_charges}`);
+      console.log(`💰 Cheapest: ${availableCouriers[0]?.name} - $${availableCouriers[0]?.total_charges}`);
 
       return {
         success: true,
@@ -303,11 +303,11 @@ router.post('/calculate-shipping', async (req, res) => {
 
     console.log('💰 Real-time calculation breakdown:');
     console.log('   Courier:', result.courier.name, '(ID:', result.courier.id + ')');
-    console.log('   Nimbuspost Base: ₹', result.breakdown.baseCharge);
-    console.log('   Commission (7%): ₹', result.breakdown.commission);
-    console.log('   Subtotal: ₹', result.breakdown.subtotal);
-    console.log('   GST (18%): ₹', result.breakdown.gst);
-    console.log('   Final Amount: ₹', result.breakdown.finalAmount);
+    console.log('   Nimbuspost Base: $', result.breakdown.baseCharge);
+    console.log('   Commission (7%): $', result.breakdown.commission);
+    console.log('   Subtotal: $', result.breakdown.subtotal);
+    console.log('   GST (18%): $', result.breakdown.gst);
+    console.log('   Final Amount: $', result.breakdown.finalAmount);
 
     return res.json({
       success: true,
