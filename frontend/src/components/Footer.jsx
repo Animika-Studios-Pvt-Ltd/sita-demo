@@ -40,6 +40,21 @@ const Footer = () => {
     fetchBlogs();
   }, []);
 
+  // Fetch Dynamic Navigation
+  const [dynamicNav, setDynamicNav] = useState([]);
+
+  useEffect(() => {
+    fetch(`${BACKEND_BASE_URL}/api/cms/navigation`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch navigation");
+        return res.json();
+      })
+      .then((data) => {
+        setDynamicNav(data.filter((p) => p.addToFooter));
+      })
+      .catch((err) => console.error("Error fetching navigation:", err));
+  }, []);
+
   // Carousel Auto-Play Logic
   useEffect(() => {
     if (recentBooks.length <= 1) return;
@@ -82,6 +97,13 @@ const Footer = () => {
             <Link to="/blogs">Blogs</Link>
             <a href="/articles">Articles</a>
             <a href="/podcasts">Podcasts</a>
+            {/* Dynamic Footer Links */}
+            {dynamicNav.length > 0 &&
+              dynamicNav.map((page) => (
+                <Link key={page._id || page.slug} to={`/${page.slug}`}>
+                  {page.navigationTitle || page.title || page.slug.replace(/-/g, " ")}
+                </Link>
+              ))}
           </div>
           <div className="footer-col footer-col-publications footer-publication">
             <h6 className="footer-title">PUBLICATIONS</h6>

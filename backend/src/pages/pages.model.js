@@ -51,6 +51,18 @@ const cmsPageSchema = new mongoose.Schema(
       default: null,
     },
 
+    // Navigation and Metadata
+    addToHeader: { type: Boolean, default: false },
+    addToFooter: { type: Boolean, default: false },
+    headerPosition: { type: mongoose.Schema.Types.Mixed, default: 0 },
+    headerRow: { type: String, enum: ["top", "bottom"], default: "bottom" },
+    headerParent: { type: String, default: null }, // "sitaFactor", "workshops", or slug of parent
+    navigationTitle: { type: String, default: "" }, // NEW: Overrides title in menus
+    isDropdownParent: { type: Boolean, default: false }, // NEW: If true, this page acts as a dropdown menu
+    footerPosition: { type: Number, default: 0 },
+    order: { type: Number, default: 0 }, // General ordering fallback
+    title: { type: String }, // For display in menus if different from slug/page title
+
     createdBy: { type: String, required: true },
     updatedAt: { type: Date, default: Date.now },
   },

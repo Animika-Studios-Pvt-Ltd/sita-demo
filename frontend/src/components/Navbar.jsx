@@ -58,14 +58,50 @@ const Navbar = () => {
       pathname.startsWith("/my-orders") ||
       pathname.startsWith("/ebook"));
 
+  // Helper for Title Case
+  const toTitleCase = (str) => {
+    return str ? str.replace(/\w\S*/g, (txt) => {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    }) : "";
+  };
+
   useEffect(() => {
     setIsNavCollapsed(true);
     setActiveDropdown(null);
   }, [location]);
 
+  // Fetch Dynamic Navigation
+  const [dynamicNav, setDynamicNav] = useState([]);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/cms/navigation`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch navigation");
+        return res.json();
+      })
+      .then((data) => {
+        setDynamicNav(data.filter((p) => p.addToHeader));
+      })
+      .catch((err) => console.error("Error fetching navigation:", err));
+  }, []);
+
   useEffect(() => {
     setImgError(false);
   }, [currentUser?.picture]);
+
+  // Categorize Dynamic Pages
+  // Categorize Dynamic Pages
+  const moreLabelPage = dynamicNav.find(p => p.slug === 'nav-more');
+  const overflowLabel = moreLabelPage ? (moreLabelPage.title || "More") : "More";
+
+  const topRowPages = dynamicNav.filter(p => p.headerRow === "top" && p.slug !== 'nav-more');
+  const bottomRowPages = dynamicNav.filter(p => p.headerRow !== "top" && !p.headerParent && !p.isDropdownParent && p.slug !== 'nav-more');
+  const sitaFactorPages = dynamicNav.filter(p => p.headerParent === "sitaFactor");
+  const workshopPages = dynamicNav.filter(p => p.headerParent === "workshops");
+
+  // Custom Dynamic Dropdowns
+  const customDropdownParents = dynamicNav.filter(p => p.isDropdownParent && p.headerRow !== "top");
+  const getChildrenForParent = (parentSlug) => dynamicNav.filter(p => p.headerParent === parentSlug);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -73,9 +109,7 @@ const Navbar = () => {
         setActiveDropdown(null);
       }
     };
-
     document.addEventListener("click", handleClickOutside);
-
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
@@ -273,6 +307,76 @@ const Navbar = () => {
                   )}
                 </li>
 
+                {/* DYNAMIC TOP ROW PAGES */}
+                {/* DYNAMIC TOP ROW PAGES */}
+                {(() => {
+                  // Helper for Top Row Logic specific rendering
+                  const truncateLabel = (str) => {
+                    const label = str || "";
+                    // "number of alphabets, it should be only 7 accepted"
+                    return label.length > 7 ? label.substring(0, 7) + "..." : label;
+                  };
+
+                  // Logic: "no more than 2 can be in the root level"
+                  // If we have > 2 pages, we show 1 page + 1 "More" dropdown.
+                  // If we have <= 2 pages, we show them as is.
+                  // BUT user said "Dropdown Menu is also counted in the 2".
+                  // So:
+                  // 1. [Page 1] [Page 2] (Total 2)
+                  // 2. [Page 1] [More Dropdown] (Total 2, dropdown contains Page 2, Page 3...)
+
+                  let visiblePages = topRowPages;
+                  let overflowPages = [];
+
+                  if (topRowPages.length > 2) {
+                    visiblePages = topRowPages.slice(0, 1);
+                    overflowPages = topRowPages.slice(1);
+                  }
+
+                  return (
+                    <>
+                      {visiblePages.map((page) => (
+                        <li className="nav-item" key={page._id || page.slug}>
+                          <Link
+                            to={`/${page.slug}`}
+                            className={`nav-link ${pathname === `/${page.slug}` ? "active" : ""}`}
+                            style={{ fontSize: "0.85rem", fontWeight: 500 }}
+                          >
+                            {truncateLabel(toTitleCase(page.navigationTitle || page.title || page.slug.replace(/-/g, " ")))}
+                          </Link>
+                        </li>
+                      ))}
+
+                      {overflowPages.length > 0 && (
+                        <li className="nav-item dropdown">
+                          <a
+                            className="nav-link dropdown-toggle"
+                            href="#"
+                            role="button"
+                            style={{ fontSize: "0.85rem", fontWeight: 500 }}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              toggleDropdown("topRowOverflow", e);
+                            }}
+                          >
+                            {toTitleCase(overflowLabel)}
+                          </a>
+                          <ul className={`dropdown-menu ${activeDropdown === "topRowOverflow" ? "show" : ""} dropdown-menu-end`}>
+                            {overflowPages.map((page) => (
+                              <li key={page._id || page.slug}>
+                                <Link className="dropdown-item" to={`/${page.slug}`}>
+                                  {toTitleCase(page.navigationTitle || page.title || page.slug.replace(/-/g, " "))}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </li>
+                      )}
+                    </>
+                  );
+                })()}
+
                 {/* Cart Logic - Conditionally visible */}
                 {showCartIcon && (
                   <li className="nav-item">
@@ -355,6 +459,14 @@ const Navbar = () => {
                         Release Karmic Patterns
                       </Link>
                     </li>
+                    {/* Dynamic Sita Factor Pages */}
+                    {sitaFactorPages.map((page) => (
+                      <li key={page._id || page.slug}>
+                        <Link className="dropdown-item" to={`/${page.slug}`}>
+                          {toTitleCase(page.navigationTitle || page.title || page.slug.replace(/-/g, " "))}
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </li>
 
@@ -405,8 +517,54 @@ const Navbar = () => {
                         Calendar
                       </Link>
                     </li>
+                    {/* Dynamic Workshop Pages */}
+                    {workshopPages.map((page) => (
+                      <li key={page._id || page.slug}>
+                        <Link className="dropdown-item" to={`/${page.slug}`}>
+                          {toTitleCase(page.navigationTitle || page.title || page.slug.replace(/-/g, " "))}
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </li>
+
+
+
+                {/* CUSTOM DYNAMIC DROPDOWNS */}
+                {customDropdownParents.map((parent) => (
+                  <li
+                    key={parent._id || parent.slug}
+                    className={`nav-item dropdown ${activeDropdown === parent.slug ? "show" : ""}`}
+                  >
+                    <a
+                      className={`nav-link dropdown-toggle ${pathname.startsWith("/" + parent.slug) ? "active" : ""}`}
+                      href="#"
+                      role="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleDropdown(parent.slug, e);
+                      }}
+                    >
+                      {(parent.navigationTitle || parent.title || parent.slug).toUpperCase().replace(/-/g, " ")}
+                    </a>
+
+                    <ul
+                      className={`dropdown-menu ${activeDropdown === parent.slug ? "show" : ""}`}
+                    >
+
+
+                      {/* Children Pages */}
+                      {getChildrenForParent(parent.slug).map((child) => (
+                        <li key={child._id || child.slug}>
+                          <Link className="dropdown-item" to={`/${child.slug}`}>
+                            {toTitleCase(child.navigationTitle || child.title || child.slug.replace(/-/g, " "))}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
 
                 {/* PUBLICATIONS */}
                 <li className="nav-item">
@@ -416,6 +574,30 @@ const Navbar = () => {
                     PUBLICATIONS
                   </Link>
                 </li>
+
+                {/* DYNAMIC BOTTOM ROW PAGES */}
+                {bottomRowPages.map((page) => (
+                  <li className="nav-item" key={page._id || page.slug}>
+                    <Link
+                      to={`/${page.slug}`}
+                      className={`nav-link ${pathname === `/${page.slug}` ? "active" : ""}`}
+                    >
+                      {(page.navigationTitle || page.title || page.slug).toUpperCase().replace(/-/g, " ")}
+                    </Link>
+                  </li>
+                ))}
+
+                {/* DYNAMIC TOP ROW PAGES (Mobile Only) */}
+                {topRowPages.map((page) => (
+                  <li className="nav-item d-lg-none" key={`mobile-${page._id || page.slug}`}>
+                    <Link
+                      to={`/${page.slug}`}
+                      className={`nav-link ${pathname === `/${page.slug}` ? "active" : ""}`}
+                    >
+                      {toTitleCase(page.navigationTitle || page.title || page.slug.replace(/-/g, " "))}
+                    </Link>
+                  </li>
+                ))}
 
                 {/* Contact Us - MOBILE ONLY (d-lg-none) - At Bottom */}
                 <li className="nav-item d-lg-none">
@@ -428,7 +610,7 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-    </header>
+    </header >
   );
 };
 

@@ -59,6 +59,21 @@ async function syncEventImage(page) {
   }
 }
 
+async function getNavigationPages(req, res) {
+  try {
+    const pages = await Page.find({
+      $or: [{ addToHeader: true }, { addToFooter: true }]
+    })
+      .select("title slug addToHeader addToFooter headerPosition headerRow headerParent isDropdownParent footerPosition order navigationTitle")
+      .sort({ order: 1, headerPosition: 1, footerPosition: 1 });
+
+    return res.status(200).json(pages);
+  } catch (error) {
+    console.error("Error fetching navigation pages:", error);
+    return res.status(500).json({ error: "Failed to fetch navigation pages" });
+  }
+}
+
 async function handleImageUpload(file, defaultAlt = "Uploaded Image") {
   if (!file || !file.buffer) return null;
   const result = await uploadToCloudinary(file.buffer, "pages");
@@ -187,6 +202,18 @@ async function updatePage(req, res) {
     page.createdFrom = data.createdFrom || page.createdFrom; // Ensure createdFrom is updated
     page.parentHeader = data.parentHeader || null;
 
+    // Navigation and Metadata
+    if (typeof data.addToHeader !== 'undefined') page.addToHeader = data.addToHeader;
+    if (typeof data.addToFooter !== 'undefined') page.addToFooter = data.addToFooter;
+    if (typeof data.headerPosition !== 'undefined') page.headerPosition = Number(data.headerPosition) || 0;
+    if (typeof data.footerPosition !== 'undefined') page.footerPosition = Number(data.footerPosition) || 0;
+    if (typeof data.order !== 'undefined') page.order = Number(data.order) || 0;
+    if (typeof data.headerRow !== 'undefined') page.headerRow = data.headerRow;
+    if (typeof data.headerParent !== 'undefined') page.headerParent = data.headerParent;
+    if (typeof data.isDropdownParent !== 'undefined') page.isDropdownParent = data.isDropdownParent; // NEW
+    if (typeof data.navigationTitle !== 'undefined') page.navigationTitle = data.navigationTitle; // NEW
+    page.title = data.title || page.title; // Already updating title, but good to be explicit here if it was conditional
+
     await page.validate();
 
     const updated = await page.save({ validateBeforeSave: true });
@@ -241,10 +268,7 @@ async function uploadImage(req, res) {
 }
 
 module.exports = {
-  getAllPages,
-  getPageBySlug,
-  createPage,
-  updatePage,
   deletePage,
   uploadImage,
+  getNavigationPages,
 };

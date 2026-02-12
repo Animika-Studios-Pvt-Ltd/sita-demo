@@ -27,6 +27,11 @@ const auth0Middleware = (req, res, next) => {
 };
 
 
+/* ---------- PUBLIC: Get navigation pages ---------- */
+router.get("/navigation", tenantMiddleware, async (req, res) => {
+  return require("./pages.controller").getNavigationPages(req, res);
+});
+
 /* ---------- PUBLIC: Get published CMS page ---------- */
 router.get("/:slug", tenantMiddleware, ensureCmsEnabled, async (req, res) => {
   try {
@@ -129,7 +134,20 @@ router.post("/", auth0Middleware, tenantMiddleware, async (req, res) => {
 /* ---------- ADMIN: Update CMS page ---------- */
 router.put("/:slug", auth0Middleware, tenantMiddleware, async (req, res) => {
   try {
-    const { sections, status, editorType } = req.body;
+    const {
+      sections,
+      status,
+      editorType,
+      headerPosition,
+      footerPosition,
+      order,
+      addToHeader,
+      addToFooter,
+      headerRow,
+      headerParent,
+      isDropdownParent,
+      navigationTitle
+    } = req.body;
     const { slug } = req.params;
 
     if (!sections) {
@@ -160,6 +178,19 @@ router.put("/:slug", auth0Middleware, tenantMiddleware, async (req, res) => {
     if (!page.createdFrom) {
       page.createdFrom = "manage-pages";
     }
+
+    // Sanitize and Update Navigation Fields
+    if (typeof headerPosition !== "undefined") page.headerPosition = Number(headerPosition) || 0;
+    if (typeof footerPosition !== "undefined") page.footerPosition = Number(footerPosition) || 0;
+    if (typeof order !== "undefined") page.order = Number(order) || 0;
+
+    if (typeof addToHeader !== "undefined") page.addToHeader = addToHeader;
+    if (typeof addToFooter !== "undefined") page.addToFooter = addToFooter;
+    if (typeof headerRow !== "undefined") page.headerRow = headerRow;
+    if (typeof headerParent !== "undefined") page.headerParent = headerParent;
+    if (typeof isDropdownParent !== "undefined") page.isDropdownParent = isDropdownParent;
+    if (typeof navigationTitle !== "undefined") page.navigationTitle = navigationTitle;
+
 
     await page.save();
 

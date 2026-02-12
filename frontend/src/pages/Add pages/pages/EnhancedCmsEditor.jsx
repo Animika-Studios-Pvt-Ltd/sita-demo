@@ -21,6 +21,8 @@ import {
   Book,
   FileText,
   Mic,
+  Settings,
+  Check,
 } from "lucide-react";
 
 const RESERVED_SLUGS = [
@@ -98,6 +100,24 @@ export default function EnhancedCmsEditor() {
       content: getDefaultContent("hero"),
     }];
   });
+
+  // Navigation & Metadata State
+  const [showSettings, setShowSettings] = useState(false);
+  const [details, setDetails] = useState({
+    title: "",
+    addToHeader: false,
+    addToFooter: false,
+    headerPosition: 0,
+    headerRow: "bottom", // "top" or "bottom"
+    headerParent: "", // "" for root, or slug/key of parent
+    isDropdownParent: false, // NEW
+    footerPosition: 0,
+    order: 0,
+    navigationTitle: "", // NEW
+  });
+
+  const [dropdownParents, setDropdownParents] = useState([]); // NEW: List of potential parent dropdowns
+
   const [loading, setLoading] = useState(!!slug);
   const [previewMode, setPreviewMode] = useState(false);
   const [expandedSections, setExpandedSections] = useState(() => {
@@ -182,6 +202,20 @@ export default function EnhancedCmsEditor() {
         setPageStatus(page.status || "draft");
         setCreatedFrom(page.createdFrom || "manage-pages");
 
+        // Set Navigation Details
+        setDetails({
+          title: page.title || "",
+          addToHeader: page.addToHeader || false,
+          addToFooter: page.addToFooter || false,
+          headerPosition: page.headerPosition || 0,
+          headerRow: page.headerRow || "bottom",
+          headerParent: page.headerParent || "",
+          isDropdownParent: page.isDropdownParent || false,
+          footerPosition: page.footerPosition || 0,
+          order: page.order || 0,
+          navigationTitle: page.navigationTitle || "", // NEW
+        });
+
         // ✅ DEFAULT EXPAND HERO
         const initialExpanded = new Set(sectionsArray.map((s) => s.id));
         setExpandedSections(initialExpanded);
@@ -196,6 +230,17 @@ export default function EnhancedCmsEditor() {
         );
         setLoading(false);
       });
+
+    // ✅ FETCH DROPDOWN PARENTS
+    api.get("/api/cms/navigation")
+      .then(res => {
+        const navPages = res.data || [];
+        // Filter pages that are marked as parents
+        const parents = navPages.filter(p => p.isDropdownParent && p.slug !== slug); // Exclude self
+        setDropdownParents(parents);
+      })
+      .catch(err => console.error("Failed to load dropdown parents", err));
+
   }, [slug]);
 
   const handleDragEnd = (result) => {
@@ -383,6 +428,11 @@ export default function EnhancedCmsEditor() {
         slug: pageSlug,
         sections: sectionsArray, // Send as array, not object
         status,
+        ...details,
+        // Sanitization
+        headerPosition: Number(details.headerPosition) || 0,
+        footerPosition: Number(details.footerPosition) || 0,
+        order: Number(details.order) || 0,
       };
 
       let response;
@@ -500,6 +550,11 @@ export default function EnhancedCmsEditor() {
                 Cancel
               </button>
 
+              <button className={glassBtn} onClick={() => setShowSettings(!showSettings)}>
+                <Settings size={16} />
+                Settings
+              </button>
+
               {/* <button className={glassBtn} onClick={() => setPreviewMode(!previewMode)}>
                 <Eye size={16} />
                 {previewMode ? "Edit Mode" : "Preview"}
@@ -525,6 +580,203 @@ export default function EnhancedCmsEditor() {
       <div className="max-w-7xl mx-auto px-4 py-8">
         {!previewMode ? (
           <>
+            {/* Page Settings Panel - Redesigned */}
+            {showSettings && (
+              <div className="mb-8 rounded-3xl bg-white/80 backdrop-blur-2xl border border-white/50 ring-1 ring-black/5 shadow-xl animate-in fade-in slide-in-from-top-4 overflow-hidden">
+                {/* Header */}
+                <div className="bg-slate-50/50 px-8 py-5 border-b border-slate-100 flex items-center justify-between">
+                  <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <Settings size={20} className="text-[#7A1F2B]" />
+                    Page Settings
+                  </h3>
+                  <button onClick={() => setShowSettings(false)} className="text-slate-400 hover:text-[#7A1F2B] transition-colors">
+                    Close
+                  </button>
+                </div>
+
+                <div className="p-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* BOX 1: Header Navigation */}
+                    <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-all">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className={`p-2 rounded-lg ${details.addToHeader ? 'bg-[#7A1F2B] text-white' : 'bg-slate-200 text-slate-500'}`}>
+                          <Settings size={18} />
+                        </div>
+                        <h4 className="font-bold text-slate-700 text-lg">Header Navigation</h4>
+                      </div>
+
+                      <div className="space-y-4">
+                        <label className="flex items-center gap-3 cursor-pointer group">
+                          <input
+                            type="checkbox"
+                            className="hidden"
+                            checked={details.addToHeader}
+                            onChange={(e) => setDetails({ ...details, addToHeader: e.target.checked })}
+                          />
+                          <div className={`w-12 h-6 rounded-full p-1 transition-colors duration-200 ease-in-out ${details.addToHeader ? 'bg-[#7A1F2B]' : 'bg-slate-300'}`}>
+                            <div className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-200 ease-in-out ${details.addToHeader ? 'translate-x-6' : 'translate-x-0'}`} />
+                          </div>
+                          <span className="font-medium text-slate-600 group-hover:text-[#7A1F2B] transition-colors">
+                            {details.addToHeader ? "Enabled" : "Disabled"}
+                          </span>
+                        </label>
+
+                        {details.addToHeader && (
+                          <div className="animate-in fade-in slide-in-from-top-2 space-y-4 pt-2 border-t border-slate-200/50">
+
+                            {/* Row Selection */}
+                            <div>
+                              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Location</label>
+                              <div className="flex gap-2">
+                                <button
+                                  onClick={() => setDetails({ ...details, headerRow: "top" })}
+                                  className={`flex-1 py-2 px-3 text-sm font-semibold rounded-xl border transition-all ${details.headerRow === "top"
+                                    ? 'bg-white border-[#7A1F2B] text-[#7A1F2B] shadow-sm'
+                                    : 'bg-transparent border-slate-200 text-slate-500 hover:border-slate-300'
+                                    }`}
+                                >
+                                  Top Row
+                                </button>
+                                <button
+                                  onClick={() => setDetails({ ...details, headerRow: "bottom" })}
+                                  className={`flex-1 py-2 px-3 text-sm font-semibold rounded-xl border transition-all ${details.headerRow === "bottom"
+                                    ? 'bg-white border-[#7A1F2B] text-[#7A1F2B] shadow-sm'
+                                    : 'bg-transparent border-slate-200 text-slate-500 hover:border-slate-300'
+                                    }`}
+                                >
+                                  Main Row
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* Dropdown Logic (only for Main Row) */}
+                            {details.headerRow === "bottom" && (
+                              <div className="space-y-3">
+                                {/* Create New Dropdown Toggle */}
+                                <label className="flex items-center gap-2 cursor-pointer">
+                                  <input
+                                    type="checkbox"
+                                    checked={details.isDropdownParent}
+                                    onChange={(e) => setDetails({ ...details, isDropdownParent: e.target.checked, headerParent: "" })}
+                                    className="rounded border-slate-300 text-[#7A1F2B] focus:ring-[#7A1F2B]"
+                                  />
+                                  <span className="text-sm font-medium text-slate-700">Make this a Dropdown Menu?</span>
+                                </label>
+
+                                {/* Dropdown Menu Title Input */}
+                                {details.isDropdownParent && (
+                                  <div className="animate-in fade-in slide-in-from-top-1 ml-6 mt-2">
+                                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Dropdown Menu Title</label>
+                                    <input
+                                      type="text"
+                                      value={details.navigationTitle}
+                                      onChange={(e) => setDetails({ ...details, navigationTitle: e.target.value })}
+                                      placeholder="e.g. Services"
+                                      className="w-full px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-[#7A1F2B]"
+                                    />
+                                    <p className="text-[10px] text-slate-400 mt-1">
+                                      This text will be the clickable label in the navigation bar.
+                                    </p>
+                                  </div>
+                                )}
+
+                                {/* OR Select Parent (if not a dropdown itself) */}
+                                {!details.isDropdownParent && (
+                                  <div className="animate-in fade-in slide-in-from-top-1">
+                                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Parent Dropdown</label>
+                                    <select
+                                      value={details.headerParent || ""}
+                                      onChange={(e) => setDetails({ ...details, headerParent: e.target.value })}
+                                      className="w-full px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-[#7A1F2B]"
+                                    >
+                                      <option value="">None (Root Level)</option>
+                                      <option value="sitaFactor">The Sita Factor</option>
+                                      <option value="workshops">Workshops</option>
+                                      {/* Dynamic Parents */}
+                                      {dropdownParents.map(parent => (
+                                        <option key={parent.slug} value={parent.slug}>
+                                          {parent.navigationTitle || parent.title || parent.slug}
+                                        </option>
+                                      ))}
+                                    </select>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* BOX 2: Footer Navigation */}
+                    <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-all">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className={`p-2 rounded-lg ${details.addToFooter ? 'bg-[#7A1F2B] text-white' : 'bg-slate-200 text-slate-500'}`}>
+                          <Settings size={18} />
+                        </div>
+                        <h4 className="font-bold text-slate-700 text-lg">Footer Navigation</h4>
+                      </div>
+
+                      <div className="space-y-4">
+                        <label className="flex items-center gap-3 cursor-pointer group">
+                          <div className={`w-12 h-6 rounded-full p-1 transition-colors ${details.addToFooter ? 'bg-[#7A1F2B]' : 'bg-slate-300'}`}>
+                            <div className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${details.addToFooter ? 'translate-x-6' : 'translate-x-0'}`} />
+                          </div>
+                          <span className="font-medium text-slate-600 group-hover:text-[#7A1F2B] transition-colors">
+                            {details.addToFooter ? "Enabled" : "Disabled"}
+                          </span>
+                          <input type="checkbox" className="hidden" checked={details.addToFooter} onChange={(e) => setDetails({ ...details, addToFooter: e.target.checked })} />
+                        </label>
+
+                        <p className="text-xs text-slate-500 leading-relaxed">
+                          Enabling this will add the page link to the "Resources" or "Quick Links" section of the site footer.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* BOX 3: Global Order */}
+                    <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-all">
+                      <h4 className="font-bold text-slate-700 text-lg mb-4">Global Order</h4>
+                      <div className="relative">
+                        <input
+                          type="number"
+                          value={details.order}
+                          onChange={(e) => setDetails({ ...details, order: e.target.value })}
+                          className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-800 font-medium focus:outline-none focus:border-[#7A1F2B] focus:ring-1 focus:ring-[#7A1F2B]"
+                        />
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-slate-400 font-semibold bg-slate-100 px-2 py-1 rounded">
+                          Index
+                        </div>
+                      </div>
+                      <p className="text-xs text-slate-400 mt-2">
+                        Lower numbers appear first. Negative numbers allowed.
+                      </p>
+                    </div>
+
+                    {/* BOX 4: Display Title */}
+                    <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-all">
+                      <h4 className="font-bold text-slate-700 text-lg mb-4">Display Title</h4>
+                      <div className="relative">
+                        <input
+                          type="text"
+                          value={details.navigationTitle}
+                          onChange={(e) => setDetails({ ...details, navigationTitle: e.target.value })}
+                          placeholder={pageSlug || "Page Title"}
+                          className={`w-full px-4 py-3 rounded-xl bg-white border text-slate-800 font-medium focus:outline-none focus:border-[#7A1F2B] focus:ring-1 focus:ring-[#7A1F2B] ${details.addToHeader && details.headerRow === 'top' && (details.navigationTitle || "").length > 7 ? "border-amber-400 focus:border-amber-500 focus:ring-amber-500" : "border-slate-200"}`}
+                        />
+                        <div className={`absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold px-2 py-1 rounded ${details.addToHeader && details.headerRow === 'top' && (details.navigationTitle || "").length > 7 ? "bg-amber-100 text-amber-700" : "bg-slate-100 text-slate-400"}`}>
+                          {(details.navigationTitle || "").length} / {details.addToHeader && details.headerRow === 'top' ? "7" : "Any"}
+                        </div>
+                      </div>
+                      <p className="text-xs text-slate-400 mt-2">
+                        Overrides the page name in menus. {details.addToHeader && details.headerRow === 'top' && "Top Row items are limited to 7 characters."}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Add Section Toolbar */}
             <div className="mb-6 p-4 rounded-2xl bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5">
               <h3 className="text-md font-semibold text-[#7A1F2B]">
