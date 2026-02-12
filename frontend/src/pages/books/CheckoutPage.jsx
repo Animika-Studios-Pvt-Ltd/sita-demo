@@ -1368,7 +1368,7 @@ const CheckoutPage = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  Secure payment powered by Cashfree
+                  Secure payment powered by Razorpay
                 </div>
               </form>
             </div>
