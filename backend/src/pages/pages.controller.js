@@ -136,6 +136,12 @@ async function createPage(req, res) {
     // SYNC EVENT IMAGE
     await syncEventImage(newPage);
 
+    // Ensure navigationTitle is lowercase if present
+    if (newPage.navigationTitle) {
+      newPage.navigationTitle = newPage.navigationTitle.toLowerCase().trim();
+      await newPage.save();
+    }
+
     const populated = await newPage.populate("parentHeader", "title slug");
     return res.status(201).json(populated);
 
@@ -211,7 +217,7 @@ async function updatePage(req, res) {
     if (typeof data.headerRow !== 'undefined') page.headerRow = data.headerRow;
     if (typeof data.headerParent !== 'undefined') page.headerParent = data.headerParent;
     if (typeof data.isDropdownParent !== 'undefined') page.isDropdownParent = data.isDropdownParent; // NEW
-    if (typeof data.navigationTitle !== 'undefined') page.navigationTitle = data.navigationTitle; // NEW
+    if (typeof data.navigationTitle !== 'undefined') page.navigationTitle = (data.navigationTitle || "").toLowerCase().trim(); // NEW: Force Lowercase
     page.title = data.title || page.title; // Already updating title, but good to be explicit here if it was conditional
 
     await page.validate();

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../../utils/api";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import {
@@ -89,9 +89,12 @@ const glassDeleteBtn =
 export default function EnhancedCmsEditor() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [pageSlug, setPageSlug] = useState(slug || "");
   const [pageStatus, setPageStatus] = useState("draft");
-  const [createdFrom, setCreatedFrom] = useState("manage-pages");
+  const [createdFrom, setCreatedFrom] = useState(() => {
+    return location.pathname.includes("manage-pages") ? "manage-pages" : "cms-module";
+  });
   const [sections, setSections] = useState(() => {
     // Should be empty initially, but will be populated if new page
     return slug ? [] : [{
@@ -117,6 +120,10 @@ export default function EnhancedCmsEditor() {
   });
 
   const [dropdownParents, setDropdownParents] = useState([]); // NEW: List of potential parent dropdowns
+  const [allPages, setAllPages] = useState([]); // NEW: List of all pages for validation
+
+  const [activeDraggable, setActiveDraggable] = useState(null);
+  const [duplicateWarning, setDuplicateWarning] = useState(""); // NEW: Realtime warning state
 
   const [loading, setLoading] = useState(!!slug);
   const [previewMode, setPreviewMode] = useState(false);
@@ -127,6 +134,7 @@ export default function EnhancedCmsEditor() {
 
   /* ================= SLUG CHECK ================= */
   const [slugStatus, setSlugStatus] = useState("idle"); // idle, checking, available, taken, error
+  const [originalPageId, setOriginalPageId] = useState(null); // NEW: Store _id for edit mode validation
 
   useEffect(() => {
     // Only check for NEW pages
@@ -201,6 +209,7 @@ export default function EnhancedCmsEditor() {
         setSections(sectionsArray);
         setPageStatus(page.status || "draft");
         setCreatedFrom(page.createdFrom || "manage-pages");
+        setOriginalPageId(page._id); // Store ID for validation
 
         // Set Navigation Details
         setDetails({
@@ -230,18 +239,20 @@ export default function EnhancedCmsEditor() {
         );
         setLoading(false);
       });
+  }, [slug]);
 
-    // ✅ FETCH DROPDOWN PARENTS
+  // ✅ FETCH DROPDOWN PARENTS & ALL PAGES (Independent of Slug)
+  useEffect(() => {
     api.get("/api/cms/navigation")
       .then(res => {
         const navPages = res.data || [];
+        setAllPages(navPages); // Store for validation
         // Filter pages that are marked as parents
         const parents = navPages.filter(p => p.isDropdownParent && p.slug !== slug); // Exclude self
         setDropdownParents(parents);
       })
       .catch(err => console.error("Failed to load dropdown parents", err));
-
-  }, [slug]);
+  }, []); // Run ONCE on mount
 
   const handleDragEnd = (result) => {
     if (!result.destination) return;
@@ -386,6 +397,39 @@ export default function EnhancedCmsEditor() {
     setExpandedSections(newExpanded);
   };
 
+  // ---------------------------------------------------------
+  // REALTIME ERROR CHECKING
+  // ---------------------------------------------------------
+  useEffect(() => {
+    if (details.addToHeader && details.navigationTitle) {
+      const duplicateTitle = allPages.find(p => {
+        // EXCLUDE SELF:
+        // 1. If we have an originalPageId (edit mode), exclude by ID
+        // 2. Fallback to slug check (new page)
+        const isSelf = originalPageId ? p._id === originalPageId : p.slug === pageSlug;
+        if (!p.addToHeader || isSelf) return false;
+
+        // Compare against what is actually displayed in Navbar for that page
+        const effectiveTitle = (p.navigationTitle || p.title || p.slug).toLowerCase().trim();
+        const currentTitle = details.navigationTitle.toLowerCase().trim();
+
+        return effectiveTitle === currentTitle;
+      });
+
+      if (duplicateTitle) {
+        setDuplicateWarning(`Title already used by "${duplicateTitle.title || duplicateTitle.slug}"`);
+      } else {
+        setDuplicateWarning("");
+      }
+    } else {
+      setDuplicateWarning("");
+    }
+  }, [details.navigationTitle, details.addToHeader, allPages, pageSlug]);
+
+
+  // ---------------------------------------------------------
+  // SAVE PAGE
+  // ---------------------------------------------------------
   async function save(status = "published") {
     if (!pageSlug.trim()) {
       Swal.fire("Error", "Page Link is required", "error");
@@ -417,6 +461,48 @@ export default function EnhancedCmsEditor() {
       }
     }
 
+    // ---------------------------------------------------------
+    // VALIDATION: DUPLICATE MENU TITLE (Global)
+    // ---------------------------------------------------------
+    if (details.addToHeader && details.navigationTitle) {
+      const duplicateTitle = allPages.find(p =>
+        p.addToHeader &&
+        p.slug !== pageSlug &&
+        (p.navigationTitle || "").toLowerCase().trim() === details.navigationTitle.toLowerCase().trim()
+      );
+
+      if (duplicateTitle) {
+        Swal.fire({
+          icon: "warning",
+          title: "Duplicate Menu Title",
+          text: `The menu title "${details.navigationTitle}" is already used by page "${duplicateTitle.title || duplicateTitle.slug}". Please choose a unique title.`,
+        });
+        return;
+      }
+    }
+
+    // ---------------------------------------------------------
+    // VALIDATION: ROOT LEVEL LIMIT (Max 2 Custom Pages)
+    // ---------------------------------------------------------
+    if (details.addToHeader && details.headerRow === 'bottom' && !details.headerParent) {
+      // Count existing custom root items (excluding current page)
+      const existingRoots = allPages.filter(p =>
+        p.addToHeader &&
+        p.headerRow === 'bottom' &&
+        !p.headerParent &&
+        p.slug !== pageSlug // exclude self
+      );
+
+      if (existingRoots.length >= 2) {
+        Swal.fire({
+          icon: "warning",
+          title: "Root Menu Limit Reached",
+          text: "Only 2 custom pages are allowed at the root level. Please add this page under 'The Sita Factor' or 'Workshops' using the Parent Menu option.",
+        });
+        return;
+      }
+    }
+
     try {
       // Keep as array to preserve multiple sections with same key
       const sectionsArray = sections.map((s) => ({
@@ -429,10 +515,12 @@ export default function EnhancedCmsEditor() {
         sections: sectionsArray, // Send as array, not object
         status,
         ...details,
+        isDropdownParent: false, // FORCE FALSE: Feature disabled in UI
         // Sanitization
         headerPosition: Number(details.headerPosition) || 0,
         footerPosition: Number(details.footerPosition) || 0,
         order: Number(details.order) || 0,
+        createdFrom, // Persist source
       };
 
       let response;
@@ -550,10 +638,12 @@ export default function EnhancedCmsEditor() {
                 Cancel
               </button>
 
-              <button className={glassBtn} onClick={() => setShowSettings(!showSettings)}>
-                <Settings size={16} />
-                Settings
-              </button>
+              {createdFrom === "manage-pages" && (
+                <button className={glassBtn} onClick={() => setShowSettings(!showSettings)}>
+                  <Settings size={16} />
+                  Settings
+                </button>
+              )}
 
               {/* <button className={glassBtn} onClick={() => setPreviewMode(!previewMode)}>
                 <Eye size={16} />
@@ -651,56 +741,37 @@ export default function EnhancedCmsEditor() {
 
                             {/* Dropdown Logic (only for Main Row) */}
                             {details.headerRow === "bottom" && (
-                              <div className="space-y-3">
-                                {/* Create New Dropdown Toggle */}
-                                <label className="flex items-center gap-2 cursor-pointer">
-                                  <input
-                                    type="checkbox"
-                                    checked={details.isDropdownParent}
-                                    onChange={(e) => setDetails({ ...details, isDropdownParent: e.target.checked, headerParent: "" })}
-                                    className="rounded border-slate-300 text-[#7A1F2B] focus:ring-[#7A1F2B]"
-                                  />
-                                  <span className="text-sm font-medium text-slate-700">Make this a Dropdown Menu?</span>
-                                </label>
+                              <div className="space-y-4 mt-3 pt-3 border-t border-slate-100">
 
-                                {/* Dropdown Menu Title Input */}
-                                {details.isDropdownParent && (
-                                  <div className="animate-in fade-in slide-in-from-top-1 ml-6 mt-2">
-                                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Dropdown Menu Title</label>
-                                    <input
-                                      type="text"
-                                      value={details.navigationTitle}
-                                      onChange={(e) => setDetails({ ...details, navigationTitle: e.target.value })}
-                                      placeholder="e.g. Services"
-                                      className="w-full px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-[#7A1F2B]"
-                                    />
-                                    <p className="text-[10px] text-slate-400 mt-1">
-                                      This text will be the clickable label in the navigation bar.
-                                    </p>
-                                  </div>
-                                )}
-
-                                {/* OR Select Parent (if not a dropdown itself) */}
-                                {!details.isDropdownParent && (
-                                  <div className="animate-in fade-in slide-in-from-top-1">
-                                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Parent Dropdown</label>
-                                    <select
-                                      value={details.headerParent || ""}
-                                      onChange={(e) => setDetails({ ...details, headerParent: e.target.value })}
-                                      className="w-full px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-[#7A1F2B]"
-                                    >
-                                      <option value="">None (Root Level)</option>
+                                {/* Parent Menu Selection (Standard Link) */}
+                                <div className="animate-in fade-in slide-in-from-top-1">
+                                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                                    Parent Menu (Optional)
+                                  </label>
+                                  <select
+                                    value={details.headerParent || ""}
+                                    onChange={(e) => setDetails({ ...details, headerParent: e.target.value, isDropdownParent: false })}
+                                    className="w-full px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-[#7A1F2B]"
+                                  >
+                                    <option value="">None (Root Level Item)</option>
+                                    <optgroup label="System Menus">
                                       <option value="sitaFactor">The Sita Factor</option>
                                       <option value="workshops">Workshops</option>
-                                      {/* Dynamic Parents */}
-                                      {dropdownParents.map(parent => (
-                                        <option key={parent.slug} value={parent.slug}>
-                                          {parent.navigationTitle || parent.title || parent.slug}
-                                        </option>
-                                      ))}
-                                    </select>
-                                  </div>
-                                )}
+                                    </optgroup>
+                                    {dropdownParents.length > 0 && (
+                                      <optgroup label="Custom Menus">
+                                        {dropdownParents.map(parent => (
+                                          <option key={parent.slug} value={parent.slug}>
+                                            {parent.navigationTitle || parent.title || parent.slug}
+                                          </option>
+                                        ))}
+                                      </optgroup>
+                                    )}
+                                  </select>
+                                  <p className="text-[10px] text-slate-400 mt-1 ml-1">
+                                    Select a parent menu to place this link inside it.
+                                  </p>
+                                </div>
                               </div>
                             )}
                           </div>
@@ -753,23 +824,34 @@ export default function EnhancedCmsEditor() {
                       </p>
                     </div>
 
-                    {/* BOX 4: Display Title */}
+                    {/* BOX 4: Menu Identity */}
                     <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-all">
-                      <h4 className="font-bold text-slate-700 text-lg mb-4">Display Title</h4>
+                      <h4 className="font-bold text-slate-700 text-lg mb-4">Menu Identity</h4>
+
+                      {/* Menu Title (Navigation) */}
                       <div className="relative">
+                        <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
+                          Menu Title
+                        </label>
                         <input
                           type="text"
+                          maxLength={7}
                           value={details.navigationTitle}
-                          onChange={(e) => setDetails({ ...details, navigationTitle: e.target.value })}
-                          placeholder={pageSlug || "Page Title"}
-                          className={`w-full px-4 py-3 rounded-xl bg-white border text-slate-800 font-medium focus:outline-none focus:border-[#7A1F2B] focus:ring-1 focus:ring-[#7A1F2B] ${details.addToHeader && details.headerRow === 'top' && (details.navigationTitle || "").length > 7 ? "border-amber-400 focus:border-amber-500 focus:ring-amber-500" : "border-slate-200"}`}
+                          onChange={(e) => setDetails({ ...details, navigationTitle: e.target.value.toLowerCase() })}
+                          placeholder="Max 7 chars"
+                          className={`w-full px-4 py-3 rounded-xl bg-white border text-slate-800 font-medium focus:outline-none focus:border-[#7A1F2B] focus:ring-1 focus:ring-[#7A1F2B] ${(details.navigationTitle || "").length > 7 ? "border-red-400 focus:border-red-500 focus:ring-red-500" : "border-slate-200"}`}
                         />
-                        <div className={`absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold px-2 py-1 rounded ${details.addToHeader && details.headerRow === 'top' && (details.navigationTitle || "").length > 7 ? "bg-amber-100 text-amber-700" : "bg-slate-100 text-slate-400"}`}>
-                          {(details.navigationTitle || "").length} / {details.addToHeader && details.headerRow === 'top' ? "7" : "Any"}
+                        <div className={`absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold px-2 py-1 rounded ${(details.navigationTitle || "").length > 10 ? "bg-red-100 text-red-700" : "bg-slate-100 text-slate-400"}`}>
+                          {(details.navigationTitle || "").length} / 10
                         </div>
                       </div>
-                      <p className="text-xs text-slate-400 mt-2">
-                        Overrides the page name in menus. {details.addToHeader && details.headerRow === 'top' && "Top Row items are limited to 7 characters."}
+                      {duplicateWarning && (
+                        <p className="text-xs text-red-500 font-bold mt-2 animate-pulse">
+                          ⚠️ {duplicateWarning}
+                        </p>
+                      )}
+                      <p className="text-[10px] text-slate-400 mt-1">
+                        Short label for Navigation Bar (Max 10 characters).
                       </p>
                     </div>
                   </div>

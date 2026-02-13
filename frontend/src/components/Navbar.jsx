@@ -80,6 +80,7 @@ const Navbar = () => {
         return res.json();
       })
       .then((data) => {
+        console.log("Fetched Navigation Data:", data); // DEBUG: Check order values
         setDynamicNav(data.filter((p) => p.addToHeader));
       })
       .catch((err) => console.error("Error fetching navigation:", err));
@@ -94,14 +95,55 @@ const Navbar = () => {
   const moreLabelPage = dynamicNav.find(p => p.slug === 'nav-more');
   const overflowLabel = moreLabelPage ? (moreLabelPage.title || "More") : "More";
 
-  const topRowPages = dynamicNav.filter(p => p.headerRow === "top" && p.slug !== 'nav-more');
-  const bottomRowPages = dynamicNav.filter(p => p.headerRow !== "top" && !p.headerParent && !p.isDropdownParent && p.slug !== 'nav-more');
-  const sitaFactorPages = dynamicNav.filter(p => p.headerParent === "sitaFactor");
-  const workshopPages = dynamicNav.filter(p => p.headerParent === "workshops");
+  const topRowPages = dynamicNav
+    .filter(p => p.headerRow === "top" && p.slug !== 'nav-more')
+    .sort((a, b) => (a.order || 0) - (b.order || 0));
 
-  // Custom Dynamic Dropdowns
-  const customDropdownParents = dynamicNav.filter(p => p.isDropdownParent && p.headerRow !== "top");
-  const getChildrenForParent = (parentSlug) => dynamicNav.filter(p => p.headerParent === parentSlug);
+  // Unified Dynamic Main Row Items (Dropdowns + Links)
+  const dynamicMainRowItems = dynamicNav
+    .filter(p =>
+      p.headerRow !== "top" &&
+      !p.headerParent && // Root Level
+      p.slug !== 'nav-more'
+    )
+    .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
+
+  const sitaFactorPages = dynamicNav.filter(p => p.headerParent === "sitaFactor").sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
+  const workshopPages = dynamicNav.filter(p => p.headerParent === "workshops").sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
+
+  // --- MERGE STATIC & DYNAMIC ITEMS FOR MAIN ROW ---
+  const staticItems = [
+    { id: 'about', order: 1, type: 'static-link', label: 'ABOUT SITA', path: '/about' },
+    { id: 'sitaFactor', order: 2, type: 'sitaFactor-dropdown', label: 'THE SITA FACTOR' },
+    { id: 'workshops', order: 3, type: 'workshops-dropdown', label: 'WORKSHOPS' },
+    { id: 'publications', order: 4, type: 'static-link', label: 'PUBLICATIONS', path: '/publications' }
+  ];
+
+  const dynamicItems = dynamicMainRowItems.map(item => ({
+    ...item,
+    id: item.slug,
+    type: item.isDropdownParent ? 'dynamic-dropdown' : 'dynamic-link',
+    // Use the order from CMS, default to 0 if missing.
+    // Note: Static items start at 10. So default 0 will appear BEFORE static items.
+    order: Number(item.order) || 0
+  }));
+
+  const allMainRowItems = [...staticItems, ...dynamicItems]
+    .sort((a, b) => a.order - b.order)
+    // DEDUPLICATE BY LABEL (Case-Insensitive)
+    .filter((item, index, self) =>
+      index === self.findIndex((t) => (
+        (t.label || t.navigationTitle || t.slug).toLowerCase().trim() ===
+        (item.label || item.navigationTitle || item.slug).toLowerCase().trim()
+      ))
+    );
+
+
+  // Custom Dynamic Dropdowns Helper
+  const getChildrenForParent = (parentSlug) =>
+    dynamicNav
+      .filter(p => p.headerParent === parentSlug)
+      .sort((a, b) => (a.order || 0) - (b.order || 0));
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -409,187 +451,146 @@ const Navbar = () => {
                   </li>
                 )}
 
-                <li className="nav-item">
-                  <Link to="/about" className="nav-link">
-                    ABOUT SITA
-                  </Link>
-                </li>
-
-                {/* THE SITA FACTOR Dropdown */}
-                <li
-                  className={`nav-item dropdown ${activeDropdown === "sitaFactor" ? "show" : ""}`}>
-                  <a
-                    className={`nav-link dropdown-toggle ${isSitaFactorActive ? "active" : ""}`}
-                    href="#"
-                    role="button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      toggleDropdown("sitaFactor", e);
-                    }}>
-                    THE SITA FACTOR
-                  </a>
-
-                  <ul
-                    className={`dropdown-menu ${activeDropdown === "sitaFactor" ? "show" : ""}`}>
-                    <li>
-                      <Link className="dropdown-item" to="/yoga-therapy">
-                        Yoga Therapy
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/ayurveda-nutrition">
-                        Ayurveda – Nutrition & Integration
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/kosha-counseling">
-                        Kosha Counseling
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/soul-curriculum">
-                        Soul Curriculum
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className="dropdown-item"
-                        to="/release-karmic-patterns">
-                        Release Karmic Patterns
-                      </Link>
-                    </li>
-                    {/* Dynamic Sita Factor Pages */}
-                    {sitaFactorPages.map((page) => (
-                      <li key={page._id || page.slug}>
-                        <Link className="dropdown-item" to={`/${page.slug}`}>
-                          {toTitleCase(page.navigationTitle || page.title || page.slug.replace(/-/g, " "))}
+                {allMainRowItems.map(item => {
+                  // --- STATIC: ABOUT & PUBLICATIONS ---
+                  if (item.type === 'static-link') {
+                    return (
+                      <li className="nav-item" key={item.id}>
+                        <Link to={item.path} className={`nav-link ${pathname === item.path ? "active" : ""}`}>
+                          {item.label}
                         </Link>
                       </li>
-                    ))}
-                  </ul>
-                </li>
+                    );
+                  }
 
-                {/* WORKSHOPS Dropdown */}
-                <li
-                  className={`nav-item dropdown ${activeDropdown === "workshops" ? "show" : ""}`}>
-                  <a
-                    className={`nav-link dropdown-toggle ${isWorkshopsActive ? "active" : ""}`}
-                    href="#"
-                    role="button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      toggleDropdown("workshops", e);
-                    }}>
-                    WORKSHOPS
-                  </a>
+                  // --- STATIC: THE SITA FACTOR ---
+                  if (item.type === 'sitaFactor-dropdown') {
+                    return (
+                      <li
+                        key={item.id}
+                        className={`nav-item dropdown ${activeDropdown === "sitaFactor" ? "show" : ""}`}>
+                        <a
+                          className={`nav-link dropdown-toggle ${isSitaFactorActive ? "active" : ""}`}
+                          href="#"
+                          role="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            toggleDropdown("sitaFactor", e);
+                          }}>
+                          {item.label}
+                        </a>
+                        <ul className={`dropdown-menu ${activeDropdown === "sitaFactor" ? "show" : ""}`}>
+                          <li><Link className="dropdown-item" to="/yoga-therapy">Yoga Therapy</Link></li>
+                          <li><Link className="dropdown-item" to="/ayurveda-nutrition">Ayurveda – Nutrition & Integration</Link></li>
+                          <li><Link className="dropdown-item" to="/kosha-counseling">Kosha Counseling</Link></li>
+                          <li><Link className="dropdown-item" to="/soul-curriculum">Soul Curriculum</Link></li>
+                          <li><Link className="dropdown-item" to="/release-karmic-patterns">Release Karmic Patterns</Link></li>
+                          {/* Dynamic Sita Factor Pages */}
+                          {sitaFactorPages.map((page) => (
+                            <li key={page._id || page.slug}>
+                              <Link className="dropdown-item" to={`/${page.slug}`}>
+                                {toTitleCase(page.navigationTitle || page.title || page.slug.replace(/-/g, " "))}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    );
+                  }
 
-                  <ul
-                    className={`dropdown-menu ${activeDropdown === "workshops" ? "show" : ""}`}>
-                    <li>
-                      <Link className="dropdown-item" to="/group-sessions">
-                        Group Sessions
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/private-sessions">
-                        Private Sessions
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/teacher-training">
-                        Teacher Training
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/corporate-training">
-                        Corporate Training
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/shakthi-leadership">
-                        Shakthi Leadership
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/booking">
-                        Calendar
-                      </Link>
-                    </li>
-                    {/* Dynamic Workshop Pages */}
-                    {workshopPages.map((page) => (
-                      <li key={page._id || page.slug}>
-                        <Link className="dropdown-item" to={`/${page.slug}`}>
-                          {toTitleCase(page.navigationTitle || page.title || page.slug.replace(/-/g, " "))}
+                  // --- STATIC: WORKSHOPS ---
+                  if (item.type === 'workshops-dropdown') {
+                    return (
+                      <li
+                        key={item.id}
+                        className={`nav-item dropdown ${activeDropdown === "workshops" ? "show" : ""}`}>
+                        <a
+                          className={`nav-link dropdown-toggle ${isWorkshopsActive ? "active" : ""}`}
+                          href="#"
+                          role="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            toggleDropdown("workshops", e);
+                          }}>
+                          {item.label}
+                        </a>
+                        <ul className={`dropdown-menu ${activeDropdown === "workshops" ? "show" : ""}`}>
+                          <li><Link className="dropdown-item" to="/group-sessions">Group Sessions</Link></li>
+                          <li><Link className="dropdown-item" to="/private-sessions">Private Sessions</Link></li>
+                          <li><Link className="dropdown-item" to="/teacher-training">Teacher Training</Link></li>
+                          <li><Link className="dropdown-item" to="/corporate-training">Corporate Training</Link></li>
+                          <li><Link className="dropdown-item" to="/shakthi-leadership">Shakthi Leadership</Link></li>
+                          <li><Link className="dropdown-item" to="/booking">Calendar</Link></li>
+                          {/* Dynamic Workshop Pages */}
+                          {workshopPages.map((page) => (
+                            <li key={page._id || page.slug}>
+                              <Link className="dropdown-item" to={`/${page.slug}`}>
+                                {toTitleCase(page.navigationTitle || page.title || page.slug.replace(/-/g, " "))}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    );
+                  }
+
+                  // --- DYNAMIC: DROPDOWN ---
+                  if (item.type === 'dynamic-dropdown') {
+                    return (
+                      <li
+                        key={item._id || item.slug}
+                        className={`nav-item dropdown ${activeDropdown === item.slug ? "show" : ""}`}
+                      >
+                        <a
+                          className={`nav-link dropdown-toggle ${pathname.startsWith("/" + item.slug) ? "active" : ""}`}
+                          href="#"
+                          role="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            toggleDropdown(item.slug, e);
+                          }}
+                        >
+                          {(item.navigationTitle || item.title || item.slug).toUpperCase().replace(/-/g, " ")}
+                        </a>
+
+                        <ul className={`dropdown-menu ${activeDropdown === item.slug ? "show" : ""}`}>
+                          {getChildrenForParent(item.slug).map((child) => (
+                            <li key={child._id || child.slug}>
+                              <Link className="dropdown-item" to={`/${child.slug}`}>
+                                {toTitleCase(child.navigationTitle || child.title || child.slug.replace(/-/g, " "))}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    );
+                  }
+
+                  // --- DYNAMIC: STANDARD LINK ---
+                  if (item.type === 'dynamic-link') {
+                    return (
+                      <li className="nav-item" key={item._id || item.slug}>
+                        <Link
+                          to={`/${item.slug}`}
+                          className={`nav-link ${pathname === `/${item.slug}` ? "active" : ""}`}
+                        >
+                          {(item.navigationTitle || item.title || item.slug).toUpperCase().replace(/-/g, " ")}
                         </Link>
                       </li>
-                    ))}
-                  </ul>
-                </li>
+                    );
+                  }
 
+                  return null;
+                })}
+              </ul>
 
-
-                {/* CUSTOM DYNAMIC DROPDOWNS */}
-                {customDropdownParents.map((parent) => (
-                  <li
-                    key={parent._id || parent.slug}
-                    className={`nav-item dropdown ${activeDropdown === parent.slug ? "show" : ""}`}
-                  >
-                    <a
-                      className={`nav-link dropdown-toggle ${pathname.startsWith("/" + parent.slug) ? "active" : ""}`}
-                      href="#"
-                      role="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        toggleDropdown(parent.slug, e);
-                      }}
-                    >
-                      {(parent.navigationTitle || parent.title || parent.slug).toUpperCase().replace(/-/g, " ")}
-                    </a>
-
-                    <ul
-                      className={`dropdown-menu ${activeDropdown === parent.slug ? "show" : ""}`}
-                    >
-
-
-                      {/* Children Pages */}
-                      {getChildrenForParent(parent.slug).map((child) => (
-                        <li key={child._id || child.slug}>
-                          <Link className="dropdown-item" to={`/${child.slug}`}>
-                            {toTitleCase(child.navigationTitle || child.title || child.slug.replace(/-/g, " "))}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                ))}
-
-                {/* PUBLICATIONS */}
-                <li className="nav-item">
-                  <Link
-                    to="/publications"
-                    className={`nav-link ${isPublicationsActive ? "active" : ""}`}>
-                    PUBLICATIONS
-                  </Link>
-                </li>
-
-                {/* DYNAMIC BOTTOM ROW PAGES */}
-                {bottomRowPages.map((page) => (
-                  <li className="nav-item" key={page._id || page.slug}>
-                    <Link
-                      to={`/${page.slug}`}
-                      className={`nav-link ${pathname === `/${page.slug}` ? "active" : ""}`}
-                    >
-                      {(page.navigationTitle || page.title || page.slug).toUpperCase().replace(/-/g, " ")}
-                    </Link>
-                  </li>
-                ))}
-
-                {/* DYNAMIC TOP ROW PAGES (Mobile Only) */}
+              {/* DYNAMIC TOP ROW PAGES (Mobile Only) */}
+              <ul className="navbar-nav d-lg-none">
                 {topRowPages.map((page) => (
-                  <li className="nav-item d-lg-none" key={`mobile-${page._id || page.slug}`}>
+                  <li className="nav-item" key={`mobile-${page._id || page.slug}`}>
                     <Link
                       to={`/${page.slug}`}
                       className={`nav-link ${pathname === `/${page.slug}` ? "active" : ""}`}
@@ -599,8 +600,8 @@ const Navbar = () => {
                   </li>
                 ))}
 
-                {/* Contact Us - MOBILE ONLY (d-lg-none) - At Bottom */}
-                <li className="nav-item d-lg-none">
+                {/* Contact Us - MOBILE ONLY - At Bottom */}
+                <li className="nav-item">
                   <Link className="nav-link nav-contact" to="/contact">
                     CONTACT US
                   </Link>
