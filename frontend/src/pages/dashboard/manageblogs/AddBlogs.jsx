@@ -50,6 +50,11 @@ const AddBlogs = () => {
       return;
     }
 
+    if (!imagePreview) {
+      Swal.fire("Error", "Blog Cover Image is required", "error");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -451,7 +456,7 @@ const AddBlogs = () => {
 
                   <div>
                     <label className="block font-semibold mb-1 text-slate-700">
-                      Blog Cover Image (optional)
+                      Blog Cover Image
                     </label>
                     <input
                       type="file"
