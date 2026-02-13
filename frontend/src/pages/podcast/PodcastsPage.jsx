@@ -279,7 +279,7 @@ const PodcastsPage = () => {
         <div className="max-w-7xl mx-auto px-4  mb-10">
           <div className="text-center mb-8" data-aos="fade-up">
             <h2 className="font-serifSita text-[#8b171b] text-3xl md:text-4xl lg:text-5xl leading-tight mb-3">
-              Podcats by Sita
+              Podcasts by Sita
             </h2>
             <img
               src="/sita-motif.webp"

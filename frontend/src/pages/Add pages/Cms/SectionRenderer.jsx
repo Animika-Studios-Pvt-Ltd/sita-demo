@@ -20,6 +20,8 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 import { useFetchAllBooksQuery } from "../../../redux/features/books/booksApi";
 import { getSecureImageUrl } from "../../../utils/imageUtils";
+import { usePodcastThumbnail, SPOTIFY_FALLBACK, APPLE_FALLBACK } from "../../../hooks/usePodcastThumbnail";
+import { FaSpotify, FaApple } from "react-icons/fa";
 
 // Import Swiper styles
 import "swiper/css";
@@ -1246,7 +1248,20 @@ function PodcastsSection({ content }) {
     // Import icons locally for this component scope or ensure they are in main imports
     // Assuming Play, Calendar, User, ArrowRight are imported at top level
 
-    const thumbnailSrc = getSecureImageUrl(podcast.thumbnail) || "/placeholder.jpg";
+    // Use usage of custom hook to get correct thumbnail
+    const thumbnailUrl = usePodcastThumbnail(podcast, API_URL);
+    
+    // Determine what to show
+    let thumbnailSrc = "/placeholder.jpg";
+    
+    if (thumbnailUrl === SPOTIFY_FALLBACK) {
+        thumbnailSrc = SPOTIFY_FALLBACK;
+    } else if (thumbnailUrl === APPLE_FALLBACK) {
+        thumbnailSrc = APPLE_FALLBACK;
+    } else {
+        // It's a URL (either uploaded or from metadata)
+        thumbnailSrc = thumbnailUrl || "/placeholder.jpg";
+    }
 
     return (
       <div
@@ -1273,12 +1288,25 @@ function PodcastsSection({ content }) {
             />
           ) : (
             <div className="relative w-full h-full">
-              <img
-                src={thumbnailSrc}
-                alt={podcast.title}
-                className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
+              {thumbnailSrc === SPOTIFY_FALLBACK ? (
+                <div className="w-full h-full flex flex-col items-center justify-center bg-[#1DB954] text-white">
+                  <FaSpotify size={48} />
+                </div>
+              ) : thumbnailSrc === APPLE_FALLBACK ? (
+                <div className="w-full h-full flex flex-col items-center justify-center bg-[#872ec4] text-white">
+                  <FaApple size={48} />
+                </div>
+              ) : (
+                <img
+                  src={thumbnailSrc}
+                  alt={podcast.title}
+                  className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+                />
+              )}
+              
+              {(thumbnailSrc !== SPOTIFY_FALLBACK && thumbnailSrc !== APPLE_FALLBACK) && (
+                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
+              )}
 
               {!isUpcoming && (
                 <button
