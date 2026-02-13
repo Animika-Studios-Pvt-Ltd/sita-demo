@@ -53,6 +53,7 @@ const LoginHistory = () => {
                                 <th className="p-3 border-r border-[#30363d] text-[#8b949e]">USER</th>
                                 <th className="p-3 border-r border-[#30363d] text-[#8b949e]">SOURCE IP</th>
                                 <th className="p-3 border-r border-[#30363d] text-[#8b949e]">DESTINATION IP</th>
+                                <th className="p-3 border-r border-[#30363d] text-[#8b949e]">DEVICE ID</th>
                                 <th className="p-3 text-[#8b949e]">CLIENT INFO</th>
                             </tr>
                         </thead>
@@ -76,6 +77,15 @@ const LoginHistory = () => {
                                         <td className="p-3 border-r border-[#30363d] text-[#a5d6ff]">
                                             {log.destinationIp || log.serverIp || 'Unknown'}
                                         </td>
+                                        <td className="p-3 border-r border-[#30363d] font-mono text-xs text-[#79c0ff]">
+                                            {log.deviceFingerprint ? (
+                                                <span title={log.deviceFingerprint}>
+                                                    {log.deviceFingerprint.substring(0, 8)}...
+                                                </span>
+                                            ) : (
+                                                <span className="text-[#8b949e]">-</span>
+                                            )}
+                                        </td>
                                         <td className="p-3 text-[#8b949e]">
                                             <span className="bg-[#21262d] px-1.5 py-0.5 rounded border border-[#30363d] mr-1">{log.device}</span>
                                             <span className="mr-1">{log.os}</span>
@@ -85,7 +95,7 @@ const LoginHistory = () => {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="6" className="p-8 text-center text-[#8b949e] italic">
+                                    <td colSpan="7" className="p-8 text-center text-[#8b949e] italic">
                                         No log entries found.
                                     </td>
                                 </tr>

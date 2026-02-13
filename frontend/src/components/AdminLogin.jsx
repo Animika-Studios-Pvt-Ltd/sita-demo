@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +15,17 @@ const AdminLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [mfaRequired, setMfaRequired] = useState(false);
   const [tempToken, setTempToken] = useState("");
+  const [deviceFingerprint, setDeviceFingerprint] = useState("");
+
+  useEffect(() => {
+    const setFp = async () => {
+      const fp = await FingerprintJS.load();
+      const result = await fp.get();
+      setDeviceFingerprint(result.visitorId);
+    };
+
+    setFp();
+  }, []);
 
   const {
     register,
@@ -44,7 +56,7 @@ const AdminLogin = () => {
     try {
       const res = await axios.post(
         `${API_URL}/api/admin-auth/admin`,
-        data,
+        { ...data, deviceFingerprint },
         { withCredentials: true }
       );
 
@@ -82,7 +94,7 @@ const AdminLogin = () => {
     try {
       const res = await axios.post(
         `${API_URL}/api/admin-auth/verify-mfa-login`,
-        { tempToken, mfaCode: data.mfaCode },
+        { tempToken, mfaCode: data.mfaCode, deviceFingerprint },
         { withCredentials: true }
       );
 

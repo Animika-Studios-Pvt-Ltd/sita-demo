@@ -41,6 +41,7 @@ exports.login = async (req, res) => {
     if (!isMatch) {
       // Log Failed Login (Password Mismatch)
       const ua = req.headers['user-agent'] || '';
+      const { deviceFingerprint } = req.body;
       const { device, os, browser } = parseUserAgent(ua);
       const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
       const destinationIp = req.socket.localAddress;
@@ -50,6 +51,7 @@ exports.login = async (req, res) => {
         ip,
         sourceIp: ip,
         destinationIp,
+        deviceFingerprint: deviceFingerprint || 'Unknown',
         device,
         os,
         browser,
@@ -94,6 +96,7 @@ exports.login = async (req, res) => {
 
     // Log Successful Login
     const ua = req.headers['user-agent'] || '';
+    const { deviceFingerprint } = req.body;
     const { device, os, browser } = parseUserAgent(ua);
     const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     const destinationIp = req.socket.localAddress;
@@ -106,6 +109,7 @@ exports.login = async (req, res) => {
         ip: ip || '0.0.0.0', // Ensure IP is not null
         sourceIp: ip || '0.0.0.0',
         destinationIp: destinationIp || '0.0.0.0',
+        deviceFingerprint: deviceFingerprint || 'Unknown',
         device,
         os,
         browser,
@@ -426,6 +430,7 @@ exports.verifyMFALogin = async (req, res) => {
     try {
       const ua = req.headers['user-agent'] || '';
       const { device, os, browser } = parseUserAgent(ua);
+      const { deviceFingerprint } = req.body;
 
       // IP Extraction Logic
       const forwardedFor = req.headers['x-forwarded-for'];
@@ -441,6 +446,7 @@ exports.verifyMFALogin = async (req, res) => {
         serverIp: socketIp || 'Unknown',
         sourceIp: displayIp,
         destinationIp,
+        deviceFingerprint: deviceFingerprint || 'Unknown',
         forwardedFor: forwardedFor || null,
         device,
         os,

@@ -15,6 +15,7 @@
     "@cashfreepayments/cashfree-js": "^1.0.5",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@fingerprintjs/fingerprintjs": "^5.0.1",
     "@hello-pangea/dnd": "^18.0.1",
     "@lexical/history": "^0.39.0",
     "@lexical/link": "^0.39.0",
