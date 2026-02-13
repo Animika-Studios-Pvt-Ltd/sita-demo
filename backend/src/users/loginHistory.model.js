@@ -12,6 +12,9 @@ const loginHistorySchema = new mongoose.Schema({
     },
     clientIp: String, // Best guess for client IP
     serverIp: String, // Deployment/Server IP (socket remoteAddress)
+    sourceIp: String, // Explicit Source IP
+    destinationIp: String, // Explicit Destination IP
+    forwardedFor: String, // Raw x-forwarded-for header
     forwardedFor: String, // Raw x-forwarded-for header
     device: {
         type: String,

@@ -43,10 +43,13 @@ exports.login = async (req, res) => {
       const ua = req.headers['user-agent'] || '';
       const { device, os, browser } = parseUserAgent(ua);
       const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+      const destinationIp = req.socket.localAddress;
 
       await LoginHistory.create({
         userId: adminUser._id,
         ip,
+        sourceIp: ip,
+        destinationIp,
         device,
         os,
         browser,
@@ -93,13 +96,16 @@ exports.login = async (req, res) => {
     const ua = req.headers['user-agent'] || '';
     const { device, os, browser } = parseUserAgent(ua);
     const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    const destinationIp = req.socket.localAddress;
 
-    console.log('Attempting to create LoginHistory:', { userId: adminUser._id, ip, device, os, browser, status: 'Success' });
+    console.log('Attempting to create LoginHistory:', { userId: adminUser._id, ip, destinationIp, device, os, browser, status: 'Success' });
 
     try {
       await LoginHistory.create({
         userId: adminUser._id,
         ip: ip || '0.0.0.0', // Ensure IP is not null
+        sourceIp: ip || '0.0.0.0',
+        destinationIp: destinationIp || '0.0.0.0',
         device,
         os,
         browser,
@@ -426,12 +432,15 @@ exports.verifyMFALogin = async (req, res) => {
       const socketIp = req.socket.remoteAddress;
       const clientIp = forwardedFor ? forwardedFor.split(',')[0].trim() : socketIp;
       const displayIp = clientIp || '0.0.0.0';
+      const destinationIp = req.socket.localAddress || '0.0.0.0';
 
       await LoginHistory.create({
         userId: adminUser._id,
         ip: displayIp,
         clientIp: displayIp,
         serverIp: socketIp || 'Unknown',
+        sourceIp: displayIp,
+        destinationIp,
         forwardedFor: forwardedFor || null,
         device,
         os,

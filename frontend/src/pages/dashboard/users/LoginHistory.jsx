@@ -51,7 +51,8 @@ const LoginHistory = () => {
                                 <th className="p-3 border-r border-[#30363d] text-[#8b949e]">TIMESTAMP</th>
                                 <th className="p-3 border-r border-[#30363d] text-[#8b949e]">STATUS</th>
                                 <th className="p-3 border-r border-[#30363d] text-[#8b949e]">USER</th>
-                                <th className="p-3 border-r border-[#30363d] text-[#8b949e]">IP ADDRESS</th>
+                                <th className="p-3 border-r border-[#30363d] text-[#8b949e]">SOURCE IP</th>
+                                <th className="p-3 border-r border-[#30363d] text-[#8b949e]">DESTINATION IP</th>
                                 <th className="p-3 text-[#8b949e]">CLIENT INFO</th>
                             </tr>
                         </thead>
@@ -70,14 +71,10 @@ const LoginHistory = () => {
                                             <span className="text-[#8b949e] ml-2">&lt;{log.userId?.email}&gt;</span>
                                         </td>
                                         <td className="p-3 border-r border-[#30363d] text-[#a5d6ff]">
-                                            <div className="flex flex-col">
-                                                <span>{log.clientIp || log.ip}</span>
-                                                {log.serverIp && log.serverIp !== 'Unknown' && log.serverIp !== (log.clientIp || log.ip) && (
-                                                    <span className="text-[10px] text-[#8b949e] mt-0.5">
-                                                        Srvr: {log.serverIp}
-                                                    </span>
-                                                )}
-                                            </div>
+                                            {log.sourceIp || log.clientIp || log.ip || 'Unknown'}
+                                        </td>
+                                        <td className="p-3 border-r border-[#30363d] text-[#a5d6ff]">
+                                            {log.destinationIp || log.serverIp || 'Unknown'}
                                         </td>
                                         <td className="p-3 text-[#8b949e]">
                                             <span className="bg-[#21262d] px-1.5 py-0.5 rounded border border-[#30363d] mr-1">{log.device}</span>
@@ -88,7 +85,7 @@ const LoginHistory = () => {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="5" className="p-8 text-center text-[#8b949e] italic">
+                                    <td colSpan="6" className="p-8 text-center text-[#8b949e] italic">
                                         No log entries found.
                                     </td>
                                 </tr>
