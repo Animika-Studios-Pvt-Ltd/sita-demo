@@ -16,11 +16,13 @@ const {
   approveRating,
   deleteRating,
   triggerRatingEmail,
+  getAllApprovedRatings,
 } = require("./eventRating.controller");
 
 // Public
 router.get("/test", (req, res) => res.json({ message: "Events route working!" }));
 router.get("/", getEvents);
+router.get("/ratings/approved", getAllApprovedRatings); // New route for testimonials
 router.post("/rate", submitRating);
 router.post("/test-email/:bookingId", triggerRatingEmail); // Test route
 

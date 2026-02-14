@@ -159,3 +159,17 @@ exports.triggerRatingEmail = async (req, res) => {
     }
 };
 
+// Get ALL approved ratings (for Testimonials/Public facing pages)
+exports.getAllApprovedRatings = async (req, res) => {
+    try {
+        const ratings = await EventRating.find({ approved: true })
+            .populate("event", "title") // distinct from getEventRatings which is specific to an event
+            .sort({ createdAt: -1 });
+
+        res.status(200).json(ratings);
+    } catch (error) {
+        console.error("Error fetching all approved ratings:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+

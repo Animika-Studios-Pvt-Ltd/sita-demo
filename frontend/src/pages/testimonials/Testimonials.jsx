@@ -1,9 +1,33 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import AOS from "aos";
 import { useLocation } from "react-router-dom";
 import "aos/dist/aos.css";
 
+const BACKEND_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 const Testimonials = () => {
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const res = await fetch(`${BACKEND_BASE_URL}/api/events/ratings/approved`);
+        if (res.ok) {
+          const data = await res.json();
+          setTestimonials(data);
+        }
+      } catch (error) {
+        console.error("Error fetching testimonials:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTestimonials();
+  }, []);
+
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -13,10 +37,13 @@ const Testimonials = () => {
       mirror: false,
     });
   }, []);
+
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
   useEffect(() => {
+    if (testimonials.length === 0) return;
+
     const carousel = document.getElementById("testimonialCarousel");
     const nameEl = document.querySelector(".sita-testimonial-name");
     const quoteImg = document.querySelector(".sita-testimonial-quote");
@@ -27,19 +54,44 @@ const Testimonials = () => {
       const active = carousel.querySelector(".carousel-item.active");
       if (!active) return;
 
-      nameEl.textContent = active.dataset.name || "";
-      quoteImg.src = active.dataset.quote || "";
+      const newName = active.dataset.name || "";
+      const newQuote = active.dataset.quote || "";
+
+      if (nameEl.textContent !== newName) nameEl.textContent = newName;
+      if (quoteImg.src !== newQuote) quoteImg.src = newQuote;
     };
 
     // Initial sync
-    setTimeout(updateMeta, 100);
+    setTimeout(updateMeta, 200);
 
     carousel.addEventListener("slid.bs.carousel", updateMeta);
 
     return () => {
       carousel.removeEventListener("slid.bs.carousel", updateMeta);
     };
-  }, []);
+  }, [testimonials]);
+
+  // Default fallback if no ratings exist yet
+  const displayTestimonials = testimonials.length > 0 ? testimonials : [
+    {
+      _id: "default1",
+      userName: "Ananya Sharma",
+      comment: "Working with Sita has been a deeply transformative experience. Her guidance helped me reconnect with my inner self, find emotional balance, and move forward with clarity and confidence.",
+      rating: 5
+    },
+    {
+      _id: "default2",
+      userName: "Rahul Mehta",
+      comment: "Sita’s sessions brought immense peace into my life. Her compassionate approach and spiritual insight allowed me to release long-held fears and rediscover my purpose.",
+      rating: 5
+    },
+    {
+      _id: "default3",
+      userName: "Priya Nair",
+      comment: "Every interaction with Sita feels grounding and uplifting. Her wisdom, presence, and gentle guidance helped me realign my life with intention and mindfulness.",
+      rating: 5
+    }
+  ];
 
   return (
     <>
@@ -95,40 +147,22 @@ const Testimonials = () => {
                   data-bs-interval="3000"
                   data-bs-pause="false">
                   <div className="carousel-inner sita-testimonials-carousel-inner text-center">
-                    <div
-                      className="carousel-item active"
-                      data-name="Ananya Sharma"
-                      data-quote="testimonial-quote.webp">
-                      <p>
-                        Working with Sita has been a deeply transformative
-                        experience. Her guidance helped me reconnect with my
-                        inner self, find emotional balance, and move forward
-                        with clarity and confidence.
-                      </p>
-                    </div>
-
-                    <div
-                      className="carousel-item"
-                      data-name="Rahul Mehta"
-                      data-quote="testimonial-quote.webp">
-                      <p>
-                        Sita’s sessions brought immense peace into my life. Her
-                        compassionate approach and spiritual insight allowed me
-                        to release long-held fears and rediscover my purpose.
-                      </p>
-                    </div>
-
-                    <div
-                      className="carousel-item"
-                      data-name="Priya Nair"
-                      data-quote="testimonial-quote.webp">
-                      <p>
-                        Every interaction with Sita feels grounding and
-                        uplifting. Her wisdom, presence, and gentle guidance
-                        helped me realign my life with intention and
-                        mindfulness.
-                      </p>
-                    </div>
+                    {displayTestimonials.map((item, index) => (
+                      <div
+                        key={item._id}
+                        className={`carousel-item ${index === 0 ? "active" : ""}`}
+                        data-name={item.userName}
+                        data-quote="testimonial-quote.webp">
+                        <p>
+                          {item.comment}
+                        </p>
+                        {item.event && item.event.title && (
+                          <small className="d-block mt-3 text-muted" style={{ fontSize: '0.8rem', fontStyle: 'italic' }}>
+                            Attended: {item.event.title}
+                          </small>
+                        )}
+                      </div>
+                    ))}
                   </div>
 
                   <div className="sita-testimonial-arrows">
