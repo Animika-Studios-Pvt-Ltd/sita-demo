@@ -112,7 +112,7 @@ const About = () => {
                     seekers. She supports and creates customized frameworks that
                     enable spiritual evolution. She is known also as a Vedic
                     Counselor, Ayurvedic Health Practitioner, Healer, Couch and
-                    Athor.
+                    Author.
                   </p>
                 </div>
               </div>
