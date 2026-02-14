@@ -678,7 +678,7 @@ const HomePage = () => {
         data-aos-duration="1000"
         data-aos-delay="150">
         <span className="cta-border">
-          <a href="/booking" className="sita-cta-btn">
+          <a href="/contact" className="sita-cta-btn">
             Book a Meeting with Sita
           </a>
         </span>

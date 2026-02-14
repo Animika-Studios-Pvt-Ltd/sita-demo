@@ -626,7 +626,7 @@ const CorporateTraining = () => {
       {/* ---------------- CTA STRIP SECTION ---------------- */}
       <div className="sita-cta-wrapper" data-aos="zoom-in">
         <span className="cta-border">
-          <a href="/booking" className="sita-cta-btn">
+          <a href="/contact" className="sita-cta-btn">
             Book a Meeting with Sita
           </a>
         </span>
