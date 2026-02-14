@@ -283,7 +283,7 @@ li {
 
 /* Footer Bottom */
 .footer-bottom {
-  background: #c26659;
+  background: #c26659 !important;
   color: #fff;
   padding: 10px 0;
   margin-top: 10px;
@@ -295,6 +295,7 @@ li {
 }
 
 .footer-bottom p {
+  font-family: "Montserrat-Regular" !important;
   font-size: 17px;
   margin-bottom: 0px;
   color: white;
