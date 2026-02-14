@@ -48,6 +48,11 @@ const Articles = () => {
       return;
     }
 
+    if (!imagePreview) {
+      Swal.fire("Error", "Article image is required", "error");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -449,7 +454,7 @@ const Articles = () => {
 
                   <div>
                     <label className="block font-semibold mb-1 text-slate-700">
-                      Article Cover Image (optional)
+                      Article Cover Image
                     </label>
                     <input
                       type="file"
