@@ -104,20 +104,15 @@ li {
 
 .sita-inner-side-img img {
   width: 100%;
-  animation: rotateWheel 90s linear infinite;
+  animation: floatImage 6s ease-in-out infinite;
 }
 
-.yoga-therapy-side-image img {
-  animation: none !important;
-}
-
-@keyframes rotateWheel {
-  from {
-    transform: rotate(0deg);
+@keyframes floatImage {
+  0%, 100% {
+    transform: translateY(0);
   }
-
-  to {
-    transform: rotate(360deg);
+  50% {
+    transform: translateY(-12px);
   }
 }
 
@@ -772,18 +767,7 @@ li {
     opacity: 0.2;
     pointer-events: none;
     z-index: 0;
-    /* animation: rotateWatermark 180s linear infinite; */
   }
-
-  /* @keyframes rotateWatermark {
-    from {
-      transform: translate(-50%, -50%) rotate(0deg);
-    }
-
-    to {
-      transform: translate(-50%, -50%) rotate(360deg);
-    }
-  } */
 
   .ayurveda-nutrition-bg-image {
     --service-watermark-img: url("/ayurveda-nutrition-image.webp");

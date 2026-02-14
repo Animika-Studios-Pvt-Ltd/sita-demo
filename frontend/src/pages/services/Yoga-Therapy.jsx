@@ -35,7 +35,7 @@ const YogaTherapy = () => {
           </div>
         </div>
         <div
-          className="sita-inner-side-img yoga-therapy-side-image"
+          className="sita-inner-side-img"
           data-aos="fade-left"
           data-aos-duration="2000">
           <img src="yoga-therapy-image.webp" alt="Yoga Therapy Image" />
