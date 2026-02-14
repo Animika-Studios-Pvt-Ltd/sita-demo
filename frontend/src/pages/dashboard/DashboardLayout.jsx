@@ -15,6 +15,7 @@ import DarkModeIcon from "@mui/icons-material/DarkMode"
 import useIdleTimeout from "../../hooks/useIdleTimeout"
 import Swal from "sweetalert2"
 import { FaHistory } from "react-icons/fa";
+import "./AdminFooter.css";
 
 const DashboardLayout = () => {
   const navigate = useNavigate()
@@ -315,8 +316,25 @@ const DashboardLayout = () => {
             )}
           </div>
         </header>
-        <main className="flex-1 px-4 sm:px-6 md:px-8 pb-10 pt-[20px]">
-          <Outlet />
+        <main className="flex-1 px-4 sm:px-6 md:px-8 pb-20 pt-[20px] flex flex-col">
+          <div className="flex-grow">
+            <Outlet />
+          </div>
+
+          {!location.pathname.includes("/dashboard/login-history") && (
+            <div className={`fixed bottom-0 z-20 transition-all duration-300 ${isExpanded && !isMobile ? "left-64" : !isMobile ? "left-20" : "left-0"
+              } right-0 footer-bottom bg-white/70 backdrop-blur-xl border-t border-white/70`}>
+              <div className="container footer-bottom-flex">
+                <p>Copyright © 2026 Sita. All Rights Reserved.</p>
+                <p>
+                  Powered By:
+                  <a href="https://lumos.in/" target="_blank" rel="noreferrer">
+                    LUMOS.in
+                  </a>
+                </p>
+              </div>
+            </div>
+          )}
         </main>
       </div>
     </div>
