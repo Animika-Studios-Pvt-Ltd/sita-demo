@@ -107,6 +107,10 @@ li {
   animation: rotateWheel 90s linear infinite;
 }
 
+.yoga-therapy-side-image img {
+  animation: none !important;
+}
+
 @keyframes rotateWheel {
   from {
     transform: rotate(0deg);
@@ -768,10 +772,10 @@ li {
     opacity: 0.2;
     pointer-events: none;
     z-index: 0;
-    animation: rotateWatermark 180s linear infinite;
+    /* animation: rotateWatermark 180s linear infinite; */
   }
 
-  @keyframes rotateWatermark {
+  /* @keyframes rotateWatermark {
     from {
       transform: translate(-50%, -50%) rotate(0deg);
     }
@@ -779,7 +783,7 @@ li {
     to {
       transform: translate(-50%, -50%) rotate(360deg);
     }
-  }
+  } */
 
   .ayurveda-nutrition-bg-image {
     --service-watermark-img: url("/ayurveda-nutrition-image.webp");
