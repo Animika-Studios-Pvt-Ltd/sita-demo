@@ -113,7 +113,7 @@ const AyurvedaNutrition = () => {
                   important as treatment itself.
                 </p>
                 <p className="mb-0" data-aos="fade-left" data-aos-delay="400">
-                  SITA guides the seeker in this seamless integration to enable
+                  Sita guides the seeker in this seamless integration to enable
                   the necessary transformation.
                 </p>
               </div>

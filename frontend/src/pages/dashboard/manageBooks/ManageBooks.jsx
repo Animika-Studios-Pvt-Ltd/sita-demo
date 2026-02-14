@@ -419,7 +419,7 @@ const ManageBooks = () => {
                                     </h2>
                                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                                         <InputField label="Title" name="title" register={register} placeholder="Enter book title" required />
-                                        <InputField label="Sub Title" name="subtitle" register={register} placeholder="Enter book sub title" />
+                                        <InputField label="Subtitle" name="subtitle" register={register} placeholder="Enter book subtitle" />
                                         <InputField label="Author" name="author" register={register} placeholder="Enter author name" required />
                                         <InputField label="Short Description" name="aboutBook" register={register} placeholder="Short description" type="textarea" />
                                         <InputField label="Detailed Description" name="description" register={register} placeholder="Enter description" type="textarea" required />

@@ -104,7 +104,7 @@ const KoshaCounseling = () => {
               </div>
               <div className="sita-inner-full-content">
                 <p data-aos="fade-up" data-aos-delay="100">
-                  Focus of the Kosha counselling is on the energy, mental,
+                  Focus of the Kosha counseling is on the energy, mental,
                   wisdom and bliss layers. By understanding and working through
                   these five koshas, we can journey towards self-realization and
                   uncover the true essence of our being.
@@ -117,7 +117,7 @@ const KoshaCounseling = () => {
                   className="kosha-benefits"
                   data-aos="fade-up"
                   data-aos-delay="300">
-                  Benefits of Kosha Counselling
+                  Benefits of Kosha Counseling
                 </h2>
                 <p data-aos="fade-right" data-aos-delay="350">
                   Koshas offer a comprehensive framework for understanding the
@@ -131,7 +131,7 @@ const KoshaCounseling = () => {
                 <p data-aos="fade-left" data-aos-delay="400">
                   Understanding the koshas encourages practices that promote
                   physical health, emotional stability, mental clarity, and
-                  spiritual fulfilment. This integrative approach enhances
+                  spiritual fulfillment. This integrative approach enhances
                   overall well-being. The koshas emphasize the
                   interconnectedness of the body, energy, mind, wisdom, and
                   spirit.
@@ -156,7 +156,7 @@ const KoshaCounseling = () => {
                 </p>
                 <p className="mb-0" data-aos="fade-up" data-aos-delay="600">
                   Exploring the deeper layers of the koshas can lead to a
-                  greater sense of purpose and fulfilment. You may discover your
+                  greater sense of purpose and fulfillment. You may discover your
                   true passions and align your life with your inner values and
                   wisdom.
                 </p>

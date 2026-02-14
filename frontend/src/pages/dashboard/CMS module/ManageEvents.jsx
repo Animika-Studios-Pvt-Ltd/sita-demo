@@ -739,7 +739,7 @@ const ManageEvents = () => {
                       onChange={(e) =>
                         setEventForm({ ...eventForm, mode: e.target.value })
                       }
-                    ><option value="">Select mode *</option>
+                    ><option value="">Select Mode *</option>
                       <option value="Online">Online</option>
                       <option value="In Person">In Person</option>
                       <option value="Hybrid">Hybrid</option>

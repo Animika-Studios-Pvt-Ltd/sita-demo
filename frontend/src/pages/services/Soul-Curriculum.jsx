@@ -100,7 +100,7 @@ const SoulCurriculum = () => {
                 <p data-aos="fade-right" data-aos-delay="200">
                   Your Jyotish chart is a sacred map that I call your “Soul’s
                   Curriculum”. Sita sits with it as if she is sitting with your
-                  soul. She is not only analyzing or intellectualizing, She is
+                  soul. She is not only analyzing or intellectualizing, she is
                   listening. The planets, houses, and nakshatras become doorways
                   that show her what your higher self is asking you to remember.
                 </p>

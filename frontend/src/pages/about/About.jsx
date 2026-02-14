@@ -111,7 +111,7 @@ const About = () => {
                     Teacher Training programs, individual and group sessions to
                     seekers. She supports and creates customized frameworks that
                     enable spiritual evolution. She is known also as a Vedic
-                    Counselor, Ayurvedic Health Practitioner, Healer, Couch and
+                    Counselor, Ayurvedic Health Practitioner, Healer, Coach and
                     Author.
                   </p>
                 </div>
@@ -152,7 +152,7 @@ const About = () => {
                   medicine, altar practices, and seva minded action.
                 </p>
                 <p data-aos="fade-up" data-aos-delay="500">
-                  She is C IAYT, an Ayurvedic plant-based culinarian, a member
+                  She is C-IAYT, an Ayurvedic plant-based culinarian, a member
                   of IAYT and AAPNA, a four belt Nia mover, a lifelong animal
                   rescuer, and a committed member of the Shri Bhaktha Anjaneya
                   Temple. She guides people back into their dharmic heart where
@@ -217,7 +217,7 @@ const About = () => {
               </p>
               <p data-aos="fade-up" data-aos-delay="250">
                 Her purpose is to guide individuals toward inner clarity,
-                emotional resilience, and conscious living. Sita honours each
+                emotional resilience, and conscious living. Sita honors each
                 person’s unique journey, creating a safe, compassionate space
                 where healing begins from within and transformation unfolds
                 naturally.

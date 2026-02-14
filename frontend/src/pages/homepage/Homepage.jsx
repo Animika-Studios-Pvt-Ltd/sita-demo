@@ -384,7 +384,7 @@ const HomePage = () => {
           <p className="sita-masterclass-text">
             Sita Severson is devoted to empowering individuals on the path of
             self-development—supporting lives of balance, vitality, and
-            well-being, and guiding them toward the fulfilment of their life’s
+            well-being, and guiding them toward the fulfillment of their life’s
             true purpose. Her work is grounded in deep expertise across the many
             dimensions of personal and spiritual transformation.
           </p>
@@ -438,7 +438,7 @@ const HomePage = () => {
                   alt="Ayurveda"
                 />
                 <div className="masterclass-content">
-                  <h4>Kosha Counselling</h4>
+                  <h4>Kosha Counseling</h4>
                   <a
                     href="/kosha-counseling"
                     className="masterclass-card-btn rose">

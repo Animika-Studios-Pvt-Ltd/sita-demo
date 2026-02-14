@@ -115,7 +115,7 @@ const YogaTherapy = () => {
                   the yogic tools available based on your goals and also your
                   comfort level. If you are seeking mind/body balance, recovery
                   from chronic and acute health issues, support with recovering
-                  from surgery or wanting to feel more strong, flexible and
+                  from surgery or wanting to feel stronger, flexible and
                   balanced, Sita’s Yoga Therapy program can meet you where you
                   are and guide you up.
                 </p>

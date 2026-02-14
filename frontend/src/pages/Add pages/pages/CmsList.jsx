@@ -144,7 +144,7 @@ export default function CmsList() {
                     <input
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        placeholder="Search events..."
+                        placeholder="Search pages..."
                         className="w-full sm:w-64 bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-full px-4 py-2 text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
                     />
                 </div>
