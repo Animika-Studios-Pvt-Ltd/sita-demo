@@ -100,12 +100,12 @@ const ArticlesPage = () => {
           <div className="row">
             {currentArticles.map((article, index) => {
               const btnColors = ["pink", "peach", "rose"];
-              const btnColor = btnColors[index % btnColors.length]; // Cycle colors
+              const btnColor = btnColors[index % btnColors.length];
 
               return (
                 <div
                   key={article._id}
-                  className="col-lg-4 col-md-4 col-sm-12 col-12 mb-5"
+                  className="col-lg-4 col-md-4 col-sm-12 col-12 mb-md-5"
                   data-aos="fade-up"
                   data-aos-delay={(index + 1) * 100}>
                   <div className="sita-blog-card">
@@ -202,10 +202,11 @@ const ArticlesPage = () => {
                     key={num}
                     onClick={() => setCurrentPage(num)}
                     className={`w-8 h-8 flex items-center justify-center rounded-full text-sm sm:text-base transition
-            ${currentPage === num
-                        ? "bg-[#993333] text-white"
-                        : "border border-transparent text-black hover:border-black hover:bg-gray-100"
-                      }`}>
+            ${
+              currentPage === num
+                ? "bg-[#993333] text-white"
+                : "border border-transparent text-black hover:border-black hover:bg-gray-100"
+            }`}>
                     {num}
                   </button>
                 ))}

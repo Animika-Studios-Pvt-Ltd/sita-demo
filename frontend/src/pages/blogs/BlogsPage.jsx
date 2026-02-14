@@ -101,11 +101,11 @@ const BlogsPage = () => {
             {currentBlogs.length > 0 ? (
               currentBlogs.map((blog, index) => {
                 const btnColors = ["pink", "peach", "rose"];
-                const btnColor = btnColors[index % btnColors.length]; // Cycle colors
+                const btnColor = btnColors[index % btnColors.length];
                 return (
                   <div
                     key={blog._id}
-                    className="col-lg-4 col-md-4 col-sm-12 col-12 pb-5"
+                    className="col-lg-4 col-md-4 col-sm-12 col-12 mb-md-5"
                     data-aos="fade-up"
                     data-aos-delay={(index + 1) * 100}>
                     <div className="sita-blog-card">
