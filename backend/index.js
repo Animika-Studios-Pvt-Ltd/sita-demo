@@ -271,6 +271,8 @@ app.use("/api/sms", smsRoutes)
 app.use("/api/events", eventRoutes);
 app.use("/api/articles", articleRoutes);
 app.use("/api/podcasts", podcastRoutes);
+app.use("/api/admin", require("./src/admin/admin.routes")); // File Editor Config
+
 
 // ============================================
 // ROOT ENDPOINT

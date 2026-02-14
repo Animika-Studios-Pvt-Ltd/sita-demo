@@ -21,6 +21,8 @@ import Podcasts from "../../pages/dashboard/CMS module/Podcasts";
 import Articles from "../../pages/dashboard/CMS module/Articles";
 import LoginHistory from "../../pages/dashboard/users/LoginHistory";
 import PageNotFound from "../PageNotFound";
+import CodeEditor from "../../pages/dashboard/admin/pages/CodeEditor"; // NEW
+
 
 export const adminRoutes = [
     {
@@ -55,6 +57,8 @@ export const adminRoutes = [
             { path: "manage-events/:id/bookings", element: <EventBookings /> },
             { path: "podcasts", element: <Podcasts /> },
             { path: "articles", element: <Articles /> },
+            { path: "code-editor/:fileKey", element: <CodeEditor /> }, // NEW
+
         ],
     },
     { path: "*", element: <PageNotFound /> },

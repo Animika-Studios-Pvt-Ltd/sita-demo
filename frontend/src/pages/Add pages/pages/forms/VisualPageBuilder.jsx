@@ -4,7 +4,7 @@ import 'grapesjs/dist/css/grapes.min.css';
 import grapesjsBlocksBasic from 'grapesjs-blocks-basic';
 import grapesjsPluginForms from 'grapesjs-plugin-forms';
 import grapesjsPresetWebpage from 'grapesjs-preset-webpage';
-import { api } from '../../../../../utils/api';
+import { api } from '../../../../utils/api';
 
 const VisualPageBuilder = React.forwardRef(({
   pageId,
@@ -359,9 +359,9 @@ const VisualPageBuilder = React.forwardRef(({
     getComponents: () => editor?.getComponents() || null,
   }));
   return (
-    <div 
-      ref={editorRef} 
-      className="h-full w-full" 
+    <div
+      ref={editorRef}
+      className="h-full w-full"
       style={{ minHeight: '100vh' }}
     />
   );
