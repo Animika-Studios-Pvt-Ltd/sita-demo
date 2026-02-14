@@ -20,7 +20,11 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 import { useFetchAllBooksQuery } from "../../../redux/features/books/booksApi";
 import { getSecureImageUrl } from "../../../utils/imageUtils";
-import { usePodcastThumbnail, SPOTIFY_FALLBACK, APPLE_FALLBACK } from "../../../hooks/usePodcastThumbnail";
+import {
+  usePodcastThumbnail,
+  SPOTIFY_FALLBACK,
+  APPLE_FALLBACK,
+} from "../../../hooks/usePodcastThumbnail";
 import { FaSpotify, FaApple } from "react-icons/fa";
 
 // Import Swiper styles
@@ -188,28 +192,28 @@ function HeroSection({ content, createdFrom, pageSlug }) {
 
   const breadcrumbItems = isBookingPage
     ? [
-      { label: "Home", path: "/" },
-      { label: "Workshops", path: "/events" }, // Or just path: null if no events page
-      {
-        label: pageSlug
-          ? pageSlug
-            .replace(/-/g, " ")
-            .replace(/\b\w/g, (c) => c.toUpperCase())
-          : displayTitle || "Workshop",
-        path: null,
-      },
-    ]
+        { label: "Home", path: "/" },
+        { label: "Workshops", path: "/events" }, // Or just path: null if no events page
+        {
+          label: pageSlug
+            ? pageSlug
+                .replace(/-/g, " ")
+                .replace(/\b\w/g, (c) => c.toUpperCase())
+            : displayTitle || "Workshop",
+          path: null,
+        },
+      ]
     : [
-      { label: "Home", path: "/" },
-      {
-        label: pageSlug
-          ? pageSlug
-            .replace(/-/g, " ")
-            .replace(/\b\w/g, (c) => c.toUpperCase())
-          : displayTitle || "Page",
-        path: null,
-      },
-    ];
+        { label: "Home", path: "/" },
+        {
+          label: pageSlug
+            ? pageSlug
+                .replace(/-/g, " ")
+                .replace(/\b\w/g, (c) => c.toUpperCase())
+            : displayTitle || "Page",
+          path: null,
+        },
+      ];
 
   const handleCtaClick = () => {
     if (eventStatus.ended || eventStatus.soldOut) return;
@@ -285,7 +289,10 @@ function HeroSection({ content, createdFrom, pageSlug }) {
               data-aos="zoom-out"
               data-aos-duration="1500">
               <img
-                src={getSecureImageUrl(backgroundImage) || "/images/about-banner.webp"}
+                src={
+                  getSecureImageUrl(backgroundImage) ||
+                  "/images/about-banner.webp"
+                }
                 alt="Hero Banner"
               />
             </div>
@@ -385,7 +392,23 @@ function HtmlSection({ content }) {
         }
 
         // Add AOS fade-up to all block-level elements
-        const blockTags = ["h1", "h2", "h3", "h4", "h5", "h6", "p", "ul", "ol", "li", "div", "img", "blockquote", "section", "article"];
+        const blockTags = [
+          "h1",
+          "h2",
+          "h3",
+          "h4",
+          "h5",
+          "h6",
+          "p",
+          "ul",
+          "ol",
+          "li",
+          "div",
+          "img",
+          "blockquote",
+          "section",
+          "article",
+        ];
         if (blockTags.includes(domNode.name)) {
           domNode.attribs["data-aos"] = "fade-up";
         }
@@ -515,9 +538,7 @@ function FaqSection({ content }) {
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
                 className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors sita-faq-question">
-                <span
-                  className="pr-4"
-                  style={{ color: questionColor }}>
+                <span className="pr-4" style={{ color: questionColor }}>
                   {item.q}
                 </span>
                 {openIndex === i ? (
@@ -608,7 +629,7 @@ const categoryImages = {
     "https://images.unsplash.com/photo-1604908177522-040c8b7e16ad",
     "https://images.unsplash.com/photo-1540420773420-3366772f4999",
   ],
-  "Kosha Counseling": [
+  "Kosha Counselling": [
     "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2",
     "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
     "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
@@ -687,7 +708,9 @@ function EventsSection({ content }) {
     const dateObj = new Date(event.date);
     const day = dateObj.getDate();
     const month = dateObj.toLocaleString("en-US", { month: "short" });
-    const eventImage = getSecureImageUrl(event.imageUrl || getCategoryImage(event.category));
+    const eventImage = getSecureImageUrl(
+      event.imageUrl || getCategoryImage(event.category),
+    );
 
     return (
       <div
@@ -911,9 +934,9 @@ function BooksSection({ content }) {
   // Memoize latestBooks to prevent re-renders ideally, but inside render is fine for now
   const latestBooks = Array.isArray(books)
     ? [...books]
-      .filter((b) => !b.suspended && b._id !== id && b.slug !== id) // Exclude current
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-      .slice(0, count)
+        .filter((b) => !b.suspended && b._id !== id && b.slug !== id) // Exclude current
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .slice(0, count)
     : [];
 
   const handleAddToCart = (book) => {
@@ -954,14 +977,20 @@ function BooksSection({ content }) {
               <div
                 className={`book-flip-front absolute w-full h-full backface-hidden ${isSuspended ? "opacity-60 grayscale" : ""}`}>
                 <img
-                  src={getSecureImageUrl(book?.coverImage) || "/placeholder-book.jpg"}
+                  src={
+                    getSecureImageUrl(book?.coverImage) ||
+                    "/placeholder-book.jpg"
+                  }
                   alt={book?.title}
                   className="w-full h-full object-cover rounded-md shadow-md"
                 />
               </div>
               <div className="book-flip-back absolute w-full h-full backface-hidden rotate-y-180 rounded-md flex flex-col items-center justify-center">
                 <img
-                  src={getSecureImageUrl(book?.backImage || book?.coverImage) || "/default-back.webp"}
+                  src={
+                    getSecureImageUrl(book?.backImage || book?.coverImage) ||
+                    "/default-back.webp"
+                  }
                   alt={`${book?.title} back`}
                   className="w-full h-full object-cover"
                 />
@@ -1250,17 +1279,17 @@ function PodcastsSection({ content }) {
 
     // Use usage of custom hook to get correct thumbnail
     const thumbnailUrl = usePodcastThumbnail(podcast, API_URL);
-    
+
     // Determine what to show
     let thumbnailSrc = "/placeholder.jpg";
-    
+
     if (thumbnailUrl === SPOTIFY_FALLBACK) {
-        thumbnailSrc = SPOTIFY_FALLBACK;
+      thumbnailSrc = SPOTIFY_FALLBACK;
     } else if (thumbnailUrl === APPLE_FALLBACK) {
-        thumbnailSrc = APPLE_FALLBACK;
+      thumbnailSrc = APPLE_FALLBACK;
     } else {
-        // It's a URL (either uploaded or from metadata)
-        thumbnailSrc = thumbnailUrl || "/placeholder.jpg";
+      // It's a URL (either uploaded or from metadata)
+      thumbnailSrc = thumbnailUrl || "/placeholder.jpg";
     }
 
     return (
@@ -1303,10 +1332,11 @@ function PodcastsSection({ content }) {
                   className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
                 />
               )}
-              
-              {(thumbnailSrc !== SPOTIFY_FALLBACK && thumbnailSrc !== APPLE_FALLBACK) && (
-                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
-              )}
+
+              {thumbnailSrc !== SPOTIFY_FALLBACK &&
+                thumbnailSrc !== APPLE_FALLBACK && (
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
+                )}
 
               {!isUpcoming && (
                 <button

@@ -297,7 +297,7 @@ const PrivateSessions = () => {
                 <div className="masterclass-content">
                   <h4>Kosha Counselling</h4>
                   <a
-                    href="/kosha-counseling"
+                    href="/kosha-counselling"
                     className="masterclass-card-btn rose">
                     Explore Inner Layers
                   </a>

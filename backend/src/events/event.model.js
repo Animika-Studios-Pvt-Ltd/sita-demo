@@ -10,9 +10,9 @@ const eventSchema = new mongoose.Schema(
     },
     title: { type: String, required: true },
 
-    date: { type: String, required: true },       // YYYY-MM-DD
-    startTime: { type: String, required: true },  // HH:mm
-    endTime: { type: String, required: true },    // HH:mm
+    date: { type: String, required: true }, // YYYY-MM-DD
+    startTime: { type: String, required: true }, // HH:mm
+    endTime: { type: String, required: true }, // HH:mm
 
     location: { type: String },
     mode: { type: String },
@@ -33,7 +33,7 @@ const eventSchema = new mongoose.Schema(
       enum: [
         "Yoga Therapy",
         "Ayurveda – Nutrition & Integration",
-        "Kosha Counseling",
+        "Kosha Counselling",
         "Soul Curriculum",
         "Release Karmic Patterns",
         "Others",
@@ -53,7 +53,7 @@ const eventSchema = new mongoose.Schema(
 
     imageUrl: { type: String },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("Event", eventSchema);

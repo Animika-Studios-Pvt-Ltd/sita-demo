@@ -3,13 +3,42 @@ const Event = require("../events/event.model"); // Import Event model
 const { uploadToCloudinary } = require("../config/cloudinary");
 
 const RESERVED_SLUGS = [
-  "about", "ayurveda-nutrition", "kosha-counseling", "release-karmic-patterns",
-  "soul-curriculum", "yoga-therapy", "corporate-training", "group-sessions",
-  "private-sessions", "shakthi-leadership", "teacher-training", "podcasts",
-  "privacy-policy", "disclaimer", "contact", "consult-sita", "engage-sita",
-  "study-with-sita", "publications", "store", "books", "cart", "checkout",
-  "ebook", "my-orders", "blogs", "articles", "booking", "my-bookings",
-  "events", "my-profile", "auth", "admin", "login", "register", "cms"
+  "about",
+  "ayurveda-nutrition",
+  "kosha-counselling",
+  "release-karmic-patterns",
+  "soul-curriculum",
+  "yoga-therapy",
+  "corporate-training",
+  "group-sessions",
+  "private-sessions",
+  "shakthi-leadership",
+  "teacher-training",
+  "podcasts",
+  "privacy-policy",
+  "disclaimer",
+  "contact",
+  "consult-sita",
+  "engage-sita",
+  "study-with-sita",
+  "publications",
+  "store",
+  "books",
+  "cart",
+  "checkout",
+  "ebook",
+  "my-orders",
+  "blogs",
+  "articles",
+  "booking",
+  "my-bookings",
+  "events",
+  "my-profile",
+  "auth",
+  "admin",
+  "login",
+  "register",
+  "cms",
 ];
 
 const isReservedSlug = (slug) => {
@@ -24,12 +53,16 @@ async function syncEventImage(page) {
   if (!page || !page.slug) return;
 
   // 1. Try to get image from Hero Section
-  const heroSection = page.sections && page.sections.find(s => s.key === 'hero');
+  const heroSection =
+    page.sections && page.sections.find((s) => s.key === "hero");
   let imageUrl = heroSection?.content?.backgroundImage;
 
   // 2. Fallback to page.bannerImage if available (and if it's a string or has src)
   if (!imageUrl && page.bannerImage) {
-    imageUrl = typeof page.bannerImage === 'string' ? page.bannerImage : page.bannerImage.src;
+    imageUrl =
+      typeof page.bannerImage === "string"
+        ? page.bannerImage
+        : page.bannerImage.src;
   }
 
   if (imageUrl) {
@@ -37,7 +70,7 @@ async function syncEventImage(page) {
 
     // Normalize slug to match bookingUrl variations
     // bookingUrl could be "yoga-therapy" or "/yoga-therapy"
-    const slug = page.slug.replace(/^\//, ''); // Remove leading slash
+    const slug = page.slug.replace(/^\//, ""); // Remove leading slash
 
     // Find corresponding event and update imageUrl
     // We try to match: strict slug, slug with slash, or whatever is in bookingUrl
@@ -45,14 +78,16 @@ async function syncEventImage(page) {
       $or: [
         { bookingUrl: slug },
         { bookingUrl: `/${slug}` },
-        { bookingUrl: page.slug } // original
-      ]
+        { bookingUrl: page.slug }, // original
+      ],
     });
 
     if (event) {
       event.imageUrl = imageUrl;
       await event.save();
-      console.log(`[Sync] Updated event ${event.code} (${event.title}) with new image.`);
+      console.log(
+        `[Sync] Updated event ${event.code} (${event.title}) with new image.`,
+      );
     } else {
       console.log(`[Sync] No matching event found for bookingUrl: ${slug}`);
     }
@@ -62,9 +97,11 @@ async function syncEventImage(page) {
 async function getNavigationPages(req, res) {
   try {
     const pages = await Page.find({
-      $or: [{ addToHeader: true }, { addToFooter: true }]
+      $or: [{ addToHeader: true }, { addToFooter: true }],
     })
-      .select("title slug addToHeader addToFooter headerPosition headerRow headerParent isDropdownParent footerPosition order navigationTitle")
+      .select(
+        "title slug addToHeader addToFooter headerPosition headerRow headerParent isDropdownParent footerPosition order navigationTitle",
+      )
       .sort({ order: 1, headerPosition: 1, footerPosition: 1 });
 
     return res.status(200).json(pages);
@@ -97,8 +134,10 @@ async function getAllPages(req, res) {
 
 async function getPageBySlug(req, res) {
   try {
-    const page = await Page.findOne({ slug: req.params.slug })
-      .populate("parentHeader", "title slug");
+    const page = await Page.findOne({ slug: req.params.slug }).populate(
+      "parentHeader",
+      "title slug",
+    );
     if (!page) return res.status(404).json({ error: "Page not found" });
     return res.status(200).json(page);
   } catch (error) {
@@ -113,19 +152,26 @@ async function createPage(req, res) {
     const files = req.files;
 
     if (isReservedSlug(data.slug)) {
-      return res.status(400).json({ error: "This page name is reserved for system use." });
+      return res
+        .status(400)
+        .json({ error: "This page name is reserved for system use." });
     }
 
     if (files?.bannerImage?.[0]) {
-      data.bannerImage = await handleImageUpload(files.bannerImage[0], "Banner Image");
+      data.bannerImage = await handleImageUpload(
+        files.bannerImage[0],
+        "Banner Image",
+      );
     }
 
     if (files?.sectionImages) {
       let secImageIndex = 0;
       for (let i = 0; i < files.sectionImages.length; i++) {
         const uploaded = await handleImageUpload(files.sectionImages[i]);
-        if (!data.sections[secImageIndex]) data.sections[secImageIndex] = { images: [] };
-        if (!data.sections[secImageIndex].images) data.sections[secImageIndex].images = [];
+        if (!data.sections[secImageIndex])
+          data.sections[secImageIndex] = { images: [] };
+        if (!data.sections[secImageIndex].images)
+          data.sections[secImageIndex].images = [];
         data.sections[secImageIndex].images.push(uploaded);
         secImageIndex++;
       }
@@ -144,12 +190,16 @@ async function createPage(req, res) {
 
     const populated = await newPage.populate("parentHeader", "title slug");
     return res.status(201).json(populated);
-
   } catch (error) {
     console.error(error);
 
     if (error.code === 11000 && error.keyPattern?.slug) {
-      return res.status(400).json({ error: "This page link (slug) is already taken. Please choose another." });
+      return res
+        .status(400)
+        .json({
+          error:
+            "This page link (slug) is already taken. Please choose another.",
+        });
     }
 
     if (error.name === "ValidationError") {
@@ -161,7 +211,6 @@ async function createPage(req, res) {
 
     return res.status(500).json({ error: "Failed to update page" });
   }
-
 }
 
 async function updatePage(req, res) {
@@ -174,7 +223,9 @@ async function updatePage(req, res) {
 
     // Validate slug if it is being changed
     if (data.slug && data.slug !== page.slug && isReservedSlug(data.slug)) {
-      return res.status(400).json({ error: "This page name is reserved for system use." });
+      return res
+        .status(400)
+        .json({ error: "This page name is reserved for system use." });
     }
 
     if (data.deleteBanner) {
@@ -182,15 +233,20 @@ async function updatePage(req, res) {
     }
 
     if (files?.bannerImage?.[0]) {
-      page.bannerImage = await handleImageUpload(files.bannerImage[0], "Banner Image");
+      page.bannerImage = await handleImageUpload(
+        files.bannerImage[0],
+        "Banner Image",
+      );
     }
 
     if (files?.sectionImages) {
       let secImageIndex = 0;
       for (let i = 0; i < files.sectionImages.length; i++) {
         const uploaded = await handleImageUpload(files.sectionImages[i]);
-        if (!data.sections[secImageIndex]) data.sections[secImageIndex] = { images: [] };
-        if (!data.sections[secImageIndex].images) data.sections[secImageIndex].images = [];
+        if (!data.sections[secImageIndex])
+          data.sections[secImageIndex] = { images: [] };
+        if (!data.sections[secImageIndex].images)
+          data.sections[secImageIndex].images = [];
         data.sections[secImageIndex].images.push(uploaded);
         secImageIndex++;
       }
@@ -209,15 +265,22 @@ async function updatePage(req, res) {
     page.parentHeader = data.parentHeader || null;
 
     // Navigation and Metadata
-    if (typeof data.addToHeader !== 'undefined') page.addToHeader = data.addToHeader;
-    if (typeof data.addToFooter !== 'undefined') page.addToFooter = data.addToFooter;
-    if (typeof data.headerPosition !== 'undefined') page.headerPosition = Number(data.headerPosition) || 0;
-    if (typeof data.footerPosition !== 'undefined') page.footerPosition = Number(data.footerPosition) || 0;
-    if (typeof data.order !== 'undefined') page.order = Number(data.order) || 0;
-    if (typeof data.headerRow !== 'undefined') page.headerRow = data.headerRow;
-    if (typeof data.headerParent !== 'undefined') page.headerParent = data.headerParent;
-    if (typeof data.isDropdownParent !== 'undefined') page.isDropdownParent = data.isDropdownParent; // NEW
-    if (typeof data.navigationTitle !== 'undefined') page.navigationTitle = (data.navigationTitle || "").toLowerCase().trim(); // NEW: Force Lowercase
+    if (typeof data.addToHeader !== "undefined")
+      page.addToHeader = data.addToHeader;
+    if (typeof data.addToFooter !== "undefined")
+      page.addToFooter = data.addToFooter;
+    if (typeof data.headerPosition !== "undefined")
+      page.headerPosition = Number(data.headerPosition) || 0;
+    if (typeof data.footerPosition !== "undefined")
+      page.footerPosition = Number(data.footerPosition) || 0;
+    if (typeof data.order !== "undefined") page.order = Number(data.order) || 0;
+    if (typeof data.headerRow !== "undefined") page.headerRow = data.headerRow;
+    if (typeof data.headerParent !== "undefined")
+      page.headerParent = data.headerParent;
+    if (typeof data.isDropdownParent !== "undefined")
+      page.isDropdownParent = data.isDropdownParent; // NEW
+    if (typeof data.navigationTitle !== "undefined")
+      page.navigationTitle = (data.navigationTitle || "").toLowerCase().trim(); // NEW: Force Lowercase
     page.title = data.title || page.title; // Already updating title, but good to be explicit here if it was conditional
 
     await page.validate();
@@ -229,14 +292,16 @@ async function updatePage(req, res) {
 
     const populated = await updated.populate("parentHeader", "title slug");
     return res.status(200).json(populated);
-
   } catch (error) {
     console.error(error);
 
     if (error.code === 11000 && error.keyPattern?.slug) {
       return res
         .status(400)
-        .json({ error: "This page link (slug) is already taken. Please choose another." });
+        .json({
+          error:
+            "This page link (slug) is already taken. Please choose another.",
+        });
     }
 
     if (error.name === "ValidationError") {
@@ -260,7 +325,6 @@ async function deletePage(req, res) {
     return res.status(500).json({ error: "Failed to delete page" });
   }
 }
-
 
 async function uploadImage(req, res) {
   try {

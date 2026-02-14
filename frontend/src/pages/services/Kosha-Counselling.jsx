@@ -6,7 +6,7 @@ import WorkShopCalendar from "../workshop calendar/WorkShopCalendar";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 import "../about/About.css";
 
-const KoshaCounseling = () => {
+const KoshaCounselling = () => {
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -30,7 +30,10 @@ const KoshaCounseling = () => {
             className="sita-inner-hero-image-banner"
             data-aos="zoom-out"
             data-aos-duration="1500">
-            <img src="kosha-counseling-banner.webp" alt="Yoga Therapy Banner" />
+            <img
+              src="kosha-counselling-banner.webp"
+              alt="Yoga Therapy Banner"
+            />
           </div>
         </div>
         <div
@@ -38,8 +41,8 @@ const KoshaCounseling = () => {
           data-aos="fade-left"
           data-aos-duration="2000">
           <img
-            src="/kosha-counseling-image.webp"
-            alt="Kosha Counseling Image"
+            src="/kosha-counselling-image.webp"
+            alt="Kosha Counselling Image"
           />
         </div>
       </section>
@@ -48,17 +51,17 @@ const KoshaCounseling = () => {
         items={[
           { label: "Home", path: "/" },
           { label: "Sita Factor", path: "" },
-          { label: "Kosha Counseling" },
+          { label: "Kosha Counselling" },
         ]}
       />
       {/* --------------------- INNER PAGE CONTENT ---------------------- */}
-      <section className="sita-inner-section kosha-counseling-bg-image">
+      <section className="sita-inner-section kosha-counselling-bg-image">
         <div className="container position-relative">
           <div className="row">
             <div className="col-lg-12 col-md-12 col-sm-12 col-12">
               <div className="sita-inner-content" data-aos="fade-up">
                 <h2 data-aos="fade-up" data-aos-delay="120">
-                  Kosha Counseling
+                  Kosha Counselling
                 </h2>
                 <img
                   src="/sita-motif.webp"
@@ -104,7 +107,7 @@ const KoshaCounseling = () => {
               </div>
               <div className="sita-inner-full-content">
                 <p data-aos="fade-up" data-aos-delay="100">
-                  Focus of the Kosha counseling is on the energy, mental,
+                  Focus of the Kosha counselling is on the energy, mental,
                   wisdom and bliss layers. By understanding and working through
                   these five koshas, we can journey towards self-realization and
                   uncover the true essence of our being.
@@ -117,7 +120,7 @@ const KoshaCounseling = () => {
                   className="kosha-benefits"
                   data-aos="fade-up"
                   data-aos-delay="300">
-                  Benefits of Kosha Counseling
+                  Benefits of Kosha Counselling
                 </h2>
                 <p data-aos="fade-right" data-aos-delay="350">
                   Koshas offer a comprehensive framework for understanding the
@@ -156,9 +159,9 @@ const KoshaCounseling = () => {
                 </p>
                 <p className="mb-0" data-aos="fade-up" data-aos-delay="600">
                   Exploring the deeper layers of the koshas can lead to a
-                  greater sense of purpose and fulfillment. You may discover your
-                  true passions and align your life with your inner values and
-                  wisdom.
+                  greater sense of purpose and fulfillment. You may discover
+                  your true passions and align your life with your inner values
+                  and wisdom.
                 </p>
               </div>
             </div>
@@ -188,4 +191,4 @@ const KoshaCounseling = () => {
   );
 };
 
-export default KoshaCounseling;
+export default KoshaCounselling;

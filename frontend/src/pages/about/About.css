@@ -219,7 +219,7 @@ li {
   }
 }
 
-/* ----------------- KOSHA COUNSELING PAGE ----------------- */
+/* ----------------- KOSHA COUNSELLING PAGE ----------------- */
 .kosha-list {
   list-style: none;
   padding: 0;
@@ -773,8 +773,8 @@ li {
     --service-watermark-img: url("/ayurveda-nutrition-image.webp");
   }
 
-  .kosha-counseling-bg-image {
-    --service-watermark-img: url("/kosha-counseling-image.webp");
+  .kosha-counselling-bg-image {
+    --service-watermark-img: url("/kosha-counselling-image.webp");
   }
 
   .release-karmic-patterns-bg-image {

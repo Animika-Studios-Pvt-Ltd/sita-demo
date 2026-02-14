@@ -143,11 +143,18 @@ const generateSlots = (step) => {
 const toDateStr = (d) =>
   d
     ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
-      d.getDate()
-    ).padStart(2, "0")}`
+        d.getDate(),
+      ).padStart(2, "0")}`
     : "";
 
-const getSlotStatus = (date, start, duration, events, blocked, ignoreEventId) => {
+const getSlotStatus = (
+  date,
+  start,
+  duration,
+  events,
+  blocked,
+  ignoreEventId,
+) => {
   const s1 = toMinutes(start);
   const e1 = s1 + duration;
 
@@ -160,7 +167,7 @@ const getSlotStatus = (date, start, duration, events, blocked, ignoreEventId) =>
 
   // 🔵 EVENT
   for (const e of events.filter(
-    (e) => e.date === date && e._id !== ignoreEventId
+    (e) => e.date === date && e._id !== ignoreEventId,
   )) {
     if (isOverlap(s1, e1, toMinutes(e.startTime), toMinutes(e.endTime))) {
       return "event";
@@ -264,7 +271,9 @@ const ManageEvents = () => {
         return true;
     }
 
-    for (const e of events.filter((e) => e.date === date && e._id !== ignoreId)) {
+    for (const e of events.filter(
+      (e) => e.date === date && e._id !== ignoreId,
+    )) {
       if (isOverlap(s1, e1, toMinutes(e.startTime), toMinutes(e.endTime)))
         return true;
     }
@@ -338,20 +347,12 @@ const ManageEvents = () => {
 
   const isPastBlocked = (block) => !isUpcomingBlocked(block);
 
-
   const eventQuery = eventSearch.trim().toLowerCase();
   const filteredEvents = events.filter((e) => {
     if (eventFilter === "upcoming" && !isUpcomingEvent(e)) return false;
     if (eventFilter === "past" && !isPastEvent(e)) return false;
     if (!eventQuery) return true;
-    const hay = [
-      e.title,
-      e.code,
-      e.location,
-      e.category,
-      e.mode,
-      e.bookingUrl,
-    ]
+    const hay = [e.title, e.code, e.location, e.category, e.mode, e.bookingUrl]
       .filter(Boolean)
       .join(" ")
       .toLowerCase();
@@ -363,12 +364,7 @@ const ManageEvents = () => {
     if (blockFilter === "upcoming" && !isUpcomingBlocked(b)) return false;
     if (blockFilter === "past" && !isPastBlocked(b)) return false;
     if (!blockQuery) return true;
-    const hay = [
-      b.reason,
-      b.date,
-      b.startTime,
-      b.endTime,
-    ]
+    const hay = [b.reason, b.date, b.startTime, b.endTime]
       .filter(Boolean)
       .join(" ")
       .toLowerCase();
@@ -385,7 +381,10 @@ const ManageEvents = () => {
         return errorAlert("Missing title", "Event title is required");
 
       if (urlStatus === "taken")
-        return errorAlert("Duplicate URL", "This Booking URL is already in use.");
+        return errorAlert(
+          "Duplicate URL",
+          "This Booking URL is already in use.",
+        );
 
       if (!eventForm.date || !eventForm.startTime || !eventForm.endTime)
         return errorAlert("Missing fields", "Date & time required");
@@ -403,12 +402,12 @@ const ManageEvents = () => {
           date,
           eventForm.startTime,
           toMinutes(eventForm.endTime) - toMinutes(eventForm.startTime),
-          editingEventId
+          editingEventId,
         )
       ) {
         return errorAlert(
           "Time conflict",
-          "This slot overlaps with another event or blocked slot"
+          "This slot overlaps with another event or blocked slot",
         );
       }
 
@@ -420,7 +419,7 @@ const ManageEvents = () => {
 
       successAlert(
         editingEventId ? "Event Updated" : "Event Created",
-        "Operation successful"
+        "Operation successful",
       );
 
       resetEvent();
@@ -490,9 +489,10 @@ const ManageEvents = () => {
     const timer = setTimeout(() => {
       // Check if URL exists in ANY event (except current one if editing)
       // Case-insensitive check
-      const exists = events.some(e =>
-        e.bookingUrl?.toLowerCase() === url.toLowerCase() &&
-        e._id !== editingEventId
+      const exists = events.some(
+        (e) =>
+          e.bookingUrl?.toLowerCase() === url.toLowerCase() &&
+          e._id !== editingEventId,
       );
 
       setUrlStatus(exists ? "taken" : "available");
@@ -505,14 +505,14 @@ const ManageEvents = () => {
 
   const paginatedEvents = filteredEvents.slice(
     (eventPage - 1) * EVENT_LIMIT,
-    eventPage * EVENT_LIMIT
+    eventPage * EVENT_LIMIT,
   );
 
   const blockTotal = filteredBlocked.length;
 
   const paginatedBlocked = filteredBlocked.slice(
     (blockPage - 1) * BLOCK_LIMIT,
-    blockPage * BLOCK_LIMIT
+    blockPage * BLOCK_LIMIT,
   );
 
   const editEvent = (e) => {
@@ -541,7 +541,6 @@ const ManageEvents = () => {
       eventFormRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 100);
   };
-
 
   const isPastDate = (date) => {
     if (!date) return false;
@@ -572,7 +571,6 @@ const ManageEvents = () => {
     }, 100);
   };
 
-
   const resetEvent = () => {
     setEditingEventId(null);
     setShowEventForm(false);
@@ -592,7 +590,6 @@ const ManageEvents = () => {
       endTime: "",
     });
   };
-
 
   /* ================= BLOCK ================= */
   const submitBlock = async () => {
@@ -635,8 +632,7 @@ const ManageEvents = () => {
     <div className="container mx-auto mt-10 px-4 font-montserrat text-slate-700">
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center gap-2 justify-center rounded-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 text-slate-700 hover:bg-white/90 transition-colors duration-200 px-3 py-1.5 text-sm font-medium"
-      >
+        className="flex items-center gap-2 justify-center rounded-full bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 text-slate-700 hover:bg-white/90 transition-colors duration-200 px-3 py-1.5 text-sm font-medium">
         <ArrowBackIcon className="w-4 h-4" />
         Back
       </button>
@@ -653,8 +649,8 @@ const ManageEvents = () => {
             </h2>
 
             <p className="text-slate-600 text-sm mb-4">
-              This Admin Event & Availability Manager is optimized for
-              Desktop or Tablet devices.
+              This Admin Event & Availability Manager is optimized for Desktop
+              or Tablet devices.
             </p>
 
             <p className="text-xs text-slate-400">
@@ -685,12 +681,10 @@ const ManageEvents = () => {
           {/* ================= EVENTS ================= */}
           {activeTab === "events" && (
             <>
-
               <div className="flex justify-end mb-4">
                 <button
                   onClick={() => setShowEventForm((v) => !v)}
-                  className={glassBtnPrimarySoft}
-                >
+                  className={glassBtnPrimarySoft}>
                   {showEventForm ? "Close Event Form" : "Create Event"}
                 </button>
               </div>
@@ -705,9 +699,21 @@ const ManageEvents = () => {
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                     {[
                       { label: "Title*", value: eventForm.title, key: "title" },
-                      { label: "Price (USD)", value: eventForm.price, key: "price" },
-                      { label: "Capacity", value: eventForm.capacity, key: "capacity" },
-                      { label: "Age Group", value: eventForm.ageGroup, key: "ageGroup" },
+                      {
+                        label: "Price (USD)",
+                        value: eventForm.price,
+                        key: "price",
+                      },
+                      {
+                        label: "Capacity",
+                        value: eventForm.capacity,
+                        key: "capacity",
+                      },
+                      {
+                        label: "Age Group",
+                        value: eventForm.ageGroup,
+                        key: "ageGroup",
+                      },
                     ].map((f) => (
                       <input
                         key={f.key}
@@ -715,7 +721,10 @@ const ManageEvents = () => {
                         className={glassInput}
                         value={f.value}
                         onChange={(e) =>
-                          setEventForm({ ...eventForm, [f.key]: e.target.value })
+                          setEventForm({
+                            ...eventForm,
+                            [f.key]: e.target.value,
+                          })
                         }
                       />
                     ))}
@@ -738,8 +747,8 @@ const ManageEvents = () => {
                       value={eventForm.mode}
                       onChange={(e) =>
                         setEventForm({ ...eventForm, mode: e.target.value })
-                      }
-                    ><option value="">Select Mode *</option>
+                      }>
+                      <option value="">Select Mode *</option>
                       <option value="Online">Online</option>
                       <option value="In Person">In Person</option>
                       <option value="Hybrid">Hybrid</option>
@@ -750,14 +759,19 @@ const ManageEvents = () => {
                       value={eventForm.category}
                       onChange={(e) =>
                         setEventForm({ ...eventForm, category: e.target.value })
-                      }
-                    >
+                      }>
                       <option value="">Select Category *</option>
                       <option value="Yoga Therapy">Yoga Therapy</option>
-                      <option value="Ayurveda – Nutrition & Integration">Ayurveda – Nutrition & Integration</option>
-                      <option value="Kosha Counseling">Kosha Counseling</option>
+                      <option value="Ayurveda – Nutrition & Integration">
+                        Ayurveda – Nutrition & Integration
+                      </option>
+                      <option value="Kosha Counselling">
+                        Kosha Counselling
+                      </option>
                       <option value="Soul Curriculum">Soul Curriculum</option>
-                      <option value="Release Karmic Patterns">Release Karmic Patterns</option>
+                      <option value="Release Karmic Patterns">
+                        Release Karmic Patterns
+                      </option>
                       <option value="Others">Others</option>
                     </select>
                   </div>
@@ -766,15 +780,21 @@ const ManageEvents = () => {
                     <div className="relative">
                       <input
                         placeholder="Booking URL (example: Yoga-Therapy)"
-                        className={`${glassInput} ${urlStatus === "taken"
-                          ? "border-red-400 focus:ring-red-200"
-                          : urlStatus === "available"
-                            ? "border-emerald-400 focus:ring-emerald-200"
-                            : "border-white/70"
-                          }`}
+                        className={`${glassInput} ${
+                          urlStatus === "taken"
+                            ? "border-red-400 focus:ring-red-200"
+                            : urlStatus === "available"
+                              ? "border-emerald-400 focus:ring-emerald-200"
+                              : "border-white/70"
+                        }`}
                         value={eventForm.bookingUrl}
                         onChange={(e) =>
-                          setEventForm({ ...eventForm, bookingUrl: e.target.value.toLowerCase().replace(/\s+/g, "-") })
+                          setEventForm({
+                            ...eventForm,
+                            bookingUrl: e.target.value
+                              .toLowerCase()
+                              .replace(/\s+/g, "-"),
+                          })
                         }
                       />
                       {/* STATUS INDICATOR */}
@@ -784,10 +804,14 @@ const ManageEvents = () => {
                             <span className="text-slate-400">Checking...</span>
                           )}
                           {urlStatus === "available" && (
-                            <span className="text-emerald-600 flex items-center gap-1">Available</span>
+                            <span className="text-emerald-600 flex items-center gap-1">
+                              Available
+                            </span>
                           )}
                           {urlStatus === "taken" && (
-                            <span className="text-red-500 flex items-center gap-1">Taken</span>
+                            <span className="text-red-500 flex items-center gap-1">
+                              Taken
+                            </span>
                           )}
                         </div>
                       )}
@@ -804,7 +828,10 @@ const ManageEvents = () => {
                     className={`${glassInput} mb-6 resize-y`}
                     value={eventForm.description}
                     onChange={(e) =>
-                      setEventForm({ ...eventForm, description: e.target.value })
+                      setEventForm({
+                        ...eventForm,
+                        description: e.target.value,
+                      })
                     }
                   />
 
@@ -813,7 +840,9 @@ const ManageEvents = () => {
                       <DayPicker
                         mode="single"
                         selected={eventForm.date}
-                        onSelect={(d) => setEventForm({ ...eventForm, date: d })}
+                        onSelect={(d) =>
+                          setEventForm({ ...eventForm, date: d })
+                        }
                         disabled={{ before: new Date() }}
                       />
                     </div>
@@ -826,7 +855,6 @@ const ManageEvents = () => {
                           onChange={() => setManualEvent(!manualEvent)}
                           className="accent-[#7A1F2B]"
                         />
-
                         Manual Time Selection
                       </label>
 
@@ -835,8 +863,9 @@ const ManageEvents = () => {
                           <select
                             className={`${glassSelect} mb-3`}
                             value={eventDuration}
-                            onChange={(e) => setEventDuration(Number(e.target.value))}
-                          >
+                            onChange={(e) =>
+                              setEventDuration(Number(e.target.value))
+                            }>
                             {[15, 30, 45, 60, 90, 120].map((d) => (
                               <option key={d} value={d}>
                                 {d} minutes
@@ -847,14 +876,16 @@ const ManageEvents = () => {
                           <div className="grid grid-cols-3 gap-2 max-h-56 overflow-y-auto pr-1">
                             {eventForm.date &&
                               generateSlots(eventDuration).map((slot) => {
-                                const end = toTime(toMinutes(slot) + eventDuration);
+                                const end = toTime(
+                                  toMinutes(slot) + eventDuration,
+                                );
                                 const status = getSlotStatus(
                                   toDateStr(eventForm.date),
                                   slot,
                                   eventDuration,
                                   events,
                                   blocked,
-                                  editingEventId
+                                  editingEventId,
                                 );
 
                                 const past = isPastSlot(eventForm.date, slot);
@@ -873,7 +904,8 @@ const ManageEvents = () => {
                                   slotClass =
                                     "border-slate-200 bg-slate-100 text-slate-400 cursor-not-allowed";
                                 } else if (eventForm.startTime === slot) {
-                                  slotClass = "border-[#7A1F2B] bg-[#7A1F2B] text-white";
+                                  slotClass =
+                                    "border-[#7A1F2B] bg-[#7A1F2B] text-white";
                                 }
 
                                 return (
@@ -902,7 +934,10 @@ const ManageEvents = () => {
                             className={`${glassInput} mb-2 disabled:opacity-70 disabled:cursor-not-allowed`}
                             value={eventForm.startTime}
                             onChange={(e) =>
-                              setEventForm({ ...eventForm, startTime: e.target.value })
+                              setEventForm({
+                                ...eventForm,
+                                startTime: e.target.value,
+                              })
                             }
                           />
 
@@ -912,10 +947,12 @@ const ManageEvents = () => {
                             className={`${glassInput} disabled:opacity-70 disabled:cursor-not-allowed`}
                             value={eventForm.endTime}
                             onChange={(e) =>
-                              setEventForm({ ...eventForm, endTime: e.target.value })
+                              setEventForm({
+                                ...eventForm,
+                                endTime: e.target.value,
+                              })
                             }
                           />
-
                         </>
                       )}
                     </div>
@@ -926,11 +963,11 @@ const ManageEvents = () => {
                       onClick={submitEvent}
                       disabled={eventSubmitting}
                       className={`px-6 py-2 rounded-full text-sm font-semibold border border-[#7A1F2B] ring-1 ring-black/5 transition
-                    ${eventSubmitting
-                          ? "bg-white/70 text-slate-400 cursor-not-allowed"
-                          : "bg-[#7A1F2B] text-white hover:bg-[#651823]"
-                        }`}
-                    >
+                    ${
+                      eventSubmitting
+                        ? "bg-white/70 text-slate-400 cursor-not-allowed"
+                        : "bg-[#7A1F2B] text-white hover:bg-[#651823]"
+                    }`}>
                       {eventSubmitting
                         ? "Saving..."
                         : editingEventId
@@ -940,8 +977,7 @@ const ManageEvents = () => {
                     {editingEventId && (
                       <button
                         onClick={resetEvent}
-                        className={`${glassBtnMuted} px-6`}
-                      >
+                        className={`${glassBtnMuted} px-6`}>
                         Cancel
                       </button>
                     )}
@@ -967,8 +1003,7 @@ const ManageEvents = () => {
                         <select
                           value={eventFilter}
                           onChange={(e) => setEventFilter(e.target.value)}
-                          className="w-full md:w-auto bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-full px-4 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
-                        >
+                          className="w-full md:w-auto bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-full px-4 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80">
                           <option value="upcoming">Upcoming</option>
                           <option value="all">All</option>
                           <option value="past">Completed</option>
@@ -989,8 +1024,7 @@ const ManageEvents = () => {
                         ].map((h) => (
                           <th
                             key={h}
-                            className="px-6 py-3 text-center tracking-wide"
-                          >
+                            className="px-6 py-3 text-center tracking-wide">
                             {h}
                           </th>
                         ))}
@@ -1001,8 +1035,7 @@ const ManageEvents = () => {
                       {paginatedEvents.map((e) => (
                         <tr
                           key={e._id}
-                          className="border-b border-slate-200/80 hover:bg-white/70 transition-colors duration-200"
-                        >
+                          className="border-b border-slate-200/80 hover:bg-white/70 transition-colors duration-200">
                           {/* TITLE */}
                           <td className="p-3 text-center font-medium text-sm text-slate-700">
                             <div className="flex flex-col gap-1">
@@ -1016,9 +1049,12 @@ const ManageEvents = () => {
                           {/* SCHEDULE */}
                           <td className="p-3 text-center text-sm">
                             <div className="flex flex-col gap-0.5">
-                              <span className="font-medium text-slate-700">{e.date}</span>
+                              <span className="font-medium text-slate-700">
+                                {e.date}
+                              </span>
                               <span className="text-slate-600">
-                                {format12Hour(e.startTime)} – {format12Hour(e.endTime)}
+                                {format12Hour(e.startTime)} –{" "}
+                                {format12Hour(e.endTime)}
                               </span>
                               <span className="text-xs text-slate-500 truncate">
                                 {e.location || "Location N/A"}
@@ -1045,13 +1081,13 @@ const ManageEvents = () => {
                               </span>
 
                               <span
-                                className={`text-xs font-semibold ${e.availability === 0
-                                  ? "text-rose-600"
-                                  : e.availability < 5
-                                    ? "text-amber-600"
-                                    : "text-emerald-600"
-                                  }`}
-                              >
+                                className={`text-xs font-semibold ${
+                                  e.availability === 0
+                                    ? "text-rose-600"
+                                    : e.availability < 5
+                                      ? "text-amber-600"
+                                      : "text-emerald-600"
+                                }`}>
                                 Avl: {e.availability ?? "-"}
                               </span>
                             </div>
@@ -1066,29 +1102,36 @@ const ManageEvents = () => {
                           <td className="p-3">
                             <div className="grid grid-cols-2 gap-2 justify-center">
                               <button
-                                onClick={() => navigate(`/dashboard/manage-events/${e._id}/bookings`)}
-                                className="px-2 py-1 text-[11px] rounded-full bg-white/70 border border-slate-200 ring-1 ring-black/5 text-slate-600 hover:bg-white/90"
-                              >
+                                onClick={() =>
+                                  navigate(
+                                    `/dashboard/manage-events/${e._id}/bookings`,
+                                  )
+                                }
+                                className="px-2 py-1 text-[11px] rounded-full bg-white/70 border border-slate-200 ring-1 ring-black/5 text-slate-600 hover:bg-white/90">
                                 Bookings
                               </button>
 
                               <button
                                 onClick={() => editEvent(e)}
-                                className="px-2 py-1 text-[11px] rounded-full bg-white/70 border border-[#7A1F2B]/40 ring-1 ring-black/5 text-[#7A1F2B] hover:bg-white/90"
-                              >
+                                className="px-2 py-1 text-[11px] rounded-full bg-white/70 border border-[#7A1F2B]/40 ring-1 ring-black/5 text-[#7A1F2B] hover:bg-white/90">
                                 Edit Event
                               </button>
 
                               <button
                                 onClick={() => {
                                   if (e.bookingUrl) {
-                                    navigate(`/dashboard/cms/edit/${e.bookingUrl}`);
+                                    navigate(
+                                      `/dashboard/cms/edit/${e.bookingUrl}`,
+                                    );
                                   } else {
-                                    Swal.fire("No Page Linked", "This event does not have a Booking URL set.", "info");
+                                    Swal.fire(
+                                      "No Page Linked",
+                                      "This event does not have a Booking URL set.",
+                                      "info",
+                                    );
                                   }
                                 }}
-                                className="px-2 py-1 text-[11px] rounded-full bg-white/70 border border-amber-200 ring-1 ring-black/5 text-amber-700 hover:bg-white/90"
-                              >
+                                className="px-2 py-1 text-[11px] rounded-full bg-white/70 border border-amber-200 ring-1 ring-black/5 text-amber-700 hover:bg-white/90">
                                 Edit Page
                               </button>
 
@@ -1103,13 +1146,18 @@ const ManageEvents = () => {
                                   });
 
                                   if (res.isConfirmed) {
-                                    await axios.delete(`${API}/events/${e._id}`);
+                                    await axios.delete(
+                                      `${API}/events/${e._id}`,
+                                    );
                                     fetchAll();
-                                    Swal.fire("Deleted!", "Event removed", "success");
+                                    Swal.fire(
+                                      "Deleted!",
+                                      "Event removed",
+                                      "success",
+                                    );
                                   }
                                 }}
-                                className="px-2 py-1 text-[11px] rounded-full bg-white/70 border border-rose-200 ring-1 ring-black/5 text-rose-600 hover:bg-white/90"
-                              >
+                                className="px-2 py-1 text-[11px] rounded-full bg-white/70 border border-rose-200 ring-1 ring-black/5 text-rose-600 hover:bg-white/90">
                                 Delete
                               </button>
                             </div>
@@ -1128,30 +1176,34 @@ const ManageEvents = () => {
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
                     disabled={eventPage <= 1}
-                    className={`px-4 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 ${eventPage <= 1
-                      ? "opacity-50 cursor-not-allowed"
-                      : "hover:bg-white/90"
-                      }`}
-                  >
+                    className={`px-4 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 ${
+                      eventPage <= 1
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-white/90"
+                    }`}>
                     Prev
                   </button>
 
                   <div className="px-3 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 text-slate-700">
-                    Page {eventPage} of {Math.max(1, Math.ceil(eventTotal / EVENT_LIMIT))}
+                    Page {eventPage} of{" "}
+                    {Math.max(1, Math.ceil(eventTotal / EVENT_LIMIT))}
                   </div>
 
                   <button
                     onClick={() => {
-                      const totalPages = Math.max(1, Math.ceil(eventTotal / EVENT_LIMIT));
+                      const totalPages = Math.max(
+                        1,
+                        Math.ceil(eventTotal / EVENT_LIMIT),
+                      );
                       if (eventPage < totalPages) setEventPage((p) => p + 1);
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
                     disabled={eventPage >= Math.ceil(eventTotal / EVENT_LIMIT)}
-                    className={`px-4 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 ${eventPage >= Math.ceil(eventTotal / EVENT_LIMIT)
-                      ? "opacity-50 cursor-not-allowed"
-                      : "hover:bg-white/90"
-                      }`}
-                  >
+                    className={`px-4 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 ${
+                      eventPage >= Math.ceil(eventTotal / EVENT_LIMIT)
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-white/90"
+                    }`}>
                     Next
                   </button>
                 </div>
@@ -1162,12 +1214,10 @@ const ManageEvents = () => {
           {/* ================= BLOCKED ================= */}
           {activeTab === "blocked" && (
             <>
-
               <div className="flex justify-end mb-4">
                 <button
                   onClick={() => setShowBlockForm((v) => !v)}
-                  className={glassBtnPrimarySoft}
-                >
+                  className={glassBtnPrimarySoft}>
                   {showBlockForm ? "Close Block Form" : "Block Time Slot"}
                 </button>
               </div>
@@ -1184,7 +1234,9 @@ const ManageEvents = () => {
                       <DayPicker
                         mode="single"
                         selected={blockForm.date}
-                        onSelect={(d) => setBlockForm({ ...blockForm, date: d })}
+                        onSelect={(d) =>
+                          setBlockForm({ ...blockForm, date: d })
+                        }
                         disabled={{ before: new Date() }}
                       />
                     </div>
@@ -1215,8 +1267,9 @@ const ManageEvents = () => {
                           <select
                             className={`${glassSelect} mb-3`}
                             value={blockDuration}
-                            onChange={(e) => setBlockDuration(Number(e.target.value))}
-                          >
+                            onChange={(e) =>
+                              setBlockDuration(Number(e.target.value))
+                            }>
                             {[15, 30, 45, 60, 90, 120].map((d) => (
                               <option key={d} value={d}>
                                 {d} minutes
@@ -1227,14 +1280,16 @@ const ManageEvents = () => {
                           <div className="grid grid-cols-3 gap-2 max-h-56 overflow-y-auto pr-1">
                             {blockForm.date &&
                               generateSlots(blockDuration).map((slot) => {
-                                const end = toTime(toMinutes(slot) + blockDuration);
+                                const end = toTime(
+                                  toMinutes(slot) + blockDuration,
+                                );
                                 const status = getSlotStatus(
                                   toDateStr(blockForm.date),
                                   slot,
                                   blockDuration,
                                   events,
                                   blocked,
-                                  editingBlockId
+                                  editingBlockId,
                                 );
 
                                 const past = isPastSlot(blockForm.date, slot);
@@ -1253,7 +1308,8 @@ const ManageEvents = () => {
                                   slotClass =
                                     "border-slate-200 bg-slate-100 text-slate-400 cursor-not-allowed";
                                 } else if (blockForm.startTime === slot) {
-                                  slotClass = "border-[#7A1F2B] bg-[#7A1F2B] text-white";
+                                  slotClass =
+                                    "border-[#7A1F2B] bg-[#7A1F2B] text-white";
                                 }
 
                                 return (
@@ -1282,7 +1338,10 @@ const ManageEvents = () => {
                             className={`${glassInput} mb-2 disabled:opacity-70 disabled:cursor-not-allowed`}
                             value={blockForm.startTime}
                             onChange={(e) =>
-                              setBlockForm({ ...blockForm, startTime: e.target.value })
+                              setBlockForm({
+                                ...blockForm,
+                                startTime: e.target.value,
+                              })
                             }
                           />
                           <input
@@ -1291,7 +1350,10 @@ const ManageEvents = () => {
                             className={`${glassInput} disabled:opacity-70 disabled:cursor-not-allowed`}
                             value={blockForm.endTime}
                             onChange={(e) =>
-                              setBlockForm({ ...blockForm, endTime: e.target.value })
+                              setBlockForm({
+                                ...blockForm,
+                                endTime: e.target.value,
+                              })
                             }
                           />
                         </>
@@ -1302,11 +1364,11 @@ const ManageEvents = () => {
                         onClick={submitBlock}
                         disabled={blockSubmitting}
                         className={`px-6 py-2 rounded-full text-sm font-semibold border border-[#7A1F2B] ring-1 ring-black/5 transition
-                      ${blockSubmitting
-                            ? "bg-white/70 text-slate-400 cursor-not-allowed"
-                            : "bg-[#7A1F2B] text-white hover:bg-[#651823]"
-                          }`}
-                      >
+                      ${
+                        blockSubmitting
+                          ? "bg-white/70 text-slate-400 cursor-not-allowed"
+                          : "bg-[#7A1F2B] text-white hover:bg-[#651823]"
+                      }`}>
                         {blockSubmitting
                           ? "Saving..."
                           : editingBlockId
@@ -1316,8 +1378,7 @@ const ManageEvents = () => {
                       {editingBlockId && (
                         <button
                           onClick={resetBlock}
-                          className={`${glassBtnMuted} px-6`}
-                        >
+                          className={`${glassBtnMuted} px-6`}>
                           Cancel
                         </button>
                       )}
@@ -1343,8 +1404,7 @@ const ManageEvents = () => {
                         <select
                           value={blockFilter}
                           onChange={(e) => setBlockFilter(e.target.value)}
-                          className="w-full md:w-auto bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-full px-4 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80"
-                        >
+                          className="w-full md:w-auto bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-full px-4 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80">
                           <option value="upcoming">Upcoming</option>
                           <option value="all">All</option>
                           <option value="past">Completed</option>
@@ -1356,10 +1416,7 @@ const ManageEvents = () => {
                     <thead>
                       <tr className={glassTableHead}>
                         {["Date", "Time", "Reason", "Actions"].map((h) => (
-                          <th
-                            key={h}
-                            className="px-6 py-3 text-center"
-                          >
+                          <th key={h} className="px-6 py-3 text-center">
                             {h}
                           </th>
                         ))}
@@ -1369,18 +1426,19 @@ const ManageEvents = () => {
                       {paginatedBlocked.map((b) => (
                         <tr
                           key={b._id}
-                          className="border-b border-slate-200/80 hover:bg-white/70 transition-colors duration-200"
-                        >
-                          <td className="p-3 text-center font-medium">{b.date}</td>
+                          className="border-b border-slate-200/80 hover:bg-white/70 transition-colors duration-200">
+                          <td className="p-3 text-center font-medium">
+                            {b.date}
+                          </td>
                           <td className="text-center">
-                            {format12Hour(b.startTime)} – {format12Hour(b.endTime)}
+                            {format12Hour(b.startTime)} –{" "}
+                            {format12Hour(b.endTime)}
                           </td>
                           <td className="text-center">{b.reason || "-"}</td>
                           <td className="flex gap-2 justify-center p-2">
                             <button
                               onClick={() => editBlock(b)}
-                              className="px-3 py-1 text-xs rounded-full bg-white/70 border border-white/70 ring-1 ring-black/5 text-slate-700 hover:bg-white/90"
-                            >
+                              className="px-3 py-1 text-xs rounded-full bg-white/70 border border-white/70 ring-1 ring-black/5 text-slate-700 hover:bg-white/90">
                               Edit
                             </button>
                             <button
@@ -1393,13 +1451,18 @@ const ManageEvents = () => {
                                   confirmButtonColor: "#dc2626",
                                 });
                                 if (res.isConfirmed) {
-                                  await axios.delete(`${API}/blocked-dates/${b._id}`);
+                                  await axios.delete(
+                                    `${API}/blocked-dates/${b._id}`,
+                                  );
                                   fetchAll();
-                                  Swal.fire("Removed!", "Blocked slot removed", "success");
+                                  Swal.fire(
+                                    "Removed!",
+                                    "Blocked slot removed",
+                                    "success",
+                                  );
                                 }
                               }}
-                              className="px-3 py-1 text-xs rounded-full bg-white/70 border border-rose-200 ring-1 ring-black/5 text-rose-600 hover:bg-white/90"
-                            >
+                              className="px-3 py-1 text-xs rounded-full bg-white/70 border border-rose-200 ring-1 ring-black/5 text-rose-600 hover:bg-white/90">
                               Remove
                             </button>
                           </td>
@@ -1408,7 +1471,9 @@ const ManageEvents = () => {
 
                       {blocked.length === 0 && (
                         <tr>
-                          <td colSpan="4" className="text-center p-6 text-slate-500">
+                          <td
+                            colSpan="4"
+                            className="text-center p-6 text-slate-500">
                             No blocked slots found
                           </td>
                         </tr>
@@ -1425,28 +1490,32 @@ const ManageEvents = () => {
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
                     disabled={blockPage <= 1}
-                    className={`px-4 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 ${blockPage <= 1
-                      ? "opacity-50 cursor-not-allowed"
-                      : "hover:bg-white/90"
-                      }`}
-                  >
+                    className={`px-4 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 ${
+                      blockPage <= 1
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-white/90"
+                    }`}>
                     Prev
                   </button>
                   <div className="px-3 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 text-slate-700">
-                    Page {blockPage} of {Math.max(1, Math.ceil(blockTotal / BLOCK_LIMIT))}
+                    Page {blockPage} of{" "}
+                    {Math.max(1, Math.ceil(blockTotal / BLOCK_LIMIT))}
                   </div>
                   <button
                     onClick={() => {
-                      const totalPages = Math.max(1, Math.ceil(blockTotal / BLOCK_LIMIT));
+                      const totalPages = Math.max(
+                        1,
+                        Math.ceil(blockTotal / BLOCK_LIMIT),
+                      );
                       if (blockPage < totalPages) setBlockPage((p) => p + 1);
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
                     disabled={blockPage >= Math.ceil(blockTotal / BLOCK_LIMIT)}
-                    className={`px-4 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 ${blockPage >= Math.ceil(blockTotal / BLOCK_LIMIT)
-                      ? "opacity-50 cursor-not-allowed"
-                      : "hover:bg-white/90"
-                      }`}
-                  >
+                    className={`px-4 py-2 rounded-full text-sm border border-white/70 bg-white/70 ring-1 ring-black/5 ${
+                      blockPage >= Math.ceil(blockTotal / BLOCK_LIMIT)
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-white/90"
+                    }`}>
                     Next
                   </button>
                 </div>
@@ -1455,7 +1524,6 @@ const ManageEvents = () => {
           )}
         </>
       )}
-
     </div>
   );
 };

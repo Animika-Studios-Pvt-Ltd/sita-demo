@@ -17,7 +17,7 @@ import ErrorBoundary from "../../components/ErrorBoundary"; // Import ErrorBound
 import HomePage from "../../pages/homepage/Homepage";
 import About from "../../pages/about/About";
 import AyurvedaNutrition from "../../pages/services/Ayurveda-Nutrition";
-import KoshaCounseling from "../../pages/services/Kosha-Counseling";
+import KoshaCounselling from "../../pages/services/Kosha-Counselling";
 import ReleaseKarmicPatterns from "../../pages/services/Release-Karmic-Patterns";
 import SoulCurriculum from "../../pages/services/Soul-Curriculum";
 import YogaTherapy from "../../pages/services/Yoga-Therapy";
@@ -67,7 +67,7 @@ export const mainRoutes = [
       { path: "/", element: <HomePage /> },
       { path: "/about", element: <About /> },
       { path: "/ayurveda-nutrition", element: <AyurvedaNutrition /> },
-      { path: "/kosha-counseling", element: <KoshaCounseling /> },
+      { path: "/kosha-counselling", element: <KoshaCounselling /> },
       { path: "/release-karmic-patterns", element: <ReleaseKarmicPatterns /> },
       { path: "/soul-curriculum", element: <SoulCurriculum /> },
       { path: "/yoga-therapy", element: <YogaTherapy /> },

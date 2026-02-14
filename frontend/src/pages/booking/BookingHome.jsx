@@ -21,7 +21,7 @@ const categoryImages = {
     "https://images.unsplash.com/photo-1604908177522-040c8b7e16ad",
     "https://images.unsplash.com/photo-1540420773420-3366772f4999",
   ],
-  "Kosha Counseling": [
+  "Kosha Counselling": [
     "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2",
     "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
     "https://images.unsplash.com/photo-1498050108023-c5249f4df085",

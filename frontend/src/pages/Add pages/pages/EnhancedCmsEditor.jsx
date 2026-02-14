@@ -26,13 +26,42 @@ import {
 } from "lucide-react";
 
 const RESERVED_SLUGS = [
-  "about", "ayurveda-nutrition", "kosha-counseling", "release-karmic-patterns",
-  "soul-curriculum", "yoga-therapy", "corporate-training", "group-sessions",
-  "private-sessions", "shakthi-leadership", "teacher-training", "podcasts",
-  "privacy-policy", "disclaimer", "contact", "consult-sita", "engage-sita",
-  "study-with-sita", "publications", "store", "books", "cart", "checkout",
-  "ebook", "my-orders", "blogs", "articles", "booking", "my-bookings",
-  "events", "my-profile", "auth", "admin", "login", "register", "cms"
+  "about",
+  "ayurveda-nutrition",
+  "kosha-counselling",
+  "release-karmic-patterns",
+  "soul-curriculum",
+  "yoga-therapy",
+  "corporate-training",
+  "group-sessions",
+  "private-sessions",
+  "shakthi-leadership",
+  "teacher-training",
+  "podcasts",
+  "privacy-policy",
+  "disclaimer",
+  "contact",
+  "consult-sita",
+  "engage-sita",
+  "study-with-sita",
+  "publications",
+  "store",
+  "books",
+  "cart",
+  "checkout",
+  "ebook",
+  "my-orders",
+  "blogs",
+  "articles",
+  "booking",
+  "my-bookings",
+  "events",
+  "my-profile",
+  "auth",
+  "admin",
+  "login",
+  "register",
+  "cms",
 ];
 
 // Import form components
@@ -93,15 +122,21 @@ export default function EnhancedCmsEditor() {
   const [pageSlug, setPageSlug] = useState(slug || "");
   const [pageStatus, setPageStatus] = useState("draft");
   const [createdFrom, setCreatedFrom] = useState(() => {
-    return location.pathname.includes("manage-pages") ? "manage-pages" : "cms-module";
+    return location.pathname.includes("manage-pages")
+      ? "manage-pages"
+      : "cms-module";
   });
   const [sections, setSections] = useState(() => {
     // Should be empty initially, but will be populated if new page
-    return slug ? [] : [{
-      id: `section-hero-${Date.now()}`,
-      key: "hero",
-      content: getDefaultContent("hero"),
-    }];
+    return slug
+      ? []
+      : [
+          {
+            id: `section-hero-${Date.now()}`,
+            key: "hero",
+            content: getDefaultContent("hero"),
+          },
+        ];
   });
 
   // Navigation & Metadata State
@@ -129,7 +164,7 @@ export default function EnhancedCmsEditor() {
   const [previewMode, setPreviewMode] = useState(false);
   const [expandedSections, setExpandedSections] = useState(() => {
     // If new page, expand the initial hero section
-    return slug ? new Set() : new Set(sections?.map(s => s.id) || []);
+    return slug ? new Set() : new Set(sections?.map((s) => s.id) || []);
   });
 
   /* ================= SLUG CHECK ================= */
@@ -197,11 +232,11 @@ export default function EnhancedCmsEditor() {
         }));
 
         // ✅ ENSURE HERO SECTION EXISTS
-        if (!sectionsArray.some(s => s.key === 'hero')) {
+        if (!sectionsArray.some((s) => s.key === "hero")) {
           const heroSection = {
             id: `section-hero-${Date.now()}`,
-            key: 'hero',
-            content: getDefaultContent('hero'),
+            key: "hero",
+            content: getDefaultContent("hero"),
           };
           sectionsArray = [heroSection, ...sectionsArray];
         }
@@ -235,7 +270,7 @@ export default function EnhancedCmsEditor() {
         Swal.fire(
           "Error",
           err.response?.data?.message || err.message || "Failed to load page",
-          "error"
+          "error",
         );
         setLoading(false);
       });
@@ -243,15 +278,18 @@ export default function EnhancedCmsEditor() {
 
   // ✅ FETCH DROPDOWN PARENTS & ALL PAGES (Independent of Slug)
   useEffect(() => {
-    api.get("/api/cms/navigation")
-      .then(res => {
+    api
+      .get("/api/cms/navigation")
+      .then((res) => {
         const navPages = res.data || [];
         setAllPages(navPages); // Store for validation
         // Filter pages that are marked as parents
-        const parents = navPages.filter(p => p.isDropdownParent && p.slug !== slug); // Exclude self
+        const parents = navPages.filter(
+          (p) => p.isDropdownParent && p.slug !== slug,
+        ); // Exclude self
         setDropdownParents(parents);
       })
-      .catch(err => console.error("Failed to load dropdown parents", err));
+      .catch((err) => console.error("Failed to load dropdown parents", err));
   }, []); // Run ONCE on mount
 
   const handleDragEnd = (result) => {
@@ -295,7 +333,11 @@ export default function EnhancedCmsEditor() {
   const addSection = (type) => {
     // Prevent adding a second Hero section
     if (type === "hero" && sections.some((s) => s.key === "hero")) {
-      Swal.fire("Action Blocked", "Only one Hero section is allowed.", "warning");
+      Swal.fire(
+        "Action Blocked",
+        "Only one Hero section is allowed.",
+        "warning",
+      );
       return;
     }
 
@@ -317,9 +359,13 @@ export default function EnhancedCmsEditor() {
 
   const deleteSection = (id) => {
     // 1. Prevent deleting Hero section
-    const section = sections.find(s => s.id === id);
-    if (section && section.key === 'hero') {
-      Swal.fire("Action Blocked", "The Hero section cannot be deleted.", "warning");
+    const section = sections.find((s) => s.id === id);
+    if (section && section.key === "hero") {
+      Swal.fire(
+        "Action Blocked",
+        "The Hero section cannot be deleted.",
+        "warning",
+      );
       return;
     }
 
@@ -356,8 +402,7 @@ export default function EnhancedCmsEditor() {
                 },
               };
               return updated;
-            }
-            else if (parts.length === 3) {
+            } else if (parts.length === 3) {
               const [parent, child, grandchild] = parts;
               const updated = {
                 ...s,
@@ -383,7 +428,7 @@ export default function EnhancedCmsEditor() {
           return updated;
         }
         return s;
-      })
+      }),
     );
   };
 
@@ -402,22 +447,28 @@ export default function EnhancedCmsEditor() {
   // ---------------------------------------------------------
   useEffect(() => {
     if (details.addToHeader && details.navigationTitle) {
-      const duplicateTitle = allPages.find(p => {
+      const duplicateTitle = allPages.find((p) => {
         // EXCLUDE SELF:
         // 1. If we have an originalPageId (edit mode), exclude by ID
         // 2. Fallback to slug check (new page)
-        const isSelf = originalPageId ? p._id === originalPageId : p.slug === pageSlug;
+        const isSelf = originalPageId
+          ? p._id === originalPageId
+          : p.slug === pageSlug;
         if (!p.addToHeader || isSelf) return false;
 
         // Compare against what is actually displayed in Navbar for that page
-        const effectiveTitle = (p.navigationTitle || p.title || p.slug).toLowerCase().trim();
+        const effectiveTitle = (p.navigationTitle || p.title || p.slug)
+          .toLowerCase()
+          .trim();
         const currentTitle = details.navigationTitle.toLowerCase().trim();
 
         return effectiveTitle === currentTitle;
       });
 
       if (duplicateTitle) {
-        setDuplicateWarning(`Title already used by "${duplicateTitle.title || duplicateTitle.slug}"`);
+        setDuplicateWarning(
+          `Title already used by "${duplicateTitle.title || duplicateTitle.slug}"`,
+        );
       } else {
         setDuplicateWarning("");
       }
@@ -425,7 +476,6 @@ export default function EnhancedCmsEditor() {
       setDuplicateWarning("");
     }
   }, [details.navigationTitle, details.addToHeader, allPages, pageSlug]);
-
 
   // ---------------------------------------------------------
   // SAVE PAGE
@@ -439,18 +489,26 @@ export default function EnhancedCmsEditor() {
     // ---------------------------------------------------------
     // VALIDATION: HERO SECTION
     // ---------------------------------------------------------
-    const heroSection = sections.find(s => s.key === "hero");
+    const heroSection = sections.find((s) => s.key === "hero");
     if (heroSection) {
       // 1. Image is ALWAYS required
       if (!heroSection.content.backgroundImage) {
-        Swal.fire("Validation Error", "Hero Banner Image is required.", "warning");
+        Swal.fire(
+          "Validation Error",
+          "Hero Banner Image is required.",
+          "warning",
+        );
         return;
       }
 
       // 2. CTA Button is REQUIRED if createdFrom === 'manage-events'
       if (createdFrom === "manage-events") {
         if (!heroSection.content.primaryCta?.label?.trim()) {
-          Swal.fire("Validation Error", "CTA Button Label is required for Event Pages.", "warning");
+          Swal.fire(
+            "Validation Error",
+            "CTA Button Label is required for Event Pages.",
+            "warning",
+          );
           return;
         }
         // If you also want to enforce a link/action:
@@ -465,10 +523,12 @@ export default function EnhancedCmsEditor() {
     // VALIDATION: DUPLICATE MENU TITLE (Global)
     // ---------------------------------------------------------
     if (details.addToHeader && details.navigationTitle) {
-      const duplicateTitle = allPages.find(p =>
-        p.addToHeader &&
-        p.slug !== pageSlug &&
-        (p.navigationTitle || "").toLowerCase().trim() === details.navigationTitle.toLowerCase().trim()
+      const duplicateTitle = allPages.find(
+        (p) =>
+          p.addToHeader &&
+          p.slug !== pageSlug &&
+          (p.navigationTitle || "").toLowerCase().trim() ===
+            details.navigationTitle.toLowerCase().trim(),
       );
 
       if (duplicateTitle) {
@@ -484,13 +544,18 @@ export default function EnhancedCmsEditor() {
     // ---------------------------------------------------------
     // VALIDATION: ROOT LEVEL LIMIT (Max 2 Custom Pages)
     // ---------------------------------------------------------
-    if (details.addToHeader && details.headerRow === 'bottom' && !details.headerParent) {
+    if (
+      details.addToHeader &&
+      details.headerRow === "bottom" &&
+      !details.headerParent
+    ) {
       // Count existing custom root items (excluding current page)
-      const existingRoots = allPages.filter(p =>
-        p.addToHeader &&
-        p.headerRow === 'bottom' &&
-        !p.headerParent &&
-        p.slug !== pageSlug // exclude self
+      const existingRoots = allPages.filter(
+        (p) =>
+          p.addToHeader &&
+          p.headerRow === "bottom" &&
+          !p.headerParent &&
+          p.slug !== pageSlug, // exclude self
       );
 
       if (existingRoots.length >= 2) {
@@ -547,7 +612,7 @@ export default function EnhancedCmsEditor() {
       Swal.fire(
         "Error",
         err.response?.data?.message || err.message || "Failed to save page",
-        "error"
+        "error",
       );
     }
   }
@@ -563,15 +628,12 @@ export default function EnhancedCmsEditor() {
     );
   }
 
-
-
   return (
     <div className="font-montserrat text-slate-700">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border border-white/70 ring-1 ring-black/5 rounded-2xl">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between gap-4 flex-wrap">
-
             {/* LEFT */}
             <div className="flex-1 max-w-md">
               <label className="block text-md font-medium text-slate-700 mb-1">
@@ -582,15 +644,18 @@ export default function EnhancedCmsEditor() {
                   type="text"
                   value={pageSlug}
                   onChange={(e) =>
-                    setPageSlug(e.target.value.toLowerCase().replace(/\s+/g, "-"))
+                    setPageSlug(
+                      e.target.value.toLowerCase().replace(/\s+/g, "-"),
+                    )
                   }
                   disabled={!!slug}
-                  className={`w-full px-4 py-2 rounded-lg bg-white/70 backdrop-blur-xl border ring-1 ring-black/5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80 ${slugStatus === "taken" || slugStatus === "reserved"
-                    ? "border-red-400 focus:ring-red-200"
-                    : slugStatus === "available"
-                      ? "border-emerald-400 focus:ring-emerald-200"
-                      : "border-white/70"
-                    }`}
+                  className={`w-full px-4 py-2 rounded-lg bg-white/70 backdrop-blur-xl border ring-1 ring-black/5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-white/80 ${
+                    slugStatus === "taken" || slugStatus === "reserved"
+                      ? "border-red-400 focus:ring-red-200"
+                      : slugStatus === "available"
+                        ? "border-emerald-400 focus:ring-emerald-200"
+                        : "border-white/70"
+                  }`}
                   placeholder="example-about-us"
                 />
 
@@ -634,12 +699,16 @@ export default function EnhancedCmsEditor() {
 
             {/* ACTIONS */}
             <div className="flex items-center gap-2 flex-wrap">
-              <button className={glassBtn} onClick={() => navigate("/dashboard/manage-pages")}>
+              <button
+                className={glassBtn}
+                onClick={() => navigate("/dashboard/manage-pages")}>
                 Cancel
               </button>
 
               {createdFrom === "manage-pages" && (
-                <button className={glassBtn} onClick={() => setShowSettings(!showSettings)}>
+                <button
+                  className={glassBtn}
+                  onClick={() => setShowSettings(!showSettings)}>
                   <Settings size={16} />
                   Settings
                 </button>
@@ -651,17 +720,20 @@ export default function EnhancedCmsEditor() {
               </button> */}
 
               {(!slug || pageStatus === "draft") && (
-                <button className={glassBtnWarning} onClick={() => save("draft")}>
+                <button
+                  className={glassBtnWarning}
+                  onClick={() => save("draft")}>
                   Save Draft
                 </button>
               )}
 
-              <button className={glassBtnPrimary} onClick={() => save("published")}>
+              <button
+                className={glassBtnPrimary}
+                onClick={() => save("published")}>
                 <Save size={16} />
                 Publish
               </button>
             </div>
-
           </div>
         </div>
       </div>
@@ -679,7 +751,9 @@ export default function EnhancedCmsEditor() {
                     <Settings size={20} className="text-[#7A1F2B]" />
                     Page Settings
                   </h3>
-                  <button onClick={() => setShowSettings(false)} className="text-slate-400 hover:text-[#7A1F2B] transition-colors">
+                  <button
+                    onClick={() => setShowSettings(false)}
+                    className="text-slate-400 hover:text-[#7A1F2B] transition-colors">
                     Close
                   </button>
                 </div>
@@ -689,10 +763,13 @@ export default function EnhancedCmsEditor() {
                     {/* BOX 1: Header Navigation */}
                     <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-all">
                       <div className="flex items-center gap-3 mb-4">
-                        <div className={`p-2 rounded-lg ${details.addToHeader ? 'bg-[#7A1F2B] text-white' : 'bg-slate-200 text-slate-500'}`}>
+                        <div
+                          className={`p-2 rounded-lg ${details.addToHeader ? "bg-[#7A1F2B] text-white" : "bg-slate-200 text-slate-500"}`}>
                           <Settings size={18} />
                         </div>
-                        <h4 className="font-bold text-slate-700 text-lg">Header Navigation</h4>
+                        <h4 className="font-bold text-slate-700 text-lg">
+                          Header Navigation
+                        </h4>
                       </div>
 
                       <div className="space-y-4">
@@ -701,10 +778,18 @@ export default function EnhancedCmsEditor() {
                             type="checkbox"
                             className="hidden"
                             checked={details.addToHeader}
-                            onChange={(e) => setDetails({ ...details, addToHeader: e.target.checked })}
+                            onChange={(e) =>
+                              setDetails({
+                                ...details,
+                                addToHeader: e.target.checked,
+                              })
+                            }
                           />
-                          <div className={`w-12 h-6 rounded-full p-1 transition-colors duration-200 ease-in-out ${details.addToHeader ? 'bg-[#7A1F2B]' : 'bg-slate-300'}`}>
-                            <div className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-200 ease-in-out ${details.addToHeader ? 'translate-x-6' : 'translate-x-0'}`} />
+                          <div
+                            className={`w-12 h-6 rounded-full p-1 transition-colors duration-200 ease-in-out ${details.addToHeader ? "bg-[#7A1F2B]" : "bg-slate-300"}`}>
+                            <div
+                              className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-200 ease-in-out ${details.addToHeader ? "translate-x-6" : "translate-x-0"}`}
+                            />
                           </div>
                           <span className="font-medium text-slate-600 group-hover:text-[#7A1F2B] transition-colors">
                             {details.addToHeader ? "Enabled" : "Disabled"}
@@ -713,27 +798,35 @@ export default function EnhancedCmsEditor() {
 
                         {details.addToHeader && (
                           <div className="animate-in fade-in slide-in-from-top-2 space-y-4 pt-2 border-t border-slate-200/50">
-
                             {/* Row Selection */}
                             <div>
-                              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Location</label>
+                              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                                Location
+                              </label>
                               <div className="flex gap-2">
                                 <button
-                                  onClick={() => setDetails({ ...details, headerRow: "top" })}
-                                  className={`flex-1 py-2 px-3 text-sm font-semibold rounded-xl border transition-all ${details.headerRow === "top"
-                                    ? 'bg-white border-[#7A1F2B] text-[#7A1F2B] shadow-sm'
-                                    : 'bg-transparent border-slate-200 text-slate-500 hover:border-slate-300'
-                                    }`}
-                                >
+                                  onClick={() =>
+                                    setDetails({ ...details, headerRow: "top" })
+                                  }
+                                  className={`flex-1 py-2 px-3 text-sm font-semibold rounded-xl border transition-all ${
+                                    details.headerRow === "top"
+                                      ? "bg-white border-[#7A1F2B] text-[#7A1F2B] shadow-sm"
+                                      : "bg-transparent border-slate-200 text-slate-500 hover:border-slate-300"
+                                  }`}>
                                   Top Row
                                 </button>
                                 <button
-                                  onClick={() => setDetails({ ...details, headerRow: "bottom" })}
-                                  className={`flex-1 py-2 px-3 text-sm font-semibold rounded-xl border transition-all ${details.headerRow === "bottom"
-                                    ? 'bg-white border-[#7A1F2B] text-[#7A1F2B] shadow-sm'
-                                    : 'bg-transparent border-slate-200 text-slate-500 hover:border-slate-300'
-                                    }`}
-                                >
+                                  onClick={() =>
+                                    setDetails({
+                                      ...details,
+                                      headerRow: "bottom",
+                                    })
+                                  }
+                                  className={`flex-1 py-2 px-3 text-sm font-semibold rounded-xl border transition-all ${
+                                    details.headerRow === "bottom"
+                                      ? "bg-white border-[#7A1F2B] text-[#7A1F2B] shadow-sm"
+                                      : "bg-transparent border-slate-200 text-slate-500 hover:border-slate-300"
+                                  }`}>
                                   Main Row
                                 </button>
                               </div>
@@ -742,7 +835,6 @@ export default function EnhancedCmsEditor() {
                             {/* Dropdown Logic (only for Main Row) */}
                             {details.headerRow === "bottom" && (
                               <div className="space-y-4 mt-3 pt-3 border-t border-slate-100">
-
                                 {/* Parent Menu Selection (Standard Link) */}
                                 <div className="animate-in fade-in slide-in-from-top-1">
                                   <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
@@ -750,26 +842,42 @@ export default function EnhancedCmsEditor() {
                                   </label>
                                   <select
                                     value={details.headerParent || ""}
-                                    onChange={(e) => setDetails({ ...details, headerParent: e.target.value, isDropdownParent: false })}
-                                    className="w-full px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-[#7A1F2B]"
-                                  >
-                                    <option value="">None (Root Level Item)</option>
+                                    onChange={(e) =>
+                                      setDetails({
+                                        ...details,
+                                        headerParent: e.target.value,
+                                        isDropdownParent: false,
+                                      })
+                                    }
+                                    className="w-full px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 text-sm focus:outline-none focus:border-[#7A1F2B]">
+                                    <option value="">
+                                      None (Root Level Item)
+                                    </option>
                                     <optgroup label="System Menus">
-                                      <option value="sitaFactor">The Sita Factor</option>
-                                      <option value="workshops">Workshops</option>
+                                      <option value="sitaFactor">
+                                        The Sita Factor
+                                      </option>
+                                      <option value="workshops">
+                                        Workshops
+                                      </option>
                                     </optgroup>
                                     {dropdownParents.length > 0 && (
                                       <optgroup label="Custom Menus">
-                                        {dropdownParents.map(parent => (
-                                          <option key={parent.slug} value={parent.slug}>
-                                            {parent.navigationTitle || parent.title || parent.slug}
+                                        {dropdownParents.map((parent) => (
+                                          <option
+                                            key={parent.slug}
+                                            value={parent.slug}>
+                                            {parent.navigationTitle ||
+                                              parent.title ||
+                                              parent.slug}
                                           </option>
                                         ))}
                                       </optgroup>
                                     )}
                                   </select>
                                   <p className="text-[10px] text-slate-400 mt-1 ml-1">
-                                    Select a parent menu to place this link inside it.
+                                    Select a parent menu to place this link
+                                    inside it.
                                   </p>
                                 </div>
                               </div>
@@ -782,37 +890,59 @@ export default function EnhancedCmsEditor() {
                     {/* BOX 2: Footer Navigation */}
                     <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-all">
                       <div className="flex items-center gap-3 mb-4">
-                        <div className={`p-2 rounded-lg ${details.addToFooter ? 'bg-[#7A1F2B] text-white' : 'bg-slate-200 text-slate-500'}`}>
+                        <div
+                          className={`p-2 rounded-lg ${details.addToFooter ? "bg-[#7A1F2B] text-white" : "bg-slate-200 text-slate-500"}`}>
                           <Settings size={18} />
                         </div>
-                        <h4 className="font-bold text-slate-700 text-lg">Footer Navigation</h4>
+                        <h4 className="font-bold text-slate-700 text-lg">
+                          Footer Navigation
+                        </h4>
                       </div>
 
                       <div className="space-y-4">
                         <label className="flex items-center gap-3 cursor-pointer group">
-                          <div className={`w-12 h-6 rounded-full p-1 transition-colors ${details.addToFooter ? 'bg-[#7A1F2B]' : 'bg-slate-300'}`}>
-                            <div className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${details.addToFooter ? 'translate-x-6' : 'translate-x-0'}`} />
+                          <div
+                            className={`w-12 h-6 rounded-full p-1 transition-colors ${details.addToFooter ? "bg-[#7A1F2B]" : "bg-slate-300"}`}>
+                            <div
+                              className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${details.addToFooter ? "translate-x-6" : "translate-x-0"}`}
+                            />
                           </div>
                           <span className="font-medium text-slate-600 group-hover:text-[#7A1F2B] transition-colors">
                             {details.addToFooter ? "Enabled" : "Disabled"}
                           </span>
-                          <input type="checkbox" className="hidden" checked={details.addToFooter} onChange={(e) => setDetails({ ...details, addToFooter: e.target.checked })} />
+                          <input
+                            type="checkbox"
+                            className="hidden"
+                            checked={details.addToFooter}
+                            onChange={(e) =>
+                              setDetails({
+                                ...details,
+                                addToFooter: e.target.checked,
+                              })
+                            }
+                          />
                         </label>
 
                         <p className="text-xs text-slate-500 leading-relaxed">
-                          Enabling this will add the page link to the "Resources" or "Quick Links" section of the site footer.
+                          Enabling this will add the page link to the
+                          "Resources" or "Quick Links" section of the site
+                          footer.
                         </p>
                       </div>
                     </div>
 
                     {/* BOX 3: Global Order */}
                     <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-all">
-                      <h4 className="font-bold text-slate-700 text-lg mb-4">Global Order</h4>
+                      <h4 className="font-bold text-slate-700 text-lg mb-4">
+                        Global Order
+                      </h4>
                       <div className="relative">
                         <input
                           type="number"
                           value={details.order}
-                          onChange={(e) => setDetails({ ...details, order: e.target.value })}
+                          onChange={(e) =>
+                            setDetails({ ...details, order: e.target.value })
+                          }
                           className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-800 font-medium focus:outline-none focus:border-[#7A1F2B] focus:ring-1 focus:ring-[#7A1F2B]"
                         />
                         <div className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-slate-400 font-semibold bg-slate-100 px-2 py-1 rounded">
@@ -826,7 +956,9 @@ export default function EnhancedCmsEditor() {
 
                     {/* BOX 4: Menu Identity */}
                     <div className="bg-white/50 rounded-2xl p-6 border border-white/60 shadow-sm hover:shadow-md transition-all">
-                      <h4 className="font-bold text-slate-700 text-lg mb-4">Menu Identity</h4>
+                      <h4 className="font-bold text-slate-700 text-lg mb-4">
+                        Menu Identity
+                      </h4>
 
                       {/* Menu Title (Navigation) */}
                       <div className="relative">
@@ -837,11 +969,17 @@ export default function EnhancedCmsEditor() {
                           type="text"
                           maxLength={7}
                           value={details.navigationTitle}
-                          onChange={(e) => setDetails({ ...details, navigationTitle: e.target.value.toLowerCase() })}
+                          onChange={(e) =>
+                            setDetails({
+                              ...details,
+                              navigationTitle: e.target.value.toLowerCase(),
+                            })
+                          }
                           placeholder="Max 7 chars"
                           className={`w-full px-4 py-3 rounded-xl bg-white border text-slate-800 font-medium focus:outline-none focus:border-[#7A1F2B] focus:ring-1 focus:ring-[#7A1F2B] ${(details.navigationTitle || "").length > 7 ? "border-red-400 focus:border-red-500 focus:ring-red-500" : "border-slate-200"}`}
                         />
-                        <div className={`absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold px-2 py-1 rounded ${(details.navigationTitle || "").length > 10 ? "bg-red-100 text-red-700" : "bg-slate-100 text-slate-400"}`}>
+                        <div
+                          className={`absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold px-2 py-1 rounded ${(details.navigationTitle || "").length > 10 ? "bg-red-100 text-red-700" : "bg-slate-100 text-slate-400"}`}>
                           {(details.navigationTitle || "").length} / 10
                         </div>
                       </div>
@@ -866,8 +1004,8 @@ export default function EnhancedCmsEditor() {
               </h3>
 
               <p className="mt-1 mb-4 text-sm text-slate-600 leading-relaxed">
-                Click a section type below to add it to your page.
-                You can add multiple sections and customize each one after adding.
+                Click a section type below to add it to your page. You can add
+                multiple sections and customize each one after adding.
               </p>
 
               <div className="flex flex-wrap gap-2">
@@ -875,15 +1013,43 @@ export default function EnhancedCmsEditor() {
                   icon={Type}
                   label="Hero"
                   onClick={() => addSection("hero")}
-                  disabled={sections.some(s => s.key === "hero")}
+                  disabled={sections.some((s) => s.key === "hero")}
                 />
-                <AddSectionButton icon={Code} label="HTML" onClick={() => addSection("html")} />
-                <AddSectionButton icon={HelpCircle} label="FAQ" onClick={() => addSection("faq")} />
-                <AddSectionButton icon={Calendar} label="Events" onClick={() => addSection("events")} />
-                <AddSectionButton icon={BookOpen} label="Blogs" onClick={() => addSection("blogs")} />
-                <AddSectionButton icon={Book} label="Books" onClick={() => addSection("books")} />
-                <AddSectionButton icon={FileText} label="Articles" onClick={() => addSection("articles")} />
-                <AddSectionButton icon={Mic} label="Podcasts" onClick={() => addSection("podcasts")} />
+                <AddSectionButton
+                  icon={Code}
+                  label="HTML"
+                  onClick={() => addSection("html")}
+                />
+                <AddSectionButton
+                  icon={HelpCircle}
+                  label="FAQ"
+                  onClick={() => addSection("faq")}
+                />
+                <AddSectionButton
+                  icon={Calendar}
+                  label="Events"
+                  onClick={() => addSection("events")}
+                />
+                <AddSectionButton
+                  icon={BookOpen}
+                  label="Blogs"
+                  onClick={() => addSection("blogs")}
+                />
+                <AddSectionButton
+                  icon={Book}
+                  label="Books"
+                  onClick={() => addSection("books")}
+                />
+                <AddSectionButton
+                  icon={FileText}
+                  label="Articles"
+                  onClick={() => addSection("articles")}
+                />
+                <AddSectionButton
+                  icon={Mic}
+                  label="Podcasts"
+                  onClick={() => addSection("podcasts")}
+                />
                 {/* <AddSectionButton icon={LinkIcon} label="Links" onClick={() => addSection("links")} /> */}
                 {/* <AddSectionButton icon={Ticket} label="Booking" onClick={() => addSection("booking")} /> */}
               </div>
@@ -893,25 +1059,33 @@ export default function EnhancedCmsEditor() {
             <DragDropContext onDragEnd={handleDragEnd}>
               <Droppable droppableId="sections">
                 {(provided) => (
-                  <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-4">
+                  <div
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    className="space-y-4">
                     {sections.map((section, index) => (
-                      <Draggable key={section.id} draggableId={section.id} index={index}>
+                      <Draggable
+                        key={section.id}
+                        draggableId={section.id}
+                        index={index}>
                         {(provided, snapshot) => (
                           <div
                             ref={provided.innerRef}
                             {...provided.draggableProps}
-                            className={`bg-white/70 backdrop-blur-xl rounded-2xl border border-white/70 ring-1 ring-black/5 transition-all ${snapshot.isDragging
-                              ? "shadow-[0_18px_45px_-30px_rgba(15,23,42,0.45)] scale-[1.02]"
-                              : "shadow-sm"
-                              }`}
-                          >
+                            className={`bg-white/70 backdrop-blur-xl rounded-2xl border border-white/70 ring-1 ring-black/5 transition-all ${
+                              snapshot.isDragging
+                                ? "shadow-[0_18px_45px_-30px_rgba(15,23,42,0.45)] scale-[1.02]"
+                                : "shadow-sm"
+                            }`}>
                             <SectionCard
                               section={section}
                               index={index}
                               totalSections={sections.length}
                               dragHandleProps={provided.dragHandleProps}
                               onDelete={() => deleteSection(section.id)}
-                              onUpdate={(field, value) => updateSection(section.id, field, value)}
+                              onUpdate={(field, value) =>
+                                updateSection(section.id, field, value)
+                              }
                               isExpanded={expandedSections.has(section.id)}
                               onToggle={() => toggleSection(section.id)}
                               onMove={moveSection}
@@ -932,8 +1106,12 @@ export default function EnhancedCmsEditor() {
             {sections.length === 0 && (
               <div className="text-center py-16 bg-white/70 backdrop-blur-xl rounded-2xl border border-white/70 ring-1 ring-black/5">
                 <Code size={48} className="mx-auto text-slate-400 mb-4" />
-                <p className="text-slate-600 text-lg font-medium mb-2">No sections yet</p>
-                <p className="text-slate-500">Click "Add Section" above to get started building your page</p>
+                <p className="text-slate-600 text-lg font-medium mb-2">
+                  No sections yet
+                </p>
+                <p className="text-slate-500">
+                  Click "Add Section" above to get started building your page
+                </p>
               </div>
             )}
           </>
@@ -941,7 +1119,7 @@ export default function EnhancedCmsEditor() {
           <PreviewPanel sections={sections} />
         )}
       </div>
-    </div >
+    </div>
   );
 }
 
@@ -965,14 +1143,15 @@ function AddSectionButton({ icon: Icon, label, onClick, disabled }) {
       onClick={handleClick}
       disabled={disabled || isAdding}
       className={`relative overflow-hidden flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border ring-1 ring-black/5 transition-all duration-300
-        ${disabled
-          ? "bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed opacity-60"
-          : isAdding
-            ? "bg-[#7A1F2B] text-white border-[#7A1F2B] scale-95 shadow-inner"
-            : "bg-white/70 backdrop-blur-xl border-white/70 text-slate-700 hover:bg-white/90 hover:text-[#7A1F2B] hover:shadow-md hover:-translate-y-0.5"
-        }`}
-    >
-      <div className={`flex items-center gap-2 transition-all duration-300 ${isAdding ? "opacity-0 translate-y-4 fixed" : "opacity-100 translate-y-0"}`}>
+        ${
+          disabled
+            ? "bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed opacity-60"
+            : isAdding
+              ? "bg-[#7A1F2B] text-white border-[#7A1F2B] scale-95 shadow-inner"
+              : "bg-white/70 backdrop-blur-xl border-white/70 text-slate-700 hover:bg-white/90 hover:text-[#7A1F2B] hover:shadow-md hover:-translate-y-0.5"
+        }`}>
+      <div
+        className={`flex items-center gap-2 transition-all duration-300 ${isAdding ? "opacity-0 translate-y-4 fixed" : "opacity-100 translate-y-0"}`}>
         <Icon size={16} />
         {label}
       </div>
@@ -987,7 +1166,19 @@ function AddSectionButton({ icon: Icon, label, onClick, disabled }) {
 }
 
 // Section Card Component
-function SectionCard({ section, index, totalSections, dragHandleProps, onDelete, onUpdate, isExpanded, onToggle, onMove, pageSlug, createdFrom }) {
+function SectionCard({
+  section,
+  index,
+  totalSections,
+  dragHandleProps,
+  onDelete,
+  onUpdate,
+  isExpanded,
+  onToggle,
+  onMove,
+  pageSlug,
+  createdFrom,
+}) {
   const getSectionIcon = (key) => {
     const icons = {
       hero: Type,
@@ -1015,8 +1206,7 @@ function SectionCard({ section, index, totalSections, dragHandleProps, onDelete,
       <div className="flex items-center gap-3 p-4 bg-white/70 backdrop-blur-xl rounded-t-2xl border-b border-white/70">
         <div
           {...dragHandleProps}
-          className={`cursor-grab active:cursor-grabbing text-slate-400 hover:text-slate-600 transition-colors duration-200 ${section.key === "hero" ? "invisible pointer-events-none" : ""}`}
-        >
+          className={`cursor-grab active:cursor-grabbing text-slate-400 hover:text-slate-600 transition-colors duration-200 ${section.key === "hero" ? "invisible pointer-events-none" : ""}`}>
           <GripVertical size={20} />
         </div>
 
@@ -1026,16 +1216,14 @@ function SectionCard({ section, index, totalSections, dragHandleProps, onDelete,
               onClick={() => onMove(index, -1)}
               disabled={index <= 1} // Cannot move up if index is 1 (index 0 is Hero)
               className={`p-0.5 rounded hover:bg-gray-200 transition ${index <= 1 ? "opacity-30 cursor-not-allowed" : ""}`}
-              title="Move Up"
-            >
+              title="Move Up">
               <ChevronUp size={14} />
             </button>
             <button
               onClick={() => onMove(index, 1)}
               disabled={index >= totalSections - 1}
               className={`p-0.5 rounded hover:bg-gray-200 transition ${index >= totalSections - 1 ? "opacity-30 cursor-not-allowed" : ""}`}
-              title="Move Down"
-            >
+              title="Move Down">
               <ChevronDown size={14} />
             </button>
           </div>
@@ -1052,8 +1240,7 @@ function SectionCard({ section, index, totalSections, dragHandleProps, onDelete,
         <button
           onClick={onToggle}
           className={glassIconBtn}
-          title={isExpanded ? "Collapse" : "Expand"}
-        >
+          title={isExpanded ? "Collapse" : "Expand"}>
           {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
         </button>
 
@@ -1061,8 +1248,7 @@ function SectionCard({ section, index, totalSections, dragHandleProps, onDelete,
           <button
             onClick={onDelete}
             className={glassDeleteBtn}
-            title="Delete Section"
-          >
+            title="Delete Section">
             <Trash2 size={16} />
           </button>
         )}
@@ -1072,7 +1258,12 @@ function SectionCard({ section, index, totalSections, dragHandleProps, onDelete,
       {isExpanded && (
         <div className="p-6 bg-white/70 backdrop-blur-xl">
           {section.key === "hero" && (
-            <HeroForm content={section.content} onUpdate={onUpdate} pageSlug={pageSlug} createdFrom={createdFrom} />
+            <HeroForm
+              content={section.content}
+              onUpdate={onUpdate}
+              pageSlug={pageSlug}
+              createdFrom={createdFrom}
+            />
           )}
           {section.key === "faq" && (
             <FaqForm content={section.content} onUpdate={onUpdate} />
@@ -1084,10 +1275,20 @@ function SectionCard({ section, index, totalSections, dragHandleProps, onDelete,
             <LinksForm content={section.content} onUpdate={onUpdate} />
           )}
           {section.key === "booking" && (
-            <BookingForm content={section.content} onUpdate={onUpdate} pageSlug={pageSlug} />
+            <BookingForm
+              content={section.content}
+              onUpdate={onUpdate}
+              pageSlug={pageSlug}
+            />
           )}
-          {["events", "blogs", "books", "articles", "podcasts"].includes(section.key) && (
-            <DynamicContentForm content={section.content} onUpdate={onUpdate} type={section.key} />
+          {["events", "blogs", "books", "articles", "podcasts"].includes(
+            section.key,
+          ) && (
+            <DynamicContentForm
+              content={section.content}
+              onUpdate={onUpdate}
+              type={section.key}
+            />
           )}
         </div>
       )}
@@ -1112,8 +1313,14 @@ function getDefaultContent(type) {
     faq: {
       title: "Frequently Asked Questions",
       items: [
-        { q: "What is this platform about?", a: "This platform helps you achieve your goals." },
-        { q: "How do I get started?", a: "Simply sign up and follow the onboarding process." },
+        {
+          q: "What is this platform about?",
+          a: "This platform helps you achieve your goals.",
+        },
+        {
+          q: "How do I get started?",
+          a: "Simply sign up and follow the onboarding process.",
+        },
       ],
     },
     html: {
@@ -1138,7 +1345,7 @@ function getDefaultContent(type) {
     booking: {
       eventId: "",
       buttonText: "Book Now",
-      alignment: "center"
+      alignment: "center",
     },
     events: { title: "Upcoming Events", count: 3 },
     blogs: { title: "Latest Blogs", count: 3 },
@@ -1156,7 +1363,9 @@ function PreviewPanel({ sections }) {
       <div className="bg-white/70 backdrop-blur-xl border-b border-white/70 p-4 text-center">
         <Eye size={24} className="inline-block mr-2 text-[#7A1F2B]" />
         <span className="font-semibold text-[#7A1F2B]">Preview Mode</span>
-        <p className="text-sm text-slate-500 mt-1">This is how your data is structured</p>
+        <p className="text-sm text-slate-500 mt-1">
+          This is how your data is structured
+        </p>
       </div>
 
       <div className="p-6">

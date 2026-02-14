@@ -80,7 +80,7 @@ const Footer = () => {
             <h6 className="footer-title">THE SITA FACTOR</h6>
             <a href="/yoga-therapy">Yoga Therapy</a>
             <a href="/ayurveda-nutrition">Ayurveda – Nutrition & Integration</a>
-            <a href="/kosha-counseling">Kosha Counseling</a>
+            <a href="/kosha-counselling">Kosha Counselling</a>
             <a href="/soul-curriculum">Soul Curriculum</a>
             <a href="/release-karmic-patterns">Release Karmic Patterns</a>
           </div>
@@ -101,7 +101,9 @@ const Footer = () => {
             {dynamicNav.length > 0 &&
               dynamicNav.map((page) => (
                 <Link key={page._id || page.slug} to={`/${page.slug}`}>
-                  {page.navigationTitle || page.title || page.slug.replace(/-/g, " ")}
+                  {page.navigationTitle ||
+                    page.title ||
+                    page.slug.replace(/-/g, " ")}
                 </Link>
               ))}
           </div>
@@ -121,7 +123,10 @@ const Footer = () => {
                         className={`publication-slide ${index === activeSlide ? "active" : ""}`}>
                         <Link to={linkPath}>
                           <img
-                            src={getSecureImageUrl(book.coverImage) || "/images/anaya-book.webp"}
+                            src={
+                              getSecureImageUrl(book.coverImage) ||
+                              "/images/anaya-book.webp"
+                            }
                             alt={book.title}
                           />
                         </Link>
@@ -155,10 +160,7 @@ const Footer = () => {
                     key={blog._id || index}
                     className="blog-item"
                     style={{ textDecoration: "none" }}>
-                    <img
-                      src={getSecureImageUrl(blog.image)}
-                      alt={blog.title}
-                    />
+                    <img src={getSecureImageUrl(blog.image)} alt={blog.title} />
                     <div className="blog-overlay">
                       <span>
                         {new Date(blog.createdAt).toLocaleDateString(
