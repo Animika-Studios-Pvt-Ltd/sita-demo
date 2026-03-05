@@ -112,7 +112,8 @@ const Footer = () => {
             <div
               className="publication-carousel"
               onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}>
+              onMouseLeave={handleMouseLeave}
+            >
               <div className="publication-slides">
                 {recentBooks.length > 0 ? (
                   recentBooks.map((book, index) => {
@@ -120,7 +121,8 @@ const Footer = () => {
                     return (
                       <div
                         key={book._id || index}
-                        className={`publication-slide ${index === activeSlide ? "active" : ""}`}>
+                        className={`publication-slide ${index === activeSlide ? "active" : ""}`}
+                      >
                         <Link to={linkPath}>
                           <img
                             src={
@@ -159,7 +161,8 @@ const Footer = () => {
                     to={linkPath}
                     key={blog._id || index}
                     className="blog-item"
-                    style={{ textDecoration: "none" }}>
+                    style={{ textDecoration: "none" }}
+                  >
                     <img src={getSecureImageUrl(blog.image)} alt={blog.title} />
                     <div className="blog-overlay">
                       <span>
@@ -205,10 +208,11 @@ const Footer = () => {
             <a
               href="https://sitaseverson.substack.com/"
               target="_blank"
-              rel="noopener noreferrer">
+              rel="noopener noreferrer"
+            >
               <img src="/substack.png" alt="Substack Icon" />
             </a>
-            <a href="https://www.instagram.com/sitapk_1/">
+            <a href="https://www.instagram.com/sitapk_1/" target="_blank">
               <i className="fa-brands fa-instagram"></i>
             </a>
             <a href="#">
