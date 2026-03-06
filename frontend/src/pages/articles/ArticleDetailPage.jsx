@@ -8,15 +8,30 @@ import "aos/dist/aos.css";
 import SitaBreadcrumb from "../breadcrumbs/SitaBreadcrumb";
 import "../../assets/herosection.css";
 import "../homepage/Homepage.css";
+import "./Articles.css";
 import { getSecureImageUrl } from "../../utils/imageUtils";
 
 const BACKEND_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const sanitizeDescription = (html) => {
-  return html
-    .replace(/class="ql-align-[^"]*"/g, "")
-    .replace(/style="[^"]*"/g, "");
+  return (
+    html
+      // remove all class and style attributes
+      .replace(/class="[^"]*"/g, "")
+      .replace(/style="[^"]*"/g, "")
+      // remove any <a> inside headings (h1-h6)
+      .replace(
+        /<h([1-6])>(.*?)<a[^>]*>.*?<\/a>(.*?)<\/h\1>/gs,
+        "<h$1>$2$3</h$1>",
+      )
+      // remove any div that looks like image expand overlay
+      .replace(/<div[^>]*(image-link-expand|expand-icon)[^>]*>.*?<\/div>/gs, "")
+      // remove empty paragraphs
+      .replace(/<p>\s*<\/p>/g, "")
+      // remove empty spans
+      .replace(/<span>\s*<\/span>/g, "")
+  );
 };
 
 const ArticleDetailPage = () => {
@@ -129,7 +144,8 @@ const ArticleDetailPage = () => {
           <div
             className="sita-inner-hero-image-banner"
             data-aos="zoom-out"
-            data-aos-duration="1500">
+            data-aos-duration="1500"
+          >
             <img
               src={getSecureImageUrl(article.image) || "/about-banner.webp"}
               alt={article.title}
@@ -150,25 +166,27 @@ const ArticleDetailPage = () => {
       />
 
       <div className="container" data-aos="fade-up" data-aos-duration="1000">
-        <div className="max-w-8xl mx-auto py-0 text-center flex flex-col justify-center items-center px-4">
-          <div className="max-w-6xl mx-auto px-4 text-center">
+        <div className="max-w-8xl mx-auto py-3 text-center flex flex-col justify-center items-center px-4">
+          <div className="max-w-6xl mt-3 mx-auto px-4 text-center">
             <h1
               className="font-pt-serif text-[#8b171b] text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight text-center"
               data-aos="zoom-in"
-              data-aos-duration="1300">
+              data-aos-duration="1300"
+            >
               {article.title}
             </h1>
             <img
               src="/sita-motif.webp"
               alt="Sita Motif"
-              className="mx-auto mb-8 motif"
+              className="mx-auto mb-2 sm:mb-3 md:mb-4 lg:mb-5 xl:mb-6 motif"
             />
           </div>
 
           <div
             className="w-full px-0 py-6"
             data-aos="fade-up"
-            data-aos-duration="1200">
+            data-aos-duration="1200"
+          >
             <div className="w-full">
               <p className="flex items-center gap-2 text-gray-400 text-md font-regular mt-0 mb-2">
                 <CalendarDays className="w-5 h-5" />
@@ -179,9 +197,9 @@ const ArticleDetailPage = () => {
                 })}
               </p>
               <div
-                className="text-left max-w-none text-gray-800 text-[15px] sm:text-[17px] md:text-[17px] lg:text-[18px] xl:text-[18px] font-Figtree leading-snug whitespace-pre-wrap"
+                className="text-left max-w-none text-gray-800 text-[15px] sm:text-[17px] md:text-[17px] lg:text-[18px] xl:text-[18px] font-Figtree leading-snug whitespace-pre-wrap article-content"
                 dangerouslySetInnerHTML={{
-                  __html: sanitizeDescription(article.description),
+                  __html: sanitizeDescription(article.content),
                 }}
               />
             </div>
@@ -191,5 +209,4 @@ const ArticleDetailPage = () => {
     </>
   );
 };
-
 export default ArticleDetailPage;
